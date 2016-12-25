@@ -4,12 +4,13 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,8 +20,10 @@ import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Interpolation;
@@ -36,7 +39,6 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionDispatcher;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionWorld;
 import com.badlogic.gdx.physics.bullet.collision.btConeShape;
 import com.badlogic.gdx.physics.bullet.collision.btCylinderShape;
 import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
@@ -91,7 +93,7 @@ public class Main extends ApplicationAdapter {
 	public void create() {
 		self = this;
 
-		setup3D();
+		
 
 		Sounds.setup();
 		buffer = new FrameBuffer(Format.RGBA8888, Main.width, Main.height, true);
@@ -117,6 +119,7 @@ public class Main extends ApplicationAdapter {
 		setScale(scale);
 
 		setScreen(GameScreen.get());
+		setup3D();
 
 	}
 
@@ -136,14 +139,13 @@ public class Main extends ApplicationAdapter {
 	btCollisionConfiguration collisionConfig;
 	btDispatcher dispatcher;
 	MyContactListener contactListener;
-	Array<CollisionObject> objects = new Array<>();
 
 	btDynamicsWorld dynamicsWorld;
 	btConstraintSolver constraintSolver;
 
-	public static short GROUND_FLAG = 1;
-	public static short ALL_FLAG = 2;
-	public static short OBJECT_FLAG = 3;
+	  final static short GROUND_FLAG = 1<<8;
+	    final static short OBJECT_FLAG = 1<<9;
+	    final static short ALL_FLAG = -1;
 
 	private void setup3D() {
 		Bullet.init();
@@ -153,32 +155,47 @@ public class Main extends ApplicationAdapter {
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
 		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 		perspectiveCam = new PerspectiveCamera(67, Main.width, Main.height);
-		perspectiveCam.position.set(3f, 7f, 10f);
-		perspectiveCam.lookAt(0, 4f, 0);
+		perspectiveCam.position.set(3f, 7f, 0f);
+		perspectiveCam.lookAt(0, 0, 0);
 		perspectiveCam.update();
 		camController = new CameraInputController(perspectiveCam);
 		Gdx.input.setInputProcessor(camController);
-
+		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates;
 		ModelBuilder mb = new ModelBuilder();
+		float amt = .5f;
 		mb.begin();
+		mb.node().id = "die";
+		MeshPartBuilder mpb = mb.part("die", GL20.GL_TRIANGLES, attr, new Material(TextureAttribute.createDiffuse(atlas.findRegion("die0").getTexture())));
+		mpb.setUVRange(atlas.findRegion("die0"));
+		mpb.rect(-amt,-amt,-amt, -amt,amt,-amt,  amt,amt,-amt, amt,-amt,-amt, 0,0,-1);
+		mpb.setUVRange(atlas.findRegion("die1"));
+		mpb.rect(-amt,amt,amt, -amt,-amt,amt,  amt,-amt,amt, amt,amt,amt, 0,0,1);
+		mpb.setUVRange(atlas.findRegion("die2"));
+		mpb.rect(-amt,-amt,amt, -amt,-amt,-amt,  amt,-amt,-amt, amt,-amt,amt, 0,-1,0);
+		mpb.setUVRange(atlas.findRegion("die3"));
+		mpb.rect(-amt,amt,-amt, -amt,amt,amt,  amt,amt,amt, amt,amt,-amt, 0,1,0);
+		mpb.setUVRange(atlas.findRegion("die4"));
+		mpb.rect(-amt,-amt,amt, -amt,amt,amt,  -amt,amt,-amt, -amt,-amt,-amt, -1,0,0);
+		mpb.setUVRange(atlas.findRegion("die5"));
+		mpb.rect(amt,-amt,-amt, amt,amt,-amt,  amt,amt,amt, amt,-amt,amt, 1,0,0);
 		mb.node().id = "ground";
 		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,
-				new Material(ColorAttribute.createDiffuse(Color.RED))).box(5f, 1f, 5f);
+				new Material(ColorAttribute.createDiffuse(Colours.red))).box(10f, 1f, 10f);
 		mb.node().id = "sphere";
 		mb.part("sphere", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,
-				new Material(ColorAttribute.createDiffuse(Color.GREEN))).sphere(1f, 1f, 1f, 10, 10);
+				new Material(ColorAttribute.createDiffuse(Colours.light))).sphere(1f, 1f, 1f, 10, 10);
 		mb.node().id = "box";
 		mb.part("box", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,
-				new Material(ColorAttribute.createDiffuse(Color.BLUE))).box(1f, 1f, 1f);
+				new Material(ColorAttribute.createDiffuse(Colours.light))).box(1f, 1f, 1f);
 		mb.node().id = "cone";
 		mb.part("cone", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,
-				new Material(ColorAttribute.createDiffuse(Color.YELLOW))).cone(1f, 2f, 1f, 10);
+				new Material(ColorAttribute.createDiffuse(Colours.dark))).cone(1f, 2f, 1f, 10);
 		mb.node().id = "capsule";
 		mb.part("capsule", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,
-				new Material(ColorAttribute.createDiffuse(Color.CYAN))).capsule(0.5f, 2f, 10);
+				new Material(ColorAttribute.createDiffuse(Colours.blue))).capsule(0.5f, 2f, 10);
 		mb.node().id = "cylinder";
 		mb.part("cylinder", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,
-				new Material(ColorAttribute.createDiffuse(Color.MAGENTA))).cylinder(1f, 2f, 1f, 10);
+				new Material(ColorAttribute.createDiffuse(Colours.blue))).cylinder(1f, 2f, 1f, 10);
 		model = mb.end();
 
 		float mass = 1;
@@ -192,9 +209,11 @@ public class Main extends ApplicationAdapter {
 		contactListener = new MyContactListener();
 
 		instances = new Array<>();
-		ground = new CollisionObject(model, "ground", new btBoxShape(new Vector3(2.5f, 0.5f, 2.5f)), mass);
+		ground = new CollisionObject(model, "ground", new btBoxShape(new Vector3(5f, 0.5f, 5f)), 0);
 		instances.add(ground);
 		dynamicsWorld.addRigidBody(ground.body, GROUND_FLAG, ALL_FLAG);
+		
+		
 
 	}
 
@@ -222,6 +241,7 @@ public class Main extends ApplicationAdapter {
 
 	public void spawn() {
 		int i = (int) (Math.random() * 5);
+		i=5;
 		float mass = 1;
 		CollisionObject co = null;
 		switch (i) {
@@ -238,18 +258,16 @@ public class Main extends ApplicationAdapter {
 			co = new CollisionObject(model, "cone", new btConeShape(0.5f, 2f), mass);
 			break;
 		case 4:
-			co = new CollisionObject(model, "capsule", new btCapsuleShape(.5f, 1f), mass);
-			break;
+			co = new CollisionObject(model, "capsule", new btCapsuleShape(.5f, 1f), mass); break;
+		case 5: co = new CollisionObject(model, "die",new btBoxShape(new Vector3(0.5f, 0.5f, 0.5f)), mass); 			break;
 		}
-		co.transform.setFromEulerAngles(MathUtils.random(360f), MathUtils.random(360f), MathUtils.random(360f));
-		co.transform.trn(MathUtils.random(-2.5f, 2.5f), 9f, MathUtils.random(-2.5f, 2.5f));
-		objects.add(co);
-		instances.add(co);
-		co.body.setUserValue(instances.size - 1);
-		co.body.setCollisionFlags(
-				co.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
-		dynamicsWorld.addRigidBody(co.body, OBJECT_FLAG, GROUND_FLAG);
-		co.body.setWorldTransform(co.transform);
+		 co.transform.setFromEulerAngles(MathUtils.random(360f), MathUtils.random(360f), MathUtils.random(360f));
+	        co.transform.trn(MathUtils.random(-2.5f, 2.5f), 9f, MathUtils.random(-2.5f, 2.5f));
+	        co.body.setWorldTransform(co.transform);
+	        co.body.setUserValue(instances.size);
+	        co.body.setCollisionFlags(co.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
+	        instances.add(co);
+	        dynamicsWorld.addRigidBody(co.body, OBJECT_FLAG, ALL_FLAG);
 	}
 
 	private MainState state = MainState.Normal;
@@ -316,12 +334,7 @@ public class Main extends ApplicationAdapter {
 		// batch.setProjectionMatrix(orthoCam.combined);
 		// Draw.fillRectangle(batch, 0, 0, Main.width, Main.height);
 		// batch.end();
-		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
-		stage.draw();
-
-		modelBatch.begin(perspectiveCam);
-		modelBatch.render(instances, environment);
-		modelBatch.end();
+		
 
 		if (Main.debug) {
 			batch.begin();
@@ -335,6 +348,13 @@ public class Main extends ApplicationAdapter {
 		buffer.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		Draw.drawRotatedScaledFlipped(batch, buffer.getColorBufferTexture(), 0, 0, 1, 1, 0, false, true);
 		batch.end();
+		
+		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
+		stage.draw();
+
+		modelBatch.begin(perspectiveCam);
+		modelBatch.render(instances, environment);
+		modelBatch.end();
 
 	}
 
@@ -344,13 +364,13 @@ public class Main extends ApplicationAdapter {
 	}
 
 	public void update(float delta) {
-
-		if (Math.random() > .96){
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
 			spawn();
 		}
 		float physicsDelta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 		dynamicsWorld.stepSimulation(physicsDelta, 5, 1f / 60f);
-		for (CollisionObject co : objects) {
+		
+		for (CollisionObject co : instances) {
 			co.update();
 			// if (co.moving) {
 			// co.transform.trn(0f, -delta*10, 0f);

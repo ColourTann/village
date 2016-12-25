@@ -52,6 +52,7 @@ public class GameScreen extends Screen{
 
 	@Override
 	public void keyPress(int keycode) {
+		Main.self.spawn();
 	}
 
 	

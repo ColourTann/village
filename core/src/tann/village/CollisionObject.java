@@ -14,12 +14,11 @@ public class CollisionObject extends ModelInstance implements Disposable{
 	private Vector3 localInertia = new Vector3();
 	public CollisionObject(Model model, String node, btCollisionShape shape, float mass) {
         super(model, node);
-        mass = 100f;
         if (mass > 0f)
             shape.calculateLocalInertia(mass, localInertia );
         else
         	localInertia.set(0, 0, 0);
-        body = new btRigidBody(new btRigidBodyConstructionInfo(1, null, shape, localInertia));
+        body = new btRigidBody(new btRigidBodyConstructionInfo(mass, null, shape, localInertia));
         body.setCollisionShape(shape);
         body.setWorldTransform(transform);
     }

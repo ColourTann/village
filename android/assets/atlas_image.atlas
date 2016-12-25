@@ -1,0 +1,188 @@
+
+atlas_image.png
+size: 256,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+cat
+  rotate: false
+  xy: 2, 12
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+corner
+  rotate: false
+  xy: 81, 16
+  size: 4, 4
+  orig: 4, 4
+  offset: 0, 0
+  index: -1
+edge
+  rotate: false
+  xy: 84, 24
+  size: 1, 4
+  orig: 1, 4
+  offset: 0, 0
+  index: -1
+font/font
+  rotate: false
+  xy: 110, 45
+  size: 120, 17
+  orig: 120, 17
+  offset: 0, 0
+  index: -1
+grass
+  rotate: false
+  xy: 88, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+happy
+  rotate: false
+  xy: 232, 42
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+lasers
+  rotate: false
+  xy: 110, 23
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+pixel
+  rotate: false
+  xy: 61, 9
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+rat/jump0
+  rotate: false
+  xy: 132, 31
+  size: 43, 12
+  orig: 43, 12
+  offset: 0, 0
+  index: -1
+rat/jump1
+  rotate: false
+  xy: 177, 31
+  size: 43, 12
+  orig: 43, 12
+  offset: 0, 0
+  index: -1
+rat/rat1
+  rotate: false
+  xy: 132, 17
+  size: 43, 12
+  orig: 43, 12
+  offset: 0, 0
+  index: -1
+rat/rat2
+  rotate: false
+  xy: 87, 6
+  size: 43, 12
+  orig: 43, 12
+  offset: 0, 0
+  index: -1
+rat/rat3
+  rotate: false
+  xy: 177, 17
+  size: 43, 12
+  orig: 43, 12
+  offset: 0, 0
+  index: -1
+rat/rat4
+  rotate: false
+  xy: 132, 3
+  size: 43, 12
+  orig: 43, 12
+  offset: 0, 0
+  index: -1
+rat/rat5
+  rotate: false
+  xy: 177, 3
+  size: 43, 12
+  orig: 43, 12
+  offset: 0, 0
+  index: -1
+shiptiny
+  rotate: false
+  xy: 54, 30
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+space/asteroid
+  rotate: false
+  xy: 2, 2
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+space/ship
+  rotate: false
+  xy: 12, 2
+  size: 7, 8
+  orig: 7, 8
+  offset: 0, 0
+  index: -1
+space/station
+  rotate: false
+  xy: 54, 12
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+spiral
+  rotate: false
+  xy: 88, 20
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+turtle/duck
+  rotate: false
+  xy: 21, 3
+  size: 18, 7
+  orig: 18, 7
+  offset: 0, 0
+  index: -1
+turtle/jump
+  rotate: false
+  xy: 41, 3
+  size: 18, 7
+  orig: 18, 7
+  offset: 0, 0
+  index: -1
+turtle/mound
+  rotate: false
+  xy: 72, 22
+  size: 10, 6
+  orig: 10, 6
+  offset: 0, 0
+  index: -1
+turtle/spike
+  rotate: false
+  xy: 72, 6
+  size: 7, 14
+  orig: 7, 14
+  offset: 0, 0
+  index: -1
+turtle/walk0
+  rotate: false
+  xy: 222, 33
+  size: 18, 7
+  orig: 18, 7
+  offset: 0, 0
+  index: -1
+turtle/walk1
+  rotate: false
+  xy: 222, 24
+  size: 18, 7
+  orig: 18, 7
+  offset: 0, 0
+  index: -1

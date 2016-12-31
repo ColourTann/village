@@ -5,6 +5,9 @@
 *.ear
 hs_err_pid*
 
+*.atlas
+*atlas_image*
+
 ## Robovm
 robovm-build/
 

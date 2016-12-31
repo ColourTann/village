@@ -2,18 +2,17 @@ package tann.village.util;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
 
-public class TextWisp extends Particle{
+public class TextWisp extends Actor{
 	public String text;
-	Color c = Colours.light;
-	public int width;
-	public TextWisp(String text, int x, int y) {
-		this.x=x;
-		this.y=y;
+	Color c = Colours.green_dark;
+	final float initialDuration = 1.3f;
+	float duration = initialDuration;
+	public TextWisp(String text, float x, float y) {
+		setPosition(x, y);
 		this.text=text;
-		setupLife(1);
-		width = TannFont.font.getWidth(text);		
 	}
 	boolean alphaMode=true;
 	public void disableAlpha(){
@@ -24,26 +23,20 @@ public class TextWisp extends Particle{
 		this.c=c;
 	}
 	
-	static float speed=10;
+	static float speed=16;
 	@Override
-	public void tick(float delta) {
-		y+=delta*speed;
-	}
-	
-	public void refresh(){
-		setupLife(.5f);
-	}
-	
-	public void setText(String text){
-		this.text=text;
-		refresh();
+	public void act(float delta) {
+		setY(getY()+delta*speed);
+		duration-=delta;
+		if(duration<=0){
+			getParent().removeActor(this);
+		}
 	}
 
 	@Override
-	public void draw(Batch batch) {
-		batch.setColor(c.r, c.g, c.b, alphaMode?ratio:1);
-		TannFont.font.draw(batch, text, (int)x, (int)y, Align.center);
+	public void draw(Batch batch, float parentAlpha) {
+		Fonts.font.setColor(c.r, c.g, c.b, duration/initialDuration);
+		Fonts.font.draw(batch, text, getX(), getY(), 0, Align.center, false);
 	}
-
 	
 }

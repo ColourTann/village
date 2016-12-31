@@ -112,7 +112,6 @@ public class Sounds {
 			}
 			float ratio = ticks/duration;
 			float newVolume =startVolume+(targetVolume-startVolume)*ratio;
-			System.out.println(newVolume);
 			music.setVolume(newVolume);
 		}
 	}

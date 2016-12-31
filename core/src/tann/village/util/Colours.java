@@ -8,22 +8,47 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Colours {
 
-	public static final Color dark;	
+	
+	
 	public static final Color light;
-	public static final Color blue;
+	public static final Color sand;
+	public static final Color dark;
+	public static final Color fate_darkest;
+	public static final Color fate_light;
+	public static final Color fate_lightest;
+	public static final Color blue_light;
+	public static final Color blue_dark;
+	public static final Color green_light;
+	public static final Color green_dark;
+	public static final Color grey;
+	public static final Color brown_light;	
+	public static final Color brown_dark;
 	public static final Color red;
 	
-	public static final Color white = new Color(1,1,1,1);
+	
+	public static final Color z_white = new Color(1,1,1,1);
+	public static final Color transparent = new Color(1,1,0,0);
 	private static Pixmap p;
 	static{
 		Texture t = new Texture(Gdx.files.internal("palette.png"));
 		p = Draw.getPixmap(t);
 		
 		light = palette(0,0);
-		dark = palette(1,0);
-		blue = palette(2,0);
-		red = palette(3,0);
+		sand = palette(1,0);
+		dark = palette(2,0);
+		fate_darkest = palette(3,0);
+		fate_light = palette(4,0);
+		fate_lightest = palette(5,0);
+		blue_light = palette(6,0);
+		blue_dark = palette(7,0);
+		green_light = palette(8,0);
+		green_dark = palette(9,0);
+		grey = palette(10,0);
+		brown_light = palette(11,0);
+		brown_dark = palette(12,0);
+		red = palette(13,0);
 	}
+	
 	
 	public static Color palette(int x, int y){
 		return new Color(p.getPixel(x, y));

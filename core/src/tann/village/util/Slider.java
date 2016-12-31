@@ -59,7 +59,7 @@ public class Slider extends Actor{
 	public void act(float delta) {
 		super.act(delta);
 		if(dragging){
-			value=((Gdx.input.getX()/Main.scale)-getX()-getParent().getX()-gap)/(getWidth()-gap*2);
+			value=((Gdx.input.getX())-getX()-getParent().getX()-gap)/(getWidth()-gap*2);
 			value=Math.max(0, Math.min(1, value));
 			if(slideAction!=null)slideAction.run();
 		}
@@ -79,7 +79,7 @@ public class Slider extends Actor{
 		batch.setColor(backGround);
 		Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), gap);
 		Draw.fillRectangle(batch, getX()+gap, getY()+gap, (getWidth()-gap*2)*value, getHeight()-gap*2);
-		TannFont.font.draw(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2), Align.center);
+//		Fonts.font.draw(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2), Align.center);
 		batch.flush();
 		clip.x=getParent().getX()+getX();
 		clip.y=getParent().getY()+getY();
@@ -88,7 +88,7 @@ public class Slider extends Actor{
 		boolean added =(ScissorStack.pushScissors(clip));
 		if(added){
 			batch.setColor(foreGround);
-			TannFont.font.draw(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2), Align.center);
+//			Fonts.font.draw(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2), Align.center);
 			batch.flush();
 			ScissorStack.popScissors();
 		}

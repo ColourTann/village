@@ -9,6 +9,7 @@ import tann.village.Main;
 public class VillageDesktop {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.samples=3;
 		config.resizable=false;
 		config.vSyncEnabled=true;
 		config.foregroundFPS=60;

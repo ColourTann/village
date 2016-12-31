@@ -4,6 +4,7 @@ package tann.village.util;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -11,8 +12,8 @@ import tann.village.Main;
 
 public class Draw {
 	
+	public static Draw draww = new Draw();
 	//Texture stuff//
-	
 	//noncentered stuff//
 
 	public static void draw(Batch batch, Texture t, float x, float y) {
@@ -178,6 +179,11 @@ public class Draw {
 		return getPixmap(t.getTexture());
 //		t.getTexture().getTextureData().prepare();
 //		return t.getTexture().getTextureData().consumePixmap();
+	}
+
+	public static void drawSize(Batch batch, TextureRegion textureRegion, float x, float y, float width, float height) {
+		batch.draw(textureRegion, x, y, 0, 0, textureRegion.getRegionWidth(), textureRegion.getRegionHeight(), width/textureRegion.getRegionWidth(), height/textureRegion.getRegionHeight(), 0);
+		
 	}
 
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 
 import tann.village.Main;
 import tann.village.Main.MainState;
+import tann.village.bullet.BulletStuff;
 
 public abstract class Screen extends Group{
 	//screenshake stuff//
@@ -24,6 +25,9 @@ public abstract class Screen extends Group{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		preDraw(batch);
+		batch.end();
+		BulletStuff.render();
+		batch.begin();
 		super.draw(batch, parentAlpha);
 		drawParticles(batch);
 		postDraw(batch);

@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
 import tann.village.bullet.BulletStuff;
+import tann.village.screens.gameScreen.Effect.EffectSource;
 import tann.village.screens.gameScreen.Effect.EffectType;
 import tann.village.screens.gameScreen.event.Event;
 import tann.village.screens.gameScreen.event.EventPanel;
@@ -159,7 +160,7 @@ public class GameScreen extends Screen{
 		
 		refreshPanels();
 		
-		addFood(-5, EffectType.Upkeep_Food);
+		addEffect(new Effect(EffectType.Food, -5, EffectSource.Upkeep));
 		for(Die d:BulletStuff.dice){
 			d.activate();
 		}
@@ -214,16 +215,10 @@ public class GameScreen extends Screen{
 	}
 	
 
-	public void addFood(int value, EffectType type) {
-		inventoryPanel.food.changeValue(value);
-		reviewPanel.addItem(type, value);
+	public void addEffect(Effect effect){
+		reviewPanel.addItem(effect);
+		inventoryPanel.activate(effect);
 	}
-
-	public void addWood(int value, EffectType type) {
-		inventoryPanel.wood.changeValue(value);
-		reviewPanel.addItem(type, value);
-	}
-
 	
 	
 	private Button proceedButton = new Button(200, 60, 8, Main.atlas.findRegion("arrow"), Colours.dark, new Runnable() {
@@ -284,17 +279,11 @@ public class GameScreen extends Screen{
 	}
 
 	public void refreshPanels() {
-		inventoryPanel.food.clearWisp();
-		inventoryPanel.wood.clearWisp();
-		
-		
-		
-		
+		inventoryPanel.clearWisps();
 	}
 
 	public void showWisps() {
-		inventoryPanel.food.wisp();
-		inventoryPanel.wood.wisp();
+		inventoryPanel.showWisps();
 	}
 	
 }

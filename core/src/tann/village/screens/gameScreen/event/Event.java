@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.screens.gameScreen.Effect;
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.Effect.EffectSource;
 import tann.village.screens.gameScreen.Effect.EffectType;
 
 public class Event {
@@ -28,23 +29,23 @@ public class Event {
 	public static void setup(){
 		t="Spawning";
 		d="Hundreds of small fish have come near the shore, it's easy to grab a bunch of them!";
-		e=new Effect(EffectType.Event_Food, 3);
+		e=new Effect(EffectType.Food, 3, EffectSource.Event);
 		make();
 		
 		t="Driftwood";
 		d="Looks like it was part of a boat. It's damp but usable.";
-		e=new Effect(EffectType.Event_Wood, 2);
+		e=new Effect(EffectType.Wood, 2, EffectSource.Event);
 		make();
 		
 		t="Flood";
 		d="The weather has taken a turn and washed away your supplies.";
-		e=new Effect(EffectType.Event_Food, -2);
-		e1=new Effect(EffectType.Event_Wood, -2);
+		e=new Effect(EffectType.Food, -2, EffectSource.Event);
+		e1=new Effect(EffectType.Wood, -2, EffectSource.Event);
 		make();
 		
 		t="Hot weather";
 		d="The heat is getting you down, your people need shelter!";
-		e=new Effect(EffectType.Morale_Event, -2);
+		e=new Effect(EffectType.Morale, -2, EffectSource.Event);
 		make();
 	}
 	

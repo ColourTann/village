@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
-import tann.village.screens.gameScreen.Effect.EffectType;
+import tann.village.screens.gameScreen.Effect;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
@@ -28,14 +28,15 @@ public class ReviewPanel extends Group{
 		
 	}
 	
-	public void addItem(EffectType type, int value){
+	public void addItem(Effect effect){
+		System.out.println(effect);
 		for(ReviewItem i:items){
-			if(i.type==type){
-				i.changeValue(value);
+			if(i.effect.type==effect.type && i.effect.source==effect.source){
+				i.changeValue(effect.value);
 				return;
 			}
 		}
-		items.add(new ReviewItem(type, value));
+		items.add(new ReviewItem(effect));
 	}
 	
 	public void build(){
@@ -43,7 +44,6 @@ public class ReviewPanel extends Group{
 		for(int i=0;i<items.size;i++){
 			ReviewItem item = items.get(i);
 			addActor(item);
-			
 			int weird = items.size%3;
 			int remaining= items.size-i-1;
 			int mod = i%items_per_row;

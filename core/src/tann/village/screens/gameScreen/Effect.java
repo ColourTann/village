@@ -3,52 +3,70 @@ package tann.village.screens.gameScreen;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
+import tann.village.screens.gameScreen.villager.Die;
 
 public class Effect {
 
 	public enum EffectType{
-		Brain(Images.side_brain, "dice"), 
-		Dice_Food(Images.food, "dice"), Upkeep_Food(Images.food, "upkeep"), Event_Food(Images.food, "event"), 
-		Dice_Wood(Images.wood, "dice"), Upkeep_Wood(Images.wood, "upkeep"), Event_Wood(Images.wood, "event"),
-		Skull(Images.side_skull, "dice"), 
-		Morale_Event(Images.morale, "event");
+		Brain(Images.side_brain), 
+		Food(Images.food), 
+		Wood(Images.wood),
+		Skull(Images.side_skull),
+		LevelUp(Images.level_up),
+		Morale(Images.morale), 
+		Fate(Images.fate);
 
-		public String text;
 		public TextureRegion region;
 		
-		EffectType(TextureRegion region, String text){
+		EffectType(TextureRegion region){
 			this.region=region;
-			this.text=text;
 		}
+	}
 	
+	public enum EffectSource{
+		Dice, Upkeep, Event
 	}
 	
 	
 	public EffectType type;
+	public EffectSource source;
 	public int value;
-	public Effect(EffectType type, int value){
+	public Die sourceDie;
+	public Effect(EffectType type, int value, EffectSource source, Die sourceDie){
 		this.type=type;
 		this.value=value;
+		this.source=source;
+		this.sourceDie = sourceDie;
 	}
 	
-	public Effect(EffectType type){
+	public Effect(EffectType type, int value, EffectSource source){
+		this.type=type;
+		this.value=value;
+		this.source=source;
+	}
+	
+	public Effect(EffectType type, EffectSource source){
 		this.type=type;
 		this.value=1;
+		this.source=source;
 	}
 	
 	public void activate(){
 		switch(type){
-		case Dice_Food:
-		case Upkeep_Food:
-		case Event_Food:
-			GameScreen.get().addFood(value, type);
-			break;
-		case Dice_Wood:
-		case Upkeep_Wood:
-		case Event_Wood:
-			GameScreen.get().addWood(value, type);
+		case Brain:
+			sourceDie.villager.gainXP(value);
 			break;
 		}
+		GameScreen.get().addEffect(this);
+	}
+	
+	public String toString(){
+		return type +": "+value+" from "+source; 
+	}
+	
+	public Effect copy(){
+		Effect result = new Effect(type, value, source);
+		return result;
 	}
 	
 }

@@ -40,12 +40,28 @@ public class Die {
 			addSide(Side.skull);
 			break;
 		case Fisher:
-			addSide(Side.food1);
 			addSide(Side.food2);
+			addSide(Side.food2);
+			addSide(Side.food3);
 			addSide(Side.food3);
 			addSide(Side.wood1);
 			addSide(Side.brain);
-			addSide(Side.skull);
+			break;
+		case Leader:
+			addSide(Side.morale1);
+			addSide(Side.morale2);
+			addSide(Side.morale2);
+			addSide(Side.food1);
+			addSide(Side.wood2);
+			addSide(Side.brain);
+			break;
+		case FateWeaver:
+			addSide(Side.food2);
+			addSide(Side.food1);
+			addSide(Side.morale1);
+			addSide(Side.fate2);
+			addSide(Side.fate2);
+			addSide(Side.fate3);
 			break;
 		}
 		construct();
@@ -103,7 +119,9 @@ public class Die {
 	public Array<Side> sides = new Array<>();
 	
 	public void addSide(Side side){
-		sides.add(side);
+		Side copy = side.copy();
+		sides.add(copy);
+		copy.effect.sourceDie=this;
 	}
 	
 	public void construct(){

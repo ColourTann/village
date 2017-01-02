@@ -38,7 +38,7 @@ public class EventPanel extends Group{
 		
 		
 		for(int i=0;i<e.effects.size;i++){
-			ReviewItem item = new ReviewItem(e.effects.get(i).type, e.effects.get(i).value);
+			ReviewItem item = new ReviewItem(e.effects.get(i));
 			addActor(item);
 			
 			int weird = e.effects.size%items_per_row;

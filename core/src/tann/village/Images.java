@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Images {
 	public static final TextureRegion food = Main.atlas.findRegion("resource/food");
+	public static final TextureRegion brain = Main.atlas.findRegion("resource/brain");
 	public static final TextureRegion wood = Main.atlas.findRegion("resource/wood");
 	public static final TextureRegion morale = Main.atlas.findRegion("resource/morale");
 	public static final TextureRegion fate = Main.atlas.findRegion("resource/fate");

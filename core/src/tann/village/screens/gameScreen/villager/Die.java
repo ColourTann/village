@@ -28,8 +28,20 @@ public class Die {
 	
 	private static HashMap<Long, Die> identityMap = new HashMap<>();
 	public Villager villager;
-	public Die(Villager villager, VillagerType type) {
+	public VillagerType type;
+	public Die(Villager villager) {
 		this.villager=villager;
+		setup(villager.type);
+		construct();
+	}
+	
+	public Die(VillagerType type){
+		setup(type);
+		this.type=type;
+		construct();
+	}
+	
+	public void setup(VillagerType type){
 		switch(type){
 		case Villager:
 			addSide(Side.food1);
@@ -64,7 +76,6 @@ public class Die {
 			addSide(Side.fate3);
 			break;
 		}
-		construct();
 	}
 
 	public static Die getDie(long userValue){
@@ -188,5 +199,9 @@ public class Die {
 	public void removeFromScreen() {
 		BulletStuff.instances.removeValue(physical, true);
 		BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
+	}
+
+	public void destroy() {
+		removeFromScreen();
 	}
 }

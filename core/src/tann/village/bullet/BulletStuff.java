@@ -41,8 +41,8 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.Images;
 import tann.village.Main;
-import tann.village.screens.gameScreen.Effect;
-import tann.village.screens.gameScreen.Effect.EffectType;
+import tann.village.screens.gameScreen.effect.Effect;
+import tann.village.screens.gameScreen.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.villager.Die;
 import tann.village.screens.gameScreen.villager.Side;
 import tann.village.screens.gameScreen.villager.Villager;

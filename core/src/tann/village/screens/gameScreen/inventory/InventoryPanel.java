@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.Images;
 import tann.village.Main;
-import tann.village.screens.gameScreen.Effect;
+import tann.village.screens.gameScreen.effect.Effect;
 
 public class InventoryPanel extends Group{
 	static final int GAP = 20;

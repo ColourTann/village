@@ -3,9 +3,9 @@ package tann.village.screens.gameScreen.villager;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
-import tann.village.screens.gameScreen.Effect;
-import tann.village.screens.gameScreen.Effect.EffectSource;
-import tann.village.screens.gameScreen.Effect.EffectType;
+import tann.village.screens.gameScreen.effect.Effect;
+import tann.village.screens.gameScreen.effect.Effect.EffectSource;
+import tann.village.screens.gameScreen.effect.Effect.EffectType;
 
 public class Side {
 

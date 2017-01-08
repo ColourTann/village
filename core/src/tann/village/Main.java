@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import tann.village.bullet.BulletStuff;
 import tann.village.bullet.CollisionObject;
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.building.Building;
 import tann.village.screens.gameScreen.event.Event;
 import tann.village.screens.gameScreen.villager.Die;
 import tann.village.util.Colours;
@@ -56,6 +57,7 @@ public class Main extends ApplicationAdapter {
 		Fonts.setup();
 		Sounds.setup();
 		Event.setup();
+		Building.init();
 		stage = new Stage(new FitViewport(Main.width, Main.height));
 		orthoCam = (OrthographicCamera) stage.getCamera();
 		batch = (SpriteBatch) stage.getBatch();

@@ -7,18 +7,22 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
 import tann.village.bullet.BulletStuff;
-import tann.village.screens.gameScreen.Effect.EffectSource;
-import tann.village.screens.gameScreen.Effect.EffectType;
+import tann.village.screens.gameScreen.effect.Effect;
+import tann.village.screens.gameScreen.effect.EffectPanel;
+import tann.village.screens.gameScreen.effect.Effect.EffectSource;
+import tann.village.screens.gameScreen.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.event.Event;
 import tann.village.screens.gameScreen.event.EventPanel;
 import tann.village.screens.gameScreen.inventory.ButtonPanel;
 import tann.village.screens.gameScreen.inventory.InventoryPanel;
 import tann.village.screens.gameScreen.review.ReviewPanel;
 import tann.village.screens.gameScreen.villager.Die;
+import tann.village.screens.gameScreen.villager.LevelupPanel;
 import tann.village.screens.gameScreen.villager.Villager;
 import tann.village.screens.gameScreen.villager.VillagerPanel;
 import tann.village.util.Button;
@@ -33,7 +37,7 @@ public class GameScreen extends Screen{
 	public InventoryPanel inventoryPanel;
 	public ButtonPanel rollButtonPanel;
 	
-	public enum State{Event, Rolling, Review}
+	public enum State{Event, Rolling, Review, Levelling}
 	
 	public State state;
 	
@@ -64,6 +68,8 @@ public class GameScreen extends Screen{
 		}
 		refreshBulletStuff();
 		setState(State.Rolling);
+		
+		
 	}
 
 
@@ -113,6 +119,8 @@ public class GameScreen extends Screen{
 		}
 	}
 
+	public Array<Villager> villagersToLevelUp = new Array<>();
+	
 	public void proceed() {
 		System.out.println("proc: "+state);
 		switch(state){
@@ -124,12 +132,25 @@ public class GameScreen extends Screen{
 			setState(State.Review);
 			break;
 		case Review:
-			setState(State.Event);
+			if(villagersToLevelUp.size>0){
+				levelup(villagersToLevelUp.removeIndex(0));
+				break;
+			}
+			else{
+				setState(State.Event);
+			}
 			break;
 		}
 	}
 	
+	private void levelup(Villager v){
+		LevelupPanel lup = new LevelupPanel(v);
+		addActor(lup);
+		lup.setPosition(getWidth()/2, getHeight()/2, Align.center);
+	}
+	
 	private void setState(State state) {
+		System.out.println("set "+state);
 		this.state=state;
 		switch(state){
 		case Rolling:
@@ -173,7 +194,6 @@ public class GameScreen extends Screen{
 			d.removeFromScreen();
 		}
 		BulletStuff.clearDice();
-		showReview();
 		
 	}
 	
@@ -193,6 +213,7 @@ public class GameScreen extends Screen{
 	}
 
 	private void startRolling() {
+		BulletStuff.refresh(villagers);
 		if(eventPanel!=null) eventPanel.remove();
 		removeProceedButton();
 		rollButtonPanel.setVisible(true);
@@ -284,6 +305,10 @@ public class GameScreen extends Screen{
 
 	public void showWisps() {
 		inventoryPanel.showWisps();
+	}
+
+	public void finishedLevellingUp() {
+		proceed();
 	}
 	
 }

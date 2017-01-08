@@ -14,7 +14,7 @@ public class TextBox extends Actor{
 	int border;
 	int align;
 	Color textCol = Colours.light;
-	public TextBox(String text, BitmapFont font, int border, int maxWidth, int align){
+	public TextBox(String text, BitmapFont font, int border, float maxWidth, int align){
 		this.align=align;
 		this.text=text;
 		this.font=font;

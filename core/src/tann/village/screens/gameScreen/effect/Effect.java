@@ -1,14 +1,15 @@
-package tann.village.screens.gameScreen;
+package tann.village.screens.gameScreen.effect;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.villager.Die;
 
 public class Effect {
 
 	public enum EffectType{
-		Brain(Images.side_brain), 
+		Brain(Images.brain), 
 		Food(Images.food), 
 		Wood(Images.wood),
 		Skull(Images.side_skull),
@@ -24,13 +25,13 @@ public class Effect {
 	}
 	
 	public enum EffectSource{
-		Dice, Upkeep, Event
+		Dice, Upkeep, Event, Building
 	}
 	
 	
-	public EffectType type;
-	public EffectSource source;
-	public int value;
+	public final EffectType type;
+	public final EffectSource source;
+	public final int value;
 	public Die sourceDie;
 	public Effect(EffectType type, int value, EffectSource source, Die sourceDie){
 		this.type=type;
@@ -47,7 +48,7 @@ public class Effect {
 	
 	public Effect(EffectType type, EffectSource source){
 		this.type=type;
-		this.value=1;
+		this.value=0;
 		this.source=source;
 	}
 	

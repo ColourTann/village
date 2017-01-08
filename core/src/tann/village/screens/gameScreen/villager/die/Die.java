@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.villager;
+package tann.village.screens.gameScreen.villager.die;
 
 import java.util.HashMap;
 
@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.bullet.BulletStuff;
 import tann.village.bullet.CollisionObject;
+import tann.village.screens.gameScreen.villager.Villager;
 import tann.village.screens.gameScreen.villager.Villager.VillagerType;
 import tann.village.util.Colours;
 import tann.village.util.Particle;

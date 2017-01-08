@@ -1,5 +1,7 @@
 package tann.village.util;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -8,6 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
 
 public class TextBox extends Actor{
+	
+	public static HashMap<BitmapFont, Float> fontHeights;
+	static{
+		fontHeights = new HashMap<>();
+		for(BitmapFont font:new BitmapFont[]{Fonts.font, Fonts.fontBig, Fonts.fontSmall}){
+			TextBox tb = new TextBox("hi", font, 0, 500, Align.center);
+			fontHeights.put(font, tb.getHeight());
+		}
+	}
+	
+	
 	String text;
 	GlyphLayout layout = new GlyphLayout();
 	BitmapFont font;
@@ -15,6 +28,7 @@ public class TextBox extends Actor{
 	int align;
 	Color textCol = Colours.light;
 	public TextBox(String text, BitmapFont font, int border, float maxWidth, int align){
+		if(maxWidth==-1) maxWidth = 99999;
 		this.align=align;
 		this.text=text;
 		this.font=font;

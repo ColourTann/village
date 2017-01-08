@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.review;
+package tann.village.screens.gameScreen.panels.review;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;

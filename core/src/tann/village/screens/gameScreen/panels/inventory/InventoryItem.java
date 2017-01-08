@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.inventory;
+package tann.village.screens.gameScreen.panels.inventory;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
+import tann.village.util.NumberPanel;
 
 public class InventoryItem extends Group{
 	

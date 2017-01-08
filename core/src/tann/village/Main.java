@@ -24,7 +24,7 @@ import tann.village.bullet.CollisionObject;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.building.Building;
 import tann.village.screens.gameScreen.event.Event;
-import tann.village.screens.gameScreen.villager.Die;
+import tann.village.screens.gameScreen.villager.die.Die;
 import tann.village.util.Colours;
 import tann.village.util.Fonts;
 import tann.village.util.Screen;

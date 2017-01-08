@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.inventory;
+package tann.village.util;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -6,10 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.util.Colours;
-import tann.village.util.Draw;
-import tann.village.util.Fonts;
-import tann.village.util.TextWisp;
 
 public class NumberPanel extends Group{
 	static final int size = 40;

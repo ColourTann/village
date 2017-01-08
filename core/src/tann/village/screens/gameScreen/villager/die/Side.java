@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.villager;
+package tann.village.screens.gameScreen.villager.die;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 

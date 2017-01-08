@@ -18,13 +18,15 @@ import tann.village.screens.gameScreen.effect.Effect.EffectSource;
 import tann.village.screens.gameScreen.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.event.Event;
 import tann.village.screens.gameScreen.event.EventPanel;
-import tann.village.screens.gameScreen.inventory.ButtonPanel;
-import tann.village.screens.gameScreen.inventory.InventoryPanel;
-import tann.village.screens.gameScreen.review.ReviewPanel;
-import tann.village.screens.gameScreen.villager.Die;
+import tann.village.screens.gameScreen.panels.construction.ConstructionPanel;
+import tann.village.screens.gameScreen.panels.inventory.InventoryPanel;
+import tann.village.screens.gameScreen.panels.review.ReviewPanel;
+import tann.village.screens.gameScreen.panels.roll.RollPanel;
+import tann.village.screens.gameScreen.panels.stats.StatsPanel;
 import tann.village.screens.gameScreen.villager.LevelupPanel;
 import tann.village.screens.gameScreen.villager.Villager;
 import tann.village.screens.gameScreen.villager.VillagerPanel;
+import tann.village.screens.gameScreen.villager.die.Die;
 import tann.village.util.Button;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
@@ -35,8 +37,8 @@ public class GameScreen extends Screen{
 
 	private static GameScreen self;
 	public InventoryPanel inventoryPanel;
-	public ButtonPanel rollButtonPanel;
-	
+	public RollPanel rollButtonPanel;
+	public StatsPanel statsPanel;
 	public enum State{Event, Rolling, Review, Levelling}
 	
 	public State state;
@@ -61,8 +63,10 @@ public class GameScreen extends Screen{
 			}
 		});
 		addActor(inventoryPanel = new InventoryPanel());
-		addActor(rollButtonPanel = new ButtonPanel());
-		rollButtonPanel.setPosition(Main.width-rollButtonPanel.getWidth(), Main.height/2-rollButtonPanel.getHeight()/2);
+		addActor(rollButtonPanel = new RollPanel());
+		addActor(statsPanel = new StatsPanel());
+		rollButtonPanel.setPosition(Main.width/2-rollButtonPanel.getWidth()/2, 0);
+		statsPanel.setPosition(Main.width-statsPanel.getWidth(), Main.height/2-statsPanel.getHeight()/2);
 		for(int i=0;i<5;i++){
 			villagers.add(new Villager());
 		}
@@ -309,6 +313,13 @@ public class GameScreen extends Screen{
 
 	public void finishedLevellingUp() {
 		proceed();
+	}
+
+	ConstructionPanel constructionPanel = new ConstructionPanel();
+	
+	public void openBuildingPanel() {
+		constructionPanel.setPosition(Main.width/2-constructionPanel.getWidth()/2, Main.height/2-constructionPanel.getHeight()/2);
+		push(constructionPanel);
 	}
 	
 }

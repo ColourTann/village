@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.inventory;
+package tann.village.screens.gameScreen.panels.inventory;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -19,7 +19,7 @@ public class InventoryPanel extends Group{
 	
 	Array<InventoryItem> items = new Array<>();
 	
-	static final int ITEM_GAP=30;
+	public static final int ITEM_GAP=30;
 	
 	public InventoryPanel() {
 		setSize(150, InventoryItem.height*4+ITEM_GAP*3);

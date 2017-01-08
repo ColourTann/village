@@ -4,9 +4,9 @@ package tann.village.util;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import tann.village.Main;
 
@@ -184,6 +184,10 @@ public class Draw {
 	public static void drawSize(Batch batch, TextureRegion textureRegion, float x, float y, float width, float height) {
 		batch.draw(textureRegion, x, y, 0, 0, textureRegion.getRegionWidth(), textureRegion.getRegionHeight(), width/textureRegion.getRegionWidth(), height/textureRegion.getRegionHeight(), 0);
 		
+	}
+
+	public static void fillActor(Batch batch, Actor a) {
+		Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());
 	}
 
 }

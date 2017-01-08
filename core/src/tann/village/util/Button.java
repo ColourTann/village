@@ -11,9 +11,11 @@ public class Button extends Group{
 	private TextureRegion region;
 	private int gap;
 	private Color backgroundColour = Colours.dark;
-	public Button(float width, float height, int gap, final TextureRegion region, Color backgroundColour, final Runnable runnable) {
+	private float imageScale;
+	public Button(float width, float height, int gap, float imageScale, final TextureRegion region, Color backgroundColour, final Runnable runnable) {
 		this.region=region;
 		this.backgroundColour=backgroundColour;
+		this.imageScale=imageScale;
 		this.gap=gap;
 		addListener(new InputListener(){
 			@Override
@@ -25,6 +27,10 @@ public class Button extends Group{
 		setSize(width, height);
 	}
 	
+	public Button(float width, float height, int gap, final TextureRegion region, Color backgroundColour, final Runnable runnable) {
+		this(width, height, gap, 1, region, backgroundColour, runnable);
+	}
+	
 	public void setBackgroundColour(Color col){
 		backgroundColour=col;
 	}
@@ -33,9 +39,12 @@ public class Button extends Group{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(backgroundColour);
-		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
+		Draw.fillRectangle(batch, getX()+gap, getY()+gap, getWidth()-gap*2, getHeight()-gap*2);
 		batch.setColor(getColor());
-		Draw.drawSize(batch, region, getX()+gap, getY()+gap, getWidth()-gap*2, getHeight()-gap*2);
+		Draw.drawSize(batch, region, 
+				getX()+gap+(getWidth()-gap*2)*(1-imageScale)/2, 
+				getY()+gap+(getHeight()-gap*2)*(1-imageScale)/2, 
+				(getWidth()-gap*2)*imageScale, (getHeight()-gap*2)*imageScale);
 		super.draw(batch, parentAlpha);
 	}
 

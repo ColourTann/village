@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.villager.die.DiePanel;
 import tann.village.util.Button;
 import tann.village.util.Colours;
 import tann.village.util.Draw;

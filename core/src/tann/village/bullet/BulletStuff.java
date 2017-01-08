@@ -43,10 +43,10 @@ import tann.village.Images;
 import tann.village.Main;
 import tann.village.screens.gameScreen.effect.Effect;
 import tann.village.screens.gameScreen.effect.Effect.EffectType;
-import tann.village.screens.gameScreen.villager.Die;
-import tann.village.screens.gameScreen.villager.Side;
 import tann.village.screens.gameScreen.villager.Villager;
 import tann.village.screens.gameScreen.villager.Villager.VillagerType;
+import tann.village.screens.gameScreen.villager.die.Die;
+import tann.village.screens.gameScreen.villager.die.Side;
 import tann.village.util.Colours;
 
 public class BulletStuff {

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.villager.Die;
+import tann.village.screens.gameScreen.villager.die.Die;
 
 public class Effect {
 

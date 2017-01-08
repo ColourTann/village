@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Align;
 import tann.village.Main;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.villager.Villager.VillagerType;
+import tann.village.screens.gameScreen.villager.die.Die;
+import tann.village.screens.gameScreen.villager.die.DiePanel;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;

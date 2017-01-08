@@ -6,6 +6,7 @@ import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.effect.Effect;
 import tann.village.screens.gameScreen.effect.Effect.EffectSource;
 import tann.village.screens.gameScreen.effect.Effect.EffectType;
+import tann.village.screens.gameScreen.villager.die.Die;
 
 public class Villager {
 
@@ -15,7 +16,7 @@ public class Villager {
 	String lastName;
 	int xp;
 	int xpToLevelUp = 10;
-	VillagerType type;
+	public VillagerType type;
 	public Die die;
 	
 	
@@ -52,7 +53,6 @@ public class Villager {
 	public void gainXP(int amount){
 		this.xp+=amount;
 		while(xp>=xpToLevelUp){
-			System.out.println("levelup!");
 			xp-=xpToLevelUp;
 			GameScreen.get().addEffect(new Effect(EffectType.LevelUp, 1, EffectSource.Dice, die));
 			GameScreen.get().villagersToLevelUp.add(this);

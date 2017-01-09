@@ -19,7 +19,7 @@ public class Building {
 	Cost cost;
 	
 	Array<BuildingEffect> buildingEffects;
-	public TextureRegion image = Main.atlas.findRegion("resource/wood");
+	public TextureRegion image = Main.atlas.findRegion("building/hut");
 	
 	
 	
@@ -40,22 +40,28 @@ public class Building {
 	private static int w,f;
 	public static void init(){
 		EffectSource b = EffectSource.Building;
-		n="Dock";
-		d="A short pier leading into the ocean";
-		w=5;
-		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
-		make();
 		
-		n="Palm Grove";
-		d="A small grove for harvesting fast-growing trees";
-		w=9; f=2;
-		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b), new Effect(EffectType.Wood, 1, b)});
-		make();
+		
+//		n="Dock";
+//		d="A short pier leading into the ocean";
+//		w=5;
+//		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
+//		b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
+//		make();
+//		
+//		n="Palm Grove";
+//		d="A small grove for harvesting fast-growing trees";
+//		w=9; f=2;
+//		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
+//		b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, 1, b)});
+//		make();
 		
 		n="Shrimp Traps";
 		d="An effective food source! Requires maintenance though";
 		w=4;
-		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 3, b), new Effect(EffectType.Wood, -1, b)});
+		f=1;
+		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 3, b)});
+		b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, -1, b)});
 		make();
 		
 		//altar

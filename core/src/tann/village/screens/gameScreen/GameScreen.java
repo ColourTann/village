@@ -126,7 +126,6 @@ public class GameScreen extends Screen{
 	public Array<Villager> villagersToLevelUp = new Array<>();
 	
 	public void proceed() {
-		System.out.println("proc: "+state);
 		switch(state){
 		case Event:
 			setState(State.Rolling);
@@ -154,7 +153,6 @@ public class GameScreen extends Screen{
 	}
 	
 	private void setState(State state) {
-		System.out.println("set "+state);
 		this.state=state;
 		switch(state){
 		case Rolling:

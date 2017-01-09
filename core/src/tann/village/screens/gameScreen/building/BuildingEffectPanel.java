@@ -15,7 +15,7 @@ import tann.village.util.TextBox;
 
 public class BuildingEffectPanel extends Group{
 
-	public static final int GAP = 10;
+	public static final int GAP = 4;
 	public static final float WIDTH = (EffectPanel.WIDTH+GAP*2)*2;
 	public static final float HEIGHT = TextBox.fontHeights.get(Fonts.fontSmall) + EffectPanel.HEIGHT+GAP*3;
 	
@@ -49,19 +49,16 @@ public class BuildingEffectPanel extends Group{
 		for(int i=0;i<totalThisRow;i++){
 			Effect e =buildingEffect.effects[i];
 			EffectPanel item = new EffectPanel(e, GAP);
+			System.out.println(totalThisRow);
 			float minigap = (WIDTH-totalThisRow*item.getWidth())/(totalThisRow+1);
-			System.out.println(minigap);
 			float startX = minigap;
 			addActor(item);
-			item.setPosition(startX + (minigap+item.getWidth()*i), 0);
-			System.out.println(HEIGHT +":"+bonusType.getHeight()+item.getHeight());
+			item.setPosition(startX + (minigap+item.getWidth())*i, 0);
 		}
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.setColor(Colours.green_dark);
-		Draw.fillActor(batch,this);
 		super.draw(batch, parentAlpha);
 	}
 	

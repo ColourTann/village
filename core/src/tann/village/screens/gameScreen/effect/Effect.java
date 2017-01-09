@@ -69,5 +69,9 @@ public class Effect {
 		Effect result = new Effect(type, value, source);
 		return result;
 	}
+
+	public String getValueString() {
+		return (value>0?"+":"")+value;
+	}
 	
 }

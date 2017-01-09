@@ -15,10 +15,10 @@ import tann.village.util.Fonts;
 
 public class EffectPanel extends Group{
 	
-	final static float imageSize=.8f; 
+	final static float imageSize=.7f; 
 	public static final float heightMult = .6666667f;
-	public static final float WIDTH = 120;
-	public static final float HEIGHT = 70;
+	public static final float WIDTH = 110;
+	public static final float HEIGHT = 45;
 	HashMap<EffectType, Integer> effectAmounts = new HashMap<>();
 	public Effect effect;
 	public int value;

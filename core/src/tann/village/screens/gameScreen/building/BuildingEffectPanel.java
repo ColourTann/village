@@ -29,7 +29,7 @@ public class BuildingEffectPanel extends Group{
 		bonusType.setPosition(getWidth()/2-bonusType.getWidth()/2, getHeight()-bonusType.getHeight());
 		switch(buildingEffect.effectType){
 		case EveryTurn:
-		case Instant:
+		case Now:
 			addEffectPanels();
 			break;
 		case Passive:

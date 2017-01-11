@@ -42,27 +42,48 @@ public class Building {
 		EffectSource b = EffectSource.Building;
 		
 		
-//		n="Dock";
-//		d="A short pier leading into the ocean";
-//		w=5;
-//		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
-//		b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
-//		make();
-//		
-//		n="Palm Grove";
-//		d="A small grove for harvesting fast-growing trees";
-//		w=9; f=2;
-//		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
-//		b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, 1, b)});
-//		make();
+		n="Dock";
+		d="A short pier leading into the ocean";
+		w=5;
+		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
+		make();
+		
+		n="Bonfire";
+		d="blah";
+		w=4;
+		b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 4, b)});
+		make();
+		
+		n="Offering";
+		d="blah";
+		w=2;
+		f=8;
+		b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 2, b)});
+		b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Fate, 5, b)});
+		make();
+		
+		n="Palm Grove";
+		d="A small grove for harvesting fast-growing trees";
+		w=9; f=2;
+		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
+		b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, 1, b)});
+		make();
+		
+		n="Lean-to";
+		d="A small grove for harvesting fast-growing trees";
+		w=8;
+		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Morale, 1, b)});
+		make();
 		
 		n="Shrimp Traps";
 		d="An effective food source! Requires maintenance though";
-		w=4;
-		f=1;
+		w=6;
+		f=4;
 		b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 3, b)});
 		b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, -1, b)});
 		make();
+		
+		
 		
 		//altar
 		
@@ -97,6 +118,14 @@ public class Building {
 		n=null; d=null;
 		b1=null;
 		b2=null;
+	}
+
+
+
+
+	public static Building random() {
+		if(buildings.size==0) init();
+		return buildings.removeIndex((int)(Math.random()*buildings.size));
 	}
 	
 }

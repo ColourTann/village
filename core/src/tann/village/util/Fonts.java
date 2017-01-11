@@ -22,7 +22,7 @@ public class Fonts {
 	public static void setup(){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/bloodcrow.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 18;
+		parameter.size = 20;
 		fontSmall = generator.generateFont(parameter); // font size 12 pixels
 		fontSmall.setColor(Colours.light);
 		parameter.size=40;

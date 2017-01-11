@@ -21,15 +21,24 @@ import tann.village.util.TextBox;
 public class ConstructionPanel extends Group{
 
 	TextBox buildingsText;
+	final int GAP = 5;
 	public ConstructionPanel() {
 		buildingsText = new TextBox("Buildings", Fonts.font, 10, -1, Align.center);
 		addActor(buildingsText);
 		setSize(buildingsText.getWidth(), buildingsText.getHeight());
+		float panWidth=0, panHeight=0;
+		for(int y=0;y<2;y++){
+		for(int i=0;i<3;i++){
+			BuildingPanel bpan = new BuildingPanel(Building.random(), GAP);
+			addActor(bpan);
+			bpan.setPosition(bpan.getWidth()*i, y*bpan.getHeight());
+			panWidth=bpan.getWidth();
+			panHeight=bpan.getHeight();
+		}
+		}
+		setSize(panWidth*3, panHeight*2);
 		
-		setSize(500, 500);
 		
-		BuildingPanel bpan = new BuildingPanel(Building.buildings.random());
-		addActor(bpan);
 		
 	}
 	

@@ -19,7 +19,7 @@ public class CostPanel extends Group{
 	private static final int  GAP=2, HEIGHT=(int) BuildingPanel.IMAGE_SIZE+0;
 	private static final float IMAGE_SIZE=HEIGHT/2;
 	
-	static final float WIDTH=IMAGE_SIZE*2;
+	static final float WIDTH=IMAGE_SIZE*1.5f;
 	
 	public CostPanel(Cost cost) {
 		this.cost=cost;

@@ -73,9 +73,6 @@ public class GameScreen extends Screen{
 		refreshBulletStuff();
 		setState(State.Rolling);
 		
-		TestPanel tp = new TestPanel();
-		addActor(tp);
-		tp.setPosition(getWidth()/tp.getWidth()/2, getHeight()/2-tp.getHeight()/2);
 	}
 
 

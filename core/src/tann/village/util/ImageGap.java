@@ -8,11 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class ImageGap extends Actor{
 	
 	TextureRegion tr;
-	float gap;
-	public ImageGap(TextureRegion tr, float width, float height, float gap) {
+	public ImageGap(TextureRegion tr, float width, float height) {
 		this.tr=tr;
 		setSize(width, height);
-		this.gap=gap;
 	}
 	
 	Color background;
@@ -28,7 +26,7 @@ public class ImageGap extends Actor{
 			Draw.fillActor(batch, this);
 		}
 		batch.setColor(Colours.z_white);
-		Draw.drawSize(batch, tr, getX()+gap, getY()+gap, getWidth()-gap*2, getHeight()-gap*2);
+		Draw.drawSize(batch, tr, getX(), getY(), getWidth(), getHeight());
 	}
 
 

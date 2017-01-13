@@ -26,6 +26,14 @@ public class Layoo {
 		currentRow = new Row();
 	}
 	
+	public void absRow(float g){
+		if(currentRow!=null){
+			actuallyAColumn.add(currentRow);
+		}
+		actuallyAColumn.abs(g);	
+		currentRow = new Row();
+	}
+	
 	public void gap(float g){
 		if(currentRow==null){
 			currentRow=new Row();
@@ -33,7 +41,17 @@ public class Layoo {
 		currentRow.add(g);
 	}
 	
+	public void abs(float g){
+		if(currentRow==null){
+			currentRow=new Row();
+		}
+		currentRow.abs(g);
+	}
+	
 	public void actor(Actor a){
+		if(currentRow==null){
+			currentRow=new Row();
+		}
 		currentRow.add(a);
 	}
 	
@@ -60,6 +78,9 @@ public class Layoo {
 		for(Element e:actuallyAColumn.elements){
 			if(e.gap!=0) totalGap+=e.gap;
 			if(e.r!=null) totalHeight+=e.r.getHeight();
+			if(e.absGap!=0){
+				totalHeight += e.absGap;
+			}
 		}
 		//set y of rows
 		float heightLeft = parent.getHeight()-totalHeight;
@@ -71,13 +92,17 @@ public class Layoo {
 				currentY -= e.r.getHeight();
 				e.r.setY(currentY);
 			}
+			if(e.absGap!=0){
+				currentY -= e.absGap;
+			}
+			
 		}
 		//tell rows to lay themselves out
 		for(Element e:actuallyAColumn.elements){
 			if(e.r!=null) e.r.layoo();
 		}
 	}
-	static final boolean debug=true;
+	static final boolean debug=false;
 	class Row{
 		public static final float INITIAL_GAP=.000000001f;
 		List<Element> elements = new ArrayList<>();
@@ -93,6 +118,11 @@ public class Layoo {
 			}
 			return max;
 		}
+		
+		public void abs(float g){
+			elements.add(new Element(g, true));
+		}
+		
 		public void add(Row r){
 			elements.add(new Element(r));
 		}
@@ -116,6 +146,7 @@ public class Layoo {
 			for(Element e:elements){
 				if(e.gap!=0) totalGap+=e.gap;
 				if(e.a!=null) totalWidth+=e.a.getWidth();
+				if(e.absGap!=0) totalWidth+=e.absGap;
 			}
 			
 			float widthLeft = parent.getWidth()-totalWidth;
@@ -129,6 +160,9 @@ public class Layoo {
 					e.a.setPosition(currentX, y+getHeight()/2-e.a.getHeight()/2);
 					currentX += e.a.getWidth();
 				}
+				if(e.absGap!=0){
+					currentX += e.absGap;
+				}
 			}
 		}
 		
@@ -136,6 +170,7 @@ public class Layoo {
 	
 	static class Element{
 		float gap;
+		float absGap;
 		Actor a;
 		Row r;
 		public Element(Actor a) {
@@ -146,6 +181,9 @@ public class Layoo {
 		}
 		public Element(Row r) {
 			this.r=r;
+		}
+		public Element(float g, boolean b) {
+			this.absGap=g;
 		}
 	}
 }

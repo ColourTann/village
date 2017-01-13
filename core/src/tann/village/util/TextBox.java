@@ -15,7 +15,7 @@ public class TextBox extends Actor{
 	static{
 		fontHeights = new HashMap<>();
 		for(BitmapFont font:new BitmapFont[]{Fonts.font, Fonts.fontBig, Fonts.fontSmall}){
-			TextBox tb = new TextBox("hi", font, 0, 500, Align.center);
+			TextBox tb = new TextBox("hi", font, 500, Align.center);
 			fontHeights.put(font, tb.getHeight());
 		}
 	}
@@ -24,17 +24,15 @@ public class TextBox extends Actor{
 	String text;
 	GlyphLayout layout = new GlyphLayout();
 	BitmapFont font;
-	int border;
 	int align;
 	Color textCol = Colours.light;
-	public TextBox(String text, BitmapFont font, int border, float maxWidth, int align){
+	public TextBox(String text, BitmapFont font, float maxWidth, int align){
 		if(maxWidth==-1) maxWidth = 99999;
 		this.align=align;
 		this.text=text;
 		this.font=font;
-		this.border=border;
 		layout.setText(font, text, Colours.light, maxWidth, align, true);
-		setSize(Math.min(maxWidth, layout.width)+border*2, layout.height+border*2);
+		setSize(Math.min(maxWidth, layout.width), layout.height);
 	}
 	
 	public void setTextColour(Color col){
@@ -46,7 +44,7 @@ public class TextBox extends Actor{
 //		batch.setColor(1,0,1,.5f);
 //		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		font.setColor(textCol);
-		font.draw(batch, text, getX()+border, getY()+getHeight()-border, layout.width,  align, true);
+		font.draw(batch, text, getX(), getY()+getHeight(), layout.width,  align, true);
 		super.draw(batch, parentAlpha);
 	}
 	

@@ -17,18 +17,17 @@ import tann.village.util.TextBox;
 
 public class VillagerPanel extends Group{
 	Villager villager;
-	private static final int GAP = 16;
 	private static final int MAX_WIDTH = 450;
 	TextBox name;
 	TextBox profession;
 	public VillagerPanel(final Villager villager) {
-		name = new TextBox(villager.firstName+" "+villager.lastName, Fonts.font, GAP, MAX_WIDTH, Align.center);
+		name = new TextBox(villager.firstName+" "+villager.lastName, Fonts.font, MAX_WIDTH, Align.center);
 		addActor(name);
 		
-		profession = new TextBox(villager.type+" "+villager.xp+"/10 xp",Fonts.fontSmall, GAP, MAX_WIDTH, Align.center);
+		profession = new TextBox(villager.type+" "+villager.xp+"/10 xp",Fonts.fontSmall, MAX_WIDTH, Align.center);
 		addActor(profession);
 		
-		DiePanel panel = new DiePanel(villager.die, MAX_WIDTH, GAP);
+		DiePanel panel = new DiePanel(villager.die, MAX_WIDTH);
 		addActor(panel);
 
 		setSize(MAX_WIDTH, name.getHeight()+profession.getHeight()+panel.getHeight());

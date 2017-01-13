@@ -23,15 +23,15 @@ public class LevelupPanel extends Group{
 	private static final int SIDE_WIDTH = 300;
 	private static final int WIDTH = MAIN_WIDTH+SIDE_WIDTH;
 	public LevelupPanel(final Villager villager) {
-		TextBox levelup = new TextBox("Level up!", Fonts.fontBig, 25, MAIN_WIDTH, Align.center);
-		TextBox nameBox = new TextBox(villager.firstName+" "+villager.lastName, Fonts.font, 10, MAIN_WIDTH, Align.center);
-		TextBox professionBox = new TextBox(villager.type.toString(), Fonts.font, 10, MAIN_WIDTH, Align.center);
-		DiePanel mainPanel = new DiePanel(villager.die, MAIN_WIDTH*.9f, 20);
+		TextBox levelup = new TextBox("Level up!", Fonts.fontBig, MAIN_WIDTH, Align.center);
+		TextBox nameBox = new TextBox(villager.firstName+" "+villager.lastName, Fonts.font, MAIN_WIDTH, Align.center);
+		TextBox professionBox = new TextBox(villager.type.toString(), Fonts.font, MAIN_WIDTH, Align.center);
+		DiePanel mainPanel = new DiePanel(villager.die, MAIN_WIDTH*.9f);
 		
 		float smallPanelHeight=0;
 		for(int i=0;i<3;i++){
 			final VillagerType type =VillagerType.values()[1+i]; 
-			ClassPanel panel = new ClassPanel(type, SIDE_WIDTH*.7f, 1);
+			ClassPanel panel = new ClassPanel(type, SIDE_WIDTH*.7f);
 			addActor(panel);
 			panel.setPosition(MAIN_WIDTH+ (SIDE_WIDTH/2-panel.getWidth()/2), i*(panel.getHeight()));
 			smallPanelHeight=panel.getHeight();

@@ -11,14 +11,11 @@ import tann.village.util.Draw;
 public class DiePanel extends Group{
 	
 	Die die;
-	float width, gap;
-	private final float internalGap;
-	public DiePanel(Die die, float width, float gap) {
-		internalGap = width/100f;
+	static final float WIDTH=300, HEIGHT = 200;
+	float width;
+	public DiePanel(Die die, float width) {
 		this.die=die;
-		this.gap=gap;
 		this.width=width;
-		float uWidth = width-gap*2-internalGap*2;
 		Array<Button> dieFaces = new Array<>();
 		for(int i=0;i<6;i++){
 			final Side side = die.sides.get(i);
@@ -27,13 +24,13 @@ public class DiePanel extends Group{
 					System.out.println(side.effect.type);
 				}
 			};
-			Button butt =new Button((uWidth)/3, (uWidth)/3, 0, side.tr, Colours.transparent, r); 
-			butt.setPosition(gap+(butt.getWidth()+internalGap)*(i/2), getHeight()+gap-(butt.getHeight()+internalGap)*(i%2-1));
+			Button butt =new Button((uWidth)/3, (uWidth)/3, side.tr, Colours.transparent, r); 
+			butt.setPosition((butt.getWidth()+internalGap)*(i/2), getHeight()-(butt.getHeight()+internalGap)*(i%2-1));
 			dieFaces.add(butt);
 			addActor(butt);
 		}
 		
-		setSize(width, dieFaces.get(0).getHeight()*2+internalGap+gap*2);
+		setSize(width, dieFaces.get(0).getHeight()*2+internalGap);
 		
 		
 	}

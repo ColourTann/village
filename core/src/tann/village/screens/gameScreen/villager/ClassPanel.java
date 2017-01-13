@@ -19,9 +19,9 @@ import tann.village.util.TextBox;
 public class ClassPanel extends Group{
 	
 	private static final int BORDER = 3;
-	public ClassPanel(VillagerType type, float width, float gap) {
-		DiePanel panel = new DiePanel(new Die(type), width-BORDER*2, 2);
-		TextBox className = new TextBox(type.toString(), Fonts.fontSmall, 5, width-BORDER*2, Align.center);
+	public ClassPanel(VillagerType type, float width) {
+		DiePanel panel = new DiePanel(new Die(type), width-BORDER*2);
+		TextBox className = new TextBox(type.toString(), Fonts.fontSmall, width-BORDER*2, Align.center);
 		setSize(width, panel.getHeight()+className.getHeight()+BORDER*2);
 		className.setPosition(getWidth()/2-className.getWidth()/2, getHeight()-BORDER-className.getHeight());
 		panel.setPosition(BORDER, BORDER);

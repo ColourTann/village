@@ -22,11 +22,9 @@ public class EffectPanel extends Group{
 	HashMap<EffectType, Integer> effectAmounts = new HashMap<>();
 	public Effect effect;
 	public int value;
-	float gap;
-	public EffectPanel(Effect effect, float gap) {
+	public EffectPanel(Effect effect) {
 		this.effect=effect;
-		this.gap=gap;
-		setSize(WIDTH+gap*2, HEIGHT+gap*2);
+		setSize(WIDTH, HEIGHT);
 		this.value=effect.value;
 	}
 	
@@ -49,17 +47,17 @@ public class EffectPanel extends Group{
 //		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		
 		batch.setColor(Colours.light);
-		Draw.fillRectangle(batch, getX()+gap, getY()+gap, getWidth()-gap*2, getHeight()-gap*2);
+		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		batch.setColor(Colours.dark);
-		Draw.fillRectangle(batch, getX()+gap+border, getY()+gap+border, getWidth()-border*2-gap*2, getHeight()-border*2-gap*2);
+		Draw.fillRectangle(batch, getX()+border, getY()+border, getWidth()-border*2, getHeight()-border*2);
 		
 		batch.setColor(Colours.z_white);
-		Draw.drawSize(batch, effect.type.region, getX()+gap+imageGap, getY()+gap+imageGap, (getHeight()-gap*2-imageGap*2), (getHeight()-gap*2-imageGap*2));
+		Draw.drawSize(batch, effect.type.region, getX()+imageGap, getY()+imageGap, (getHeight()-imageGap*2), (getHeight()-imageGap*2));
 		BitmapFont font = Fonts.font;
 		
 		
 		float textStart = getHeight()-imageGap;
-		float textWidth = getWidth()-textStart-imageGap-gap*2;
+		float textWidth = getWidth()-textStart-imageGap;
 		if(value>0){
 			Fonts.font.setColor(Colours.light);
 		}

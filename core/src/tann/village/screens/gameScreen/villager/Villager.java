@@ -15,7 +15,7 @@ public class Villager {
 	String firstName;
 	String lastName;
 	int xp;
-	int xpToLevelUp = 5;
+	int xpToLevelUp = 1;
 	public VillagerType type;
 	public Die die;
 	
@@ -24,9 +24,7 @@ public class Villager {
 		
 		this.type=VillagerType.Villager;
 		
-		if(true){
-//			this.type=VillagerType.values()[(int)(Math.random()*VillagerType.values().length)];
-		}
+//		this.type=VillagerType.values()[(int)(Math.random()*VillagerType.values().length)];
 		
 		setupDie();
 		firstName=generateName(true);

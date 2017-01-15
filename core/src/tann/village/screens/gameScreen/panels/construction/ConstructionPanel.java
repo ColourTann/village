@@ -1,51 +1,115 @@
 package tann.village.screens.gameScreen.panels.construction;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
+import tann.village.Main;
 import tann.village.screens.gameScreen.building.Building;
-import tann.village.screens.gameScreen.building.BuildingEffect;
-import tann.village.screens.gameScreen.building.BuildingEffect.BuildingEffectType;
-import tann.village.screens.gameScreen.building.BuildingEffectPanel;
 import tann.village.screens.gameScreen.building.BuildingPanel;
-import tann.village.screens.gameScreen.effect.Effect;
-import tann.village.screens.gameScreen.effect.Effect.EffectSource;
-import tann.village.screens.gameScreen.effect.Effect.EffectType;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
+import tann.village.util.Layoo;
 import tann.village.util.TextBox;
 
 public class ConstructionPanel extends Group{
 
-	TextBox buildingsText;
+	Array<BuildingPanel> slots = new Array<>();
+	Array<BuildingPanel> availables = new Array<>();
+	BuildingPanel currentSlot;
+	static final float WIDTH = 600, HEIGHT = Main.height;
 	public ConstructionPanel() {
-		buildingsText = new TextBox("Buildings", Fonts.font,-1, Align.center);
-		addActor(buildingsText);
-		setSize(buildingsText.getWidth(), buildingsText.getHeight());
-		float panWidth=0, panHeight=0;
-		for(int y=0;y<2;y++){
+		setSize(WIDTH, HEIGHT);
+		TextBox available = new TextBox("Available buildings", Fonts.font,-1, Align.center);
+		
+		TextBox your = new TextBox("Your buildings", Fonts.font,-1, Align.center);
+
+		Layoo l = new Layoo(this);
+		l.row(1);
+
+		l.actor(available);
+		l.row(1);
+		l.gap(1);
 		for(int i=0;i<3;i++){
 			BuildingPanel bpan = new BuildingPanel(Building.random());
-			addActor(bpan);
-			bpan.setPosition(bpan.getWidth()*i, y*bpan.getHeight());
-			panWidth=bpan.getWidth();
-			panHeight=bpan.getHeight();
+			l.actor(bpan);
+			availables.add(bpan);
+			l.gap(1);
 		}
+		l.row(3);
+		l.actor(your);
+		l.row(1);
+		l.gap(1);
+		for(int i=0;i<3;i++){
+			BuildingPanel slot = new BuildingPanel();
+			slots.add(slot);
+			l.actor(slot);
+			l.gap(1);
 		}
-		setSize(panWidth*3, panHeight*2);
+		l.row(1);
+		l.layoo();
 		
+		setSlot(slots.get(0));
+
+		for(final BuildingPanel bp:availables){
+			bp.addListener(new InputListener(){
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					attemptToBuy(bp.building);
+					return super.touchDown(event, x, y, pointer, button);
+				}
+				@Override
+				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+					bp.highlight(true);
+					super.enter(event, x, y, pointer, fromActor);
+				}
+				@Override
+				public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+					bp.highlight(false);
+					super.exit(event, x, y, pointer, toActor);
+				}
+			});
+		}
 		
 		
 	}
 	
+	private void setSlot(BuildingPanel slot){
+		if(currentSlot!=null){
+			currentSlot.highlight(false);
+		}
+		currentSlot=slot;
+		currentSlot.highlight(true);
+	}
+	
+	private void incrementSlot(){
+		setSlot(slots.get((slots.indexOf(currentSlot, true)+1)%slots.size));
+	}	
+	
+	public void attemptToBuy(Building b){
+		// maybe have an inventory manager class to deal with this kind of thing.
+		// doesn't really make sense to pass it onto gamescreen :P
+		currentSlot.setBuilding(b);
+		resetAvailablePanels();
+		incrementSlot();
+	}
+
+	private void resetAvailablePanels() {
+		for(BuildingPanel bp:availables){
+			bp.setBuilding(Building.random());
+		}
+	}
+
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(Colours.dark);
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		super.draw(batch, parentAlpha);
 	}
-	
+
 }

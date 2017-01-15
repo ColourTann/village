@@ -1,5 +1,6 @@
 package tann.village.screens.gameScreen.building;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
@@ -14,12 +15,27 @@ import tann.village.util.TextBox;
 
 public class BuildingPanel extends Group{
 
-	Building building;
+	public Building building;
 	
-	static final float WIDTH = 150, HEIGHT=240;;
+	public static final float WIDTH = 150, HEIGHT=240;;
 	public static final float IMAGE_SIZE= 50;
+	private static final int border = 3;
 	public BuildingPanel(Building building) {
 		setSize(WIDTH, HEIGHT);
+		setBuilding(building);
+	}
+	
+	public BuildingPanel() {
+		setSize(WIDTH, HEIGHT);
+	}
+	
+	public void clearBuilding(){
+		clearChildren();
+		this.building=null;
+	}
+	
+	public void setBuilding(Building building){
+		clearBuilding();
 		this.building=building;
 		Layoo l = new Layoo(this);
 		l.absRow(10);
@@ -44,12 +60,17 @@ public class BuildingPanel extends Group{
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		int border = 2;
-		batch.setColor(Colours.brown_light);
+		
+		batch.setColor(highlightColour);
 		Draw.fillRectangle(batch, getX()-border, getY()-border, getWidth()+border*2, getHeight()+border*2);
 		batch.setColor(Colours.brown_dark);
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		super.draw(batch, parentAlpha);
+	}
+
+	Color highlightColour = Colours.brown_light;
+	public void highlight(boolean b) {
+		highlightColour = b?Colours.light:Colours.brown_light;
 	}
 	
 }

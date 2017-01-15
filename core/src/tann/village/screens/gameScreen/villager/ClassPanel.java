@@ -34,7 +34,7 @@ public class ClassPanel extends Group{
 		addListener(new ClickListener(){
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-				borderColour=Colours.light;
+				borderColour=Colours.fate_light;
 				super.enter(event, x, y, pointer, fromActor);
 			}
 			@Override
@@ -52,7 +52,8 @@ public class ClassPanel extends Group{
 //		batch.setColor(Colours.dark);
 //		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		batch.setColor(borderColour);
-		Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), BORDER);
+//		Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), BORDER);
+		Draw.fillActor(batch, this);
 		super.draw(batch, parentAlpha);
 	}
 	

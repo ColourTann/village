@@ -6,7 +6,10 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.Images;
 import tann.village.Main;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.effect.Effect;
+import tann.village.util.Colours;
+import tann.village.util.Draw;
 
 public class InventoryPanel extends Group{
 	static final int GAP = 20;
@@ -22,8 +25,8 @@ public class InventoryPanel extends Group{
 	public static final int ITEM_GAP=30;
 	
 	public InventoryPanel() {
-		setSize(150, InventoryItem.height*4+ITEM_GAP*3);
-		setPosition(GAP, Main.height/2-getHeight()/2);
+		setSize(InventoryItem.width, InventoryItem.height*4+ITEM_GAP*3);
+		setPosition(GameScreen.BUTTON_BORDER, Main.height/2-getHeight()/2);
 		addActor(food = new InventoryItem(Images.food));
 		addActor(wood = new InventoryItem(Images.wood));
 		addActor(morale = new InventoryItem(Images.morale));

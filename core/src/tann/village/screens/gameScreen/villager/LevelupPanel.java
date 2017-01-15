@@ -19,7 +19,7 @@ import tann.village.util.TextBox;
 public class LevelupPanel extends Group{
 	
 	
-	private static final int LEFT_WIDTH = 500;
+	private static final int LEFT_WIDTH = 400;
 	private static final int RIGHT_WIDTH = 300;
 	private static final int WIDTH = LEFT_WIDTH+RIGHT_WIDTH;
 	private static final int HEIGHT = 650;
@@ -57,7 +57,7 @@ public class LevelupPanel extends Group{
 		
 		for(int i=0;i<3;i++){
 			final VillagerType type =VillagerType.values()[1+i]; 
-			ClassPanel panel = new ClassPanel(type, RIGHT_WIDTH);
+			ClassPanel panel = new ClassPanel(type, RIGHT_WIDTH-20);
 			panel.addListener(new InputListener(){
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

@@ -87,10 +87,10 @@ public class ReviewPanel extends Group{
 
 		
 		for(int i=0;i<items.size;i++){
-			if(i%3==0) l.row(1);
+			if(i%3==0) l.absRow(10);
 			EffectPanel item = items.get(i);
 			l.actor(item);
-			if(i<items.size-1){
+			if(i<items.size-1 && i%3!=2){
 				l.abs(10);
 			}
 		}

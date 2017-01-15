@@ -16,8 +16,7 @@ import tann.village.util.NumberPanel;
 public class RollPanel extends Group{
 	
 	static final int buttonSize = 100;
-	static final int BOTTOM_GAP=30;
-	static final int WIDTH=300, HEIGHT=buttonSize+BOTTOM_GAP;
+	static final int WIDTH=300, HEIGHT=buttonSize;
 	public NumberPanel rollsLeft;
 	
 	

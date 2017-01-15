@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.Main;
 import tann.village.bullet.BulletStuff;
 import tann.village.screens.gameScreen.effect.Effect;
-import tann.village.screens.gameScreen.effect.EffectPanel;
 import tann.village.screens.gameScreen.effect.Effect.EffectSource;
 import tann.village.screens.gameScreen.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.event.Event;
@@ -34,7 +33,7 @@ import tann.village.util.Fonts;
 import tann.village.util.Screen;
 
 public class GameScreen extends Screen{
-
+	public static final int BUTTON_BORDER=20;
 	private static GameScreen self;
 	public InventoryPanel inventoryPanel;
 	public RollPanel rollButtonPanel;
@@ -65,14 +64,13 @@ public class GameScreen extends Screen{
 		addActor(inventoryPanel = new InventoryPanel());
 		addActor(rollButtonPanel = new RollPanel());
 		addActor(statsPanel = new StatsPanel());
-		rollButtonPanel.setPosition(Main.width/2-rollButtonPanel.getWidth()/2, 0);
-		statsPanel.setPosition(Main.width-statsPanel.getWidth(), Main.height/2-statsPanel.getHeight()/2);
+		rollButtonPanel.setPosition(Main.width/2-rollButtonPanel.getWidth()/2, BUTTON_BORDER);
+		statsPanel.setPosition(Main.width-statsPanel.getWidth()-BUTTON_BORDER, Main.height/2-statsPanel.getHeight()/2);
 		for(int i=0;i<5;i++){
 			villagers.add(new Villager());
 		}
 		refreshBulletStuff();
 		setState(State.Rolling);
-		
 	}
 
 

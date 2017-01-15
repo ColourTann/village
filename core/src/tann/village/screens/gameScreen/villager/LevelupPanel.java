@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 
-import tann.village.Main;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.villager.Villager.VillagerType;
 import tann.village.screens.gameScreen.villager.die.Die;
@@ -14,27 +13,51 @@ import tann.village.screens.gameScreen.villager.die.DiePanel;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
+import tann.village.util.Layoo;
 import tann.village.util.TextBox;
 
 public class LevelupPanel extends Group{
 	
 	
-	private static final int MAIN_WIDTH = 500;
-	private static final int SIDE_WIDTH = 300;
-	private static final int WIDTH = MAIN_WIDTH+SIDE_WIDTH;
+	private static final int LEFT_WIDTH = 500;
+	private static final int RIGHT_WIDTH = 300;
+	private static final int WIDTH = LEFT_WIDTH+RIGHT_WIDTH;
+	private static final int HEIGHT = 650;
 	public LevelupPanel(final Villager villager) {
-		TextBox levelup = new TextBox("Level up!", Fonts.fontBig, MAIN_WIDTH, Align.center);
-		TextBox nameBox = new TextBox(villager.firstName+" "+villager.lastName, Fonts.font, MAIN_WIDTH, Align.center);
-		TextBox professionBox = new TextBox(villager.type.toString(), Fonts.font, MAIN_WIDTH, Align.center);
-		DiePanel mainPanel = new DiePanel(villager.die, MAIN_WIDTH*.9f);
 		
-		float smallPanelHeight=0;
+		setSize(WIDTH, HEIGHT);
+		
+		Group leftGroup = new Group();
+		leftGroup.setSize(LEFT_WIDTH, HEIGHT);
+		Layoo left = new Layoo(leftGroup);
+		addActor(leftGroup);
+		
+		TextBox levelup = new TextBox("Level up!", Fonts.fontBig, LEFT_WIDTH, Align.center);
+		TextBox nameBox = new TextBox(villager.firstName+" "+villager.lastName, Fonts.font, LEFT_WIDTH, Align.center);
+		TextBox professionBox = new TextBox(villager.type.toString(), Fonts.font, LEFT_WIDTH, Align.center);
+		DiePanel mainPanel = new DiePanel(villager.die, LEFT_WIDTH*.9f);
+		left.row(1);
+		left.actor(levelup);
+		left.row(1);
+		left.actor(nameBox);
+		left.row(1);
+		left.actor(professionBox);
+		left.row(1);
+		left.actor(mainPanel);
+		left.row(1);
+		left.layoo();
+		
+		
+		Group rightGroup = new Group();
+		rightGroup.setSize(RIGHT_WIDTH, HEIGHT);
+		Layoo right = new Layoo(rightGroup);
+		addActor(rightGroup);
+		rightGroup.setPosition(LEFT_WIDTH, 0);
+		
+		
 		for(int i=0;i<3;i++){
 			final VillagerType type =VillagerType.values()[1+i]; 
-			ClassPanel panel = new ClassPanel(type, SIDE_WIDTH*.7f);
-			addActor(panel);
-			panel.setPosition(MAIN_WIDTH+ (SIDE_WIDTH/2-panel.getWidth()/2), i*(panel.getHeight()));
-			smallPanelHeight=panel.getHeight();
+			ClassPanel panel = new ClassPanel(type, RIGHT_WIDTH);
 			panel.addListener(new InputListener(){
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -43,20 +66,11 @@ public class LevelupPanel extends Group{
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
+			right.row(1);
+			right.actor(panel);
 		}
-		setSize(WIDTH, (smallPanelHeight)*3);
-
-		addActor(levelup);
-		levelup.setPosition(MAIN_WIDTH/2-levelup.getWidth()/2, getHeight()-levelup.getHeight());
-		
-		addActor(nameBox);
-		nameBox.setPosition(MAIN_WIDTH/2-nameBox.getWidth()/2, getHeight()-nameBox.getHeight()-levelup.getHeight());
-		
-		addActor(professionBox);
-		professionBox.setPosition(MAIN_WIDTH/2-professionBox.getWidth()/2, getHeight()-nameBox.getHeight()-professionBox.getHeight()-levelup.getHeight());
-		
-		addActor(mainPanel);
-		mainPanel.setPosition(MAIN_WIDTH/2-mainPanel.getWidth()/2, getHeight()-nameBox.getHeight()-professionBox.getHeight()-mainPanel.getHeight()-levelup.getHeight());
+		right.row(1);
+		right.layoo();
 	}
 	
 	public void removeThis(){

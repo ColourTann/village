@@ -13,28 +13,30 @@ import tann.village.util.Button;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
+import tann.village.util.Layoo;
 import tann.village.util.TextBox;
 
 public class VillagerPanel extends Group{
 	Villager villager;
-	private static final int MAX_WIDTH = 450;
+	private static final int MAX_WIDTH = 350, HEIGHT = 270;
 	TextBox name;
 	TextBox profession;
 	public VillagerPanel(final Villager villager) {
+		setSize(MAX_WIDTH, HEIGHT);
 		name = new TextBox(villager.firstName+" "+villager.lastName, Fonts.font, MAX_WIDTH, Align.center);
-		addActor(name);
-		
 		profession = new TextBox(villager.type+" "+villager.xp+"/10 xp",Fonts.fontSmall, MAX_WIDTH, Align.center);
-		addActor(profession);
-		
 		DiePanel panel = new DiePanel(villager.die, MAX_WIDTH);
-		addActor(panel);
-
-		setSize(MAX_WIDTH, name.getHeight()+profession.getHeight()+panel.getHeight());
 		
-		name.setPosition(getWidth()/2-name.getWidth()/2, getHeight()-name.getHeight());
-		profession.setPosition(getWidth()/2-profession.getWidth()/2, name.getY()-profession.getHeight());
-		panel.setPosition(getWidth()/2-panel.getWidth()/2, 0);
+		Layoo l = new Layoo(this);
+		l.row(1);
+		l.actor(name);
+		l.row(1);
+		l.actor(profession);
+		l.row(1);
+		l.actor(panel);
+		l.row(1);
+		l.layoo();
+		
 		
 		addListener(new InputListener(){
 			@Override

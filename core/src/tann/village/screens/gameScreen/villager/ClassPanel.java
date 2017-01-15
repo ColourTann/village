@@ -14,20 +14,23 @@ import tann.village.screens.gameScreen.villager.die.DiePanel;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
+import tann.village.util.Layoo;
 import tann.village.util.TextBox;
 
 public class ClassPanel extends Group{
 	
 	private static final int BORDER = 3;
-	public ClassPanel(VillagerType type, float width) {
-		DiePanel panel = new DiePanel(new Die(type), width-BORDER*2);
-		TextBox className = new TextBox(type.toString(), Fonts.fontSmall, width-BORDER*2, Align.center);
-		setSize(width, panel.getHeight()+className.getHeight()+BORDER*2);
-		className.setPosition(getWidth()/2-className.getWidth()/2, getHeight()-BORDER-className.getHeight());
-		panel.setPosition(BORDER, BORDER);
+	public ClassPanel(VillagerType type, float WIDTH) {
+		TextBox className = new TextBox(type.toString(), Fonts.fontSmall, WIDTH-BORDER*2, Align.center);
+		DiePanel panel = new DiePanel(new Die(type), WIDTH-BORDER*2);
+		setSize(WIDTH, panel.getHeight()+className.getHeight()+BORDER*2);
 		
-		addActor(panel);
-		addActor(className);
+		Layoo l = new Layoo(this);
+		l.actor(className);
+		l.row(1);
+		l.actor(panel);
+		l.layoo();
+		
 		addListener(new ClickListener(){
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {

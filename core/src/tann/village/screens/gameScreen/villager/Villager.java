@@ -15,7 +15,7 @@ public class Villager {
 	String firstName;
 	String lastName;
 	int xp;
-	int xpToLevelUp = 10;
+	int xpToLevelUp = 5;
 	public VillagerType type;
 	public Die die;
 	

@@ -243,7 +243,7 @@ public class GameScreen extends Screen{
 	}
 	
 	
-	private Button proceedButton = new Button(200, 60, 8, Main.atlas.findRegion("arrow"), Colours.dark, new Runnable() {
+	private Button proceedButton = new Button(200, 60, .8f, Main.atlas.findRegion("arrow"), Colours.dark, new Runnable() {
 		public void run() {
 			proceed();
 		}

@@ -18,7 +18,7 @@ import tann.village.screens.gameScreen.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.event.Event;
 import tann.village.screens.gameScreen.event.EventPanel;
 import tann.village.screens.gameScreen.panels.construction.ConstructionPanel;
-import tann.village.screens.gameScreen.panels.inventory.InventoryPanel;
+import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.screens.gameScreen.panels.roll.RollPanel;
 import tann.village.screens.gameScreen.panels.stats.StatsPanel;
@@ -33,9 +33,8 @@ import tann.village.util.Fonts;
 import tann.village.util.Screen;
 
 public class GameScreen extends Screen{
-	public static final int BUTTON_BORDER=20;
+	public static final int BUTTON_BORDER=10;
 	private static GameScreen self;
-	public InventoryPanel inventoryPanel;
 	public RollPanel rollButtonPanel;
 	public StatsPanel statsPanel;
 	public enum State{Event, Rolling, Review, Levelling}
@@ -61,7 +60,7 @@ public class GameScreen extends Screen{
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
-		addActor(inventoryPanel = new InventoryPanel());
+		addActor(Inventory.get().getGroup());
 		addActor(rollButtonPanel = new RollPanel());
 		addActor(statsPanel = new StatsPanel());
 		rollButtonPanel.setPosition(Main.width/2-rollButtonPanel.getWidth()/2, BUTTON_BORDER);
@@ -180,7 +179,7 @@ public class GameScreen extends Screen{
 		
 		refreshPanels();
 		
-		addEffect(new Effect(EffectType.Food, -5, EffectSource.Upkeep));
+		addEffect(new Effect(EffectType.Food, -2, EffectSource.Upkeep));
 		for(Die d:BulletStuff.dice){
 			d.activate();
 		}
@@ -227,6 +226,7 @@ public class GameScreen extends Screen{
 	
 	private void showReview() {
 		state=State.Review;
+		constructionPanel.upkeep();
 		reviewPanel.build();
 		reviewPanel.setPosition(Main.width/2-reviewPanel.getWidth()/2, Main.height/2-reviewPanel.getHeight()/2);
 		addActor(reviewPanel);
@@ -237,7 +237,7 @@ public class GameScreen extends Screen{
 
 	public void addEffect(Effect effect){
 		reviewPanel.addItem(effect);
-		inventoryPanel.activate(effect);
+		Inventory.get().activate(effect);
 	}
 	
 	
@@ -299,11 +299,11 @@ public class GameScreen extends Screen{
 	}
 
 	public void refreshPanels() {
-		inventoryPanel.clearWisps();
+		Inventory.get().clearWisps();
 	}
 
 	public void showWisps() {
-		inventoryPanel.showWisps();
+		Inventory.get().showWisps();
 	}
 
 	public void finishedLevellingUp() {

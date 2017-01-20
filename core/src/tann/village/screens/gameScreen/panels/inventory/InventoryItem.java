@@ -13,7 +13,6 @@ import tann.village.util.NumberPanel;
 public class InventoryItem extends Group{
 	
 	TextureRegion icon;
-	int amount;
 	static final int width = 80;
 	static final int height = 80;
 	static final int border = 4;
@@ -41,6 +40,10 @@ public class InventoryItem extends Group{
 	
 	public void changeValue(int delta){
 		numberPanel.changeValue(delta);
+	}
+	
+	public int getValue(){
+		return numberPanel.getValue();
 	}
 	
 	@Override

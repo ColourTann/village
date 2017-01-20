@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.Main;
 import tann.village.screens.gameScreen.building.Building;
 import tann.village.screens.gameScreen.building.BuildingPanel;
+import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
@@ -94,9 +95,14 @@ public class ConstructionPanel extends Group{
 	public void attemptToBuy(Building b){
 		// maybe have an inventory manager class to deal with this kind of thing.
 		// doesn't really make sense to pass it onto gamescreen :P
+		if(!Inventory.get().checkCost(b.cost)){
+			return;
+		}
+		Inventory.get().spendCost(b.cost);
 		currentSlot.setBuilding(b);
 		resetAvailablePanels();
 		incrementSlot();
+		b.onBuild();
 	}
 
 	private void resetAvailablePanels() {
@@ -111,5 +117,17 @@ public class ConstructionPanel extends Group{
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		super.draw(batch, parentAlpha);
 	}
+
+	
+	
+	public void upkeep() {
+			for(BuildingPanel b:slots){
+				if(b.building!=null){
+					b.building.upkeep();
+				}
+			}
+	}
+
+	
 
 }

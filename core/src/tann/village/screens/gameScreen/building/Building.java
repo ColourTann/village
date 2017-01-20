@@ -16,7 +16,7 @@ public class Building {
 	
 	String name;
 	String description;
-	Cost cost;
+	public Cost cost;
 	
 	Array<BuildingEffect> buildingEffects;
 	public TextureRegion image = Main.atlas.findRegion("building/hut");
@@ -127,5 +127,28 @@ public class Building {
 		if(buildings.size==0) init();
 		return buildings.removeIndex((int)(Math.random()*buildings.size));
 	}
+
+
+
+
+	public void onBuild() {
+		for(BuildingEffect bEff:buildingEffects){
+			if(bEff.effectType==BuildingEffectType.Now){
+				for(Effect e:bEff.effects){
+					e.activate();
+				}
+			}
+		}
+	}
 	
+
+	public void upkeep() {
+		for(BuildingEffect bEff:buildingEffects){
+			if(bEff.effectType==BuildingEffectType.EveryTurn){
+				for(Effect e:bEff.effects){
+					e.activate();
+				}
+			}
+		}
+	}
 }

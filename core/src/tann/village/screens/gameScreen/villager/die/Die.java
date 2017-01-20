@@ -46,16 +46,16 @@ public class Die {
 		switch(type){
 		case Villager:
 			addSide(Side.food1);
-			addSide(Side.food2);
+			addSide(Side.food1);
 			addSide(Side.wood1);
-			addSide(Side.wood2);
+			addSide(Side.wood1);
 			addSide(Side.brain);
 			addSide(Side.skull);
 			break;
 		case Fisher:
+			addSide(Side.food1);
 			addSide(Side.food2);
 			addSide(Side.food2);
-			addSide(Side.food3);
 			addSide(Side.food3);
 			addSide(Side.wood1);
 			addSide(Side.brain);

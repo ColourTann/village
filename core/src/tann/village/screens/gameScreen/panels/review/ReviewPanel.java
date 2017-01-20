@@ -19,7 +19,7 @@ public class ReviewPanel extends Group{
 	static final int itemWidth = (int)EffectPanel.WIDTH;
 	static final int itemHeight = (int)EffectPanel.HEIGHT;
 	static final int WIDTH = 380;
-	static final int HEIGHT = 250;
+	static final int HEIGHT = 290;
 	int day;
 	
 	TextBox title;

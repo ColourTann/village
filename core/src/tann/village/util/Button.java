@@ -3,6 +3,7 @@ package tann.village.util;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -15,6 +16,20 @@ public class Button extends Group{
 		this.region=region;
 		this.backgroundColour=backgroundColour;
 		this.imageScale=imageScale;
+		setRunnable(runnable);
+		setSize(width, height);
+	}
+	
+	public Button(float width, float height, float imageScale, final TextureRegion region, Color backgroundColour) {
+		this.region=region;
+		this.backgroundColour=backgroundColour;
+		this.imageScale=imageScale;
+		setSize(width, height);
+	}
+	
+	
+	
+	public void setRunnable(final Runnable runnable){
 		addListener(new InputListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -22,7 +37,6 @@ public class Button extends Group{
 				return true;
 			}
 		});
-		setSize(width, height);
 	}
 	
 	public Button(float width, float height, final TextureRegion region, Color backgroundColour, final Runnable runnable) {

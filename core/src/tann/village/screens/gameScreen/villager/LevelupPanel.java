@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.screens.gameScreen.villager.Villager.VillagerType;
 import tann.village.screens.gameScreen.villager.die.Die;
 import tann.village.screens.gameScreen.villager.die.DiePanel;
@@ -16,7 +17,7 @@ import tann.village.util.Fonts;
 import tann.village.util.Layoo;
 import tann.village.util.TextBox;
 
-public class LevelupPanel extends Group{
+public class LevelupPanel extends InfoPanel{
 	
 	
 	private static final int LEFT_WIDTH = 400;

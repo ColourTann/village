@@ -9,6 +9,7 @@ import tann.village.Main;
 import tann.village.screens.gameScreen.Cost;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.effect.Effect;
+import tann.village.screens.gameScreen.effect.Effect.EffectType;
 
 public class Inventory{
 	static final int GAP = 20;
@@ -49,7 +50,7 @@ public class Inventory{
 		food.setY(InventoryItem.height*3+GAP*3);
 
 		morale.setValue(10);
-		food.setValue(6);
+		food.setValue(1);
 		wood.setValue(2);
 		fate.setValue(1);
 
@@ -93,7 +94,11 @@ public class Inventory{
 	
 	
 	public InventoryItem get(Effect e){
-		switch(e.type){
+		return get(e.type);
+	}
+	
+	public InventoryItem get(EffectType type){
+		switch(type){
 		case Food:
 			return food;
 		case Morale:
@@ -126,7 +131,9 @@ public class Inventory{
 		}
 	}
 
-	
+	public int getResourceAmount(EffectType resourceType){
+		return get(resourceType).getValue();
+	}
 
 	public void clearWisps() {
 		for(InventoryItem i:items) i.clearWisp();
@@ -134,6 +141,10 @@ public class Inventory{
 
 	public void showWisps() {
 		for(InventoryItem i:items) i.wisp();
+	}
+
+	public void resetFood() {
+		get(EffectType.Food).setValue(0);
 	}
 
 }

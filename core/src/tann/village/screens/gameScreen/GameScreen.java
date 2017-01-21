@@ -20,6 +20,7 @@ import tann.village.screens.gameScreen.event.EventPanel;
 import tann.village.screens.gameScreen.panels.construction.ConstructionPanel;
 import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;
+import tann.village.screens.gameScreen.panels.review.StarvationPanel;
 import tann.village.screens.gameScreen.panels.roll.RollPanel;
 import tann.village.screens.gameScreen.panels.stats.StatsPanel;
 import tann.village.screens.gameScreen.villager.LevelupPanel;
@@ -131,6 +132,10 @@ public class GameScreen extends Screen{
 			setState(State.Review);
 			break;
 		case Review:
+			if(Inventory.get().getResourceAmount(EffectType.Food)<0){
+				showStarvation();
+				break;
+			}
 			if(villagersToLevelUp.size>0){
 				levelup(villagersToLevelUp.removeIndex(0));
 				break;
@@ -142,6 +147,14 @@ public class GameScreen extends Screen{
 		}
 	}
 	
+	private void showStarvation() {
+		StarvationPanel panel = new StarvationPanel(-Inventory.get().getResourceAmount(EffectType.Food));
+		addActor(panel);
+		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
+		addProceedButton(panel);
+		Inventory.get().resetFood();
+	}
+
 	private void levelup(Villager v){
 		LevelupPanel lup = new LevelupPanel(v);
 		addActor(lup);
@@ -200,7 +213,6 @@ public class GameScreen extends Screen{
 	EventPanel eventPanel;
 	
 	private void showEvent() {
-		reviewPanel.remove();
 		state=State.Event;
 		Event event = Event.getRandomEvent();
 		eventPanel= new EventPanel(event, ++dayNum);
@@ -212,8 +224,6 @@ public class GameScreen extends Screen{
 
 	private void startRolling() {
 		BulletStuff.refresh(villagers);
-		if(eventPanel!=null) eventPanel.remove();
-		removeProceedButton();
 		rollButtonPanel.setVisible(true);
 		rollButtonPanel.rollsLeft.setValue(3);
 		reviewPanel = new ReviewPanel(dayNum);
@@ -241,23 +251,16 @@ public class GameScreen extends Screen{
 	}
 	
 	
-	private Button proceedButton = new Button(200, 60, .8f, Main.atlas.findRegion("arrow"), Colours.dark, new Runnable() {
-		public void run() {
-			proceed();
-		}
-	});
+	private ProceedButton proceedButton = new ProceedButton();
 	
 	public void addProceedButton(Actor relativeTo){
 		int dist = 10;
 		proceedButton.setColor(Colours.green_light);
 		addActor(proceedButton);
+		proceedButton.setLinkedActor(relativeTo);
 		proceedButton.setPosition(Main.width/2-proceedButton.getWidth()/2, relativeTo.getY()-proceedButton.getHeight()-dist);
 	}
 	
-	public void removeProceedButton(){
-		proceedButton.remove();
-	}
-
 	public void addVillagerPanel(Villager villager) {
 		VillagerPanel panel = new VillagerPanel(villager);
 		push(panel);
@@ -309,7 +312,7 @@ public class GameScreen extends Screen{
 	public void finishedLevellingUp() {
 		proceed();
 	}
-
+	
 	ConstructionPanel constructionPanel = new ConstructionPanel();
 	
 	public void openBuildingPanel() {

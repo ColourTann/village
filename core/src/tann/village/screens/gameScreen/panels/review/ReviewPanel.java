@@ -13,7 +13,7 @@ import tann.village.util.Fonts;
 import tann.village.util.Layoo;
 import tann.village.util.TextBox;
 
-public class ReviewPanel extends Group{
+public class ReviewPanel extends InfoPanel{
 	
 	static final int items_per_row=3;
 	static final int itemWidth = (int)EffectPanel.WIDTH;
@@ -94,12 +94,5 @@ public class ReviewPanel extends Group{
 				l.abs(10);
 			}
 		}
-	}
-	
-	@Override
-	public void draw(Batch batch, float parentAlpha) {
-		batch.setColor(Colours.dark);
-		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
-		super.draw(batch, parentAlpha);
 	}
 }

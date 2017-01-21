@@ -12,13 +12,14 @@ import tann.village.Main;
 import tann.village.screens.gameScreen.building.Building;
 import tann.village.screens.gameScreen.building.BuildingPanel;
 import tann.village.screens.gameScreen.panels.inventory.Inventory;
+import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
 import tann.village.util.Layoo;
 import tann.village.util.TextBox;
 
-public class ConstructionPanel extends Group{
+public class ConstructionPanel extends InfoPanel{
 
 	Array<BuildingPanel> slots = new Array<>();
 	Array<BuildingPanel> availables = new Array<>();
@@ -111,14 +112,6 @@ public class ConstructionPanel extends Group{
 		}
 	}
 
-	@Override
-	public void draw(Batch batch, float parentAlpha) {
-		batch.setColor(Colours.dark);
-		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
-		super.draw(batch, parentAlpha);
-	}
-
-	
 	
 	public void upkeep() {
 			for(BuildingPanel b:slots){

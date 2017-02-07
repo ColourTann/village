@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.screens.gameScreen.effect.Effect;
-import tann.village.screens.gameScreen.effect.EffectPanel;
+import tann.village.screens.gameScreen.panels.EffectPanel;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
@@ -20,6 +20,7 @@ public class ReviewPanel extends InfoPanel{
 	static final int itemHeight = (int)EffectPanel.HEIGHT;
 	static final int WIDTH = 380;
 	static final int HEIGHT = 290;
+	public static final float SMALL_GAP=10;
 	int day;
 	
 	TextBox title;
@@ -91,7 +92,7 @@ public class ReviewPanel extends InfoPanel{
 			EffectPanel item = items.get(i);
 			l.actor(item);
 			if(i<items.size-1 && i%3!=2){
-				l.abs(10);
+				l.abs(SMALL_GAP);
 			}
 		}
 	}

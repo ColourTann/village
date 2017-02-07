@@ -16,13 +16,14 @@ public class Side {
 		this.effect=effect;
 	}
 	
+	
 	public static Side food1 = new Side(Images.side_food_1, new Effect(EffectType.Food, 1, EffectSource.Dice));
 	public static Side food2 = new Side(Images.side_food_2, new Effect(EffectType.Food, 2, EffectSource.Dice));
 	public static Side food3 = new Side(Images.side_food_3, new Effect(EffectType.Food, 3, EffectSource.Dice));
 	public static Side wood1 = new Side(Images.side_wood_1, new Effect(EffectType.Wood, 1, EffectSource.Dice));
 	public static Side wood2 = new Side(Images.side_wood_2, new Effect(EffectType.Wood, 2, EffectSource.Dice));
 	public static Side skull = new Side(Images.side_skull, new Effect(EffectType.Skull, EffectSource.Dice));
-	public static Side brain = new Side(Images.side_brain, new Effect(EffectType.Brain, 4, EffectSource.Dice));
+	public static Side brain = new Side(Images.side_brain, new Effect(EffectType.Brain, 2, EffectSource.Dice));
 	
 
 	public static Side morale1 = new Side(Images.side_morale_1, new Effect(EffectType.Morale, 1, EffectSource.Dice));

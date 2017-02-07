@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
 import tann.village.screens.gameScreen.effect.Effect;
-import tann.village.screens.gameScreen.effect.EffectPanel;
+import tann.village.screens.gameScreen.panels.EffectPanel;
 import tann.village.util.Fonts;
 import tann.village.util.Layoo;
 import tann.village.util.TextBox;

@@ -24,7 +24,7 @@ public class ConstructionPanel extends InfoPanel{
 	Array<BuildingPanel> slots = new Array<>();
 	Array<BuildingPanel> availables = new Array<>();
 	BuildingPanel currentSlot;
-	static final float WIDTH = 600, HEIGHT = Main.height;
+	static final float WIDTH = 600, HEIGHT = Main.height*.9f;
 	public ConstructionPanel() {
 		setSize(WIDTH, HEIGHT);
 		TextBox available = new TextBox("Available buildings", Fonts.font,-1, Align.center);

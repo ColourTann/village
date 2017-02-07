@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.effect;
+package tann.village.screens.gameScreen.panels;
 
 import java.util.HashMap;
 
@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
+import tann.village.screens.gameScreen.effect.Effect;
 import tann.village.screens.gameScreen.effect.Effect.EffectType;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
@@ -48,7 +49,21 @@ public class EffectPanel extends Group{
 		
 		batch.setColor(Colours.light);
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
-		batch.setColor(Colours.dark);
+		
+		switch(effect.source){
+		case Building:
+		case Dice:
+		case Event:
+			batch.setColor(Colours.dark);
+		case Upkeep:
+			batch.setColor(Colours.dark);
+			break;
+		default:
+			break;
+			
+		}
+		
+		
 		Draw.fillRectangle(batch, getX()+border, getY()+border, getWidth()-border*2, getHeight()-border*2);
 		
 		batch.setColor(Colours.z_white);

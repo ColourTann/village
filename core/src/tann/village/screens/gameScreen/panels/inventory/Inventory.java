@@ -39,20 +39,20 @@ public class Inventory{
 		
 		g.setSize(InventoryItem.width, InventoryItem.height*4+ITEM_GAP*3);
 		g.setPosition(GameScreen.BUTTON_BORDER, Main.height/2-g.getHeight()/2);
-		food = new InventoryItem(Images.food);
+		food = new InventoryItem(Images.food, 5);
 		g.addActor(food);
-		g.addActor(wood = new InventoryItem(Images.wood));
-		g.addActor(morale = new InventoryItem(Images.morale));
-		g.addActor(fate = new InventoryItem(Images.fate));
+		g.addActor(wood = new InventoryItem(Images.wood, 10));
+		g.addActor(morale = new InventoryItem(Images.morale, 5));
+		g.addActor(fate = new InventoryItem(Images.fate, 0));
 
 		morale.setY(InventoryItem.height+GAP);
 		wood.setY(InventoryItem.height*2+GAP*2);
 		food.setY(InventoryItem.height*3+GAP*3);
 
-		morale.setValue(10);
-		food.setValue(1);
-		wood.setValue(2);
-		fate.setValue(1);
+		morale.setValue(3);
+		food.setValue(0);
+		wood.setValue(0);
+		fate.setValue(0);
 
 		items.add(food);
 		items.add(wood);
@@ -75,23 +75,9 @@ public class Inventory{
 	
 	private void internalActivate(Effect effect, boolean inverse){
 		int value = effect.value*(inverse?-1:1);
-		switch(effect.type){
-		case Food:
-			food.changeValue(value);
-			break;
-		case Morale:
-			morale.changeValue(value);
-			break;
-		case Skull:
-			break;
-		case Wood:
-			wood.changeValue(value);
-			break;
-		default:
-			break;
-		}
+		InventoryItem item = get(effect.type);
+		if(item!=null) item.changeValue(value);
 	}
-	
 	
 	public InventoryItem get(Effect e){
 		return get(e.type);
@@ -145,6 +131,12 @@ public class Inventory{
 
 	public void resetFood() {
 		get(EffectType.Food).setValue(0);
+	}
+	
+	public void imposeMaximums(){
+		for(InventoryItem item:items){
+			item.imposeMaximum();
+		}
 	}
 
 }

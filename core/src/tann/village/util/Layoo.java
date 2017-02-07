@@ -7,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 public class Layoo {
-	Group parent;
-	Row currentRow;
-	Row actuallyAColumn = new Row();
+	private Group parent;
+	private Row currentRow;
+	private Row actuallyAColumn = new Row();
 	
 	public Layoo(Group parent) {
 		this.parent=parent;

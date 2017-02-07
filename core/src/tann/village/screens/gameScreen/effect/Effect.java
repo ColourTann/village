@@ -18,9 +18,13 @@ public class Effect {
 		Fate(Images.fate);
 
 		public TextureRegion region;
-		
+		boolean special;
 		EffectType(TextureRegion region){
 			this.region=region;
+		}
+		EffectType(TextureRegion region, String extraText){
+			this.region=region;
+			this.special=true;
 		}
 	}
 	
@@ -31,7 +35,7 @@ public class Effect {
 	
 	public final EffectType type;
 	public final EffectSource source;
-	public final int value;
+	public int value;
 	public Die sourceDie;
 	public Effect(EffectType type, int value, EffectSource source, Die sourceDie){
 		this.type=type;

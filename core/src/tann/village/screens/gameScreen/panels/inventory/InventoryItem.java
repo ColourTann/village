@@ -3,11 +3,9 @@ package tann.village.screens.gameScreen.panels.inventory;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Align;
 
 import tann.village.util.Colours;
 import tann.village.util.Draw;
-import tann.village.util.Fonts;
 import tann.village.util.NumberPanel;
 
 public class InventoryItem extends Group{
@@ -16,12 +14,13 @@ public class InventoryItem extends Group{
 	static final int width = 80;
 	static final int height = 80;
 	static final int border = 4;
-	
+	int max;
 	public NumberPanel numberPanel;
-	public InventoryItem(TextureRegion icon) {
+	public InventoryItem(TextureRegion icon, int max) {
+		this.max=max;
 		this.icon=icon;
 		setSize(width, height);
-		numberPanel = new NumberPanel();
+		numberPanel = new NumberPanel(max);
 		addActor(numberPanel);
 		numberPanel.setPosition(getX()+width, getY()+getHeight()/2-numberPanel.getHeight()/2);
 	}
@@ -53,6 +52,10 @@ public class InventoryItem extends Group{
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		batch.setColor(Colours.z_white);
 		Draw.drawSize(batch, icon, getX()+border, getY()+border, getWidth()-border*2, getHeight()-border*2);
+	}
+
+	public void imposeMaximum() {
+		if(max>0) setValue(Math.min(getValue(), max));
 	}
 
 }

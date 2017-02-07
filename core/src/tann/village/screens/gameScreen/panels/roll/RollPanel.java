@@ -16,7 +16,7 @@ import tann.village.util.NumberPanel;
 public class RollPanel extends Group{
 	
 	static final int buttonSize = 86;
-	static final int WIDTH=230, HEIGHT=buttonSize;
+	static final int WIDTH=260, HEIGHT=buttonSize;
 	public NumberPanel rollsLeft;
 	
 	
@@ -38,7 +38,7 @@ public class RollPanel extends Group{
 		acceptButton.setColor(Colours.green_light);
 		
 		Layoo l = new Layoo(this);
-		rollsLeft = new NumberPanel();
+		rollsLeft = new NumberPanel(2);
 		
 		l.actor(rollsLeft);
 		l.actor(rollButton);

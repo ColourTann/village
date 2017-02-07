@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.effect;
+package tann.village.screens.gameScreen.building;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
 import tann.village.screens.gameScreen.Cost;
-import tann.village.screens.gameScreen.building.BuildingPanel;
+import tann.village.screens.gameScreen.effect.Effect;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;

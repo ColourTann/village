@@ -23,7 +23,6 @@ public class InfoPanel extends Group{
 		Draw.fillRectangle(batch, getX()-BORDER, getY()-BORDER, getWidth()+BORDER*2, getHeight()+BORDER*2);
 		batch.setColor(background);
 		Draw.fillActor(batch, this);
-		// TODO Auto-generated method stub
 		super.draw(batch, parentAlpha);
 	}
 	

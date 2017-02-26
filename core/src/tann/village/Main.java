@@ -24,6 +24,7 @@ import tann.village.bullet.CollisionObject;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.building.Building;
 import tann.village.screens.gameScreen.event.Event;
+import tann.village.screens.gameScreen.event.EventGenerator;
 import tann.village.screens.gameScreen.villager.die.Die;
 import tann.village.util.Colours;
 import tann.village.util.Fonts;
@@ -56,7 +57,7 @@ public class Main extends ApplicationAdapter {
 		self = this;
 		Fonts.setup();
 		Sounds.setup();
-		Event.setup();
+		EventGenerator.setup();
 		Building.init();
 		stage = new Stage(new FitViewport(Main.width, Main.height));
 		orthoCam = (OrthographicCamera) stage.getCamera();

@@ -1,6 +1,5 @@
 package tann.village.screens.gameScreen.panels.inventory;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 
@@ -22,6 +21,8 @@ public class Inventory{
 
 	Array<InventoryItem> items = new Array<>();
 
+	private static final EffectType[] inventoryEffect = new EffectType[]{EffectType.Food, EffectType.Wood, EffectType.Morale, EffectType.Fate};
+	
 	private static Inventory instance;
 	public static Inventory get(){
 		if(instance==null){
@@ -42,8 +43,8 @@ public class Inventory{
 		food = new InventoryItem(Images.food, 5);
 		g.addActor(food);
 		g.addActor(wood = new InventoryItem(Images.wood, 10));
-		g.addActor(morale = new InventoryItem(Images.morale, 5));
-		g.addActor(fate = new InventoryItem(Images.fate, 0));
+		g.addActor(morale = new InventoryItem(Images.morale, 10));
+		g.addActor(fate = new InventoryItem(Images.fate, 10, -10));
 
 		morale.setY(InventoryItem.height+GAP);
 		wood.setY(InventoryItem.height*2+GAP*2);
@@ -52,7 +53,7 @@ public class Inventory{
 		morale.setValue(3);
 		food.setValue(0);
 		wood.setValue(0);
-		fate.setValue(0);
+		fate.setValue(-3);
 
 		items.add(food);
 		items.add(wood);
@@ -137,6 +138,11 @@ public class Inventory{
 		for(InventoryItem item:items){
 			item.imposeMaximum();
 		}
+	}
+	
+	public boolean isEffectValid(Effect e){
+		if(get(e) == null) return true;
+		return get(e).canChangeBy(e.value);
 	}
 
 }

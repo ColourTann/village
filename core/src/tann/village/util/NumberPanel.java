@@ -21,6 +21,11 @@ public class NumberPanel extends Group{
 		setup();
 	}
 	
+	public void setMax(int max){
+		this.max=max;
+		setup();
+	}
+	
 	int wispAmount=0;
 	public void clearWisp(){
 		wispAmount=0;
@@ -60,5 +65,10 @@ public class NumberPanel extends Group{
 		batch.setColor(Colours.dark);
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		super.draw(batch, parentAlpha);
+	}
+
+	public void maxOut() {
+		setValue(max);
+		setup();
 	}
 }

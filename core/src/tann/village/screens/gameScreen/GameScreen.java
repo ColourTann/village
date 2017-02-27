@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
@@ -20,15 +19,16 @@ import tann.village.screens.gameScreen.event.EventPanel;
 import tann.village.screens.gameScreen.panels.construction.ConstructionPanel;
 import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.screens.gameScreen.panels.inventory.UpkeepPanel;
+import tann.village.screens.gameScreen.panels.review.LossPanel;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.screens.gameScreen.panels.review.StarvationPanel;
+import tann.village.screens.gameScreen.panels.review.LossPanel.LossReason;
 import tann.village.screens.gameScreen.panels.roll.RollPanel;
 import tann.village.screens.gameScreen.panels.stats.StatsPanel;
 import tann.village.screens.gameScreen.villager.LevelupPanel;
 import tann.village.screens.gameScreen.villager.Villager;
 import tann.village.screens.gameScreen.villager.VillagerPanel;
 import tann.village.screens.gameScreen.villager.die.Die;
-import tann.village.util.Button;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
@@ -43,6 +43,13 @@ public class GameScreen extends Screen{
 	public State state;
 	
 	public Array<Villager> villagers = new Array<>();
+	
+	TextureRegion bg = Main.atlas.findRegion("gamescreen");
+	public Array<Villager> villagersToLevelUp = new Array<>();
+	ReviewPanel reviewPanel = new ReviewPanel(dayNum);
+	static int dayNum=0;
+	EventPanel eventPanel;
+	ConstructionPanel constructionPanel = new ConstructionPanel();
 	
 	public static GameScreen get(){
 		if(self==null){
@@ -85,8 +92,13 @@ public class GameScreen extends Screen{
 		
 	}
 	
-	public void center(Actor a){
-		a.setPosition(getWidth()/2-a.getWidth()/2, (getHeight()-rollButtonPanel.getHeight())/2-a.getHeight()/2+rollButtonPanel.getHeight());
+	public void center(Actor a, boolean adjustForRollPanel){
+		if(adjustForRollPanel){
+			a.setPosition(getWidth()/2-a.getWidth()/2, (getHeight()-rollButtonPanel.getHeight())/2-a.getHeight()/2+rollButtonPanel.getHeight());
+		}
+		else{
+			a.setPosition(getWidth()/2-a.getWidth()/2, (getHeight())/2-a.getHeight()/2);
+		}
 	}
 	
 	UpkeepPanel upkeepPanel = new UpkeepPanel();
@@ -96,8 +108,7 @@ public class GameScreen extends Screen{
 	}
 
 
-	TextureRegion bg = Main.atlas.findRegion("gamescreen");
-
+	
 	@Override
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
@@ -137,7 +148,6 @@ public class GameScreen extends Screen{
 		}
 	}
 
-	public Array<Villager> villagersToLevelUp = new Array<>();
 	
 	public void proceed() {
 		switch(state){
@@ -153,6 +163,10 @@ public class GameScreen extends Screen{
 				showStarvation();
 				break;
 			}
+			if(Inventory.get().getResourceAmount(EffectType.Morale)<=0){
+				showLoss();
+				break;
+			}
 			if(villagersToLevelUp.size>0){
 				levelup(villagersToLevelUp.removeIndex(0));
 				break;
@@ -164,6 +178,12 @@ public class GameScreen extends Screen{
 		}
 	}
 	
+	private void showLoss() {
+		LossPanel panel = new LossPanel(LossReason.Morale, 5);
+		addActor(panel);
+		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
+	}
+
 	private void showStarvation() {
 		StarvationPanel panel = new StarvationPanel(-Inventory.get().getResourceAmount(EffectType.Food));
 		addActor(panel);
@@ -175,7 +195,7 @@ public class GameScreen extends Screen{
 	private void levelup(Villager v){
 		LevelupPanel lup = new LevelupPanel(v);
 		addActor(lup);
-		center(lup);
+		center(lup, false);
 	}
 	
 	private void setState(State state) {
@@ -197,38 +217,23 @@ public class GameScreen extends Screen{
 		}
 	
 	}
-
 	
-	ReviewPanel reviewPanel = new ReviewPanel(dayNum);;
-
-	
-
 	private void finishRolling() {
 		if(!BulletStuff.finishedRolling()) return;
-		
-		
 		refreshPanels();
-		
-		
 		upkeepPanel.activate();
 		for(Die d:BulletStuff.dice){
 			d.activate();
 		}
-		
 		showWisps();
-		
-		
 		for(Die d: BulletStuff.dice){
 			d.villager.gainXP(1);
 			d.removeFromScreen();
 		}
 		BulletStuff.clearDice();
-		
 	}
 	
-	static int dayNum=0;
 
-	EventPanel eventPanel;
 	
 	private void showEvent() {
 		state=State.Event;
@@ -237,7 +242,7 @@ public class GameScreen extends Screen{
 		
 		eventPanel= new EventPanel(event, dayNum++);
 		event.action();
-		center(eventPanel);
+		center(eventPanel, true);
 		addActor(eventPanel);
 		addProceedButton(eventPanel);
 		Inventory.get().imposeMaximums();
@@ -246,7 +251,8 @@ public class GameScreen extends Screen{
 	private void startRolling() {
 		BulletStuff.refresh(villagers);
 		rollButtonPanel.setVisible(true);
-		rollButtonPanel.rollsLeft.setValue(3);
+		rollButtonPanel.rollsLeft.setMax(2+Inventory.get().getResourceAmount(EffectType.Morale)/3);
+		rollButtonPanel.rollsLeft.maxOut();
 		reviewPanel = new ReviewPanel(dayNum);
 		state=State.Rolling;
 		for(Die d: BulletStuff.dice){
@@ -259,7 +265,7 @@ public class GameScreen extends Screen{
 		state=State.Review;
 		constructionPanel.upkeep();
 		reviewPanel.build();
-		center(reviewPanel);
+		center(reviewPanel, true);
 		addActor(reviewPanel);
 		addProceedButton(reviewPanel);
 		rollButtonPanel.setVisible(false);
@@ -318,7 +324,6 @@ public class GameScreen extends Screen{
 		if(stack.size>0){
 			stack.removeIndex(stack.size-1).remove();
 		}
-		
 		if(stack.size==0){
 			inputBlocker.remove();
 		}
@@ -339,7 +344,7 @@ public class GameScreen extends Screen{
 		proceed();
 	}
 	
-	ConstructionPanel constructionPanel = new ConstructionPanel();
+	
 	
 	public void openBuildingPanel() {
 		constructionPanel.setPosition(Main.width/2-constructionPanel.getWidth()/2, Main.height/2-constructionPanel.getHeight()/2);

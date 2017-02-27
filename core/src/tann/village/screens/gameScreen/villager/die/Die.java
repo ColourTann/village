@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.bullet.BulletStuff;
 import tann.village.bullet.CollisionObject;
+import tann.village.screens.gameScreen.effect.Effect;
 import tann.village.screens.gameScreen.villager.Villager;
 import tann.village.screens.gameScreen.villager.Villager.VillagerType;
 import tann.village.util.Colours;
@@ -52,29 +53,31 @@ public class Die {
 			addSide(Side.brain);
 			addSide(Side.skull);
 			break;
+			
+			// level 2
 		case Fisher:
+			addSide(Side.food1);
 			addSide(Side.food1);
 			addSide(Side.food2);
 			addSide(Side.food2);
-			addSide(Side.food3);
 			addSide(Side.wood1);
 			addSide(Side.brain);
 			break;
-		case Leader:
+		case Musician:
 			addSide(Side.morale1);
-			addSide(Side.morale2);
-			addSide(Side.morale2);
+			addSide(Side.morale1);
 			addSide(Side.food1);
-			addSide(Side.wood2);
+			addSide(Side.food1);
+			addSide(Side.wood1);
 			addSide(Side.brain);
 			break;
 		case FateWeaver:
-			addSide(Side.food2);
+			addSide(Side.fateForFood);
+			addSide(Side.fateForWood);
+			addSide(Side.wood1);
 			addSide(Side.food1);
-			addSide(Side.morale1);
-			addSide(Side.fate2);
-			addSide(Side.fate2);
-			addSide(Side.fate3);
+			addSide(Side.food1);
+			addSide(Side.brain);
 			break;
 		}
 	}
@@ -133,7 +136,7 @@ public class Die {
 	public void addSide(Side side){
 		Side copy = side.copy();
 		sides.add(copy);
-		copy.effect.sourceDie=this;
+		for(Effect e:copy.effects) e.sourceDie=this;
 	}
 	
 	public void construct(){
@@ -187,8 +190,7 @@ public class Die {
 	}
 
 	public void activate() {
-		sides.get(getSide()).effect.activate();
-		
+		for(Effect e:sides.get(getSide()).effects) e.activate();
 	}
 
 	public void addToScreen() {

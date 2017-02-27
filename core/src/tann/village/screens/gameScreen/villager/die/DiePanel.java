@@ -28,7 +28,7 @@ public class DiePanel extends Group{
 			final Side side = die.sides.get(i);
 			Runnable r = new Runnable() {
 				public void run() {
-					System.out.println(side.effect.type);
+					System.out.println("magpie");
 				}
 			};
 			Button butt =new Button(BUTTON_SIZE, BUTTON_SIZE, side.tr, Colours.transparent, r); 

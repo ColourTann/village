@@ -27,8 +27,12 @@ public class Images {
 	public static final TextureRegion side_skull = Main.atlas.findRegion("dice/skull");
 	
 	public static final TextureRegion side_morale_1 = Main.atlas.findRegion("dice/morale1");
+	public static final TextureRegion side_morale_2_minus_2_food = Main.atlas.findRegion("dice/morale2foodminus2");
 	public static final TextureRegion side_morale_2 = Main.atlas.findRegion("dice/morale2");
 	
+	public static final TextureRegion side_fate_1 = Main.atlas.findRegion("dice/fate1");
+	public static final TextureRegion side_fateForFood = Main.atlas.findRegion("dice/fate_for_food");
+	public static final TextureRegion side_fateForWood = Main.atlas.findRegion("dice/fate_for_wood");
 	public static final TextureRegion side_fate_2 = Main.atlas.findRegion("dice/fate2");
 	public static final TextureRegion side_fate_3 = Main.atlas.findRegion("dice/fate3");
 }

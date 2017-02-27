@@ -94,7 +94,7 @@ public class Main extends ApplicationAdapter {
 
 	public enum TransitionType {
 		LEFT, RIGHT
-	};
+	}
 
 	public void setScreen(final Screen screen, TransitionType type, Interpolation interp, float speed) {
 		if (screen == currentScreen)

@@ -36,15 +36,13 @@ public class Inventory{
 	public Inventory() {
 		
 		g = new Group();
-		
-		
 		g.setSize(InventoryItem.width, InventoryItem.height*4+ITEM_GAP*3);
 		g.setPosition(GameScreen.BUTTON_BORDER, Main.height/2-g.getHeight()/2);
 		food = new InventoryItem(Images.food, 5);
 		g.addActor(food);
 		g.addActor(wood = new InventoryItem(Images.wood, 10));
 		g.addActor(morale = new InventoryItem(Images.morale, 10));
-		g.addActor(fate = new InventoryItem(Images.fate, 10, -10));
+		g.addActor(fate = new InventoryItem(Images.fate, 6, -6));
 
 		morale.setY(InventoryItem.height+GAP);
 		wood.setY(InventoryItem.height*2+GAP*2);
@@ -53,7 +51,7 @@ public class Inventory{
 		morale.setValue(3);
 		food.setValue(0);
 		wood.setValue(0);
-		fate.setValue(-3);
+		fate.setValue(0);
 
 		items.add(food);
 		items.add(wood);

@@ -19,7 +19,6 @@ public class RollPanel extends Group{
 	static final int WIDTH=260, HEIGHT=buttonSize;
 	public NumberPanel rollsLeft;
 	
-	
 	public RollPanel() {
 		setSize(WIDTH, HEIGHT);
 		Button rollButton = new Button(buttonSize, buttonSize, .8f, Images.roll, Colours.dark, new Runnable() {
@@ -51,8 +50,4 @@ public class RollPanel extends Group{
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 	}
-	
-	
-	
-
 }

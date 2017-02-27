@@ -84,7 +84,7 @@ public class Slider extends Actor{
 		clip.x=getParent().getX()+getX();
 		clip.y=getParent().getY()+getY();
 		clip.width=getWidth()*value;
-		clip.height=getHeight();;
+		clip.height=getHeight();
 		boolean added =(ScissorStack.pushScissors(clip));
 		if(added){
 			batch.setColor(foreGround);

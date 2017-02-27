@@ -18,14 +18,13 @@ public class StarvationPanel extends InfoPanel{
 	public StarvationPanel(int amountMissing) {
 		TextBox ranOut = new TextBox("You ran out of food!", Fonts.font, WIDTH, Align.center);
 		TextBox missing = new TextBox("Missing "+amountMissing+" food", Fonts.font, WIDTH, Align.center);
-		TextBox morale = new TextBox("You lose 2 morale plus 1 for each food missing.", Fonts.font, WIDTH, Align.center);
-		Effect moraleLoss =new Effect(EffectType.Morale, -3, EffectSource.Upkeep);
-		EffectPanel moralePanel=new EffectPanel( moraleLoss );
-		Inventory.get().activate(moraleLoss);
+		int moraleLoss = 1 + amountMissing/2;
+		TextBox morale = new TextBox("You lose "+moraleLoss+" morale.", Fonts.font, WIDTH, Align.center);
+		Effect moraleLossEffect =new Effect(EffectType.Morale, -moraleLoss, EffectSource.Upkeep);
+		EffectPanel moralePanel=new EffectPanel(moraleLossEffect);
+		Inventory.get().activate(moraleLossEffect);
 		setSize(WIDTH, HEIGHT);
 		Layoo l = new Layoo(this);
-		
-		
 		l.row(1);
 		l.actor(ranOut);
 		l.row(1);
@@ -35,7 +34,6 @@ public class StarvationPanel extends InfoPanel{
 		l.row(1);
 		l.actor(moralePanel);
 		l.row(1);
-		
 		l.layoo();
 	}
 

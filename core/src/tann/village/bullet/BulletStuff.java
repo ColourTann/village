@@ -110,7 +110,7 @@ public class BulletStuff {
 		float amt = .5f;
 		mb.begin();
 
-
+		
 
 		mb.node().id = "ground";
 		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,

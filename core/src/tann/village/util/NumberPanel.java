@@ -10,7 +10,7 @@ import tann.village.screens.gameScreen.GameScreen;
 public class NumberPanel extends Group{
 	static final int WIDTH=70, HEIGHT=40;
 	private int value;
-	int max;
+	public int max;
 	public NumberPanel(int max) {
 		setSize(WIDTH, HEIGHT);
 		this.max=max;

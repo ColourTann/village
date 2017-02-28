@@ -19,7 +19,6 @@ public class ReviewPanel extends InfoPanel{
 	static final int itemWidth = (int)EffectPanel.WIDTH;
 	static final int itemHeight = (int)EffectPanel.HEIGHT;
 	static final int WIDTH = 380;
-	static final int HEIGHT = 290;
 	public static final float SMALL_GAP=10;
 	int day;
 	
@@ -30,7 +29,6 @@ public class ReviewPanel extends InfoPanel{
 	TextBox upkeepTitle;
 	public ReviewPanel(int day) {
 		this.day=day;
-		setSize(WIDTH, HEIGHT);
 	}
 	
 	Array<EffectPanel> diceEffects = new Array<>();
@@ -63,20 +61,26 @@ public class ReviewPanel extends InfoPanel{
 	}
 	Layoo l;
 	public void build(){
+		int height = 0;
 		l = new Layoo(this);
-		l.row(1);
+		l.row(2);
 		title = new TextBox("Day "+day+" review", Fonts.font, WIDTH, Align.center);
+		height += title.getHeight();
 		l.actor(title);
 		if(upkeepEffects.size>0){
 			addItems("Upkeep", upkeepEffects);
+			height += ((upkeepEffects.size+2)/3)*EffectPanel.HEIGHT + Fonts.fontSmall.getLineHeight() + 20;
 		}
 		if(buildingEffects.size>0){
 			addItems("Buildings", buildingEffects);
+			height += ((buildingEffects.size+2)/3)*EffectPanel.HEIGHT + Fonts.fontSmall.getLineHeight() + 20;
 		}
 		if(diceEffects.size>0){
 			addItems("Dice", diceEffects);
+			height += ((diceEffects.size+2)/3)*EffectPanel.HEIGHT + Fonts.fontSmall.getLineHeight() + 20;
 		}
-		l.row(3);
+		l.row(1);
+		setSize(WIDTH, height + 50);
 		l.layoo();
 	}
 

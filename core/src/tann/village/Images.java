@@ -10,6 +10,7 @@ public class Images {
 	public static final TextureRegion morale = Main.atlas.findRegion("resource/morale");
 	public static final TextureRegion fate = Main.atlas.findRegion("resource/fate");
 	public static final TextureRegion level_up = Main.atlas.findRegion("resource/levelup");
+	public static final TextureRegion boat_wheel = Main.atlas.findRegion("resource/ship_wheel");
 	
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
 	public static final TextureRegion tick = Main.atlas.findRegion("tick");
@@ -36,6 +37,7 @@ public class Images {
 	public static final TextureRegion side_fateForWood = Main.atlas.findRegion("dice/fate_for_wood");
 	public static final TextureRegion side_2fateForWoodAndFood = Main.atlas.findRegion("dice/fate2");
 	public static final TextureRegion side_fate_3 = Main.atlas.findRegion("dice/fate3");
+	
 	
 	
 }

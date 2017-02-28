@@ -1,18 +1,13 @@
 package tann.village.screens.gameScreen.villager;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.screens.gameScreen.villager.die.DiePanel;
-import tann.village.util.Button;
 import tann.village.util.Colours;
-import tann.village.util.Draw;
 import tann.village.util.Fonts;
 import tann.village.util.Layoo;
 import tann.village.util.TextBox;
@@ -26,7 +21,7 @@ public class VillagerPanel extends InfoPanel{
 		setSize(MAX_WIDTH, HEIGHT);
 		setBackground(Colours.blue_dark);
 		name = new TextBox(villager.firstName+" "+villager.lastName, Fonts.font, MAX_WIDTH, Align.center);
-		profession = new TextBox(villager.type+" "+villager.xp+"/10 xp",Fonts.fontSmall, MAX_WIDTH, Align.center);
+		profession = new TextBox(villager.type+" "+villager.xp+"/"+villager.xpToLevelUp+" xp",Fonts.fontSmall, MAX_WIDTH, Align.center);
 		DiePanel panel = new DiePanel(villager.die, MAX_WIDTH);
 		
 		Layoo l = new Layoo(this);

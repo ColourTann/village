@@ -17,7 +17,8 @@ public class Effect {
 		LevelUp(Images.level_up),
 		Morale(Images.morale), 
 		FoodStorage(Images.food_storage),
-		Fate(Images.fate);
+		Fate(Images.fate), 
+		Boat(Images.boat_wheel);
 
 		public TextureRegion region;
 		boolean special;
@@ -62,6 +63,9 @@ public class Effect {
 		switch(type){
 		case FoodStorage:
 			Inventory.get().get(EffectType.Food).numberPanel.addMax(value);
+			return;
+		case Boat:
+			GameScreen.get().addObjective();
 			return;
 		case Brain:
 			sourceDie.villager.gainXP(value);

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
@@ -16,6 +17,7 @@ import tann.village.screens.gameScreen.effect.Effect.EffectSource;
 import tann.village.screens.gameScreen.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.event.Event;
 import tann.village.screens.gameScreen.event.EventPanel;
+import tann.village.screens.gameScreen.panels.ObjectivePanel;
 import tann.village.screens.gameScreen.panels.construction.ConstructionPanel;
 import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.screens.gameScreen.panels.inventory.UpkeepPanel;
@@ -33,6 +35,7 @@ import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
 import tann.village.util.Screen;
+import tann.village.util.TextBox;
 
 public class GameScreen extends Screen{
 	public static final int BUTTON_BORDER=10;
@@ -344,11 +347,21 @@ public class GameScreen extends Screen{
 		proceed();
 	}
 	
-	
-	
 	public void openBuildingPanel() {
 		constructionPanel.setPosition(Main.width/2-constructionPanel.getWidth()/2, Main.height/2-constructionPanel.getHeight()/2);
 		push(constructionPanel);
+	}
+
+	public void addObjective() {
+		ObjectivePanel panel = new ObjectivePanel();
+		addActor(panel);
+		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()-panel.getHeight()-BUTTON_BORDER);
+	}
+
+	public void win() {
+		TextBox tb = new TextBox("You win! It took you "+dayNum+" turns :D", Fonts.fontBig, getWidth()/2, Align.center);
+		addActor(tb);
+		tb.setPosition(getWidth()/2, getHeight()/2, Align.center);
 	}
 	
 }

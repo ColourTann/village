@@ -56,7 +56,7 @@ public class EventGenerator {
 
 		//not ok//
 		t="Cursed Orange";
-		d="Lightning struck the ground as someone picked an orange from a tree";
+		d="Lightning strikes the ground as someone picked an orange from a tree";
 		f=1; v=1;
 		c=1;
 		e=new Effect(EffectType.Food, 1, ev);
@@ -118,25 +118,23 @@ public class EventGenerator {
 		e1 = new Effect(EffectType.Wood, 2, EffectSource.Event);
 		makeStory();
 		
-		turn=3;
+		turn=6;
+		t="You Must Build A Boat";
+		d="The weather is not getting better, to stand a chance at survival you have to escape!";
+		e = new Effect(EffectType.Boat, ev);
+		makeStory();
+		
+		turn=4;
 		t="Hunger";
 		d="The reduced rations you decided on are not enough keep you alive on the island. Upkeep increased by two.";
 		e = new Effect(EffectType.Food, -2, EffectSource.Upkeep);
 		makeStory();
 		
-		turn=6;
+		turn=9;
 		t="Cold";
 		d="The nights are getting colder, you need fuel to keep warm.";
 		e = new Effect(EffectType.Wood, -1, EffectSource.Upkeep);
 		makeStory();
-		
-		turn=9;
-		t="You Must Build A Boat";
-		d="The weather is not getting better, to stand a chance at survival you have to escape!";
-//		e = new Effect(EffectType.Boat);
-		makeStory();
-		
-		
 	}
 	
 	private static void makeStory() {

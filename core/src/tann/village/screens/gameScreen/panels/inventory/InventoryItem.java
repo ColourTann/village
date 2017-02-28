@@ -14,7 +14,6 @@ public class InventoryItem extends Group{
 	static final int width = 80;
 	static final int height = 80;
 	static final int border = 4;
-	int max;
 	int min;
 	public NumberPanel numberPanel;
 	public InventoryItem(TextureRegion icon, int max) {
@@ -22,7 +21,6 @@ public class InventoryItem extends Group{
 	}
 	
 	public InventoryItem(TextureRegion icon, int max, int min) {
-		this.max=max;
 		this.min=min;
 		this.icon=icon;
 		setSize(width, height);
@@ -61,11 +59,11 @@ public class InventoryItem extends Group{
 	}
 
 	public void imposeMaximum() {
-		if(max>0) setValue(Math.min(getValue(), max));
+		if(numberPanel.max>0) setValue(Math.min(getValue(), numberPanel.max));
 	}
 	
 	public boolean canChangeBy(int amount){
 		int potentialTotal = amount + getValue();
-		return (potentialTotal <= max) && (potentialTotal  >= min); 
+		return (potentialTotal <= numberPanel.max) && (potentialTotal  >= min); 
 	}
 }

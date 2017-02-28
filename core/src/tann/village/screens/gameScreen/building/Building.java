@@ -62,7 +62,7 @@ public class Building {
 			n="Offering";
 			d="If the gods exist, it's a good idea to get on their favour";
 			w=4;
-			f=4;
+			f=2;
 			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 1, b)});
 			b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Fate, 1, b)});
 			make();
@@ -70,7 +70,7 @@ public class Building {
 			n="Crate";
 			d="A little extra storage for food can help out when times are hard";
 			w=5;
-			b1 = new BuildingEffect(BuildingEffectType.Permanent, new Effect[]{new Effect(EffectType.FoodStorage, 2, b)});
+			b1 = new BuildingEffect(BuildingEffectType.Permanent, new Effect[]{new Effect(EffectType.FoodStorage, 3, b)});
 			make();
 			
 			n="Salvage Hut";

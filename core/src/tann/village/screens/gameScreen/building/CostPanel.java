@@ -18,7 +18,7 @@ public class CostPanel extends Group{
 	
 	public Cost cost;
 	private static final int HEIGHT=(int) BuildingPanel.IMAGE_SIZE+0;
-	private static final float IMAGE_SIZE=HEIGHT/2;	
+	private static final float IMAGE_SIZE=HEIGHT/3;	
 	
 	static final float WIDTH=IMAGE_SIZE*2.5f;
 	

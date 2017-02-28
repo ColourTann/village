@@ -1,8 +1,6 @@
 package tann.village.screens.gameScreen.panels.construction;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
@@ -13,8 +11,6 @@ import tann.village.screens.gameScreen.building.Building;
 import tann.village.screens.gameScreen.building.BuildingPanel;
 import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
-import tann.village.util.Colours;
-import tann.village.util.Draw;
 import tann.village.util.Fonts;
 import tann.village.util.Layoo;
 import tann.village.util.TextBox;
@@ -110,8 +106,8 @@ public class ConstructionPanel extends InfoPanel{
 
 	private void resetAvailablePanels() {
 		int levelToGenerate = 0;
-		if(currentSlot.building!=null){
-			levelToGenerate=currentSlot.building.level+1;
+		if(slots.get(2).building!=null){
+			levelToGenerate=slots.get(2).building.level+1;
 		}
 		for(BuildingPanel bp:availables){
 			bp.setBuilding(Building.random(levelToGenerate));

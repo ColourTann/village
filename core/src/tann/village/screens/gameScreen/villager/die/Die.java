@@ -67,9 +67,9 @@ public class Die {
 			break;
 		case Musician:
 			addSide(Side.morale1);
-			addSide(Side.morale1);
 			addSide(Side.food1);
-			addSide(Side.food1);
+			addSide(Side.wood1);
+			addSide(Side.food2);
 			addSide(Side.wood1);
 			addSide(Side.brain);
 			break;

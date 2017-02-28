@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.screens.gameScreen.villager.die.Die;
 
 public class Effect {
@@ -15,6 +16,7 @@ public class Effect {
 		Skull(Images.side_skull),
 		LevelUp(Images.level_up),
 		Morale(Images.morale), 
+		FoodStorage(Images.food_storage),
 		Fate(Images.fate);
 
 		public TextureRegion region;
@@ -58,6 +60,9 @@ public class Effect {
 	
 	public void activate(){
 		switch(type){
+		case FoodStorage:
+			Inventory.get().get(EffectType.Food).numberPanel.addMax(value);
+			return;
 		case Brain:
 			sourceDie.villager.gainXP(value);
 			break;

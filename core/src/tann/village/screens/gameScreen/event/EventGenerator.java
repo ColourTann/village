@@ -53,11 +53,26 @@ public class EventGenerator {
 		f=0; v=10;
 		c=2; 
 		makeRandom();
-		
+
 		//not ok//
+		t="Cursed Orange";
+		d="Lightning struck the ground as someone picked an orange from a tree";
+		f=1; v=1;
+		c=1;
+		e=new Effect(EffectType.Food, 1, ev);
+		e1=new Effect(EffectType.Fate, -1, ev);
+		makeRandom();
+		
 		t="Tiny Thief";
 		d="A monkey runs off with a handful of food!";
 		e=new Effect(EffectType.Food, -1, ev);
+		f=-1; v=1;
+		c=1; 
+		makeRandom();
+		
+		t="Rot";
+		d="Rot starts to set in";
+		e=new Effect(EffectType.Wood, -1, ev);
 		f=-1; v=1;
 		c=1; 
 		makeRandom();
@@ -67,6 +82,15 @@ public class EventGenerator {
 		d="The heat is getting you down, your people need shelter!";
 		e=new Effect(EffectType.Morale, -2, ev);
 		e1=new Effect(EffectType.Fate, +1, ev);
+		f=-2; v=1;
+		c=1; 
+		makeRandom();
+		
+		t="Noises in the night";
+		d="Some of your food is gone, along with some storage!";
+		e=new Effect(EffectType.Food, -2, ev);
+		e1=new Effect(EffectType.FoodStorage, -1, ev);
+		e2=new Effect(EffectType.Fate, +1, ev);
 		f=-2; v=1;
 		c=1; 
 		makeRandom();
@@ -96,19 +120,22 @@ public class EventGenerator {
 		
 		turn=3;
 		t="Hunger";
-		d="The reduced rations you decided on are not enough to fuel your hard labour on the island. Upkeep increased by two.";
+		d="The reduced rations you decided on are not enough keep you alive on the island. Upkeep increased by two.";
 		e = new Effect(EffectType.Food, -2, EffectSource.Upkeep);
 		makeStory();
 		
-		turn=10;
-		t="Hunger";
-		d="Your village needs more food, they're looking malnourished and weak.";
-		e = new Effect(EffectType.Food, -2, EffectSource.Upkeep);
+		turn=6;
+		t="Cold";
+		d="The nights are getting colder, you need fuel to keep warm.";
+		e = new Effect(EffectType.Wood, -1, EffectSource.Upkeep);
 		makeStory();
 		
-		turn=15;
-		t="Howling";
-		d="";
+		turn=9;
+		t="You Must Build A Boat";
+		d="The weather is not getting better, to stand a chance at survival you have to escape!";
+//		e = new Effect(EffectType.Boat);
+		makeStory();
+		
 		
 	}
 	

@@ -6,7 +6,7 @@ import tann.village.screens.gameScreen.effect.Effect;
 
 public class BuildingEffect {
 
-	public enum BuildingEffectType{Now, EveryTurn, PermanentBonus, Passive}
+	public enum BuildingEffectType{Now, EveryTurn, Permanent, Passive}
 
 	public enum PermanentBonusType{}
 	
@@ -23,7 +23,7 @@ public class BuildingEffect {
 	}
 	
 	public BuildingEffect(PermanentBonusType permanentBonusType){
-		this.effectType=BuildingEffectType.PermanentBonus;
+		this.effectType=BuildingEffectType.Permanent;
 		this.perm = permanentBonusType;
 	}
 	

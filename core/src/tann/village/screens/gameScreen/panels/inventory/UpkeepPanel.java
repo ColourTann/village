@@ -20,7 +20,7 @@ import tann.village.util.TextBox;
 
 public class UpkeepPanel extends InfoPanel{
 
-	static final int WIDTH=150, HEIGHT=80;
+	static final int WIDTH=300, HEIGHT=80;
 	static final int EXTRA= 20;
 	
 	Array<Effect> effects = new Array<>();
@@ -49,7 +49,7 @@ public class UpkeepPanel extends InfoPanel{
 	public void build(){
 		clear();
 		TextBox title = new TextBox("Upkeep", Fonts.font, WIDTH, Align.center);
-		setSize(Math.max(title.getWidth(), EffectPanel.WIDTH)+EXTRA, title.getHeight()+EffectPanel.HEIGHT+EXTRA);
+		setSize(Math.max(title.getWidth(), EffectPanel.WIDTH*effects.size)+EXTRA, title.getHeight()+EffectPanel.HEIGHT+EXTRA);
 		Layoo l = new Layoo(this);
 		l.row(1);
 		l.actor(title);

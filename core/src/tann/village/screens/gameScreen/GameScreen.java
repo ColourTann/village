@@ -193,7 +193,7 @@ public class GameScreen extends Screen{
 	}
 
 	private void levelup(Villager v){
-		LevelupPanel lup = new LevelupPanel(v);
+		LevelupPanel lup = new LevelupPanel(v, Villager.getRandomVillagerTypes(Math.min(Villager.MAX_LEVEL, v.type.level+1), 3));
 		addActor(lup);
 		center(lup, false);
 	}

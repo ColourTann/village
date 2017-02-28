@@ -20,7 +20,7 @@ public class Fonts {
 	public static BitmapFont fontBig;
 	
 	public static void setup(){
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/bloodcrow.ttf"));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/ampersand.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = 22;
 		fontSmall = generator.generateFont(parameter); // font size 12 pixels

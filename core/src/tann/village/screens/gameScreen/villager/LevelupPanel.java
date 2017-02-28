@@ -24,7 +24,7 @@ public class LevelupPanel extends InfoPanel{
 	private static final int RIGHT_WIDTH = 300;
 	private static final int WIDTH = LEFT_WIDTH+RIGHT_WIDTH;
 	private static final int HEIGHT = 650;
-	public LevelupPanel(final Villager villager) {
+	public LevelupPanel(final Villager villager, VillagerType[] options) {
 		
 		setSize(WIDTH, HEIGHT);
 		
@@ -55,9 +55,8 @@ public class LevelupPanel extends InfoPanel{
 		addActor(rightGroup);
 		rightGroup.setPosition(LEFT_WIDTH, 0);
 		
-		
 		for(int i=0;i<3;i++){
-			final VillagerType type =VillagerType.values()[1+i]; 
+			final VillagerType type =options[i]; 
 			ClassPanel panel = new ClassPanel(type, RIGHT_WIDTH-20);
 			panel.addListener(new InputListener(){
 				@Override

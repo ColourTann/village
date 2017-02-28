@@ -79,7 +79,7 @@ public class EffectPanel extends Group{
 		else if (value<0){
 			Fonts.font.setColor(Colours.red);
 		}
-		font.draw(batch, (value>0?"+":"")+value, getX()+textStart, getY()+getHeight()/2f+font.getXHeight()*.75f, textWidth, Align.center, false);
+		font.draw(batch, (value>0?"+":"")+value, getX()+textStart, getY()+getHeight()/2f+font.getXHeight()*.35f, textWidth, Align.center, false);
 		
 		
 		super.draw(batch, parentAlpha);

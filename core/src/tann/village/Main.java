@@ -58,7 +58,6 @@ public class Main extends ApplicationAdapter {
 		Fonts.setup();
 		Sounds.setup();
 		EventGenerator.setup();
-		Building.init();
 		stage = new Stage(new FitViewport(Main.width, Main.height));
 		orthoCam = (OrthographicCamera) stage.getCamera();
 		batch = (SpriteBatch) stage.getBatch();

@@ -50,7 +50,7 @@ public class Inventory{
 
 		morale.setValue(3);
 		food.setValue(0);
-		wood.setValue(0);
+		wood.setValue(50);
 		fate.setValue(0);
 
 		items.add(food);

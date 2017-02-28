@@ -11,32 +11,40 @@ import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
 import tann.village.util.ImageGap;
+import tann.village.util.Layoo;
 import tann.village.util.TextBox;
 
 public class CostPanel extends Group{
 	
 	public Cost cost;
 	private static final int HEIGHT=(int) BuildingPanel.IMAGE_SIZE+0;
-	private static final float IMAGE_SIZE=HEIGHT/2;
+	private static final float IMAGE_SIZE=HEIGHT/2;	
 	
-	static final float WIDTH=IMAGE_SIZE*1.5f;
+	static final float WIDTH=IMAGE_SIZE*2.5f;
 	
 	public CostPanel(Cost cost) {
 		this.cost=cost;
-		setSize(WIDTH+10, HEIGHT);
+		setSize(WIDTH, HEIGHT);
 		BitmapFont font = Fonts.fontSmall;
-		float gap = (getHeight()-IMAGE_SIZE*cost.effects.size)/(cost.effects.size+1) ;
+		Layoo l = new Layoo(this);
 		for(int i=0;i<cost.effects.size;i++){
+			
 			Effect e = cost.effects.get(i);
 			TextBox tb = new TextBox(e.value+"", font,  WIDTH, Align.center);
+			
 			tb.setTextColour(Colours.brown_light);
 			ImageGap img = new ImageGap(e.type.region, IMAGE_SIZE, IMAGE_SIZE);
-			img.setPosition(0, gap+(img.getHeight()+gap)*i);
-			tb.setPosition(img.getWidth()+(getWidth()-img.getWidth())/2-tb.getWidth()/2, img.getY()+img.getHeight()/2-tb.getHeight()/2);
-			addActor(tb);
-			addActor(img);
+			
+			l.row(1);
+			l.gap(1);
+			l.actor(img);
+			l.gap(1);
+			l.actor(tb);
+			l.gap(1);
+			
 		}
-		
+		l.row(1);
+		l.layoo();
 		
 	}
 	

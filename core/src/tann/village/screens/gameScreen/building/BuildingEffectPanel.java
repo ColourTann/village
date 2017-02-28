@@ -29,11 +29,10 @@ public class BuildingEffectPanel extends Group{
 		switch(buildingEffect.effectType){
 		case EveryTurn:
 		case Now:
+		case Permanent:
 			addEffectPanels();
 			break;
 		case Passive:
-			break;
-		case PermanentBonus:
 			break;
 		default:
 			break;

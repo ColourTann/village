@@ -1,5 +1,9 @@
 package tann.village.screens.gameScreen.villager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 
 import tann.village.screens.gameScreen.GameScreen;
@@ -10,7 +14,34 @@ import tann.village.screens.gameScreen.villager.die.Die;
 
 public class Villager {
 
-	public enum VillagerType{Villager, Fisher, Musician, FateWeaver}
+	public enum VillagerType{
+		Villager(0), 
+		Fisher(1), Musician(1), Mystic(1), Gatherer(1), Chopper(1),
+		Farmer(2), Leader(2), FateWeaver(2), Explorer(2), Builder(2);
+		public int level;
+		VillagerType(int level){
+			this.level=level;
+		}
+	}
+
+	public static final int MAX_LEVEL = 2;
+
+	
+	public static VillagerType[] getRandomVillagerTypes(int level, int amount){
+		VillagerType[] results = new VillagerType[amount];
+		List<VillagerType> availables = new ArrayList<>();
+		for(VillagerType t:VillagerType.values()){
+			if(t.level==level){
+				availables.add(t);
+			}
+		}
+		if(availables.size()<amount) return null;
+		Collections.shuffle(availables);
+		for(int i=0;i<amount;i++){
+			results[i]=availables.remove(0);
+		}
+		return results;
+	}
 	
 	String firstName;
 	String lastName;
@@ -21,11 +52,7 @@ public class Villager {
 	
 	
 	public Villager() {
-		
 		this.type=VillagerType.Villager;
-		
-//		this.type=VillagerType.values()[(int)(Math.random()*VillagerType.values().length)];
-		
 		setupDie();
 		firstName=generateName(true);
 		lastName=generateName(false);

@@ -9,9 +9,6 @@ public class VillagePack {
 	settings.combineSubdirectories = false;
 	settings.maxWidth=2048;
 	settings.maxHeight=2048;
-	settings.edgePadding=false;
-	settings.paddingX=0;
-	settings.paddingY=0;
 	TexturePacker.process(settings, "../images", "../android/assets", "atlas_image");
 	}
 }

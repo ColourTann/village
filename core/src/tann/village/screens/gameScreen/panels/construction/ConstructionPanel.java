@@ -37,8 +37,9 @@ public class ConstructionPanel extends InfoPanel{
 		l.actor(available);
 		l.row(1);
 		l.gap(1);
+		
 		for(int i=0;i<3;i++){
-			BuildingPanel bpan = new BuildingPanel(Building.random());
+			BuildingPanel bpan = new BuildingPanel();
 			l.actor(bpan);
 			availables.add(bpan);
 			l.gap(1);
@@ -78,6 +79,7 @@ public class ConstructionPanel extends InfoPanel{
 			});
 		}
 		
+		resetAvailablePanels();
 		
 	}
 	
@@ -107,8 +109,12 @@ public class ConstructionPanel extends InfoPanel{
 	}
 
 	private void resetAvailablePanels() {
+		int levelToGenerate = 0;
+		if(currentSlot.building!=null){
+			levelToGenerate=currentSlot.building.level+1;
+		}
 		for(BuildingPanel bp:availables){
-			bp.setBuilding(Building.random());
+			bp.setBuilding(Building.random(levelToGenerate));
 		}
 	}
 

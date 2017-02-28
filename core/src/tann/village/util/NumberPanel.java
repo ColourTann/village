@@ -71,4 +71,9 @@ public class NumberPanel extends Group{
 		setValue(max);
 		setup();
 	}
+
+	public void addMax(int value) {
+		System.out.println("adding max "+value);
+		setMax(max+value);
+	}
 }

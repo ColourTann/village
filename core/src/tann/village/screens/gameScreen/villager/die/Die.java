@@ -45,6 +45,8 @@ public class Die {
 	
 	public void setup(VillagerType type){
 		switch(type){
+		
+			// level 0
 		case Villager:
 			addSide(Side.food1);
 			addSide(Side.food1);
@@ -54,7 +56,7 @@ public class Die {
 			addSide(Side.skull);
 			break;
 			
-			// level 2
+			// level 1
 		case Fisher:
 			addSide(Side.food1);
 			addSide(Side.food1);
@@ -71,14 +73,75 @@ public class Die {
 			addSide(Side.wood1);
 			addSide(Side.brain);
 			break;
-		case FateWeaver:
+		case Mystic:
 			addSide(Side.fateForFood);
 			addSide(Side.fateForWood);
 			addSide(Side.wood1);
 			addSide(Side.food1);
-			addSide(Side.food1);
+			addSide(Side.skull);
 			addSide(Side.brain);
 			break;
+		case Chopper:
+			addSide(Side.food1);
+			addSide(Side.wood1);
+			addSide(Side.wood2);
+			addSide(Side.wood3);
+			addSide(Side.skull);
+			addSide(Side.brain);
+			break;
+		case Gatherer:
+			addSide(Side.food1);
+			addSide(Side.food1);
+			addSide(Side.food2);
+			addSide(Side.wood1);
+			addSide(Side.wood2);
+			addSide(Side.brain);
+			break;
+			
+		// level 2
+		case Builder:
+			addSide(Side.food1);
+			addSide(Side.food2);
+			addSide(Side.wood2);
+			addSide(Side.wood3);
+			addSide(Side.wood3);
+			addSide(Side.brain);
+			break;
+		case Explorer:
+			addSide(Side.food3);
+			addSide(Side.wood3);
+			addSide(Side.morale1);
+			addSide(Side.food1wood1);
+			addSide(Side.brain);
+			addSide(Side.skull);
+			break;
+		case Farmer:
+			addSide(Side.food1wood1);
+			addSide(Side.food1wood1);
+			addSide(Side.food2);
+			addSide(Side.food3);
+			addSide(Side.food3);
+			addSide(Side.brain);
+			break;
+		case FateWeaver:
+			addSide(Side.fate1);
+			addSide(Side.fate1);
+			addSide(Side.fate2ForWoodAndFood);
+			addSide(Side.food2);
+			addSide(Side.skull);
+			addSide(Side.brain);
+			break;
+		case Leader:
+			addSide(Side.morale2);
+			addSide(Side.morale2);
+			addSide(Side.food2);
+			addSide(Side.food2);
+			addSide(Side.wood2);
+			addSide(Side.brain);
+			break;
+		default:
+			break;
+			
 		}
 	}
 

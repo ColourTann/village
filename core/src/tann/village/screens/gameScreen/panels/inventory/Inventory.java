@@ -48,7 +48,7 @@ public class Inventory{
 		wood.setY(InventoryItem.height*2+GAP*2);
 		food.setY(InventoryItem.height*3+GAP*3);
 
-		morale.setValue(3);
+		morale.setValue(4);
 		food.setValue(0);
 		wood.setValue(0);
 		fate.setValue(0);

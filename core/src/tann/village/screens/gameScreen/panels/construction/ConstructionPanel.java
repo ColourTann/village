@@ -109,6 +109,7 @@ public class ConstructionPanel extends InfoPanel{
 		if(slots.get(2).building!=null){
 			levelToGenerate=slots.get(2).building.level+1;
 		}
+		levelToGenerate = Math.min(1, levelToGenerate);
 		for(BuildingPanel bp:availables){
 			bp.setBuilding(Building.random(levelToGenerate));
 		}

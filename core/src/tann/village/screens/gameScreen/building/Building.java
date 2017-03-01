@@ -43,7 +43,7 @@ public class Building {
 	private static int w,f,l;
 	public static void init(int level){
 		EffectSource b = EffectSource.Building;
-		buildings.put(level, new Array<>());
+		buildings.put(level, new Array<Building>());
 		switch(level){
 		case 0:
 			l=0; // *********************level 0********************* //

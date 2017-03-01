@@ -26,6 +26,7 @@ public class TextBox extends Actor{
 	BitmapFont font;
 	int align;
 	Color textCol = Colours.light;
+	Color bgCol = Colours.transparent;
 	public TextBox(String text, BitmapFont font, float maxWidth, int align){
 		if(maxWidth==-1) maxWidth = 99999;
 		this.align=align;
@@ -33,6 +34,10 @@ public class TextBox extends Actor{
 		this.font=font;
 		layout.setText(font, text, Colours.light, maxWidth, align, true);
 		setSize(Math.min(maxWidth, layout.width), layout.height);
+	}
+	
+	public void setBackgroundColour(Color col){
+		this.bgCol=col;
 	}
 	
 	public void setTextColour(Color col){
@@ -43,6 +48,8 @@ public class TextBox extends Actor{
 	public void draw(Batch batch, float parentAlpha) {
 //		batch.setColor(1,0,1,.5f);
 //		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
+		batch.setColor(bgCol);
+		Draw.fillRectangle(batch, getX()-50, getY()-50, getWidth()+100, getHeight()+100);
 		font.setColor(textCol);
 		font.draw(batch, text, getX(), getY()+getHeight(), layout.width,  align, true);
 		super.draw(batch, parentAlpha);

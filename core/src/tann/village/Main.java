@@ -56,7 +56,7 @@ public class Main extends ApplicationAdapter {
 		atlas = new TextureAtlas(Gdx.files.internal("atlas_image.atlas"));
 		self = this;
 		Fonts.setup();
-		Sounds.setup();
+//		Sounds.setup();
 		EventGenerator.setup();
 		stage = new Stage(new FitViewport(Main.width, Main.height));
 		orthoCam = (OrthographicCamera) stage.getCamera();

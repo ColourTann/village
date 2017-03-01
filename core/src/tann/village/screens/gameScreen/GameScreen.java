@@ -116,7 +116,7 @@ public class GameScreen extends Screen{
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
 		Draw.draw(batch, bg, 0, 0);
-		Fonts.font.draw(batch, "state: "+state, 400, Main.height-Fonts.font.getAscent());
+//		Fonts.font.draw(batch, "state: "+state, 400, Main.height-Fonts.font.getAscent());
 	}
 
 	@Override
@@ -182,13 +182,18 @@ public class GameScreen extends Screen{
 	}
 	
 	private void showLoss() {
-		LossPanel panel = new LossPanel(LossReason.Morale, 5);
+		LossPanel panel = new LossPanel(LossReason.Morale, dayNum);
 		addActor(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 	}
 
 	private void showStarvation() {
-		StarvationPanel panel = new StarvationPanel(-Inventory.get().getResourceAmount(EffectType.Food));
+		int food = Inventory.get().getResourceAmount(EffectType.Food);
+		int wood = Inventory.get().getResourceAmount(EffectType.Wood);
+		int missing = 0;
+		if(food<0) missing -= food;
+		if(wood<0) missing -= wood;
+		StarvationPanel panel = new StarvationPanel(missing);
 		addActor(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 		addProceedButton(panel);
@@ -360,6 +365,8 @@ public class GameScreen extends Screen{
 
 	public void win() {
 		TextBox tb = new TextBox("You win! It took you "+dayNum+" turns :D", Fonts.fontBig, getWidth()/2, Align.center);
+		tb.setTextColour(Colours.blue_dark);
+		tb.setBackgroundColour(Colours.dark);
 		addActor(tb);
 		tb.setPosition(getWidth()/2, getHeight()/2, Align.center);
 	}

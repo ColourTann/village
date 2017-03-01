@@ -113,7 +113,7 @@ public class EventGenerator {
 	private static void setupStory(){
 		turn=0;
 		t="Stranded!";
-		d="A sudden storm cause your ship to crash upon an island. It looks like there are only 5 survivors. You manage to salvage some supplies before they're carried away by the waves.";
+		d="A sudden storm causes your ship to crash upon an island. It looks like there are only 5 survivors. You manage to salvage some supplies before they're carried away by the waves.";
 		e = new Effect(EffectType.Food, 2, EffectSource.Event);
 		e1 = new Effect(EffectType.Wood, 2, EffectSource.Event);
 		makeStory();

@@ -68,7 +68,7 @@ public class Effect {
 			GameScreen.get().addObjective();
 			return;
 		case Brain:
-			sourceDie.villager.gainXP(value);
+			sourceDie.villager.gainXP(value*2);
 			break;
 		}
 		GameScreen.get().addEffect(this);

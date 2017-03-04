@@ -33,6 +33,7 @@ import tann.village.util.Sounds;
 
 public class Main extends ApplicationAdapter {
 	public static int width = 1000, height = 700;
+	String version = "0.2";
 	SpriteBatch batch;
 	Stage stage;
 	OrthographicCamera orthoCam;
@@ -49,7 +50,6 @@ public class Main extends ApplicationAdapter {
 		Normal, Paused
 	}
 
-	public static final int version = 4;
 
 	@Override
 	public void create() {
@@ -147,13 +147,21 @@ public class Main extends ApplicationAdapter {
 
 //		BulletStuff.render();
 
-
+		drawVersion();
+		
 		if (Main.showFPS) {
 			batch.begin();
 			batch.setColor(Colours.light);
 			drawFPS(batch);
 			batch.end();
 		}
+	}
+
+	private void drawVersion() {
+		batch.begin();
+		Fonts.fontSmall.setColor(Colours.blue_dark);
+		Fonts.fontSmall.draw(batch, version, 0, Fonts.fontSmall.getLineHeight());
+		batch.end();
 	}
 
 	public void drawFPS(Batch batch) {

@@ -67,6 +67,10 @@ public class Side {
 	}
 	
 	public Side copy(){
-		return new Side(tr, effects.clone());
+		Effect[] newEffects = new Effect[effects.length];
+		for(int i=0;i<effects.length;i++){
+			newEffects[i] = new Effect(effects[i].type, effects[i].value, effects[i].source);
+		}
+		return new Side(tr, newEffects);
 	}
 }

@@ -1,6 +1,7 @@
 package tann.village.bullet;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes;
@@ -10,13 +11,17 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.Renderable;
+import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
+import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader.Config;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
+import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.bullet.Bullet;
@@ -39,18 +44,16 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.utils.Array;
 
-import tann.village.Images;
 import tann.village.Main;
-import tann.village.screens.gameScreen.effect.Effect;
-import tann.village.screens.gameScreen.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.villager.Villager;
-import tann.village.screens.gameScreen.villager.Villager.VillagerType;
 import tann.village.screens.gameScreen.villager.die.Die;
-import tann.village.screens.gameScreen.villager.die.Side;
 import tann.village.util.Colours;
 
 public class BulletStuff {
 
+	public static Renderable renderable = new Renderable();
+	public static ShaderProgram shaderProgram;
+	
 	static PerspectiveCamera perspectiveCam;
 	static CameraInputController camController;
 	static ModelBatch modelBatch;
@@ -82,14 +85,42 @@ public class BulletStuff {
 	public static Array<AtlasRegion> diceTextures = new Array<>();
 
 	public static void init(){
-
 		for(int i=0;i<6;i++){
 			diceTextures.add(Main.atlas.findRegion("dice/die"+i));
 		}
 
 		Bullet.init();
-
-		modelBatch = new ModelBatch();
+		
+		FileHandle vert = Gdx.files.internal("shader/test.vertex.glsl");
+		FileHandle frag = Gdx.files.internal("shader/test.fragment.glsl");
+		
+		
+		String vertexShader = "attribute vec4 a_position;    \n" + 
+                "attribute vec4 a_color;\n" +
+                "attribute vec2 a_texCoord0;\n" + 
+                "uniform mat4 u_projTrans;\n" + 
+                "varying vec4 v_color;" + 
+                "varying vec2 v_texCoords;" + 
+                "void main()                  \n" + 
+                "{                            \n" + 
+                "   v_color = vec4(1, 1, 1, 1); \n" + 
+                "   v_texCoords = a_texCoord0; \n" + 
+                "   gl_Position =  u_projTrans * a_position;  \n"      + 
+                "}                            \n" ;
+String fragmentShader = "#ifdef GL_ES\n" +
+                  "precision mediump float;\n" + 
+                  "#endif\n" + 
+                  "varying vec4 v_color;\n" + 
+                  "varying vec2 v_texCoords;\n" + 
+                  "uniform sampler2D u_texture;\n" + 
+                  "void main()                                  \n" + 
+                  "{                                            \n" + 
+                  "  gl_FragColor = v_color * texture2D(u_texture, v_texCoords);\n" +
+                  "}";
+		
+//ShaderProvider defaultShaderProvider =new DefaultShaderProvider(vertexShader, fragmentShader);
+ShaderProvider defaultShaderProvider =new DefaultShaderProvider(vert.readString(), frag.readString());
+		modelBatch = new ModelBatch(defaultShaderProvider);
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
 		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
@@ -180,13 +211,18 @@ public class BulletStuff {
 	public static final int mass = 1;
 
 	public static void render() {
-		modelBatch.begin(perspectiveCam); 
+		modelBatch.begin(perspectiveCam);
+//		renderable.shader=shader;
+//		modelBatch.render(instances, environment);
 		modelBatch.render(instances, environment);
-		Array<ModelInstance> lockedInstances = new Array<>();
-		for(Die d:lockedDice){
-			lockedInstances.add(d.physical);
-		}
-		modelBatch.render(lockedInstances, locked);
+//		modelBatch.render(renderable, env);
+//		modelBatch.render(renderable);
+		
+//		Array<ModelInstance> lockedInstances = new Array<>();
+//		for(Die d:lockedDice){
+//			lockedInstances.add(d.physical);
+//		}
+//		modelBatch.render(lockedInstances, locked);
 		modelBatch.end();
 	}
 

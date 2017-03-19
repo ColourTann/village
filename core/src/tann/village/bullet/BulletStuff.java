@@ -3,6 +3,7 @@ package tann.village.bullet;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
@@ -54,10 +56,10 @@ public class BulletStuff {
 	public static Renderable renderable = new Renderable();
 	public static ShaderProgram shaderProgram;
 	
-	static PerspectiveCamera perspectiveCam;
+	static PerspectiveCamera cam;
 	static CameraInputController camController;
 	static ModelBatch modelBatch;
-	public static Array<CollisionObject> instances;
+	public static Array<ModelInstance> instances;
 	public static Array<Die> dice = new Array<>();
 	public static Array<Die> lockedDice = new Array<>();
 	static Environment environment;
@@ -83,6 +85,8 @@ public class BulletStuff {
 	public final static short ALL_FLAG = -1;
 
 	public static Array<AtlasRegion> diceTextures = new Array<>();
+	
+	static Shader shader;
 
 	public static void init(){
 		for(int i=0;i<6;i++){
@@ -90,32 +94,35 @@ public class BulletStuff {
 		}
 
 		Bullet.init();
-		
-		FileHandle vert = Gdx.files.internal("shader/test.vertex.glsl");
-		FileHandle frag = Gdx.files.internal("shader/test.fragment.glsl");
-		
-		
-//ShaderProvider defaultShaderProvider =new DefaultShaderProvider(vertexShader, fragmentShader);
-ShaderProvider defaultShaderProvider =new DefaultShaderProvider(vert.readString(), frag.readString());
-		modelBatch = new ModelBatch(defaultShaderProvider);
-		environment = new Environment();
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+		modelBatch = new ModelBatch();
+//		environment = new Environment();
+//		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+//		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+//
+//		locked= new Environment();
+//		locked.set(new ColorAttribute(ColorAttribute.Specular, .2f, .4f, .4f, .8f));
+//		//		locked.set(new ColorAttribute(ColorAttribute.Diffuse, 1, 1, 1, 1f));
+//		locked.add(new DirectionalLight().set(1, 1, 1, 0, -0.8f, 0));
 
-		locked= new Environment();
-		locked.set(new ColorAttribute(ColorAttribute.Specular, .2f, .4f, .4f, .8f));
-		//		locked.set(new ColorAttribute(ColorAttribute.Diffuse, 1, 1, 1, 1f));
-		locked.add(new DirectionalLight().set(1, 1, 1, 0, -0.8f, 0));
+		
+		
+		  cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	       cam.position.set(0f, 10f, 0f);
+	       cam.lookAt(0,0,0);
+	       cam.near = 1f;
+	       cam.far = 300f;
+	       cam.update();
 
-		perspectiveCam = new PerspectiveCamera(67, Main.width, Main.height);
-		perspectiveCam.position.set(0f, 10f, 0f);
-		perspectiveCam.lookAt(0, 0, 0);
-		perspectiveCam.update();
-		camController = new CameraInputController(perspectiveCam);
-		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal
-				| VertexAttributes.Usage.TextureCoordinates;
+	       camController = new CameraInputController(cam);
+//	       Gdx.input.setInputProcessor(camController);
+		
+		
+		//		perspectiveCam = new PerspectiveCamera(67, Main.width, Main.height);
+//		perspectiveCam.position.set(0f, 10f, 0f);
+//		perspectiveCam.lookAt(0, 0, 0);
+//		perspectiveCam.update();
+//		camController = new CameraInputController(perspectiveCam);
 		ModelBuilder mb = new ModelBuilder();
-		float amt = .5f;
 		mb.begin();
 
 		
@@ -166,6 +173,19 @@ ShaderProvider defaultShaderProvider =new DefaultShaderProvider(vert.readString(
 			// instances.add(wall);
 			dynamicsWorld.addRigidBody(wall.body, OBJECT_FLAG, ALL_FLAG);
 		}
+		
+		ModelBuilder modelBuilder = new ModelBuilder();
+		model = modelBuilder.createSphere(2f, 2f, 2f, 20, 20, new Material(),
+				Usage.Position | Usage.Normal | Usage.TextureCoordinates);
+
+		
+		 shader = new DieShader();
+	       shader.init();
+
+	   	modelBuilder = new ModelBuilder();
+		model = modelBuilder.createSphere(2f, 2f, 2f, 20, 20, new Material(),
+				Usage.Position | Usage.Normal | Usage.TextureCoordinates);
+
 	}
 	
 	
@@ -185,10 +205,11 @@ ShaderProvider defaultShaderProvider =new DefaultShaderProvider(vert.readString(
 	public static final int mass = 1;
 
 	public static void render() {
-		modelBatch.begin(perspectiveCam);
+		
+//		modelBatch.begin(perspectiveCam);
 //		renderable.shader=shader;
 //		modelBatch.render(instances, environment);
-		modelBatch.render(instances, environment);
+//		modelBatch.render(instances, environment);
 //		modelBatch.render(renderable, env);
 //		modelBatch.render(renderable);
 		
@@ -197,15 +218,31 @@ ShaderProvider defaultShaderProvider =new DefaultShaderProvider(vert.readString(
 //			lockedInstances.add(d.physical);
 //		}
 //		modelBatch.render(lockedInstances, locked);
-		modelBatch.end();
+//		modelBatch.end();
+		
+		 camController.update();
+
+		    Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		    Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
+		    Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
+		    
+
+		    modelBatch.begin(cam);
+		    for (ModelInstance instance : instances){
+		    	modelBatch.render(instance, shader);
+		    }
+		    modelBatch.end();
+		
 	}
 
 	public static void update(float delta){
 		float physicsDelta = Math.min(1f / 30f, delta);
 		dynamicsWorld.stepSimulation(physicsDelta, 5, 1f / 60f);
 
-		for (CollisionObject co : instances) {
-			co.update();
+		for (ModelInstance mi : instances) {
+			if(mi instanceof CollisionObject){
+				((CollisionObject)mi).update();
+			}
 		}
 	}
 
@@ -234,7 +271,7 @@ ShaderProvider defaultShaderProvider =new DefaultShaderProvider(vert.readString(
 	private static Vector3 position = new Vector3();
 
 	public static Die getObject (int screenX, int screenY) {
-		Ray ray = perspectiveCam.getPickRay(screenX, screenY);
+		Ray ray = cam.getPickRay(screenX, screenY);
 
 		Die result = null;
 		float distance = -1;

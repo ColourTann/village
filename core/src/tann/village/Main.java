@@ -38,6 +38,7 @@ public class Main extends ApplicationAdapter {
 	Stage stage;
 	OrthographicCamera orthoCam;
 	public static TextureAtlas atlas;
+	public static TextureAtlas atlas_3d;
 	public static Main self;
 	public static boolean debug = false;
 	public static boolean showFPS = false;
@@ -54,6 +55,7 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		atlas = new TextureAtlas(Gdx.files.internal("atlas_image.atlas"));
+		atlas_3d = new TextureAtlas(Gdx.files.internal("3d/atlas_image.atlas"));
 		self = this;
 		Fonts.setup();
 //		Sounds.setup();

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.Renderable;
@@ -23,6 +24,7 @@ import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.utils.Array;
 
+import tann.village.Images;
 import tann.village.bullet.BulletStuff;
 import tann.village.bullet.CollisionObject;
 import tann.village.screens.gameScreen.effect.Effect;
@@ -211,25 +213,47 @@ public class Die {
 		ModelBuilder mb = new ModelBuilder();
 		float amt = .5f;
 		mb.begin();
+		
+		
+		
 		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal
-				| VertexAttributes.Usage.TextureCoordinates;
+				| VertexAttributes.Usage.TextureCoordinates|VertexAttributes.Usage.ColorPacked;
 		mb.node().id = "die";
+		
 		MeshPartBuilder mpb = mb.part("die", GL20.GL_TRIANGLES, attr,
 				new Material(TextureAttribute.createDiffuse(sides.get(0).tr.getTexture())));
-		mpb.setUVRange(sides.get(0).tr);
+		
+		TextureRegion tr =  Images.side_skull;
+		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
+		System.out.println((float)tr.getRegionX()/tr.getTexture().getWidth()*.8f+ (float)tr.getRegionY()/tr.getTexture().getHeight()*.08f);
 		mpb.rect(-amt, -amt, -amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, 0, 0, -1);
-		mpb.setUVRange(sides.get(1).tr);
-		mpb.rect(-amt, amt, amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, 0, 0, 1);
-		mpb.setUVRange(sides.get(2).tr);
+//		mpb.setUVRange(sides.get(1).tr);
+		
+		tr =  Images.side_morale_2;
+		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
+		
+		mpb.rect(-amt, amt, amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, 1, 0, 1);
+//		mpb.setUVRange(sides.get(2).tr);
+		
+		
+		tr =  Images.side_fate_1;
+		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
+		
 		mpb.rect(-amt, -amt, amt, -amt, -amt, -amt, amt, -amt, -amt, amt, -amt, amt, 0, -1, 0);
-		mpb.setUVRange(sides.get(3).tr);
+//		mpb.setUVRange(sides.get(3).tr);
+		
+		tr =  Images.side_fate_1;
+		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
+		
 		mpb.rect(-amt, amt, -amt, -amt, amt, amt, amt, amt, amt, amt, amt, -amt, 0, 1, 0);
-		mpb.setUVRange(sides.get(4).tr);
+		tr =  Images.side_brain;
+		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
 		mpb.rect(-amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, -amt, -amt, -1, 0, 0);
-		mpb.setUVRange(sides.get(5).tr);
+		tr =  Images.side_brain;
+		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
 		mpb.rect(amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, -amt, amt, 1, 0, 0);
 		
-		Model model = mb.end();
+		Model model = mb.end(); 
 		
 		model.getNode("die").parts.get(0).setRenderable(BulletStuff.renderable);
 		

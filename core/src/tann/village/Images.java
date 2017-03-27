@@ -30,17 +30,17 @@ public class Images {
 	public static final TextureRegion side_wood_2 = Main.atlas_3d.findRegion("dice/face/wood2");
 	public static final TextureRegion side_wood_3 = Main.atlas_3d.findRegion("dice/face/wood3");
 	
-	public static final TextureRegion side_skull = Main.atlas_3d.findRegion("dice/face/skull");
+	public static final TextureRegion side_skull = Main.atlas_3d.findRegion("dice/face/nothing");
 	
 	public static final TextureRegion side_morale_1 = Main.atlas_3d.findRegion("dice/face/morale1");
 	public static final TextureRegion side_morale_2_minus_2_food = Main.atlas_3d.findRegion("dice/face/morale2foodminus2");
 	public static final TextureRegion side_morale_2 = Main.atlas_3d.findRegion("dice/face/morale2");
 	
 	public static final TextureRegion side_fate_1 = Main.atlas_3d.findRegion("dice/face/fate1");
-	public static final TextureRegion side_fateForFood = Main.atlas_3d.findRegion("dice/face/fate_for_food");
-	public static final TextureRegion side_fateForWood = Main.atlas_3d.findRegion("dice/face/fate_for_wood");
-	public static final TextureRegion side_2fateForWoodAndFood = Main.atlas_3d.findRegion("dice/face/fate2");
-	public static final TextureRegion side_fate_3 = Main.atlas_3d.findRegion("dice/face/fate3");
+	public static final TextureRegion side_fateForFood = Main.atlas_3d.findRegion("dice/face/fate1foodminus1");
+	public static final TextureRegion side_fateForWood = Main.atlas_3d.findRegion("dice/face/fate1woodminus1");
+	public static final TextureRegion side_2fateForWoodAndFood = Main.atlas_3d.findRegion("dice/face/fate2woodminus1foodminus1");
+	
 	
 	
 	

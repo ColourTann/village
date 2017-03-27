@@ -229,6 +229,7 @@ public class BulletStuff {
 
 		    modelBatch.begin(cam);
 		    for (ModelInstance instance : instances){
+		    	Gdx.input.setInputProcessor(camController);
 		    	modelBatch.render(instance, shader);
 		    }
 		    modelBatch.end();

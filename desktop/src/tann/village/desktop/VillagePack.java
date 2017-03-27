@@ -12,10 +12,11 @@ public class VillagePack {
 	TexturePacker.process(settings, "../images", "../android/assets", "atlas_image");
 	
 	
-	settings.minWidth=2048;
-	settings.minHeight=2048;
-//	settings.paddingX=0;
-//	settings.paddingY=0;
+	settings.minWidth=1024;
+	settings.minHeight=1024;
+	settings.paddingX=0;
+	settings.paddingY=0;
+	settings.combineSubdirectories=true;
 	TexturePacker.process(settings, "../images_3d", "../android/assets/3d", "atlas_image");
 	}
 }

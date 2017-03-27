@@ -222,38 +222,31 @@ public class Die {
 		
 		MeshPartBuilder mpb = mb.part("die", GL20.GL_TRIANGLES, attr,
 				new Material(TextureAttribute.createDiffuse(sides.get(0).tr.getTexture())));
-		
-		TextureRegion tr =  Images.side_skull;
-		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
-		System.out.println((float)tr.getRegionX()/tr.getTexture().getWidth()*.8f+ (float)tr.getRegionY()/tr.getTexture().getHeight()*.08f);
-		mpb.rect(-amt, -amt, -amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, 0, 0, -1);
-//		mpb.setUVRange(sides.get(1).tr);
-		
-		tr =  Images.side_morale_2;
-		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
-		
-		mpb.rect(-amt, amt, amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, 1, 0, 1);
-//		mpb.setUVRange(sides.get(2).tr);
-		
-		
-		tr =  Images.side_fate_1;
-		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
-		
-		mpb.rect(-amt, -amt, amt, -amt, -amt, -amt, amt, -amt, -amt, amt, -amt, amt, 0, -1, 0);
-//		mpb.setUVRange(sides.get(3).tr);
-		
-		tr =  Images.side_fate_1;
-		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
-		
-		mpb.rect(-amt, amt, -amt, -amt, amt, amt, amt, amt, amt, amt, amt, -amt, 0, 1, 0);
-		tr =  Images.side_brain;
-		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
-		mpb.rect(-amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, -amt, -amt, -1, 0, 0);
-		tr =  Images.side_brain;
-		mpb.setColor((float)tr.getRegionX()/tr.getTexture().getWidth(), (float)tr.getRegionY()/tr.getTexture().getHeight(),  1, 1);
-		mpb.rect(amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, -amt, amt, 1, 0, 0);
-		
+		float mult = 1.007f;
+		System.out.println(mult);
+		for(int i=0;i<6;i++){
+			Side side = sides.get(i);
+			TextureRegion tr = side.tr;
+//			System.out.println(tr.getRegionX()/(float)tr.getTexture().getWidth()+":"+ (float)tr.getRegionY()/tr.getTexture().getHeight());
+			float x = (float)tr.getRegionX()/(float)tr.getTexture().getWidth();
+			float y = (float)tr.getRegionY()/tr.getTexture().getHeight();
+			mpb.setColor(x*mult, y*mult,  1, 1);
+			
+			switch(i){
+				case 0: mpb.rect(-amt, -amt, -amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, 0, 0, -1); break;
+				case 1: mpb.rect(-amt, amt, amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, 1, 0, 1); break;
+				case 2: mpb.rect(-amt, -amt, amt, -amt, -amt, -amt, amt, -amt, -amt, amt, -amt, amt, 0, -1, 0); break;
+				case 3: mpb.rect(-amt, amt, -amt, -amt, amt, amt, amt, amt, amt, amt, amt, -amt, 0, 1, 0); break;
+				case 4: mpb.rect(-amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, -amt, -amt, -1, 0, 0); break;
+				case 5: mpb.rect(amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, -amt, amt, 1, 0, 0); break;
+			}
+			
+		}
 		Model model = mb.end(); 
+		
+		
+		
+		
 		
 		model.getNode("die").parts.get(0).setRenderable(BulletStuff.renderable);
 		

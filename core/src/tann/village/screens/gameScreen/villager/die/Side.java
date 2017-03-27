@@ -51,7 +51,6 @@ public class Side {
 	public static Side fate2ForWoodAndFood= make(Images.side_2fateForWoodAndFood, EffectType.Fate, 2, EffectType.Wood, -1, EffectType.Food, -1);
 	public static Side fateForWood= make(Images.side_fateForWood, EffectType.Fate, 1, EffectType.Wood, -1);
 	public static Side fateForFood= make(Images.side_fateForFood, EffectType.Fate, 1, EffectType.Food, -1);
-	public static Side fate3= make(Images.side_fate_3, EffectType.Fate, 3);
 	
 	
 	private static Side make(TextureRegion image, EffectType type, int value){

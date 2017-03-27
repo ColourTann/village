@@ -62,11 +62,11 @@ public class DieShader implements Shader{
 		program.setUniformMatrix(u_projTrans, camera.combined);
 		Gdx.graphics.getGL20().glActiveTexture(GL20.GL_TEXTURE0);
 		
-		Images.food_storage.getTexture().bind(1);
-		program.setUniformi("u_texture", 1);
+		
 		
 		Images.side_brain.getTexture().bind(0);
 		program.setUniformi("u_texture", 0);
+		
 		
 		program.setUniformf(f1, Math.random()>.5?0:1);
 		

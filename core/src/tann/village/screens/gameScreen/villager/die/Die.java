@@ -3,6 +3,7 @@ package tann.village.screens.gameScreen.villager.die;
 import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -220,25 +221,36 @@ public class Die {
 				| VertexAttributes.Usage.TextureCoordinates|VertexAttributes.Usage.ColorPacked;
 		mb.node().id = "die";
 		
+		
+		VertexAttribute va = new VertexAttribute(Usage.ColorPacked, 4, ShaderProgram.COLOR_ATTRIBUTE);
+		
+		VertexAttributes vas = new VertexAttributes(va);
+		
+		
+		Material m =new Material(TextureAttribute.createDiffuse(sides.get(0).tr.getTexture()));
+		
+		
 		MeshPartBuilder mpb = mb.part("die", GL20.GL_TRIANGLES, attr,
-				new Material(TextureAttribute.createDiffuse(sides.get(0).tr.getTexture())));
-		float mult = 1.007f;
-		System.out.println(mult);
+				m);
 		for(int i=0;i<6;i++){
 			Side side = sides.get(i);
+			
 			TextureRegion tr = side.tr;
-//			System.out.println(tr.getRegionX()/(float)tr.getTexture().getWidth()+":"+ (float)tr.getRegionY()/tr.getTexture().getHeight());
 			float x = (float)tr.getRegionX()/(float)tr.getTexture().getWidth();
 			float y = (float)tr.getRegionY()/tr.getTexture().getHeight();
-			mpb.setColor(x*mult, y*mult,  1, 1);
+			mpb.setColor(i/255f, 1,  1, 1);	
+			
+			
+			float normalX = x;
+			float normalY = y;
 			
 			switch(i){
-				case 0: mpb.rect(-amt, -amt, -amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, 0, 0, -1); break;
-				case 1: mpb.rect(-amt, amt, amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, 1, 0, 1); break;
-				case 2: mpb.rect(-amt, -amt, amt, -amt, -amt, -amt, amt, -amt, -amt, amt, -amt, amt, 0, -1, 0); break;
-				case 3: mpb.rect(-amt, amt, -amt, -amt, amt, amt, amt, amt, amt, amt, amt, -amt, 0, 1, 0); break;
-				case 4: mpb.rect(-amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, -amt, -amt, -1, 0, 0); break;
-				case 5: mpb.rect(amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, -amt, amt, 1, 0, 0); break;
+				case 0: mpb.rect(-amt, -amt, -amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, normalX, normalY, -1); break;
+				case 1: mpb.rect(-amt, amt, amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, normalX, normalY, 1); break;
+				case 2: mpb.rect(-amt, -amt, amt, -amt, -amt, -amt, amt, -amt, -amt, amt, -amt, amt, normalX, normalY, 0); break;
+				case 3: mpb.rect(-amt, amt, -amt, -amt, amt, amt, amt, amt, amt, amt, amt, -amt, normalX, normalY, 0); break;
+				case 4: mpb.rect(-amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, -amt, -amt, normalX, normalY, 0); break;
+				case 5: mpb.rect(amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, -amt, amt, normalX, normalY, 0); break;
 			}
 			
 		}
@@ -255,7 +267,7 @@ public class Die {
 		co.transform.trn(MathUtils.random(-2.5f, 2.5f), 1.5f, MathUtils.random(-2.5f, 2.5f));
 		co.body.setWorldTransform(co.transform);
 		co.body.setUserValue(BulletStuff.instances.size);
-		co.body.setCollisionFlags(
+		co.body.setCollisionFlags(	
 				co.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
 		physical=co;
 		physical.body.setActivationState(4);

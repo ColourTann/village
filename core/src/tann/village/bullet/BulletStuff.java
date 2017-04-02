@@ -95,41 +95,16 @@ public class BulletStuff {
 
 		Bullet.init();
 		modelBatch = new ModelBatch();
-//		environment = new Environment();
-//		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-//		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
-//
-//		locked= new Environment();
-//		locked.set(new ColorAttribute(ColorAttribute.Specular, .2f, .4f, .4f, .8f));
-//		//		locked.set(new ColorAttribute(ColorAttribute.Diffuse, 1, 1, 1, 1f));
-//		locked.add(new DirectionalLight().set(1, 1, 1, 0, -0.8f, 0));
+		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cam.position.set(0f, 7f, -2f);
+		cam.lookAt(0, 0, 0);
+		cam.update();
 
-		
-		
-		  cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-	       cam.position.set(0f, 10f, 0f);
-	       cam.lookAt(0,0,0);
-	       cam.near = 1f;
-	       cam.far = 300f;
-	       cam.update();
-
-	       camController = new CameraInputController(cam);
-//	       Gdx.input.setInputProcessor(camController);
-		
-		
-		//		perspectiveCam = new PerspectiveCamera(67, Main.width, Main.height);
-//		perspectiveCam.position.set(0f, 10f, 0f);
-//		perspectiveCam.lookAt(0, 0, 0);
-//		perspectiveCam.update();
-//		camController = new CameraInputController(perspectiveCam);
+		camController = new CameraInputController(cam);
 		ModelBuilder mb = new ModelBuilder();
 		mb.begin();
-
-		
-
 		mb.node().id = "ground";
-		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,
-				new Material(ColorAttribute.createDiffuse(Colours.green_light))).box(10f, 1f, 10f);
+		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,new Material(ColorAttribute.createDiffuse(Colours.green_light))).box(10f, 1f, 10f);
 		model = mb.end();
 
 
@@ -143,48 +118,45 @@ public class BulletStuff {
 
 		instances = new Array<>();
 		ground = new CollisionObject(model, "ground", new btBoxShape(new Vector3(5f, 0.5f, 5f)), 0);
-		//		instances.add(ground);
 		dynamicsWorld.addRigidBody(ground.body, GROUND_FLAG, ALL_FLAG);
 
+		float wallSize = 3.8f;
+		
 		for (int i = 0; i < 5; i++) {
-			CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(5f, 0.5f, 5f)), 0);
+			CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(wallSize, 0.5f, wallSize)), 0);
 			switch (i) {
 			case 0:
 				wall.transform.rotate(1, 0, 0, 90);
-				wall.transform.trn(0, 5, 5);
+				wall.transform.trn(0, wallSize, wallSize);
 				break;
 			case 1:
 				wall.transform.rotate(1, 0, 0, 90);
-				wall.transform.trn(0, 5, -5);
+				wall.transform.trn(0, wallSize, -wallSize);
 				break;
 			case 2:
 				wall.transform.rotate(0, 0, 1, 90);
-				wall.transform.trn(5, 5, 0);
+				wall.transform.trn(wallSize, wallSize, 0);
 				break;
 			case 3:
 				wall.transform.rotate(0, 0, 1, 90);
-				wall.transform.trn(-5, 5, 0);
+				wall.transform.trn(-wallSize, wallSize, 0);
 				break;
 			case 4:
 				wall.transform.trn(0, 10, 0);
 				break;
 			}
 			wall.initialUpdate();
-			// instances.add(wall);
 			dynamicsWorld.addRigidBody(wall.body, OBJECT_FLAG, ALL_FLAG);
 		}
 		
 		ModelBuilder modelBuilder = new ModelBuilder();
-		model = modelBuilder.createSphere(2f, 2f, 2f, 20, 20, new Material(),
-				Usage.Position | Usage.Normal | Usage.TextureCoordinates);
-
+		model = modelBuilder.createSphere(2f, 2f, 2f, 20, 20, new Material(),Usage.Position | Usage.Normal | Usage.TextureCoordinates);
 		
-		 shader = new DieShader();
-	       shader.init();
+		shader = new DieShader();
+	    shader.init();
 
 	   	modelBuilder = new ModelBuilder();
-		model = modelBuilder.createSphere(2f, 2f, 2f, 20, 20, new Material(),
-				Usage.Position | Usage.Normal | Usage.TextureCoordinates);
+		model = modelBuilder.createSphere(2f, 2f, 2f, 20, 20, new Material(),Usage.Position | Usage.Normal | Usage.TextureCoordinates);
 
 	}
 	
@@ -205,41 +177,21 @@ public class BulletStuff {
 	public static final int mass = 1;
 
 	public static void render() {
-		
-//		modelBatch.begin(perspectiveCam);
-//		renderable.shader=shader;
-//		modelBatch.render(instances, environment);
-//		modelBatch.render(instances, environment);
-//		modelBatch.render(renderable, env);
-//		modelBatch.render(renderable);
-		
-//		Array<ModelInstance> lockedInstances = new Array<>();
-//		for(Die d:lockedDice){
-//			lockedInstances.add(d.physical);
-//		}
-//		modelBatch.render(lockedInstances, locked);
-//		modelBatch.end();
-		
 		 camController.update();
-
 		    Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//		    Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
-		    Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
-		    
-
 		    modelBatch.begin(cam);
 		    for (ModelInstance instance : instances){
-		    	Gdx.input.setInputProcessor(camController);
+		    	Die d = (Die)instance.userData;
+//		    	shaderProgram.setUniformi(location, value);
+//		    	modelBatch. setd.getSide()
 		    	modelBatch.render(instance, shader);
 		    }
 		    modelBatch.end();
-		
 	}
 
 	public static void update(float delta){
 		float physicsDelta = Math.min(1f / 30f, delta);
 		dynamicsWorld.stepSimulation(physicsDelta, 5, 1f / 60f);
-
 		for (ModelInstance mi : instances) {
 			if(mi instanceof CollisionObject){
 				((CollisionObject)mi).update();
@@ -309,26 +261,22 @@ public class BulletStuff {
 	}
 
 	public static void click(float x, float y, int button) {
-		Die d = getObject((int)x, Gdx.graphics.getHeight()-(int)y); 
-		if(d!=null){
-			
-			if(button==0){
-				if(lockedDice.contains(d, true)){
+		Die d = getObject((int) x, Gdx.graphics.getHeight() - (int) y);
+		if (d != null) {
+
+			if (button == 0) {
+				if (lockedDice.contains(d, true)) {
 					lockedDice.removeValue(d, true);
-				}
-				else{
+				} else {
 					lockedDice.add(d);
 				}
 			}
-			if(button==1){
+			if (button == 1) {
 				d.villager.dieRightClicked();
 			}
-			
-		}
-
 
 		}
 
-	
+	}
+
 }
-

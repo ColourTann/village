@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import tann.village.Images;
+import tann.village.screens.gameScreen.villager.die.Die;
 
 public class DieShader implements Shader{
 	ShaderProgram program;
@@ -22,6 +22,8 @@ public class DieShader implements Shader{
 	int v_data;
 	int f1;
 	int f2;
+	int side;
+	int glow;
 	@Override
 	public void init() {
         String vert = Gdx.files.internal("shader/vertex.glsl").readString();
@@ -34,7 +36,9 @@ public class DieShader implements Shader{
         u_diffuseTexture = program.getUniformLocation("u_diffuseTexture");
         f1 = program.getUniformLocation("f1");
         f2 = program.getUniformLocation("f2");
+        side = program.getUniformLocation("side");
         v_data = program.getUniformLocation("v_data");
+        glow = program.getUniformLocation("v_glow");
 	}
 	
 	@Override
@@ -77,6 +81,11 @@ public class DieShader implements Shader{
 	@Override
 	public void render(Renderable renderable) {
 //		program.setUniformf(v_data, new Vector3(1,0,1));
+//		System.out.println(renderable.userData);
+
+		Die d = (Die)renderable.userData;
+		program.setUniformf(glow, d.glow);
+		program.setUniformi(side, d.isMoving()?-1:d.getSide());
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		renderable.meshPart.render(program, true);
 	}

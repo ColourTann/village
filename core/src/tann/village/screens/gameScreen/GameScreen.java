@@ -83,7 +83,7 @@ public class GameScreen extends Screen{
 		addActor(statsPanel = new StatsPanel());
 		rollButtonPanel.setPosition(Main.width/2-rollButtonPanel.getWidth()/2, BUTTON_BORDER);
 		statsPanel.setPosition(Main.width-statsPanel.getWidth()-BUTTON_BORDER, Main.height/2-statsPanel.getHeight()/2);
-		for(int i=0;i<5;i++){
+		for(int i=0;i<1;i++){
 			villagers.add(new Villager());
 		}
 		refreshBulletStuff();
@@ -224,6 +224,14 @@ public class GameScreen extends Screen{
 			
 		}
 	
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		for(Die d:BulletStuff.dice){
+			d.update(delta);
+		}
 	}
 	
 	private void finishRolling() {

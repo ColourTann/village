@@ -16,7 +16,7 @@ public class VillageDesktop {
 		config.width=Main.width;
 		config.height=Main.height;
 		
-
+		
 		config.title="Village";
 		config.addIcon("icon.png", FileType.Internal);
 

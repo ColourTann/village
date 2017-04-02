@@ -3,6 +3,7 @@ package tann.village.screens.gameScreen.villager.die;
 import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
@@ -210,6 +211,8 @@ public class Die {
 		for(Effect e:copy.effects) e.sourceDie=this;
 	}
 	
+	static int die = 0;
+	
 	public void construct(){
 		ModelBuilder mb = new ModelBuilder();
 		float amt = .5f;
@@ -228,21 +231,19 @@ public class Die {
 		
 		
 		Material m =new Material(TextureAttribute.createDiffuse(sides.get(0).tr.getTexture()));
+		sides.get(0).tr.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		
-		MeshPartBuilder mpb = mb.part("die", GL20.GL_TRIANGLES, attr,
-				m);
+		MeshPartBuilder mpb = mb.part("die", GL20.GL_TRIANGLES, attr,m);
+		float normalX = 0;
+		float normalY = 0;
+//		float[] f = new float[]{getFloat(5,6),getFloat(4,5),getFloat(3, 4),getFloat(2,3),getFloat(1, 2),getFloat(0,0)};
+		float[] f = new float[]{getFloat(3,4)};
+		float inner = f[(int)(Math.random()*f.length)];
 		for(int i=0;i<6;i++){
+			normalX=i;
 			Side side = sides.get(i);
-			
 			TextureRegion tr = side.tr;
-			float x = (float)tr.getRegionX()/(float)tr.getTexture().getWidth();
-			float y = (float)tr.getRegionY()/tr.getTexture().getHeight();
-			mpb.setColor(i/255f, 1,  1, 1);	
-			
-			
-			float normalX = x;
-			float normalY = y;
+			mpb.setColor(getFloat(tr), inner, getFloat(0,4), die/5f+0.01f);
 			
 			switch(i){
 				case 0: mpb.rect(-amt, -amt, -amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, normalX, normalY, -1); break;
@@ -262,6 +263,7 @@ public class Die {
 		
 		model.getNode("die").parts.get(0).setRenderable(BulletStuff.renderable);
 		
+		
 		CollisionObject co = null;
 		co = new CollisionObject(model, "die", new btBoxShape(new Vector3(0.5f, 0.5f, 0.5f)), BulletStuff.mass);
 		co.transform.trn(MathUtils.random(-2.5f, 2.5f), 1.5f, MathUtils.random(-2.5f, 2.5f));
@@ -271,8 +273,21 @@ public class Die {
 				co.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
 		physical=co;
 		physical.body.setActivationState(4);
+		die = die+1;
 		
+		co.userData=this;
 	}
+	
+	private float getFloat(TextureRegion tr){
+		return getFloat(tr.getRegionX()/128, tr.getRegionY()/128);
+	}
+	
+	private float getFloat(int x, int y){
+		int num = x+16*(y);
+		return num/255f+0.002f;
+	}
+		
+		
 	
 	public boolean isMoving(){
 		return physical.isMoving();
@@ -304,5 +319,18 @@ public class Die {
 
 	public void destroy() {
 		removeFromScreen();
+	}
+	
+	
+	public float glow=0;
+	public void update(float delta){
+		int side = getSide();
+		if(side==-99 || isMoving()){
+			glow=0;
+		}
+		else{
+			glow = Math.min(1, glow+delta*3);
+			glow=1;
+		}
 	}
 }

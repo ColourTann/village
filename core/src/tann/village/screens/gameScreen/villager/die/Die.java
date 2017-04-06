@@ -66,88 +66,88 @@ public class Die {
 			break;
 			
 			// level 1
-		case Fisher:
-			addSide(Side.food1);
-			addSide(Side.food1);
-			addSide(Side.food2);
-			addSide(Side.food2);
-			addSide(Side.wood1);
-			addSide(Side.brain);
-			break;
-		case Musician:
-			addSide(Side.morale1);
-			addSide(Side.food1);
-			addSide(Side.wood1);
-			addSide(Side.food2);
-			addSide(Side.wood1);
-			addSide(Side.brain);
-			break;
-		case Mystic:
-			addSide(Side.fateForFood);
-			addSide(Side.fateForWood);
-			addSide(Side.wood1);
-			addSide(Side.food1);
-			addSide(Side.skull);
-			addSide(Side.brain);
-			break;
-		case Chopper:
-			addSide(Side.food1);
-			addSide(Side.wood1);
-			addSide(Side.wood2);
-			addSide(Side.wood3);
-			addSide(Side.skull);
-			addSide(Side.brain);
-			break;
-		case Gatherer:
-			addSide(Side.food1);
-			addSide(Side.food1);
-			addSide(Side.food2);
-			addSide(Side.wood1);
-			addSide(Side.wood2);
-			addSide(Side.brain);
-			break;
-			
-		// level 2
-		case Builder:
-			addSide(Side.food1);
-			addSide(Side.food2);
-			addSide(Side.wood2);
-			addSide(Side.wood3);
-			addSide(Side.wood3);
-			addSide(Side.brain);
-			break;
-		case Explorer:
-			addSide(Side.food3);
-			addSide(Side.wood3);
-			addSide(Side.morale1);
-			addSide(Side.food1wood1);
-			addSide(Side.brain);
-			addSide(Side.skull);
-			break;
-		case Farmer:
-			addSide(Side.food1wood1);
-			addSide(Side.food1wood1);
-			addSide(Side.food2);
-			addSide(Side.food3);
-			addSide(Side.food3);
-			addSide(Side.brain);
-			break;
-		case FateWeaver:
-			addSide(Side.fate1);
-			addSide(Side.fate1);
-			addSide(Side.fate2ForWoodAndFood);
-			addSide(Side.food2);
-			addSide(Side.skull);
-			addSide(Side.brain);
-			break;
-		case Leader:
-			addSide(Side.morale2);
-			addSide(Side.morale2);
-			addSide(Side.food2);
-			addSide(Side.food2);
-			addSide(Side.wood2);
-			addSide(Side.brain);
-			break;
+//		case Fisher:
+//			addSide(Side.food1);
+//			addSide(Side.food1);
+//			addSide(Side.food2);
+//			addSide(Side.food2);
+//			addSide(Side.wood1);
+//			addSide(Side.brain);
+//			break;
+//		case Musician:
+//			addSide(Side.morale1);
+//			addSide(Side.food1);
+//			addSide(Side.wood1);
+//			addSide(Side.food2);
+//			addSide(Side.wood1);
+//			addSide(Side.brain);
+//			break;
+//		case Mystic:
+//			addSide(Side.fateForFood);
+//			addSide(Side.fateForWood);
+//			addSide(Side.wood1);
+//			addSide(Side.food1);
+//			addSide(Side.skull);
+//			addSide(Side.brain);
+//			break;
+//		case Chopper:
+//			addSide(Side.food1);
+//			addSide(Side.wood1);
+//			addSide(Side.wood2);
+//			addSide(Side.wood3);
+//			addSide(Side.skull);
+//			addSide(Side.brain);
+//			break;
+//		case Gatherer:
+//			addSide(Side.food1);
+//			addSide(Side.food1);
+//			addSide(Side.food2);
+//			addSide(Side.wood1);
+//			addSide(Side.wood2);
+//			addSide(Side.brain);
+//			break;
+//			
+//		// level 2
+//		case Builder:
+//			addSide(Side.food1);
+//			addSide(Side.food2);
+//			addSide(Side.wood2);
+//			addSide(Side.wood3);
+//			addSide(Side.wood3);
+//			addSide(Side.brain);
+//			break;
+//		case Explorer:
+//			addSide(Side.food3);
+//			addSide(Side.wood3);
+//			addSide(Side.morale1);
+//			addSide(Side.food1wood1);
+//			addSide(Side.brain);
+//			addSide(Side.skull);
+//			break;
+//		case Farmer:
+//			addSide(Side.food1wood1);
+//			addSide(Side.food1wood1);
+//			addSide(Side.food2);
+//			addSide(Side.food3);
+//			addSide(Side.food3);
+//			addSide(Side.brain);
+//			break;
+//		case FateWeaver:
+//			addSide(Side.fate1);
+//			addSide(Side.fate1);
+//			addSide(Side.fate2ForWoodAndFood);
+//			addSide(Side.food2);
+//			addSide(Side.skull);
+//			addSide(Side.brain);
+//			break;
+//		case Leader:
+//			addSide(Side.morale2);
+//			addSide(Side.morale2);
+//			addSide(Side.food2);
+//			addSide(Side.food2);
+//			addSide(Side.wood2);
+//			addSide(Side.brain);
+//			break;
 		default:
 			break;
 			
@@ -230,8 +230,8 @@ public class Die {
 		VertexAttributes vas = new VertexAttributes(va);
 		
 		
-		Material m =new Material(TextureAttribute.createDiffuse(sides.get(0).tr.getTexture()));
-		sides.get(0).tr.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Material m =new Material(TextureAttribute.createDiffuse(sides.get(0).tr[0].getTexture()));
+		sides.get(0).tr[0].getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		MeshPartBuilder mpb = mb.part("die", GL20.GL_TRIANGLES, attr,m);
 		float normalX = 0;
@@ -242,8 +242,9 @@ public class Die {
 		for(int i=0;i<6;i++){
 			normalX=i;
 			Side side = sides.get(i);
-			TextureRegion tr = side.tr;
-			mpb.setColor(getFloat(tr), inner, getFloat(0,4), die/5f+0.01f);
+			TextureRegion base = side.tr[0];
+			TextureRegion highlight = side.tr[1];
+			mpb.setColor(getFloat(base), inner, getFloat(highlight), 0);
 			
 			switch(i){
 				case 0: mpb.rect(-amt, -amt, -amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, normalX, normalY, -1); break;
@@ -296,7 +297,7 @@ public class Die {
 	static int count;
 	public void roll() {
 		float sideways = 7;
-		float upwards = 12;
+		float upwards = 7 + (float)(Math.random()*8);
 		physical.body.applyCentralImpulse(new Vector3(Particle.rand(-sideways, sideways), upwards, Particle.rand(-sideways, sideways)));
 		float rotationalForce = 2.0f;
 		physical.body.applyTorqueImpulse(new Vector3(Particle.rand(-rotationalForce, rotationalForce),Particle.rand(-rotationalForce, rotationalForce),Particle.rand(-rotationalForce, rotationalForce)));
@@ -329,8 +330,7 @@ public class Die {
 			glow=0;
 		}
 		else{
-			glow = Math.min(1, glow+delta*3);
-			glow=1;
+			glow = Math.min(1, glow+delta*1.5f);
 		}
 	}
 }

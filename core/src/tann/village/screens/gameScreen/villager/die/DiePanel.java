@@ -31,7 +31,7 @@ public class DiePanel extends Group{
 					System.out.println("magpie");
 				}
 			};
-			Button butt =new Button(BUTTON_SIZE, BUTTON_SIZE, side.tr, Colours.transparent, r); 
+			Button butt =new Button(BUTTON_SIZE, BUTTON_SIZE, side.tr[0], Colours.transparent, r); 
 			dieFaces.add(butt);
 			l.actor(butt);
 			if(i%3!=2){

@@ -1,5 +1,8 @@
 package tann.village;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Images {
@@ -42,6 +45,19 @@ public class Images {
 	public static final TextureRegion side_2fateForWoodAndFood = Main.atlas_3d.findRegion("dice/face/fate2woodminus1foodminus1");
 	
 	
+	private static Map<String, TextureRegion[]> threeDTextures = new HashMap<>();
+	private static TextureRegion[] makeFace(String name){
+		TextureRegion base = Main.atlas_3d.findRegion("dice/face/"+name);
+		TextureRegion highlight = Main.atlas_3d.findRegion("dice/face/"+name+"_highlight");
+		return  new TextureRegion[]{base,highlight};
+	}
 	
-	
+	public static TextureRegion[] get(String name){
+		TextureRegion[] tr = threeDTextures.get(name);
+		if(tr==null){
+			tr = makeFace(name);
+			threeDTextures.put(name, tr);
+		}
+		return tr;
+	}
 }

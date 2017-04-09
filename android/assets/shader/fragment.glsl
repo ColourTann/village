@@ -68,7 +68,7 @@ void main() {
 	if(mult>0){
 		
 		colour = texture2D(u_texture, vec2(lSmall/16.0+UV.x, lBig/16.0+UV.y));
-		float alpha = colour.a * (1-mult)*0.5;
+		float alpha = colour.a * mult*0.5;
 		gl_FragColor.rgb +=  colour * alpha;
 	}
 	else if (mult<-10){

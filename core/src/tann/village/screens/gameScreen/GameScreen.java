@@ -44,7 +44,7 @@ public class GameScreen extends Screen{
 	public StatsPanel statsPanel;
 	public enum State{Event, Rolling, Review, Levelling}
 	public State state;
-	
+	private static final int STARTING_VILLAGERS = 5;
 	public Array<Villager> villagers = new Array<>();
 	
 	TextureRegion bg = Main.atlas.findRegion("gamescreen");
@@ -83,7 +83,7 @@ public class GameScreen extends Screen{
 		addActor(statsPanel = new StatsPanel());
 		rollButtonPanel.setPosition(Main.width/2-rollButtonPanel.getWidth()/2, BUTTON_BORDER);
 		statsPanel.setPosition(Main.width-statsPanel.getWidth()-BUTTON_BORDER, Main.height/2-statsPanel.getHeight()/2);
-		for(int i=0;i<5;i++){
+		for(int i=0;i<STARTING_VILLAGERS;i++){
 			villagers.add(new Villager());
 		}
 		refreshBulletStuff();

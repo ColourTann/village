@@ -48,9 +48,11 @@ public class CollisionObject extends ModelInstance implements Disposable{
 	}
 	
 	BoundingBox box = new BoundingBox();
-
+	
+	private static final float LINEAR_THRESHOLD = 0.01f, ANGULAR_THRESHOLD = 0.01f; 
+	
 	public boolean isMoving(){
-		return body.getLinearVelocity().len()> .1f || body.getAngularVelocity().len()>.1f;
+		return body.getLinearVelocity().len()> LINEAR_THRESHOLD || body.getAngularVelocity().len()> ANGULAR_THRESHOLD;
 	}
 	
 	public void initialUpdate(){

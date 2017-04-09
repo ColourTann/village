@@ -259,6 +259,7 @@ public class BulletStuff {
 		}
 		return true;
 	}
+	
 
 	public static void click(float x, float y, int button) {
 		Die d = getObject((int) x, Gdx.graphics.getHeight() - (int) y);

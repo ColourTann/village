@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.utils.Array;
@@ -33,6 +34,7 @@ import tann.village.screens.gameScreen.effect.Effect;
 import tann.village.screens.gameScreen.villager.Villager;
 import tann.village.screens.gameScreen.villager.Villager.VillagerType;
 import tann.village.util.Colours;
+import tann.village.util.Maths;
 import tann.village.util.Particle;
 
 public class Die {
@@ -162,6 +164,7 @@ public class Die {
 	
 	
 	public int getSide(){
+		if(lockedSide >=0) return lockedSide;
 		physical.update();
 		physical.updateBounds();
 		Quaternion rot = new Quaternion();
@@ -296,13 +299,38 @@ public class Die {
 	
 	static int count;
 	public void roll() {
-		float sideways = 7;
-		float upwards = 7 + (float)(Math.random()*8);
-		physical.body.applyCentralImpulse(new Vector3(Particle.rand(-sideways, sideways), upwards, Particle.rand(-sideways, sideways)));
-		float rotationalForce = 2.0f;
-		physical.body.applyTorqueImpulse(new Vector3(Particle.rand(-rotationalForce, rotationalForce),Particle.rand(-rotationalForce, rotationalForce),Particle.rand(-rotationalForce, rotationalForce)));
+		unlock();
+//		randomise(12, 0, 6, 3, 1, 1);
+		randomise(12, 0, 6, 0, 1, 1);
 	}
 
+	private void unlock(){
+		locked=false;
+		lockedSide=-1;
+		physical.body.setDamping(0, 0);
+	}
+	
+	public void jiggle(){
+		
+	}
+	
+	private void randomise(float up, float upRand, float side, float sideRand, float rot, float rotRand){
+		float x = (float)(side + Maths.factor(sideRand))*Maths.mult();
+		float y = (float)(up + Maths.factor(upRand));
+		float z = (float)(side + Maths.factor(sideRand))*Maths.mult();
+		float r1 = (float)(rot + Maths.factor(rotRand))*Maths.mult();
+		float r2 = (float)(rot + Maths.factor(rotRand))*Maths.mult();
+		float r3 = (float)(rot + Maths.factor(rotRand))*Maths.mult();
+		applyForces(x, y, z, r1, r2, r3);
+	}
+	
+	
+	
+	private void applyForces(float x, float y, float z, float r1, float r2, float r3){
+		physical.body.applyCentralImpulse(new Vector3(x, y, z));
+		physical.body.applyTorqueImpulse(new Vector3(r1, r2, r3));
+	}
+	
 	public void activate() {
 		for(Effect e:sides.get(getSide()).effects) e.activate();
 	}
@@ -322,15 +350,28 @@ public class Die {
 		removeFromScreen();
 	}
 	
-	
+	Vector3 position = new Vector3();
+	public boolean isStopped(){
+		physical.transform.getTranslation(position);
+		return getSide()!=99 && !isMoving() && position.y<1;
+	}
+	int lockedSide=-1;
 	public float glow=0;
 	public void update(float delta){
-		int side = getSide();
-		if(side==-99 || isMoving()){
-			glow=0;
+		if(locked){
+			glow = Math.max(0, glow-delta*1.5f);
 		}
-		else{
-			glow = Math.min(1, glow+delta*1.5f);
+		else if(isStopped()){
+			lock();
 		}
+	}
+	
+	boolean locked;
+	public void lock(){
+		if (locked) return;
+		lockedSide = getSide();
+		locked = true;
+		physical.body.setDamping(2, 50);
+		glow = 1;
 	}
 }

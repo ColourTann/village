@@ -85,7 +85,7 @@ public class DieShader implements Shader{
 
 		Die d = (Die)renderable.userData;
 		program.setUniformf(glow, d.glow);
-		program.setUniformi(side, d.isMoving()?-1:d.getSide());
+		program.setUniformi(side, d.getSide());
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		renderable.meshPart.render(program, true);
 	}

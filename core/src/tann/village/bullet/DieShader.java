@@ -20,8 +20,6 @@ public class DieShader implements Shader{
 	int u_worldTrans;
 	int u_diffuseTexture;
 	int v_data;
-	int f1;
-	int f2;
 	int side;
 	int glow;
 	@Override
@@ -34,8 +32,6 @@ public class DieShader implements Shader{
         u_projTrans = program.getUniformLocation("u_projViewTrans");
         u_worldTrans = program.getUniformLocation("u_worldTrans");
         u_diffuseTexture = program.getUniformLocation("u_diffuseTexture");
-        f1 = program.getUniformLocation("f1");
-        f2 = program.getUniformLocation("f2");
         side = program.getUniformLocation("side");
         v_data = program.getUniformLocation("v_data");
         glow = program.getUniformLocation("v_glow");
@@ -72,7 +68,6 @@ public class DieShader implements Shader{
 		program.setUniformi("u_texture", 0);
 		
 		
-		program.setUniformf(f1, Math.random()>.5?0:1);
 		
 		context.setDepthTest(GL20.GL_LEQUAL);
 		context.setCullFace(GL20.GL_BACK);
@@ -84,7 +79,7 @@ public class DieShader implements Shader{
 //		System.out.println(renderable.userData);
 
 		Die d = (Die)renderable.userData;
-		program.setUniformf(glow, d.glow);
+		program.setUniformf(glow, d.getGlow());
 		program.setUniformi(side, d.getSide());
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		renderable.meshPart.render(program, true);

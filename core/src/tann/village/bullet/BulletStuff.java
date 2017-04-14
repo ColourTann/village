@@ -96,7 +96,7 @@ public class BulletStuff {
 		Bullet.init();
 		modelBatch = new ModelBatch();
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(0f, 7f, -2f);
+		cam.position.set(0f, 8f, -2f);
 		cam.lookAt(0, 0, 0);
 		cam.update();
 
@@ -255,7 +255,7 @@ public class BulletStuff {
 
 	public static boolean finishedRolling(){
 		for (Die d : BulletStuff.dice) {
-			if (d.isMoving()) return false;
+			if (!d.isStopped()) return false;
 		}
 		return true;
 	}

@@ -39,6 +39,7 @@ import tann.village.util.Particle;
 
 public class Die {
 	
+	private static final float MAX_AIRTIME = 3f;
 	private static HashMap<Long, Die> identityMap = new HashMap<>();
 	public Villager villager;
 	public VillagerType type;
@@ -165,6 +166,7 @@ public class Die {
 	
 	public int getSide(){
 		if(lockedSide >=0) return lockedSide;
+		if(!isStopped()) return -1;
 		physical.update();
 		physical.updateBounds();
 		Quaternion rot = new Quaternion();
@@ -203,7 +205,7 @@ public class Die {
 			return 2;
 		}
 		
-		return -99;
+		return -1;
 	}
 	
 	public Array<Side> sides = new Array<>();
@@ -230,7 +232,6 @@ public class Die {
 		
 		VertexAttribute va = new VertexAttribute(Usage.ColorPacked, 4, ShaderProgram.COLOR_ATTRIBUTE);
 		
-		VertexAttributes vas = new VertexAttributes(va);
 		
 		
 		Material m =new Material(TextureAttribute.createDiffuse(sides.get(0).tr[0].getTexture()));
@@ -247,7 +248,7 @@ public class Die {
 			Side side = sides.get(i);
 			TextureRegion base = side.tr[0];
 			TextureRegion highlight = side.tr[1];
-			mpb.setColor(getFloat(base), inner, getFloat(highlight), 0);
+			mpb.setColor(getFloat(base), getFloat(highlight), inner, die/5f+0.1f);
 			
 			switch(i){
 				case 0: mpb.rect(-amt, -amt, -amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, normalX, normalY, -1); break;
@@ -290,28 +291,29 @@ public class Die {
 		int num = x+16*(y);
 		return num/255f+0.002f;
 	}
-		
-		
 	
 	public boolean isMoving(){
 		return physical.isMoving();
 	}
 	
 	static int count;
+	
+	float timeInAir;
 	public void roll() {
+		timeInAir=0;
 		unlock();
-//		randomise(12, 0, 6, 3, 1, 1);
-		randomise(12, 0, 6, 0, 1, 1);
+		randomise(12, 0, 6, 0, .7f, .7f);
+	}
+	
+	public void jiggle(){
+		timeInAir=0;
+		randomise(5, 0, 2, 0, 1, 0);
 	}
 
 	private void unlock(){
 		locked=false;
 		lockedSide=-1;
 		physical.body.setDamping(0, 0);
-	}
-	
-	public void jiggle(){
-		
 	}
 	
 	private void randomise(float up, float upRand, float side, float sideRand, float rot, float rotRand){
@@ -353,16 +355,23 @@ public class Die {
 	Vector3 position = new Vector3();
 	public boolean isStopped(){
 		physical.transform.getTranslation(position);
-		return getSide()!=99 && !isMoving() && position.y<1;
+		return !isMoving() && position.y<1;
 	}
+	
 	int lockedSide=-1;
-	public float glow=0;
+	private float glow=0;
 	public void update(float delta){
 		if(locked){
-			glow = Math.max(0, glow-delta*1.5f);
+			glow = Math.max(0, glow-delta*1.1f);
 		}
 		else if(isStopped()){
 			lock();
+		}
+		else{
+			timeInAir+=delta;
+			if(timeInAir > MAX_AIRTIME){
+				jiggle();
+			}
 		}
 	}
 	
@@ -373,5 +382,9 @@ public class Die {
 		locked = true;
 		physical.body.setDamping(2, 50);
 		glow = 1;
+	}
+	
+	public float getGlow(){
+		return glow;
 	}
 }

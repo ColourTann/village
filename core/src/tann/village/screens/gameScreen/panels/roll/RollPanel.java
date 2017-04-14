@@ -24,7 +24,7 @@ public class RollPanel extends Group{
 		Button rollButton = new Button(buttonSize, buttonSize, .8f, Images.roll, Colours.dark, new Runnable() {
 			@Override
 			public void run() {
-				GameScreen.get().roll();
+				GameScreen.get().roll(true);
 			}
 		});
 		rollButton.setColor(Colours.brown_light);

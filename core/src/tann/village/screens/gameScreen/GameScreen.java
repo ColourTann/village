@@ -135,22 +135,20 @@ public class GameScreen extends Screen{
 	public void keyPress(int keycode) {
 		switch(keycode){
 		case Input.Keys.SPACE:
-				roll();
 			break;
 		}
 	}
 	
-	public void roll(){
+	public void roll(boolean reroll){
 		if(state!=State.Rolling) return;
 		if(rollButtonPanel.rollsLeft.getValue()<=0) return;
-		if(!BulletStuff.finishedRolling()) return;
+		if(reroll && !BulletStuff.finishedRolling()) return;
 		rollButtonPanel.rollsLeft.changeValue(-1);
 		for (Die d : BulletStuff.dice) {
 			if(BulletStuff.lockedDice.contains(d, true)) continue;
 			d.roll();
 		}
 	}
-
 	
 	public void proceed() {
 		switch(state){
@@ -274,7 +272,7 @@ public class GameScreen extends Screen{
 		for(Die d: BulletStuff.dice){
 			d.addToScreen();
 		}
-		roll();
+		roll(false);
 	}
 	
 	private void showReview() {

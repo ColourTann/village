@@ -140,9 +140,13 @@ public class GameScreen extends Screen{
 	}
 	
 	public void roll(boolean reroll){
+		System.out.println("reroll");
 		if(state!=State.Rolling) return;
+		System.out.println("state ok");
 		if(rollButtonPanel.rollsLeft.getValue()<=0) return;
+		System.out.println("rolls left ok");
 		if(reroll && !BulletStuff.finishedRolling()) return;
+		System.out.println("finished rolling ok");
 		rollButtonPanel.rollsLeft.changeValue(-1);
 		for (Die d : BulletStuff.dice) {
 			if(BulletStuff.lockedDice.contains(d, true)) continue;

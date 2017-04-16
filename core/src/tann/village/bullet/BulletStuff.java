@@ -35,6 +35,7 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionDispatcher;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionWorld;
 import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
 import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.collision.btDispatcher;
@@ -52,8 +53,11 @@ import tann.village.screens.gameScreen.villager.die.Die;
 import tann.village.util.Colours;
 
 public class BulletStuff {
+	
+	public final static short GROUND_FLAG = 1 << 8;
+	public final static short OBJECT_FLAG = 1 << 9;
+	public final static short ALL_FLAG = -1;
 
-	public static Renderable renderable = new Renderable();
 	public static ShaderProgram shaderProgram;
 	
 	static PerspectiveCamera cam;
@@ -62,27 +66,19 @@ public class BulletStuff {
 	public static Array<ModelInstance> instances;
 	public static Array<Die> dice = new Array<>();
 	public static Array<Die> lockedDice = new Array<>();
-	static Environment environment;
 
-	static Environment locked;
 
 	static Model model;
 	static CollisionObject ground;
-
-	static btCollisionShape groundShape;
-	static btCollisionShape ballShape;
 
 	static btBroadphaseInterface broadphase;
 	static btCollisionConfiguration collisionConfig;
 	static btDispatcher dispatcher;
 	static MyContactListener contactListener;
-
 	public static btDynamicsWorld dynamicsWorld;
 	static btConstraintSolver constraintSolver;
 
-	final static short GROUND_FLAG = 1 << 8;
-	public final static short OBJECT_FLAG = 1 << 9;
-	public final static short ALL_FLAG = -1;
+	
 
 	public static Array<AtlasRegion> diceTextures = new Array<>();
 	
@@ -111,10 +107,14 @@ public class BulletStuff {
 		collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
+		
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(new Vector3(0, -30f, 0));
 		contactListener = new MyContactListener();
+		contactListener.enableOnAdded();
+		contactListener.enableOnProcessed();
+		contactListener.enableOnStarted();
 
 		instances = new Array<>();
 		ground = new CollisionObject(model, "ground", new btBoxShape(new Vector3(5f, 0.5f, 5f)), 0);
@@ -175,18 +175,14 @@ public class BulletStuff {
 	}
 
 	public static final int mass = 1;
+
 
 	public static void render() {
-		 camController.update();
-		    Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		    modelBatch.begin(cam);
-		    for (ModelInstance instance : instances){
-		    	Die d = (Die)instance.userData;
-//		    	shaderProgram.setUniformi(location, value);
-//		    	modelBatch. setd.getSide()
-		    	modelBatch.render(instance, shader);
-		    }
-		    modelBatch.end();
+		camController.update();
+	    Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	    modelBatch.begin(cam);
+	    modelBatch.render(instances, shader);
+	    modelBatch.end();
 	}
 
 	public static void update(float delta){
@@ -194,12 +190,15 @@ public class BulletStuff {
 		dynamicsWorld.stepSimulation(physicsDelta, 5, 1f / 60f);
 		for (ModelInstance mi : instances) {
 			if(mi instanceof CollisionObject){
+//				checkCollision(((CollisionObject)mi).body, ((CollisionObject)mi).body);
 				((CollisionObject)mi).update();
+				
 			}
 		}
 	}
 
 	static boolean checkCollision(btCollisionObject obj0, btCollisionObject obj1) {
+		System.out.println("hi");
 		CollisionObjectWrapper co0 = new CollisionObjectWrapper(obj0);
 		CollisionObjectWrapper co1 = new CollisionObjectWrapper(obj1);
 

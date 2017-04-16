@@ -6,26 +6,22 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import tann.village.bullet.BulletStuff;
-import tann.village.bullet.CollisionObject;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.building.Building;
-import tann.village.screens.gameScreen.event.Event;
 import tann.village.screens.gameScreen.event.EventGenerator;
-import tann.village.screens.gameScreen.villager.die.Die;
 import tann.village.util.Colours;
 import tann.village.util.Fonts;
 import tann.village.util.Screen;
@@ -56,9 +52,12 @@ public class Main extends ApplicationAdapter {
 	public void create() {
 		atlas = new TextureAtlas(Gdx.files.internal("atlas_image.atlas"));
 		atlas_3d = new TextureAtlas(Gdx.files.internal("3d/atlas_image.atlas"));
+		for(Texture t: atlas_3d.getTextures()){
+			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		}
 		self = this;
 		Fonts.setup();
-//		Sounds.setup();
+		Sounds.setup();
 		EventGenerator.setup();
 		stage = new Stage(new FitViewport(Main.width, Main.height));
 		orthoCam = (OrthographicCamera) stage.getCamera();

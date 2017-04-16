@@ -18,8 +18,6 @@ public class DieShader implements Shader{
 	RenderContext context;
 	int u_projTrans;
 	int u_worldTrans;
-	int u_diffuseTexture;
-	int v_data;
 	int side;
 	int glow;
 	@Override
@@ -27,13 +25,10 @@ public class DieShader implements Shader{
         String vert = Gdx.files.internal("shader/vertex.glsl").readString();
         String frag = Gdx.files.internal("shader/fragment.glsl").readString();
         program = new ShaderProgram(vert, frag);
-        if (!program.isCompiled())
-            throw new GdxRuntimeException(program.getLog());
+        if (!program.isCompiled()) throw new GdxRuntimeException(program.getLog());
         u_projTrans = program.getUniformLocation("u_projViewTrans");
         u_worldTrans = program.getUniformLocation("u_worldTrans");
-        u_diffuseTexture = program.getUniformLocation("u_diffuseTexture");
         side = program.getUniformLocation("side");
-        v_data = program.getUniformLocation("v_data");
         glow = program.getUniformLocation("v_glow");
 	}
 	
@@ -41,7 +36,6 @@ public class DieShader implements Shader{
 	public void dispose() {
 		program.dispose();
 	}
-
 
 	@Override
 	public int compareTo(Shader other) {
@@ -53,7 +47,6 @@ public class DieShader implements Shader{
 		return true;
 	}
 
-	float f =0;
 	@Override
 	public void begin(Camera camera, RenderContext context) {
 		this.camera = camera;
@@ -61,23 +54,13 @@ public class DieShader implements Shader{
 		program.begin();
 		program.setUniformMatrix(u_projTrans, camera.combined);
 		Gdx.graphics.getGL20().glActiveTexture(GL20.GL_TEXTURE0);
-		
-		
-		
 		Images.side_brain.getTexture().bind(0);
 		program.setUniformi("u_texture", 0);
-		
-		
-		
 		context.setDepthTest(GL20.GL_LEQUAL);
-		context.setCullFace(GL20.GL_BACK);
 	}
 
 	@Override
 	public void render(Renderable renderable) {
-//		program.setUniformf(v_data, new Vector3(1,0,1));
-//		System.out.println(renderable.userData);
-
 		Die d = (Die)renderable.userData;
 		program.setUniformf(glow, d.getGlow());
 		program.setUniformi(side, d.getSide());

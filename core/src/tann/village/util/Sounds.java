@@ -15,26 +15,30 @@ public class Sounds {
 
 	public static void setup(){
 		//sfx//
-		makeSound("sfx/loaded.ogg", Sound.class);
-		makeSound("sfx/point.ogg", Sound.class);
+		for(int i=0;i<=3;i++){
+			makeSound("sfx/clack"+i+".wav", Sound.class);	
+		}
 		
-		makeSound("sfx/snake_enemycrash.ogg", Sound.class);
-		makeSound("sfx/snake_playercrash.ogg", Sound.class);
-		makeSound("sfx/snake_move.ogg", Sound.class);
-		
-		makeSound("sfx/space_shoot.ogg", Sound.class);
-		makeSound("sfx/space_stationhit.ogg", Sound.class);
-		makeSound("sfx/space_warp.ogg", Sound.class);
-		makeSound("sfx/space_asteroidkill.ogg", Sound.class);
-		
-		makeSound("sfx/turtle_die.ogg", Sound.class);
-		makeSound("sfx/turtle_duck.ogg", Sound.class);
-		makeSound("sfx/turtle_jump.ogg", Sound.class);
-		
-		//music//
-		makeSound("music/turtle.ogg", Music.class);
-		makeSound("music/snake.ogg", Music.class);
-		makeSound("music/space.ogg", Music.class);
+//		makeSound("sfx/loaded.ogg", Sound.class);
+//		makeSound("sfx/point.ogg", Sound.class);
+//		
+//		makeSound("sfx/snake_enemycrash.ogg", Sound.class);
+//		makeSound("sfx/snake_playercrash.ogg", Sound.class);
+//		makeSound("sfx/snake_move.ogg", Sound.class);
+//		
+//		makeSound("sfx/space_shoot.ogg", Sound.class);
+//		makeSound("sfx/space_stationhit.ogg", Sound.class);
+//		makeSound("sfx/space_warp.ogg", Sound.class);
+//		makeSound("sfx/space_asteroidkill.ogg", Sound.class);
+//		
+//		makeSound("sfx/turtle_die.ogg", Sound.class);
+//		makeSound("sfx/turtle_duck.ogg", Sound.class);
+//		makeSound("sfx/turtle_jump.ogg", Sound.class);
+//		
+//		//music//
+//		makeSound("music/turtle.ogg", Music.class);
+//		makeSound("music/snake.ogg", Music.class);
+//		makeSound("music/space.ogg", Music.class);
 		
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
@@ -53,8 +57,8 @@ public class Sounds {
 	public static <T> T get(String name, Class<T> type){
 		String folder = type==Sound.class?"sfx":"music";
 		name=folder+"/"+name;
-		if(type==Sound.class) name=name+".ogg";
-		if(type==Music.class) name=name+".ogg";
+		if(type==Sound.class) name=name+".wav";
+		if(type==Music.class) name=name+".wav";
 		return am.get(name, type);
 	}
 	

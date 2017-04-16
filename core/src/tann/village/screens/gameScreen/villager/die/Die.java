@@ -1,48 +1,35 @@
 package tann.village.screens.gameScreen.villager.die;
 
-import java.util.HashMap;
-
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.Renderable;
-import com.badlogic.gdx.graphics.g3d.Shader;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
-import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader.Config;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.physics.bullet.collision.Collision;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.utils.Array;
 
-import tann.village.Images;
 import tann.village.bullet.BulletStuff;
 import tann.village.bullet.CollisionObject;
 import tann.village.screens.gameScreen.effect.Effect;
 import tann.village.screens.gameScreen.villager.Villager;
 import tann.village.screens.gameScreen.villager.Villager.VillagerType;
-import tann.village.util.Colours;
 import tann.village.util.Maths;
-import tann.village.util.Particle;
 
 public class Die {
 	
 	private static final float MAX_AIRTIME = 3f;
-	private static HashMap<Long, Die> identityMap = new HashMap<>();
 	public Villager villager;
 	public VillagerType type;
+	public CollisionObject physical;
+	
 	public Die(Villager villager) {
 		this.villager=villager;
 		setup(villager.type);
@@ -156,13 +143,6 @@ public class Die {
 			
 		}
 	}
-
-	public static Die getDie(long userValue){
-		return identityMap.get(userValue);
-	}
-	
-	public CollisionObject physical;
-	
 	
 	public int getSide(){
 		if(lockedSide >=0) return lockedSide;
@@ -176,17 +156,16 @@ public class Die {
 		direction.set(Vector3.Z);
 		direction.mul(rot);
 		float dot = Vector3.Y.dot(direction);
-		
 		if(dot>.9f){
 			return 1;
 		}
 		else if (dot<-.9f){
 			return 0;
 		}
+		
 		direction.set(Vector3.X);
 		direction.mul(rot);
 		dot = Vector3.Y.dot(direction);
-		
 		if(dot>.9f){
 			return 5;
 		}
@@ -197,7 +176,6 @@ public class Die {
 		direction.set(Vector3.Y);
 		direction.mul(rot);
 		dot = Vector3.Y.dot(direction);
-		
 		if(dot>.9f){
 			return 3;
 		}
@@ -217,31 +195,22 @@ public class Die {
 	}
 	
 	static int die = 0;
-	
+	private static final float DIE_SIZE = 0.5f;
+	private static final int ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates|VertexAttributes.Usage.ColorPacked;
+	private static Material MATERIAL;
 	public void construct(){
 		ModelBuilder mb = new ModelBuilder();
-		float amt = .5f;
 		mb.begin();
-		
-		
-		
-		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal
-				| VertexAttributes.Usage.TextureCoordinates|VertexAttributes.Usage.ColorPacked;
 		mb.node().id = "die";
 		
+		if(MATERIAL==null){
+			MATERIAL =new Material(TextureAttribute.createDiffuse(sides.get(0).tr[0].getTexture()));
+		}
 		
-		VertexAttribute va = new VertexAttribute(Usage.ColorPacked, 4, ShaderProgram.COLOR_ATTRIBUTE);
-		
-		
-		
-		Material m =new Material(TextureAttribute.createDiffuse(sides.get(0).tr[0].getTexture()));
-		sides.get(0).tr[0].getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		MeshPartBuilder mpb = mb.part("die", GL20.GL_TRIANGLES, attr,m);
-		float normalX = 0;
-		float normalY = 0;
-//		float[] f = new float[]{getFloat(5,6),getFloat(4,5),getFloat(3, 4),getFloat(2,3),getFloat(1, 2),getFloat(0,0)};
-		float[] f = new float[]{getFloat(3,4)};
+		MeshPartBuilder mpb = mb.part("die", GL20.GL_TRIANGLES, ATTRIBUTES, MATERIAL);
+		float normalX = 0; // normalX stores the side number for flashing/fading
+		float normalY = 0; // currently unused
+		float[] f = new float[]{getFloat(3,4)}; // the 
 		float inner = f[(int)(Math.random()*f.length)];
 		for(int i=0;i<6;i++){
 			normalX=i;
@@ -251,36 +220,33 @@ public class Die {
 			mpb.setColor(getFloat(base), getFloat(highlight), inner, die/5f+0.1f);
 			
 			switch(i){
-				case 0: mpb.rect(-amt, -amt, -amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, normalX, normalY, -1); break;
-				case 1: mpb.rect(-amt, amt, amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, normalX, normalY, 1); break;
-				case 2: mpb.rect(-amt, -amt, amt, -amt, -amt, -amt, amt, -amt, -amt, amt, -amt, amt, normalX, normalY, 0); break;
-				case 3: mpb.rect(-amt, amt, -amt, -amt, amt, amt, amt, amt, amt, amt, amt, -amt, normalX, normalY, 0); break;
-				case 4: mpb.rect(-amt, -amt, amt, -amt, amt, amt, -amt, amt, -amt, -amt, -amt, -amt, normalX, normalY, 0); break;
-				case 5: mpb.rect(amt, -amt, -amt, amt, amt, -amt, amt, amt, amt, amt, -amt, amt, normalX, normalY, 0); break;
+				case 0: mpb.rect(-DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, normalX, normalY, -1); break;
+				case 1: mpb.rect(-DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, normalX, normalY, 1); break;
+				case 2: mpb.rect(-DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, normalX, normalY, 0); break;
+				case 3: mpb.rect(-DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, normalX, normalY, 0); break;
+				case 4: mpb.rect(-DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, normalX, normalY, 0); break;
+				case 5: mpb.rect(DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, normalX, normalY, 0); break;
 			}
 			
 		}
-		Model model = mb.end(); 
-		
-		
-		
-		
-		
-		model.getNode("die").parts.get(0).setRenderable(BulletStuff.renderable);
-		
-		
-		CollisionObject co = null;
-		co = new CollisionObject(model, "die", new btBoxShape(new Vector3(0.5f, 0.5f, 0.5f)), BulletStuff.mass);
-		co.transform.trn(MathUtils.random(-2.5f, 2.5f), 1.5f, MathUtils.random(-2.5f, 2.5f));
+		Model model = mb.end();
+
+		CollisionObject co = new CollisionObject(model, "die", new btBoxShape(new Vector3(0.5f, 0.5f, 0.5f)),
+				BulletStuff.mass);
+		physical = co;
+		co.transform.trn(MathUtils.random(-2.5f, 2.5f), 1.5f, MathUtils.random(-2.5f, 2.5f)); // starting
+																								// position
 		co.body.setWorldTransform(co.transform);
-		co.body.setUserValue(BulletStuff.instances.size);
-		co.body.setCollisionFlags(	
+		co.body.setCollisionFlags(
 				co.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
-		physical=co;
 		physical.body.setActivationState(4);
-		die = die+1;
-		
-		co.userData=this;
+		co.body.setCollisionFlags(BulletStuff.OBJECT_FLAG);
+		co.body.setContactCallbackFlag(BulletStuff.OBJECT_FLAG);
+		co.body.setContactCallbackFilter(BulletStuff.OBJECT_FLAG);
+		co.body.setActivationState(Collision.DISABLE_DEACTIVATION);
+		die = die + 1;
+		co.body.userData=this;
+		physical.userData = this;
 	}
 	
 	private float getFloat(TextureRegion tr){
@@ -296,7 +262,6 @@ public class Die {
 		return physical.isMoving();
 	}
 	
-	static int count;
 	
 	float timeInAir;
 	public void roll() {
@@ -326,8 +291,6 @@ public class Die {
 		applyForces(x, y, z, r1, r2, r3);
 	}
 	
-	
-	
 	private void applyForces(float x, float y, float z, float r1, float r2, float r3){
 		physical.body.applyCentralImpulse(new Vector3(x, y, z));
 		physical.body.applyTorqueImpulse(new Vector3(r1, r2, r3));
@@ -340,7 +303,8 @@ public class Die {
 	public void addToScreen() {
 		BulletStuff.instances.add(physical);
 		BulletStuff.dynamicsWorld.addRigidBody(physical.body, BulletStuff.OBJECT_FLAG, BulletStuff.ALL_FLAG);
-		
+		physical.body.setContactCallbackFlag(BulletStuff.OBJECT_FLAG);
+		physical.body.setContactCallbackFilter(0);
 	}
 
 	public void removeFromScreen() {
@@ -355,14 +319,15 @@ public class Die {
 	Vector3 position = new Vector3();
 	public boolean isStopped(){
 		physical.transform.getTranslation(position);
-		return !isMoving() && position.y<1;
+		System.out.println(isMoving() +":"+ position.y);
+		return !isMoving() && position.y<1.01f;
 	}
 	
 	int lockedSide=-1;
 	private float glow=0;
 	public void update(float delta){
 		if(locked){
-			glow = Math.max(0, glow-delta*1.1f);
+			glow = Math.max(0, glow-delta*1.0f);
 		}
 		else if(isStopped()){
 			lock();

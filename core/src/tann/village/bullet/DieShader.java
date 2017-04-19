@@ -22,7 +22,7 @@ public class DieShader implements Shader{
 	int glow;
 	int v_villagerColour;
 	int v_values;
-	int[] v_faces = new int[24];
+	int[] v_faces = new int[26];
 	@Override
 	public void init() {
         String vert = Gdx.files.internal("shader/vertex.glsl").readString();
@@ -39,6 +39,8 @@ public class DieShader implements Shader{
         		v_faces[i*4+2]=program.getUniformLocation("h_"+i+"x");
         		v_faces[i*4+3]=program.getUniformLocation("h_"+i+"y");
         }
+        v_faces[24]= program.getUniformLocation("l_x");
+        v_faces[25]= program.getUniformLocation("l_y");
         
         v_villagerColour = program.getUniformLocation("v_villagerColour");
         v_values= program.getUniformLocation("v_values[0]");

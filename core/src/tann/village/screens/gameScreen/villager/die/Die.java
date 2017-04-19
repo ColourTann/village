@@ -368,16 +368,16 @@ public class Die {
 		return values;
 	}
 	
-//	private static final Vector3[] colours = new Vector3[]{Colours.v3(Colours.blue_light), Colours.v3(Colours.fate_light), Colours.v3(Colours.green_light), Colours.v3(Colours.brown_light), Colours.v3(Colours.red)};
 	private static final Color[] colours = new Color[]{(Colours.blue_light), (Colours.fate_light), (Colours.green_light), (Colours.brown_light), (Colours.red)};
 	public Color getColour() {
 		return colours[col];
 	}
+	
 
 	private float[] texLocs = null;
 	public float[] getTexLocs() {
 		if(texLocs != null) return texLocs;
-		texLocs = new float[24];
+		texLocs = new float[26];
 		float width = sides.get(0).tr[0].getTexture().getWidth();
 		float height = sides.get(0).tr[0].getTexture().getHeight();
 		for(int i=0;i<sides.size;i++){
@@ -387,6 +387,9 @@ public class Die {
 			texLocs[4*i+2] = s.tr[1].getRegionX()/width;
 			texLocs[4*i+3] = s.tr[1].getRegionY()/height;
 		}
+		TextureRegion lapel =villager.lapel; 
+		texLocs[24]=lapel.getRegionX()/width;
+		texLocs[25]=lapel.getRegionY()/height;
 		
 		return texLocs;
 	}

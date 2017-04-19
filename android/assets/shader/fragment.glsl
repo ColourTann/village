@@ -45,37 +45,25 @@ uniform float s_4y;
 uniform float s_5x;
 uniform float s_5y;
 
+uniform float l_x;
+uniform float l_y;
 
 void main() {
 
-	// setup tex location vec2s //
 
-	// ------------------------ //
 	vec2 UV = v_diffuseUV/16.0;
 	
-	float faceFloat = float(floor(v_color.x*256.0));
-	float fSmall = mod(faceFloat, 16.0);
-	float fBig = (faceFloat-fSmall)/16.0;
-	//vec2 face = vec2(fSmall/16.0, fBig/16.0);
-
-	float highlightFloat = float(floor(v_color.y*256.0));
-	float hSmall = mod(highlightFloat, 16.0);
-	float hBig = (highlightFloat-hSmall)/16.0;
-	//vec2 highlight = vec2(hSmall/16.0, hBig/16.0);
-
-	float lapelFloat = float(floor(v_color.z*256.0));
-	float lSmall = mod(lapelFloat, 16.0);
-	float lBig = (lapelFloat-lSmall)/16.0;
-	vec2 lapel = vec2(lSmall/16.0, lBig/16.0);
-	// ------------------------ //
 
 	// base colour 
 	gl_FragColor.rgba =  vec4(.1333,.1569,.1725,1);
-
+	vec2 lapel = vec2(l_x,l_y);
 	// add lapels
 	vec4 colour = texture2D(u_texture, lapel+UV);
 	gl_FragColor.rgb =  gl_FragColor.rgb *(1.0-colour.a) +v_villagerColour.rgb*(colour.a);
 	
+
+	
+
 	int mySide = int(v_normal.x+0.1);
 
 	float faceX = (s_0x*(mySide==0?1.0:0.0)) + (s_1x*(mySide==1?1.0:0.0)) + (s_2x*(mySide==2?1.0:0.0)) + (s_3x*(mySide==3?1.0:0.0)) + (s_4x*(mySide==4?1.0:0.0)) + (s_5x*(mySide==5?1.0:0.0));
@@ -85,6 +73,8 @@ void main() {
 	float highlightX = (h_0x*(mySide==0?1.0:0.0)) + (h_1x*(mySide==1?1.0:0.0)) + (h_2x*(mySide==2?1.0:0.0)) + (h_3x*(mySide==3?1.0:0.0)) + (h_4x*(mySide==4?1.0:0.0)) + (h_5x*(mySide==5?1.0:0.0));
 	float highlightY = (h_0y*(mySide==0?1.0:0.0)) + (h_1y*(mySide==1?1.0:0.0)) + (h_2y*(mySide==2?1.0:0.0)) + (h_3y*(mySide==3?1.0:0.0)) + (h_4y*(mySide==4?1.0:0.0)) + (h_5y*(mySide==5?1.0:0.0));
 	vec2 highlight = vec2(highlightX, highlightY);
+
+
 
 	// add face image	
 	colour = texture2D(u_texture, face+UV);

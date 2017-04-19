@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import tann.village.Images;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.effect.Effect;
 import tann.village.screens.gameScreen.effect.Effect.EffectSource;
@@ -49,14 +51,16 @@ public class Villager {
 	int xpToLevelUp = 10;
 	public VillagerType type;
 	public Die die;
-	
+	public TextureRegion lapel;
 	
 	public Villager() {
 //		this.type=VillagerType.Villager;
 		this.type=VillagerType.values()[(int)(Math.random()*VillagerType.values().length)];
+		this.lapel = Images.lapel;
 		setupDie();
 		firstName=generateName(true);
 		lastName=generateName(false);
+		
 	}
 
 	public void setDie(Die die) {

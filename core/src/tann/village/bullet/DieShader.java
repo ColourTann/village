@@ -20,6 +20,9 @@ public class DieShader implements Shader{
 	int u_worldTrans;
 	int side;
 	int glow;
+	int v_villagerColour;
+	int v_values;
+	int[] v_faces = new int[24];
 	@Override
 	public void init() {
         String vert = Gdx.files.internal("shader/vertex.glsl").readString();
@@ -30,6 +33,15 @@ public class DieShader implements Shader{
         u_worldTrans = program.getUniformLocation("u_worldTrans");
         side = program.getUniformLocation("side");
         glow = program.getUniformLocation("v_glow");
+        for(int i=0;i<6;i++){
+        		v_faces[i*4]=program.getUniformLocation("s_"+i+"x");
+        		v_faces[i*4+1]=program.getUniformLocation("s_"+i+"y");
+        		v_faces[i*4+2]=program.getUniformLocation("h_"+i+"x");
+        		v_faces[i*4+3]=program.getUniformLocation("h_"+i+"y");
+        }
+        
+        v_villagerColour = program.getUniformLocation("v_villagerColour");
+        v_values= program.getUniformLocation("v_values[0]");
 	}
 	
 	@Override
@@ -61,13 +73,25 @@ public class DieShader implements Shader{
 
 	@Override
 	public void render(Renderable renderable) {
+		
 		Die d = (Die)renderable.userData;
 		program.setUniformf(glow, d.getGlow());
 		program.setUniformi(side, d.getSide());
+		setTexLocs(d.getTexLocs());
+//		program.setUniformf(v_villagerColour, d.getColour().r, d.getColour().g, d.getColour().b);
+		Gdx.gl20.glUniform1iv(v_values, 4, d.getValues(), 0);
+		program.setUniformf(v_villagerColour, d.getColour());
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
+		
 		renderable.meshPart.render(program, true);
 	}
-
+	
+	public void setTexLocs(float[] ints){
+		for(int i=0;i<ints.length;i++){
+			program.setUniformf(v_faces[i], ints[i]);
+		}
+	}
+	
 	@Override
 	public void end() {
 		program.end();

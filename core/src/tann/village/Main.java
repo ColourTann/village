@@ -37,7 +37,7 @@ public class Main extends ApplicationAdapter {
 	public static TextureAtlas atlas_3d;
 	public static Main self;
 	public static boolean debug = false;
-	public static boolean showFPS = false;
+	public static boolean showFPS = true;
 	Screen currentScreen;
 	Screen previousScreen;
 	public static float ticks;
@@ -139,7 +139,10 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void render() {
-
+		
+		
+		long startTime = System.currentTimeMillis();
+		
 		update(Gdx.graphics.getDeltaTime());
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -156,6 +159,10 @@ public class Main extends ApplicationAdapter {
 			drawFPS(batch);
 			batch.end();
 		}
+		
+		if(Main.showFPS){
+			updateFPS(System.currentTimeMillis()-startTime);
+		}
 	}
 
 	private void drawVersion() {
@@ -165,10 +172,24 @@ public class Main extends ApplicationAdapter {
 		batch.end();
 	}
 
-	public void drawFPS(Batch batch) {
-		batch.setColor(Colours.light);
-
-		Fonts.fontSmall.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, Main.height - 10);
+	int sampleSize=60;
+	long[] values = new long[sampleSize];
+	int currentSample;
+	private void updateFPS(long value){
+		values[(currentSample++)%sampleSize]=value;
+	}
+	
+	private void drawFPS(Batch batch) {
+		Fonts.fontSmall.setColor(Colours.fate_darkest);
+		
+		
+		long average = 0;
+		for(long l:values){
+			average+=l;
+		}
+		average/=values.length;
+		
+		Fonts.fontSmall.draw(batch, String.valueOf(average)+":"+Gdx.graphics.getFramesPerSecond(), 0, 60);
 	}
 
 

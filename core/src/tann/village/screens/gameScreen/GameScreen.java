@@ -1,6 +1,7 @@
 package tann.village.screens.gameScreen;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -35,6 +36,7 @@ import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
 import tann.village.util.Screen;
+import tann.village.util.Sounds;
 import tann.village.util.TextBox;
 
 public class GameScreen extends Screen{
@@ -92,6 +94,7 @@ public class GameScreen extends Screen{
 		addActor(upkeepPanel);
 		upkeepPanel.setPosition(BUTTON_BORDER, getHeight()-BUTTON_BORDER-upkeepPanel.getHeight());
 		setState(State.Event);
+		Sounds.playMusic(Sounds.get("beach", Music.class));
 		
 	}
 	
@@ -140,17 +143,18 @@ public class GameScreen extends Screen{
 	}
 	
 	public void roll(boolean reroll){
-		System.out.println("reroll");
 		if(state!=State.Rolling) return;
-		System.out.println("state ok");
 		if(rollButtonPanel.rollsLeft.getValue()<=0) return;
-		System.out.println("rolls left ok");
-		if(reroll && !BulletStuff.finishedRolling()) return;
-		System.out.println("finished rolling ok");
-		rollButtonPanel.rollsLeft.changeValue(-1);
+		if(reroll && !BulletStuff.isFinishedRolling()) return;
+		int diceRolled = 0;
 		for (Die d : BulletStuff.dice) {
-			if(BulletStuff.lockedDice.contains(d, true)) continue;
-			d.roll();
+			if(d.rerolling){
+				d.roll();
+				diceRolled++;
+			}
+		}
+		if(diceRolled>0) {
+			rollButtonPanel.rollsLeft.changeValue(-1);
 		}
 	}
 	
@@ -160,7 +164,7 @@ public class GameScreen extends Screen{
 			setState(State.Rolling);
 			break;
 		case Rolling:
-			if(!BulletStuff.finishedRolling()) return;
+			if(!BulletStuff.isFinishedRolling()) return;
 			setState(State.Review);
 			break;
 		case Review:
@@ -237,7 +241,7 @@ public class GameScreen extends Screen{
 	}
 	
 	private void finishRolling() {
-		if(!BulletStuff.finishedRolling()) return;
+		if(!BulletStuff.isFinishedRolling()) return;
 		refreshPanels();
 		upkeepPanel.activate();
 		for(Die d:BulletStuff.dice){
@@ -248,7 +252,6 @@ public class GameScreen extends Screen{
 			d.villager.gainXP(1);
 			d.removeFromScreen();
 		}
-		BulletStuff.clearDice();
 	}
 	
 
@@ -269,12 +272,14 @@ public class GameScreen extends Screen{
 	private void startRolling() {
 		BulletStuff.refresh(villagers);
 		rollButtonPanel.setVisible(true);
+		
 		rollButtonPanel.rollsLeft.setMax(2+Inventory.get().getResourceAmount(EffectType.Morale)/3);
 		rollButtonPanel.rollsLeft.maxOut();
 		reviewPanel = new ReviewPanel(dayNum);
 		state=State.Rolling;
 		for(Die d: BulletStuff.dice){
 			d.addToScreen();
+			d.rerolling=true;
 		}
 		roll(false);
 	}

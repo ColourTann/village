@@ -35,22 +35,22 @@ public class Side {
 	
 
 	public static Side food1 = new Side(Images.get("food1"), new Effect(EffectType.Food, 1, d));
-//	public static Side food2 = new Side(Images.side_food_2, new Effect(EffectType.Food, 2, d));
-//	public static Side food3 = new Side(Images.side_food_3, new Effect(EffectType.Food, 3, d));
+	public static Side food2 = new Side(Images.get("food2"), new Effect(EffectType.Food, 2, d));
+	public static Side food3 = new Side(Images.get("food3"), new Effect(EffectType.Food, 3, d));
 	public static Side wood1 = new Side(Images.get("wood1"), new Effect(EffectType.Wood, 1, d));
-//	public static Side wood2 = new Side(Images.side_wood_2, new Effect(EffectType.Wood, 2, d));
-//	public static Side wood3 = new Side(Images.side_wood_3, new Effect(EffectType.Wood, 3, d));
-//	public static Side food1wood1 = make(Images.side_food_1_wood_1, EffectType.Wood, 1, EffectType.Food, 1);
-	public static Side skull = new Side(Images.get("nothing"), new Effect(EffectType.Skull, d));
+	public static Side wood2 = new Side(Images.get("wood2"), new Effect(EffectType.Wood, 2, d));
+	public static Side wood3 = new Side(Images.get("wood2"), new Effect(EffectType.Wood, 3, d));
+	public static Side food1wood1 = make(Images.get("food1wood1"), EffectType.Wood, 1, EffectType.Food, 1);
+	public static Side skull = make(Images.get("nothing"), EffectType.Skull, 1);
 	public static Side brain = make(Images.get("brain"), EffectType.Brain, 1);
-//	public static Side TwoMoraleForTwoFood = make(Images.side_morale_2_minus_2_food, EffectType.Food, -2, EffectType.Morale, 2);
-//
-//	public static Side morale1 = new Side(Images.side_morale_1, new Effect(EffectType.Morale, 1, d));
-//	public static Side morale2 = make(Images.side_morale_2, EffectType.Morale, 2);
-//	public static Side fate1= make(Images.side_fate_1, EffectType.Fate, 1);
-//	public static Side fate2ForWoodAndFood= make(Images.side_2fateForWoodAndFood, EffectType.Fate, 2, EffectType.Wood, -1, EffectType.Food, -1);
-//	public static Side fateForWood= make(Images.side_fateForWood, EffectType.Fate, 1, EffectType.Wood, -1);
-//	public static Side fateForFood= make(Images.side_fateForFood, EffectType.Fate, 1, EffectType.Food, -1);
+	public static Side TwoMoraleForTwoFood = make(Images.get("morale_2_minus_2_food"), EffectType.Food, -2, EffectType.Morale, 2);
+
+	public static Side morale1 = make(Images.get("morale1"), EffectType.Morale, 1);
+	public static Side morale2 = make(Images.get("morale2"), EffectType.Morale, 2);
+	public static Side fate1= make(Images.get("fate1"), EffectType.Fate, 1);
+	public static Side fate2ForWoodAndFood= make(Images.get("fate2woodminus1foodminus1"), EffectType.Fate, 2, EffectType.Wood, -1, EffectType.Food, -1);
+	public static Side fateForWood= make(Images.get("fate1woodminus1"), EffectType.Fate, 1, EffectType.Wood, -1);
+	public static Side fateForFood= make(Images.get("fate1foodminus1"), EffectType.Fate, 1, EffectType.Food, -1);
 	
 	
 	private static Side make(TextureRegion[] image, EffectType type, int value){

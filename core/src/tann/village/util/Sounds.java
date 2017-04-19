@@ -17,7 +17,9 @@ public class Sounds {
 		//sfx//
 		for(int i=0;i<=3;i++){
 			makeSound("sfx/clack"+i+".wav", Sound.class);	
+			makeSound("sfx/clock"+i+".wav", Sound.class);	
 		}
+		makeSound("music/beach.mp3", Music.class);
 		
 //		makeSound("sfx/loaded.ogg", Sound.class);
 //		makeSound("sfx/point.ogg", Sound.class);
@@ -58,7 +60,7 @@ public class Sounds {
 		String folder = type==Sound.class?"sfx":"music";
 		name=folder+"/"+name;
 		if(type==Sound.class) name=name+".wav";
-		if(type==Music.class) name=name+".wav";
+		if(type==Music.class) name=name+".mp3";
 		return am.get(name, type);
 	}
 	

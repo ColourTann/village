@@ -1,5 +1,6 @@
 package tann.village.screens.gameScreen.villager.die;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
@@ -21,6 +23,7 @@ import tann.village.bullet.CollisionObject;
 import tann.village.screens.gameScreen.effect.Effect;
 import tann.village.screens.gameScreen.villager.Villager;
 import tann.village.screens.gameScreen.villager.Villager.VillagerType;
+import tann.village.util.Colours;
 import tann.village.util.Maths;
 
 public class Die {
@@ -29,7 +32,7 @@ public class Die {
 	public Villager villager;
 	public VillagerType type;
 	public CollisionObject physical;
-	
+	int col = (int)(Math.random()*5);
 	public Die(Villager villager) {
 		this.villager=villager;
 		setup(villager.type);
@@ -44,7 +47,6 @@ public class Die {
 	
 	public void setup(VillagerType type){
 		switch(type){
-		
 			// level 0
 		case Villager:
 			addSide(Side.food1);
@@ -55,89 +57,89 @@ public class Die {
 			addSide(Side.skull);
 			break;
 			
-			// level 1
-//		case Fisher:
-//			addSide(Side.food1);
-//			addSide(Side.food1);
-//			addSide(Side.food2);
-//			addSide(Side.food2);
-//			addSide(Side.wood1);
-//			addSide(Side.brain);
-//			break;
-//		case Musician:
-//			addSide(Side.morale1);
-//			addSide(Side.food1);
-//			addSide(Side.wood1);
-//			addSide(Side.food2);
-//			addSide(Side.wood1);
-//			addSide(Side.brain);
-//			break;
-//		case Mystic:
-//			addSide(Side.fateForFood);
-//			addSide(Side.fateForWood);
-//			addSide(Side.wood1);
-//			addSide(Side.food1);
-//			addSide(Side.skull);
-//			addSide(Side.brain);
-//			break;
-//		case Chopper:
-//			addSide(Side.food1);
-//			addSide(Side.wood1);
-//			addSide(Side.wood2);
-//			addSide(Side.wood3);
-//			addSide(Side.skull);
-//			addSide(Side.brain);
-//			break;
-//		case Gatherer:
-//			addSide(Side.food1);
-//			addSide(Side.food1);
-//			addSide(Side.food2);
-//			addSide(Side.wood1);
-//			addSide(Side.wood2);
-//			addSide(Side.brain);
-//			break;
-//			
-//		// level 2
-//		case Builder:
-//			addSide(Side.food1);
-//			addSide(Side.food2);
-//			addSide(Side.wood2);
-//			addSide(Side.wood3);
-//			addSide(Side.wood3);
-//			addSide(Side.brain);
-//			break;
-//		case Explorer:
-//			addSide(Side.food3);
-//			addSide(Side.wood3);
-//			addSide(Side.morale1);
-//			addSide(Side.food1wood1);
-//			addSide(Side.brain);
-//			addSide(Side.skull);
-//			break;
-//		case Farmer:
-//			addSide(Side.food1wood1);
-//			addSide(Side.food1wood1);
-//			addSide(Side.food2);
-//			addSide(Side.food3);
-//			addSide(Side.food3);
-//			addSide(Side.brain);
-//			break;
-//		case FateWeaver:
-//			addSide(Side.fate1);
-//			addSide(Side.fate1);
-//			addSide(Side.fate2ForWoodAndFood);
-//			addSide(Side.food2);
-//			addSide(Side.skull);
-//			addSide(Side.brain);
-//			break;
-//		case Leader:
-//			addSide(Side.morale2);
-//			addSide(Side.morale2);
-//			addSide(Side.food2);
-//			addSide(Side.food2);
-//			addSide(Side.wood2);
-//			addSide(Side.brain);
-//			break;
+//			 level 1
+		case Fisher:
+			addSide(Side.food1);
+			addSide(Side.food1);
+			addSide(Side.food2);
+			addSide(Side.food2);
+			addSide(Side.wood1);
+			addSide(Side.brain);
+			break;
+		case Musician:
+			addSide(Side.morale1);
+			addSide(Side.food1);
+			addSide(Side.wood1);
+			addSide(Side.food2);
+			addSide(Side.wood1);
+			addSide(Side.brain);
+			break;
+		case Mystic:
+			addSide(Side.fateForFood);
+			addSide(Side.fateForWood);
+			addSide(Side.wood1);
+			addSide(Side.food1);
+			addSide(Side.skull);
+			addSide(Side.brain);
+			break;
+		case Chopper:
+			addSide(Side.food1);
+			addSide(Side.wood1);
+			addSide(Side.wood2);
+			addSide(Side.wood3);
+			addSide(Side.skull);
+			addSide(Side.brain);
+			break;
+		case Gatherer:
+			addSide(Side.food1);
+			addSide(Side.food1);
+			addSide(Side.food2);
+			addSide(Side.wood1);
+			addSide(Side.wood2);
+			addSide(Side.brain);
+			break;
+			
+		// level 2
+		case Builder:
+			addSide(Side.food1);
+			addSide(Side.food2);
+			addSide(Side.wood2);
+			addSide(Side.wood3);
+			addSide(Side.wood3);
+			addSide(Side.brain);
+			break;
+		case Explorer:
+			addSide(Side.food3);
+			addSide(Side.wood3);
+			addSide(Side.morale1);
+			addSide(Side.food1wood1);
+			addSide(Side.brain);
+			addSide(Side.skull);
+			break;
+		case Farmer:
+			addSide(Side.food1wood1);
+			addSide(Side.food1wood1);
+			addSide(Side.food2);
+			addSide(Side.food3);
+			addSide(Side.food3);
+			addSide(Side.brain);
+			break;
+		case FateWeaver:
+			addSide(Side.fate1);
+			addSide(Side.fate1);
+			addSide(Side.fate2ForWoodAndFood);
+			addSide(Side.food2);
+			addSide(Side.skull);
+			addSide(Side.brain);
+			break;
+		case Leader:
+			addSide(Side.morale2);
+			addSide(Side.morale2);
+			addSide(Side.food2);
+			addSide(Side.food2);
+			addSide(Side.wood2);
+			addSide(Side.brain);
+			break;
 		default:
 			break;
 			
@@ -145,6 +147,7 @@ public class Die {
 	}
 	
 	public int getSide(){
+		if(rerolling) return 50;
 		if(lockedSide >=0) return lockedSide;
 		if(!isStopped()) return -1;
 		physical.update();
@@ -210,7 +213,7 @@ public class Die {
 		MeshPartBuilder mpb = mb.part("die", GL20.GL_TRIANGLES, ATTRIBUTES, MATERIAL);
 		float normalX = 0; // normalX stores the side number for flashing/fading
 		float normalY = 0; // currently unused
-		float[] f = new float[]{getFloat(3,4)}; // the 
+		float[] f = new float[]{getFloat(4,5)}; // the lapels 
 		float inner = f[(int)(Math.random()*f.length)];
 		for(int i=0;i<6;i++){
 			normalX=i;
@@ -234,8 +237,7 @@ public class Die {
 		CollisionObject co = new CollisionObject(model, "die", new btBoxShape(new Vector3(0.5f, 0.5f, 0.5f)),
 				BulletStuff.mass);
 		physical = co;
-		co.transform.trn(MathUtils.random(-2.5f, 2.5f), 1.5f, MathUtils.random(-2.5f, 2.5f)); // starting
-																								// position
+		co.transform.trn(MathUtils.random(-2.5f, 2.5f), 1.5f, MathUtils.random(-2.5f, 2.5f)); // starting position
 		co.body.setWorldTransform(co.transform);
 		co.body.setCollisionFlags(
 				co.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
@@ -262,12 +264,19 @@ public class Die {
 		return physical.isMoving();
 	}
 	
+	public boolean rerolling;
+	public void prepareToReroll(){
+		rerolling = !rerolling;
+	}
+	
+
 	
 	float timeInAir;
 	public void roll() {
 		timeInAir=0;
+		rerolling=false;
 		unlock();
-		randomise(12, 0, 6, 0, .7f, .7f);
+		randomise(12, 0, 7, 0, .7f, .7f);
 	}
 	
 	public void jiggle(){
@@ -297,6 +306,7 @@ public class Die {
 	}
 	
 	public void activate() {
+		rerolling=false;
 		for(Effect e:sides.get(getSide()).effects) e.activate();
 	}
 
@@ -319,7 +329,6 @@ public class Die {
 	Vector3 position = new Vector3();
 	public boolean isStopped(){
 		physical.transform.getTranslation(position);
-		System.out.println(isMoving() +":"+ position.y);
 		return !isMoving() && position.y<1.01f;
 	}
 	
@@ -351,5 +360,34 @@ public class Die {
 	
 	public float getGlow(){
 		return glow;
+	}
+
+	
+	final int[] values = new int[]{1,0,0,1,2,2,3,3,4,4,5,5};
+	public int[] getValues(){
+		return values;
+	}
+	
+//	private static final Vector3[] colours = new Vector3[]{Colours.v3(Colours.blue_light), Colours.v3(Colours.fate_light), Colours.v3(Colours.green_light), Colours.v3(Colours.brown_light), Colours.v3(Colours.red)};
+	private static final Color[] colours = new Color[]{(Colours.blue_light), (Colours.fate_light), (Colours.green_light), (Colours.brown_light), (Colours.red)};
+	public Color getColour() {
+		return colours[col];
+	}
+
+	private float[] texLocs = null;
+	public float[] getTexLocs() {
+		if(texLocs != null) return texLocs;
+		texLocs = new float[24];
+		float width = sides.get(0).tr[0].getTexture().getWidth();
+		float height = sides.get(0).tr[0].getTexture().getHeight();
+		for(int i=0;i<sides.size;i++){
+			Side s = sides.get(i);
+			texLocs[4*i] = s.tr[0].getRegionX()/width;
+			texLocs[4*i+1] = s.tr[0].getRegionY()/height;
+			texLocs[4*i+2] = s.tr[1].getRegionX()/width;
+			texLocs[4*i+3] = s.tr[1].getRegionY()/height;
+		}
+		
+		return texLocs;
 	}
 }

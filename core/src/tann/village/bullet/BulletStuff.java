@@ -54,76 +54,61 @@ import tann.village.util.Colours;
 
 public class BulletStuff {
 	
+	// holy shit tons of boilerplate haha
 	public final static short GROUND_FLAG = 1 << 8;
 	public final static short OBJECT_FLAG = 1 << 9;
 	public final static short ALL_FLAG = -1;
-
 	public static ShaderProgram shaderProgram;
-	
 	static PerspectiveCamera cam;
 	static CameraInputController camController;
 	static ModelBatch modelBatch;
-	public static Array<ModelInstance> instances;
+	public static Array<ModelInstance> instances = new Array<>();
+	public static Array<ModelInstance> walls = new Array<>();
 	public static Array<Die> dice = new Array<>();
-	public static Array<Die> lockedDice = new Array<>();
-
-
 	static Model model;
 	static CollisionObject ground;
-
 	static btBroadphaseInterface broadphase;
 	static btCollisionConfiguration collisionConfig;
 	static btDispatcher dispatcher;
 	static MyContactListener contactListener;
 	public static btDynamicsWorld dynamicsWorld;
 	static btConstraintSolver constraintSolver;
-
-	
-
-	public static Array<AtlasRegion> diceTextures = new Array<>();
-	
 	static Shader shader;
+	private static Vector3 dieClickPosition = new Vector3();
 
 	public static void init(){
-		for(int i=0;i<6;i++){
-			diceTextures.add(Main.atlas.findRegion("dice/die"+i));
-		}
-
 		Bullet.init();
-		modelBatch = new ModelBatch();
-		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(0f, 8f, -2f);
-		cam.lookAt(0, 0, 0);
-		cam.update();
-
-		camController = new CameraInputController(cam);
-		ModelBuilder mb = new ModelBuilder();
-		mb.begin();
-		mb.node().id = "ground";
-		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,new Material(ColorAttribute.createDiffuse(Colours.green_light))).box(10f, 1f, 10f);
-		model = mb.end();
-
-
 		collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
-		
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(new Vector3(0, -30f, 0));
 		contactListener = new MyContactListener();
-		contactListener.enableOnAdded();
-		contactListener.enableOnProcessed();
-		contactListener.enableOnStarted();
-
-		instances = new Array<>();
-		ground = new CollisionObject(model, "ground", new btBoxShape(new Vector3(5f, 0.5f, 5f)), 0);
+		modelBatch = new ModelBatch();
+		
+		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cam.position.set(0f, 8f, -2f);
+		cam.lookAt(0, 0, 0);
+		cam.update();
+		camController = new CameraInputController(cam);
+		
+		ModelBuilder mb = new ModelBuilder();
+		mb.begin();
+		final float wallSize = 4.2f;
+		final float wallThickness = 0.5f;
+		mb.node().id = "ground";
+		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,new Material(ColorAttribute.createDiffuse(Colours.green_light))).box(wallSize*2, wallThickness, wallSize*2);
+		model = mb.end();
+		
+		ground = new CollisionObject(model, "ground", new btBoxShape(new Vector3(wallSize, wallThickness, wallSize)), 0);
+		ground.userData=5;
+		ground.body.userData=5;
+		ground.transform.trn(0, wallSize, 0);
 		dynamicsWorld.addRigidBody(ground.body, GROUND_FLAG, ALL_FLAG);
 
-		float wallSize = 3.8f;
-		
 		for (int i = 0; i < 5; i++) {
-			CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(wallSize, 0.5f, wallSize)), 0);
+			CollisionObject wall = new CollisionObject(model, "ground", new btBoxShape(new Vector3(wallSize, wallThickness, wallSize)), 0);
 			switch (i) {
 			case 0:
 				wall.transform.rotate(1, 0, 0, 90);
@@ -142,47 +127,36 @@ public class BulletStuff {
 				wall.transform.trn(-wallSize, wallSize, 0);
 				break;
 			case 4:
-				wall.transform.trn(0, 10, 0);
+				wall.transform.trn(0, wallSize*1.5f, 0);
 				break;
 			}
 			wall.initialUpdate();
+			walls.add(wall);
 			dynamicsWorld.addRigidBody(wall.body, OBJECT_FLAG, ALL_FLAG);
 		}
 		
-		ModelBuilder modelBuilder = new ModelBuilder();
-		model = modelBuilder.createSphere(2f, 2f, 2f, 20, 20, new Material(),Usage.Position | Usage.Normal | Usage.TextureCoordinates);
-		
 		shader = new DieShader();
 	    shader.init();
-
-	   	modelBuilder = new ModelBuilder();
-		model = modelBuilder.createSphere(2f, 2f, 2f, 20, 20, new Material(),Usage.Position | Usage.Normal | Usage.TextureCoordinates);
-
 	}
 	
 	
 	public static void refresh(Array<Villager> villagers) {
-		clearDice();
 		dice.clear();
 		for(Villager v:villagers){
 			dice.add(v.die);
 		}
 	}
-
 	
-	public static void clearDice(){
-		lockedDice.clear();
-	}
-
 	public static final int mass = 1;
 
-
 	public static void render() {
 		camController.update();
 	    Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	    modelBatch.begin(cam);
 	    modelBatch.render(instances, shader);
 	    modelBatch.end();
+//	    modelBatch.render(walls);
+	    
 	}
 
 	public static void update(float delta){
@@ -190,41 +164,13 @@ public class BulletStuff {
 		dynamicsWorld.stepSimulation(physicsDelta, 5, 1f / 60f);
 		for (ModelInstance mi : instances) {
 			if(mi instanceof CollisionObject){
-//				checkCollision(((CollisionObject)mi).body, ((CollisionObject)mi).body);
 				((CollisionObject)mi).update();
-				
 			}
 		}
 	}
 
-	static boolean checkCollision(btCollisionObject obj0, btCollisionObject obj1) {
-		System.out.println("hi");
-		CollisionObjectWrapper co0 = new CollisionObjectWrapper(obj0);
-		CollisionObjectWrapper co1 = new CollisionObjectWrapper(obj1);
-
-		btCollisionAlgorithm algorithm = dispatcher.findAlgorithm(co0.wrapper, co1.wrapper);
-
-		btDispatcherInfo info = new btDispatcherInfo();
-		btManifoldResult result = new btManifoldResult(co0.wrapper, co1.wrapper);
-
-		algorithm.processCollision(co0.wrapper, co1.wrapper, info, result);
-
-		boolean r = result.getPersistentManifold().getNumContacts() > 0;
-
-		dispatcher.freeCollisionAlgorithm(algorithm.getCPointer());
-		result.dispose();
-		info.dispose();
-		co1.dispose();
-		co0.dispose();
-
-		return r;
-	}
-
-	private static Vector3 position = new Vector3();
-
-	public static Die getObject (int screenX, int screenY) {
+	public static Die getClickedDie (int screenX, int screenY) {
 		Ray ray = cam.getPickRay(screenX, screenY);
-
 		Die result = null;
 		float distance = -1;
 
@@ -232,14 +178,14 @@ public class BulletStuff {
 			final CollisionObject instance = d.physical;
 			instance.updateBounds();
 
-			instance.transform.getTranslation(position);
-			position.add(instance.center);
+			instance.transform.getTranslation(dieClickPosition);
+			dieClickPosition.add(instance.center);
 
-			final float len = ray.direction.dot(position.x-ray.origin.x, position.y-ray.origin.y, position.z-ray.origin.z);
+			final float len = ray.direction.dot(dieClickPosition.x-ray.origin.x, dieClickPosition.y-ray.origin.y, dieClickPosition.z-ray.origin.z);
 			if (len < 0f)
 				continue;
 
-			float dist2 = position.dst2(ray.origin.x+ray.direction.x*len, ray.origin.y+ray.direction.y*len, ray.origin.z+ray.direction.z*len);
+			float dist2 = dieClickPosition.dst2(ray.origin.x+ray.direction.x*len, ray.origin.y+ray.direction.y*len, ray.origin.z+ray.direction.z*len);
 			if (distance >= 0f && dist2 > distance) 
 				continue;
 
@@ -247,29 +193,17 @@ public class BulletStuff {
 				result = d;
 				distance = dist2;
 			}
+//			Gdx.input.setInputProcessor(camController);
 		}
 		if(result==null) return null;
 		return result;
 	}
 
-	public static boolean finishedRolling(){
-		for (Die d : BulletStuff.dice) {
-			if (!d.isStopped()) return false;
-		}
-		return true;
-	}
-	
-
 	public static void click(float x, float y, int button) {
-		Die d = getObject((int) x, Gdx.graphics.getHeight() - (int) y);
+		Die d = getClickedDie((int) x, Gdx.graphics.getHeight() - (int) y);
 		if (d != null) {
-
 			if (button == 0) {
-				if (lockedDice.contains(d, true)) {
-					lockedDice.removeValue(d, true);
-				} else {
-					lockedDice.add(d);
-				}
+				d.prepareToReroll();
 			}
 			if (button == 1) {
 				d.villager.dieRightClicked();
@@ -278,5 +212,11 @@ public class BulletStuff {
 		}
 
 	}
-
+	
+	public static boolean isFinishedRolling(){
+		for (Die d : BulletStuff.dice) {
+			if (!d.isStopped()) return false;
+		}
+		return true;
+	}
 }

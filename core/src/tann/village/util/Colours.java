@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector3;
 
 public class Colours {
 
@@ -98,5 +99,9 @@ public class Colours {
 	
 	public static void setBatchColour(Batch batch, Color c, float a) {
 		batch.setColor(c.r, c.g, c.b, a);
+	}
+	
+	public static Vector3 v3(Color col){
+		return new Vector3(col.r, col.g, col.b);
 	}
 }

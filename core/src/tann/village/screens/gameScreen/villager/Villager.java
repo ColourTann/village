@@ -52,7 +52,8 @@ public class Villager {
 	
 	
 	public Villager() {
-		this.type=VillagerType.Villager;
+//		this.type=VillagerType.Villager;
+		this.type=VillagerType.values()[(int)(Math.random()*VillagerType.values().length)];
 		setupDie();
 		firstName=generateName(true);
 		lastName=generateName(false);

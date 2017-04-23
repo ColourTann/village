@@ -18,6 +18,10 @@ public class Images {
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
 	public static final TextureRegion tick = Main.atlas.findRegion("tick");
 	
+	// map stuff
+	public static final TextureRegion mask = Main.atlas.findRegion("mask");
+	public static final TextureRegion island0 = Main.atlas.findRegion("map/island0");
+	public static final TextureRegion island1 = Main.atlas.findRegion("map/island1");
 	
 	
 	//3d

@@ -1,15 +1,10 @@
 package tann.village.screens.gameScreen.panels.inventory;
 
-import java.util.HashMap;
-
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
+import tann.village.gameplay.effect.Effect;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.effect.Effect;
-import tann.village.screens.gameScreen.effect.Effect.EffectSource;
-import tann.village.screens.gameScreen.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.panels.EffectPanel;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;

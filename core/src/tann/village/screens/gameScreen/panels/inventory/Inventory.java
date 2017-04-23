@@ -5,10 +5,10 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.Images;
 import tann.village.Main;
-import tann.village.screens.gameScreen.Cost;
+import tann.village.gameplay.effect.Cost;
+import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.effect.Effect;
-import tann.village.screens.gameScreen.effect.Effect.EffectType;
 
 public class Inventory{
 	static final int GAP = 20;

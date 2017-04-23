@@ -2,9 +2,9 @@ package tann.village.screens.gameScreen.panels.review;
 
 import com.badlogic.gdx.utils.Align;
 
-import tann.village.screens.gameScreen.effect.Effect;
-import tann.village.screens.gameScreen.effect.Effect.EffectSource;
-import tann.village.screens.gameScreen.effect.Effect.EffectType;
+import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Effect.EffectSource;
+import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.panels.EffectPanel;
 import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.util.Fonts;

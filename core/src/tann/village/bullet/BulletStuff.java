@@ -48,8 +48,8 @@ import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSol
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
-import tann.village.screens.gameScreen.villager.Villager;
-import tann.village.screens.gameScreen.villager.die.Die;
+import tann.village.gameplay.village.villager.Villager;
+import tann.village.screens.gameScreen.panels.Die;
 import tann.village.util.Colours;
 
 public class BulletStuff {

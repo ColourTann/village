@@ -20,9 +20,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import tann.village.bullet.BulletStuff;
+import tann.village.gameplay.island.event.EventGenerator;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.event.EventGenerator;
+import tann.village.screens.mapScreen.MapScreen;
 import tann.village.util.Colours;
+import tann.village.util.Draw;
 import tann.village.util.Fonts;
 import tann.village.util.Screen;
 import tann.village.util.Sounds;
@@ -55,7 +57,11 @@ public class Main extends ApplicationAdapter {
 		for(Texture t: atlas_3d.getTextures()){
 			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		}
+		for(Texture t: atlas.getTextures()){
+//			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		}
 		self = this;
+		Draw.setup();
 		Fonts.setup();
 		Sounds.setup();
 		EventGenerator.setup();
@@ -75,7 +81,8 @@ public class Main extends ApplicationAdapter {
 		});
 
 		BulletStuff.init();
-		setScreen(GameScreen.get());
+//		setScreen(GameScreen.get());
+		setScreen(MapScreen.get());
 
 	}
 

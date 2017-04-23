@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import tann.village.Images;
-import tann.village.screens.gameScreen.villager.die.Die;
+import tann.village.screens.gameScreen.panels.Die;
 
 public class DieShader implements Shader{
 	ShaderProgram program;
@@ -80,8 +80,6 @@ public class DieShader implements Shader{
 		program.setUniformf(glow, d.getGlow());
 		program.setUniformi(side, d.getSide());
 		setTexLocs(d.getTexLocs());
-//		program.setUniformf(v_villagerColour, d.getColour().r, d.getColour().g, d.getColour().b);
-		Gdx.gl20.glUniform1iv(v_values, 4, d.getValues(), 0);
 		program.setUniformf(v_villagerColour, d.getColour());
 		program.setUniformMatrix(u_worldTrans, renderable.worldTransform);
 		

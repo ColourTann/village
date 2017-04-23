@@ -1,6 +1,7 @@
 package tann.village.util;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -11,6 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import tann.village.Main;
 
 public class Draw {
+	
+	public static void setup(){
+		circle150 = Main.atlas.findRegion("circle150");
+	}
 	
 	public static Draw draww = new Draw();
 	//Texture stuff//
@@ -140,6 +145,11 @@ public class Draw {
 		Draw.drawScaled(batch, Draw.getSq(), x, y, width, height);
 	}
 
+	public static TextureRegion circle150;
+	public static void fillEllipse(Batch batch, float x, float y, float width, float height){
+		Draw.drawScaled(batch, circle150, x-width/2f, y-height/2f, width/150f, height/150f);
+	}
+	
 	public static void drawLine(Batch batch, float x, float y, float tX,
 			float tY, float width) {
 		float dist = (float) Math.sqrt((tX - x) * (tX - x) + (tY - y)
@@ -161,11 +171,11 @@ public class Draw {
 		return (float) (rad * 180f / Math.PI);
 	}
 
-	private static AtlasRegion wSq;
+	private static Texture wSq;
 
-	public static AtlasRegion getSq() {
+	public static Texture getSq() {
 		if (wSq == null) {
-			wSq = Main.atlas.findRegion("pixel");
+			wSq = new Texture(Gdx.files.internal("pixel.png"));
 		}
 		return wSq;
 	}

@@ -7,8 +7,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
-import tann.village.screens.gameScreen.building.Building;
-import tann.village.screens.gameScreen.building.BuildingPanel;
+import tann.village.gameplay.village.building.Building;
+import tann.village.screens.gameScreen.panels.BuildingPanel;
 import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.util.Fonts;

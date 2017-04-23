@@ -13,12 +13,16 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
 import tann.village.bullet.BulletStuff;
-import tann.village.screens.gameScreen.effect.Effect;
-import tann.village.screens.gameScreen.effect.Effect.EffectSource;
-import tann.village.screens.gameScreen.effect.Effect.EffectType;
-import tann.village.screens.gameScreen.event.Event;
-import tann.village.screens.gameScreen.event.EventPanel;
+import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Effect.EffectSource;
+import tann.village.gameplay.effect.Effect.EffectType;
+import tann.village.gameplay.island.event.Event;
+import tann.village.gameplay.village.villager.Villager;
+import tann.village.screens.gameScreen.panels.Die;
+import tann.village.screens.gameScreen.panels.EventPanel;
+import tann.village.screens.gameScreen.panels.LevelupPanel;
 import tann.village.screens.gameScreen.panels.ObjectivePanel;
+import tann.village.screens.gameScreen.panels.VillagerPanel;
 import tann.village.screens.gameScreen.panels.construction.ConstructionPanel;
 import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.screens.gameScreen.panels.inventory.UpkeepPanel;
@@ -28,10 +32,6 @@ import tann.village.screens.gameScreen.panels.review.StarvationPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel.LossReason;
 import tann.village.screens.gameScreen.panels.roll.RollPanel;
 import tann.village.screens.gameScreen.panels.stats.StatsPanel;
-import tann.village.screens.gameScreen.villager.LevelupPanel;
-import tann.village.screens.gameScreen.villager.Villager;
-import tann.village.screens.gameScreen.villager.VillagerPanel;
-import tann.village.screens.gameScreen.villager.die.Die;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
@@ -86,7 +86,7 @@ public class GameScreen extends Screen{
 		rollButtonPanel.setPosition(Main.width/2-rollButtonPanel.getWidth()/2, BUTTON_BORDER);
 		statsPanel.setPosition(Main.width-statsPanel.getWidth()-BUTTON_BORDER, Main.height/2-statsPanel.getHeight()/2);
 		for(int i=0;i<STARTING_VILLAGERS;i++){
-			villagers.add(new Villager());
+			villagers.add(new Villager(i));
 		}
 		refreshBulletStuff();
 		upkeepPanel.addEffect(new Effect(EffectType.Food, -2, EffectSource.Upkeep));

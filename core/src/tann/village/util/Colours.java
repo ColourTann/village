@@ -28,7 +28,7 @@ public class Colours {
 	
 	
 	public static final Color z_white = new Color(1,1,1,1);
-	public static final Color transparent = new Color(1,1,0,0);
+	public static final Color transparent = new Color(0,0,0,0);
 	private static Pixmap p;
 	static{
 		Texture t = new Texture(Gdx.files.internal("palette.png"));

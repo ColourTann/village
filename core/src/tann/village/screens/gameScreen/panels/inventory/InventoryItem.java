@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
+import tann.village.screens.gameScreen.NumberPanel;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
-import tann.village.util.NumberPanel;
 
 public class InventoryItem extends Group{
 	

@@ -4,9 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
 import tann.village.Images;
-import tann.village.screens.gameScreen.Cost;
+import tann.village.gameplay.effect.Cost;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.building.CostPanel;
 import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.util.Button;

@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
-import tann.village.screens.gameScreen.effect.Effect;
-import tann.village.screens.gameScreen.effect.Effect.EffectType;
+import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;

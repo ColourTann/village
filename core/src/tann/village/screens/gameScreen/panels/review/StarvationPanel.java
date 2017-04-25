@@ -6,7 +6,7 @@ import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.panels.EffectPanel;
-import tann.village.screens.gameScreen.panels.inventory.Inventory;
+import tann.village.gameplay.village.Inventory;
 import tann.village.util.Fonts;
 import tann.village.util.Layoo;
 import tann.village.util.TextBox;

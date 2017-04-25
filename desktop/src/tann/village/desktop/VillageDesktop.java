@@ -15,12 +15,8 @@ public class VillageDesktop {
 		config.foregroundFPS=60;
 		config.width=Main.width;
 		config.height=Main.height;
-		
-		
 		config.title="Village";
 		config.addIcon("icon.png", FileType.Internal);
-
-		
 		new LwjglApplication(new Main(), config);
 	}
 }

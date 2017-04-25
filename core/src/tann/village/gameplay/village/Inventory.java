@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels.inventory;
+package tann.village.gameplay.village;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
@@ -9,6 +9,8 @@ import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.panels.InventoryItem;
+
 
 public class Inventory{
 	static final int GAP = 20;
@@ -36,7 +38,7 @@ public class Inventory{
 	public Inventory() {
 		
 		g = new Group();
-		g.setSize(InventoryItem.width, InventoryItem.height*4+ITEM_GAP*3);
+		g.setSize(InventoryItem.WIDTH, InventoryItem.HEIGHT*4+ITEM_GAP*3);
 		g.setPosition(GameScreen.BUTTON_BORDER, Main.height/2-g.getHeight()/2);
 		food = new InventoryItem(Images.food, 5);
 		g.addActor(food);
@@ -44,14 +46,14 @@ public class Inventory{
 		g.addActor(morale = new InventoryItem(Images.morale, 10));
 		g.addActor(fate = new InventoryItem(Images.fate, 6, -6));
 
-		morale.setY(InventoryItem.height+GAP);
-		wood.setY(InventoryItem.height*2+GAP*2);
-		food.setY(InventoryItem.height*3+GAP*3);
+		morale.setY(InventoryItem.HEIGHT+GAP);
+		wood.setY(InventoryItem.HEIGHT*2+GAP*2);
+		food.setY(InventoryItem.HEIGHT*3+GAP*3);
 
 		morale.setValue(4);
 		food.setValue(0);
 		wood.setValue(0);
-		fate.setValue(0);
+		fate.setValue(10);
 
 		items.add(food);
 		items.add(wood);

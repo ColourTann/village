@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels.inventory;
+package tann.village.screens.gameScreen.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,10 +9,10 @@ import tann.village.util.Colours;
 import tann.village.util.Draw;
 
 public class InventoryItem extends Group{
-	
+
 	TextureRegion icon;
-	static final int width = 80;
-	static final int height = 80;
+	public static final int WIDTH = 80;
+	public static final int HEIGHT = 80;
 	static final int border = 4;
 	int min;
 	public NumberPanel numberPanel;
@@ -23,10 +23,10 @@ public class InventoryItem extends Group{
 	public InventoryItem(TextureRegion icon, int max, int min) {
 		this.min=min;
 		this.icon=icon;
-		setSize(width, height);
+		setSize(WIDTH, HEIGHT);
 		numberPanel = new NumberPanel(max);
 		addActor(numberPanel);
-		numberPanel.setPosition(getX()+width, getY()+getHeight()/2-numberPanel.getHeight()/2);
+		numberPanel.setPosition(getX()+WIDTH, getY()+getHeight()/2-numberPanel.getHeight()/2);
 	}
 	
 	public void wisp(){

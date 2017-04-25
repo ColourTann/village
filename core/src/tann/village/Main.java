@@ -20,7 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import tann.village.bullet.BulletStuff;
-import tann.village.gameplay.island.event.EventGenerator;
+import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.mapScreen.MapScreen;
 import tann.village.util.Colours;
@@ -40,6 +41,7 @@ public class Main extends ApplicationAdapter {
 	public static Main self;
 	public static boolean debug = false;
 	public static boolean showFPS = true;
+	public static boolean chadwick = false;
 	Screen currentScreen;
 	Screen previousScreen;
 	public static float ticks;
@@ -49,9 +51,20 @@ public class Main extends ApplicationAdapter {
 		Normal, Paused
 	}
 
-
+	private static long previousTime;
+	public static void logTime(String id){
+		if(!chadwick) return;
+		long currentTime = System.currentTimeMillis();
+		if(id!=null){
+			System.out.println(id+": "+(currentTime-previousTime));
+		}
+		previousTime = System.currentTimeMillis();
+	}
+	
 	@Override
 	public void create() {
+		logTime(null);
+		logTime("start");
 		atlas = new TextureAtlas(Gdx.files.internal("atlas_image.atlas"));
 		atlas_3d = new TextureAtlas(Gdx.files.internal("3d/atlas_image.atlas"));
 		for(Texture t: atlas_3d.getTextures()){
@@ -60,11 +73,12 @@ public class Main extends ApplicationAdapter {
 		for(Texture t: atlas.getTextures()){
 //			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		}
+		logTime("textures");
 		self = this;
 		Draw.setup();
 		Fonts.setup();
 		Sounds.setup();
-		EventGenerator.setup();
+		logTime("setup");
 		stage = new Stage(new FitViewport(Main.width, Main.height));
 		orthoCam = (OrthographicCamera) stage.getCamera();
 		batch = (SpriteBatch) stage.getBatch();
@@ -79,11 +93,12 @@ public class Main extends ApplicationAdapter {
 				return true;
 			}
 		});
-
+		logTime("bits");
 		BulletStuff.init();
+		logTime("bullet");
 //		setScreen(GameScreen.get());
 		setScreen(MapScreen.get());
-
+		logTime("screen");
 	}
 
 
@@ -210,6 +225,12 @@ public class Main extends ApplicationAdapter {
 		ticks += delta;
 		Sounds.tickFaders(delta);
 		stage.act(delta);
+	}
+
+	public void travelTo(Island island) {
+		island.setup();
+		GameScreen.get().init(island, new Village());
+		setScreen(GameScreen.get());
 	}
 
 }

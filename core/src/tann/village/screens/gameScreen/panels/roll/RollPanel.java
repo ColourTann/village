@@ -4,13 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 import tann.village.Images;
-import tann.village.Main;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.NumberPanel;
-import tann.village.screens.gameScreen.panels.inventory.Inventory;
 import tann.village.util.Button;
 import tann.village.util.Colours;
-import tann.village.util.Draw;
 import tann.village.util.Layoo;
 
 public class RollPanel extends Group{

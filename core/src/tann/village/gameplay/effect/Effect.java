@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tann.village.Images;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.Die;
-import tann.village.screens.gameScreen.panels.inventory.Inventory;
+import tann.village.gameplay.village.Inventory;
 
 public class Effect {
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import tann.village.Main;
 import tann.village.Main.MainState;
 import tann.village.bullet.BulletStuff;
+import tann.village.screens.mapScreen.MapScreen;
 
 public abstract class Screen extends Group{
 	//screenshake stuff//
@@ -31,7 +32,6 @@ public abstract class Screen extends Group{
 		super.draw(batch, parentAlpha);
 		drawParticles(batch);
 		postDraw(batch);
-
 	}
 	public abstract void preDraw(Batch batch);
 	public abstract void postDraw(Batch batch);

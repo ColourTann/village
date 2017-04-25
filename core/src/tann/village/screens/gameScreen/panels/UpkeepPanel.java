@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels.inventory;
+package tann.village.screens.gameScreen.panels;
 
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;

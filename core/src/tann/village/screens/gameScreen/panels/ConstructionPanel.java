@@ -1,36 +1,25 @@
-package tann.village.screens.gameScreen.panels.construction;
+package tann.village.screens.gameScreen.panels;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
-import tann.village.Main;
+import tann.village.gameplay.island.BuildingGenerator;
+import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.building.Building;
-import tann.village.screens.gameScreen.panels.BuildingPanel;
-import tann.village.screens.gameScreen.panels.inventory.Inventory;
+import tann.village.gameplay.village.Inventory;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
-import tann.village.util.Fonts;
 import tann.village.util.Layoo;
-import tann.village.util.TextBox;
 
 public class ConstructionPanel extends InfoPanel{
 
-	Array<BuildingPanel> slots = new Array<>();
 	Array<BuildingPanel> availables = new Array<>();
-	BuildingPanel currentSlot;
-	static final float WIDTH = 600, HEIGHT = Main.height*.9f;
+	static final float WIDTH = 550, HEIGHT = 300;
 	public ConstructionPanel() {
 		setSize(WIDTH, HEIGHT);
-		TextBox available = new TextBox("Available buildings", Fonts.font,-1, Align.center);
-		
-		TextBox your = new TextBox("Your buildings", Fonts.font,-1, Align.center);
 
 		Layoo l = new Layoo(this);
-		l.row(1);
-
-		l.actor(available);
 		l.row(1);
 		l.gap(1);
 		
@@ -40,20 +29,9 @@ public class ConstructionPanel extends InfoPanel{
 			availables.add(bpan);
 			l.gap(1);
 		}
-		l.row(3);
-		l.actor(your);
-		l.row(1);
-		l.gap(1);
-		for(int i=0;i<3;i++){
-			BuildingPanel slot = new BuildingPanel();
-			slots.add(slot);
-			l.actor(slot);
-			l.gap(1);
-		}
 		l.row(1);
 		l.layoo();
 		
-		setSlot(slots.get(0));
 
 		for(final BuildingPanel bp:availables){
 			bp.addListener(new InputListener(){
@@ -79,18 +57,6 @@ public class ConstructionPanel extends InfoPanel{
 		
 	}
 	
-	private void setSlot(BuildingPanel slot){
-		if(currentSlot!=null){
-			currentSlot.highlight(false);
-		}
-		currentSlot=slot;
-		currentSlot.highlight(true);
-	}
-	
-	private void incrementSlot(){
-		setSlot(slots.get((slots.indexOf(currentSlot, true)+1)%slots.size));
-	}	
-	
 	public void attemptToBuy(Building b){
 		// maybe have an inventory manager class to deal with this kind of thing.
 		// doesn't really make sense to pass it onto gamescreen :P
@@ -98,32 +64,16 @@ public class ConstructionPanel extends InfoPanel{
 			return;
 		}
 		Inventory.get().spendCost(b.cost);
-		currentSlot.setBuilding(b);
+		Village.get().addBuilding(b);
 		resetAvailablePanels();
-		incrementSlot();
 		b.onBuild();
 	}
 
 	private void resetAvailablePanels() {
 		int levelToGenerate = 0;
-		if(slots.get(2).building!=null){
-			levelToGenerate=slots.get(2).building.level+1;
-		}
 		levelToGenerate = Math.min(1, levelToGenerate);
 		for(BuildingPanel bp:availables){
-			bp.setBuilding(Building.random(levelToGenerate));
+			bp.setBuilding(BuildingGenerator.random(levelToGenerate));
 		}
 	}
-
-	
-	public void upkeep() {
-			for(BuildingPanel b:slots){
-				if(b.building!=null){
-					b.building.upkeep();
-				}
-			}
-	}
-
-	
-
 }

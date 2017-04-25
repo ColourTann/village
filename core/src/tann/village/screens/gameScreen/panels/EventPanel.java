@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.Align;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.island.event.Event;
-import tann.village.screens.gameScreen.panels.inventory.UpkeepPanel;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;

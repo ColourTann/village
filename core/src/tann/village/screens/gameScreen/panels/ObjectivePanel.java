@@ -1,12 +1,11 @@
 package tann.village.screens.gameScreen.panels;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
 import tann.village.Images;
 import tann.village.gameplay.effect.Cost;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.panels.inventory.Inventory;
+import tann.village.gameplay.village.Inventory;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.util.Button;
 import tann.village.util.Colours;

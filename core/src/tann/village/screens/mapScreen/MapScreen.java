@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 
 import tann.village.Images;
 import tann.village.Main;
-import tann.village.gameplay.island.Island;
+import tann.village.gameplay.island.islands.Island;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Screen;
@@ -27,10 +27,15 @@ public class MapScreen extends Screen{
 	
 	public MapScreen() {
 		map = new Map();
+		for(Island i:map.islands){
+			addActor(i.getActor());
+		}
 	}
 	
 	@Override
 	public void preDraw(Batch batch) {
+		batch.setColor(Colours.blue_dark);
+		Draw.fillActor(batch, this);
 	}
 
 	FrameBuffer buff = new FrameBuffer(Format.RGBA8888, Main.width, Main.height, false);
@@ -47,7 +52,7 @@ public class MapScreen extends Screen{
 		Draw.fillRectangle(batch, 0, 0, Main.width, Main.height);
 		
 		for(Island i:map.islands){
-			i.drawMask(batch);
+			i.getActor().drawMask(batch);
 		}
 //		batch.draw(Images.mask, Gdx.input.getX()-size/2, Gdx.input.getY()-size/2, size, size);
 		
@@ -58,11 +63,7 @@ public class MapScreen extends Screen{
 		
 		batch.begin();
 		
-		batch.setColor(Colours.blue_dark);
-		Draw.fillActor(batch, this);
-		for(Island i:map.islands){
-			i.draw(batch);
-		}
+		
 		
 		Draw.draw(batch,buff.getColorBufferTexture(),0,0);
 	}

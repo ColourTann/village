@@ -17,15 +17,17 @@ import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.gameplay.island.event.Event;
+import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
+import tann.village.screens.gameScreen.panels.ConstructionPanel;
 import tann.village.screens.gameScreen.panels.Die;
 import tann.village.screens.gameScreen.panels.EventPanel;
 import tann.village.screens.gameScreen.panels.LevelupPanel;
 import tann.village.screens.gameScreen.panels.ObjectivePanel;
 import tann.village.screens.gameScreen.panels.VillagerPanel;
-import tann.village.screens.gameScreen.panels.construction.ConstructionPanel;
-import tann.village.screens.gameScreen.panels.inventory.Inventory;
-import tann.village.screens.gameScreen.panels.inventory.UpkeepPanel;
+import tann.village.gameplay.village.Inventory;
+import tann.village.screens.gameScreen.panels.UpkeepPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.screens.gameScreen.panels.review.StarvationPanel;
@@ -59,7 +61,6 @@ public class GameScreen extends Screen{
 	public static GameScreen get(){
 		if(self==null){
 			self= new GameScreen();
-			self.init();
 		}
 		return self;
 	}
@@ -68,7 +69,11 @@ public class GameScreen extends Screen{
 		
 	}
 	
-	private void init(){
+	public Island island;
+	public Village village;
+	public void init(Island island, Village village){
+		this.village=village;
+		this.island=island;
 		setSize(Main.width, Main.height);
 		addListener(new ClickListener(){
 			@Override
@@ -259,7 +264,7 @@ public class GameScreen extends Screen{
 	private void showEvent() {
 		state=State.Event;
 		
-		Event event = Event.getEventForTurn(dayNum);
+		Event event = island.getEventForTurn(dayNum);
 		
 		eventPanel= new EventPanel(event, dayNum++);
 		event.action();
@@ -286,7 +291,7 @@ public class GameScreen extends Screen{
 	
 	private void showReview() {
 		state=State.Review;
-		constructionPanel.upkeep();
+		Village.get().upkeep();
 		reviewPanel.build();
 		center(reviewPanel, true);
 		addActor(reviewPanel);

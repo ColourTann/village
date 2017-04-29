@@ -229,7 +229,7 @@ public class Main extends ApplicationAdapter {
 
 	public void travelTo(Island island) {
 		island.setup();
-		GameScreen.get().init(island, new Village());
+		GameScreen.get().init(island, Village.get());
 		setScreen(GameScreen.get());
 	}
 

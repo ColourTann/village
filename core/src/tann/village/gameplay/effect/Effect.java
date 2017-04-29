@@ -62,7 +62,7 @@ public class Effect {
 	public void activate(){
 		switch(type){
 		case FoodStorage:
-			Inventory.get().get(EffectType.Food).numberPanel.addMax(value);
+			Inventory.get().get(EffectType.Food).addMax(value);
 			return;
 		case Boat:
 			GameScreen.get().addObjective();

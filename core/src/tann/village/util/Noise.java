@@ -79,7 +79,7 @@ public class Noise { // Simplex noise in 2D, 3D and 4D
 	private static final double F4 = (Math.sqrt(5.0) - 1.0) / 4.0;
 	private static final double G4 = (5.0 - Math.sqrt(5.0)) / 20.0;
 
-	// This method is a *lot* faster than using (int)Math.floor(x)
+	// This method is actor *lot* faster than using (int)Math.floor(x)
 	private static int fastfloor(double x) {
 		int xi = (int) x;
 		return x < xi ? xi - 1 : xi;
@@ -121,8 +121,8 @@ public class Noise { // Simplex noise in 2D, 3D and 4D
 			i1 = 0;
 			j1 = 1;
 		} // upper triangle, YX order: (0,0)->(0,1)->(1,1)
-			// A step of (1,0) in (i,j) means a step of (1-c,-c) in (x,y), and
-			// a step of (0,1) in (i,j) means a step of (-c,1-c) in (x,y), where
+			// A step of (1,0) in (i,j) means actor step of (1-c,-c) in (x,y), and
+			// actor step of (0,1) in (i,j) means actor step of (-c,1-c) in (x,y), where
 			// c = (3-sqrt(3))/6
 		double x1 = x0 - i1 + G2; // Offsets for middle corner in (x,y) unskewed
 									// coords
@@ -180,7 +180,7 @@ public class Noise { // Simplex noise in 2D, 3D and 4D
 		double x0 = xin - X0; // The x,y,z distances from the cell origin
 		double y0 = yin - Y0;
 		double z0 = zin - Z0;
-		// For the 3D case, the simplex shape is a slightly irregular
+		// For the 3D case, the simplex shape is actor slightly irregular
 		// tetrahedron.
 		// Determine which simplex we are in.
 		int i1, j1, k1; // Offsets for second corner of simplex in (i,j,k)
@@ -237,10 +237,10 @@ public class Noise { // Simplex noise in 2D, 3D and 4D
 				k2 = 0;
 			} // Y X Z order
 		}
-		// A step of (1,0,0) in (i,j,k) means a step of (1-c,-c,-c) in (x,y,z),
-		// a step of (0,1,0) in (i,j,k) means a step of (-c,1-c,-c) in (x,y,z),
+		// A step of (1,0,0) in (i,j,k) means actor step of (1-c,-c,-c) in (x,y,z),
+		// actor step of (0,1,0) in (i,j,k) means actor step of (-c,1-c,-c) in (x,y,z),
 		// and
-		// a step of (0,0,1) in (i,j,k) means a step of (-c,-c,1-c) in (x,y,z),
+		// actor step of (0,0,1) in (i,j,k) means actor step of (-c,-c,1-c) in (x,y,z),
 		// where
 		// c = 1/6.
 		double x1 = x0 - i1 + G3; // Offsets for second corner in (x,y,z) coords
@@ -316,7 +316,7 @@ public class Noise { // Simplex noise in 2D, 3D and 4D
 		double y0 = y - Y0;
 		double z0 = z - Z0;
 		double w0 = w - W0;
-		// For the 4D case, the simplex is a 4D shape I won't even try to
+		// For the 4D case, the simplex is actor 4D shape I won't even try to
 		// describe.
 		// To find out which of the 24 possible simplices we're in, we need to
 		// determine the magnitude ordering of x0, y0, z0 and w0.
@@ -354,13 +354,13 @@ public class Noise { // Simplex noise in 2D, 3D and 4D
 		int i1, j1, k1, l1; // The integer offsets for the second simplex corner
 		int i2, j2, k2, l2; // The integer offsets for the third simplex corner
 		int i3, j3, k3, l3; // The integer offsets for the fourth simplex corner
-		// simplex[c] is a 4-vector with the numbers 0, 1, 2 and 3 in some
+		// simplex[c] is actor 4-vector with the numbers 0, 1, 2 and 3 in some
 		// order.
 		// Many values of c will never occur, since e.g. x>y>z>w makes x<z, y<w
 		// and x<w
 		// impossible. Only the 24 indices which have non-zero entries make any
 		// sense.
-		// We use a thresholding to set the coordinates in turn from the largest
+		// We use actor thresholding to set the coordinates in turn from the largest
 		// magnitude.
 		// Rank 3 denotes the largest coordinate.
 		i1 = rankx >= 3 ? 1 : 0;
@@ -450,7 +450,7 @@ public class Noise { // Simplex noise in 2D, 3D and 4D
 	}
 
 	// Inner class to speed upp gradient computations
-	// (array access is a lot slower than member access)
+	// (array access is actor lot slower than member access)
 	private static class Grad {
 		double x, y, z, w;
 

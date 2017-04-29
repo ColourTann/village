@@ -5,12 +5,14 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
+import tann.village.Images;
 import tann.village.Main;
 import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.effect.Effect;
@@ -18,6 +20,7 @@ import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.panels.ConstructionPanel;
@@ -32,14 +35,9 @@ import tann.village.screens.gameScreen.panels.review.LossPanel;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.screens.gameScreen.panels.review.StarvationPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel.LossReason;
-import tann.village.screens.gameScreen.panels.roll.RollPanel;
+import tann.village.screens.gameScreen.panels.RollPanel;
 import tann.village.screens.gameScreen.panels.stats.StatsPanel;
-import tann.village.util.Colours;
-import tann.village.util.Draw;
-import tann.village.util.Fonts;
-import tann.village.util.Screen;
-import tann.village.util.Sounds;
-import tann.village.util.TextBox;
+import tann.village.util.*;
 
 public class GameScreen extends Screen{
 	public static final int BUTTON_BORDER=10;
@@ -85,10 +83,10 @@ public class GameScreen extends Screen{
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
-		addActor(Inventory.get().getGroup());
-		addActor(rollButtonPanel = new RollPanel());
+		Group inventoryGroup = Inventory.get().getGroup();
+		addActor(inventoryGroup);
+		inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight())/2);
 		addActor(statsPanel = new StatsPanel());
-		rollButtonPanel.setPosition(Main.width/2-rollButtonPanel.getWidth()/2, BUTTON_BORDER);
 		statsPanel.setPosition(Main.width-statsPanel.getWidth()-BUTTON_BORDER, Main.height/2-statsPanel.getHeight()/2);
 		for(int i=0;i<STARTING_VILLAGERS;i++){
 			villagers.add(new Villager(i));
@@ -100,16 +98,31 @@ public class GameScreen extends Screen{
 		upkeepPanel.setPosition(BUTTON_BORDER, getHeight()-BUTTON_BORDER-upkeepPanel.getHeight());
 		setState(State.Event);
 		Sounds.playMusic(Sounds.get("beach", Music.class));
-		
+
+        CircleButton cButt = new CircleButton(0, 0, 180, Colours.dark);
+        cButt.setTexture(Images.hammer, 0.7f, .7f, 80, 80);
+        cButt.setClickAction(new Runnable() {
+            @Override
+            public void run() {
+                openBuildingPanel();
+            }
+        });
+        addActor(cButt);
+
+        cButt = new CircleButton(Main.width, 0, 180, Colours.dark);
+        rollButtonPanel = RollManager.getRollPanel();
+        cButt.setActor(rollButtonPanel, cButt.getWidth()/4-rollButtonPanel.getWidth()/2 + 20, cButt.getHeight()/2);
+        cButt.setClickAction(new Runnable() {
+            @Override
+            public void run() {
+                rollButtonClick();
+            }
+        });
+        addActor(cButt);
 	}
 	
-	public void center(Actor a, boolean adjustForRollPanel){
-		if(adjustForRollPanel){
-			a.setPosition(getWidth()/2-a.getWidth()/2, (getHeight()-rollButtonPanel.getHeight())/2-a.getHeight()/2+rollButtonPanel.getHeight());
-		}
-		else{
-			a.setPosition(getWidth()/2-a.getWidth()/2, (getHeight())/2-a.getHeight()/2);
-		}
+	public void center(Actor a){
+        a.setPosition(getWidth()/2-a.getWidth()/2, (getHeight())/2-a.getHeight()/2);
 	}
 	
 	UpkeepPanel upkeepPanel = new UpkeepPanel();
@@ -146,10 +159,21 @@ public class GameScreen extends Screen{
 			break;
 		}
 	}
-	
+
+	public void rollButtonClick(){
+	    if(!BulletStuff.isFinishedRolling()) return;
+	    if(BulletStuff.numSelectedDice()==0){
+	        proceed();
+        }
+        else{
+            roll(true);
+        }
+    }
+
 	public void roll(boolean reroll){
+
 		if(state!=State.Rolling) return;
-		if(rollButtonPanel.rollsLeft.getValue()<=0) return;
+//		if(rollButtonPanel.rollsLeft.getValue()<=0) return;
 		if(reroll && !BulletStuff.isFinishedRolling()) return;
 		int diceRolled = 0;
 		for (Die d : BulletStuff.dice) {
@@ -159,7 +183,7 @@ public class GameScreen extends Screen{
 			}
 		}
 		if(diceRolled>0) {
-			rollButtonPanel.rollsLeft.changeValue(-1);
+            RollManager.spendRoll();
 		}
 	}
 	
@@ -208,13 +232,13 @@ public class GameScreen extends Screen{
 		addActor(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 		addProceedButton(panel);
-		Inventory.get().resetFood();
+		Inventory.get().imposeMaximums();
 	}
 
 	private void levelup(Villager v){
 		LevelupPanel lup = new LevelupPanel(v, Villager.getRandomVillagerTypes(Math.min(Villager.MAX_LEVEL, v.type.level+1), 3));
 		addActor(lup);
-		center(lup, false);
+		center(lup);
 	}
 	
 	private void setState(State state) {
@@ -268,7 +292,7 @@ public class GameScreen extends Screen{
 		
 		eventPanel= new EventPanel(event, dayNum++);
 		event.action();
-		center(eventPanel, true);
+		center(eventPanel);
 		addActor(eventPanel);
 		addProceedButton(eventPanel);
 		Inventory.get().imposeMaximums();
@@ -276,10 +300,9 @@ public class GameScreen extends Screen{
 
 	private void startRolling() {
 		BulletStuff.refresh(villagers);
-		rollButtonPanel.setVisible(true);
-		
-		rollButtonPanel.rollsLeft.setMax(2+Inventory.get().getResourceAmount(EffectType.Morale)/3);
-		rollButtonPanel.rollsLeft.maxOut();
+
+		RollManager.setMaximumRolls(2+Inventory.get().getResourceAmount(EffectType.Morale)/3);
+		RollManager.refreshRolls();
 		reviewPanel = new ReviewPanel(dayNum);
 		state=State.Rolling;
 		for(Die d: BulletStuff.dice){
@@ -293,7 +316,7 @@ public class GameScreen extends Screen{
 		state=State.Review;
 		Village.get().upkeep();
 		reviewPanel.build();
-		center(reviewPanel, true);
+		center(reviewPanel);
 		addActor(reviewPanel);
 		addProceedButton(reviewPanel);
 		rollButtonPanel.setVisible(false);
@@ -361,11 +384,11 @@ public class GameScreen extends Screen{
 	}
 
 	public void refreshPanels() {
-		Inventory.get().clearWisps();
+		//Inventory.get().clearWisps();
 	}
 
 	public void showWisps() {
-		Inventory.get().showWisps();
+		//Inventory.get().showWisps();
 	}
 
 	public void finishedLevellingUp() {

@@ -55,7 +55,7 @@ void main() {
 	
 
 	// base colour 
-	gl_FragColor.rgba =  vec4(.1333,.1569,.1725,1);
+	gl_FragColor.rgba =  vec4(.1569,.1333,.1725,1);
 	vec2 lapel = vec2(l_x,l_y);
 	// add lapels
 	vec4 colour = texture2D(u_texture, lapel+UV);

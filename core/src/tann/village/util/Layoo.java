@@ -16,7 +16,7 @@ public class Layoo {
 	}
 	
 	// The plan is for gaps to be relative to total available space.
-	// So you can go vGap(1); vAdd(a); vGap(2); and that means the bottom gap will be twice as big as the top gap 
+	// So you can go vGap(1); vAdd(actor); vGap(2); and that means the bottom gap will be twice as big as the top gap
 	
 	public void row(float g){
 		if(currentRow!=null){

@@ -2,14 +2,11 @@ package tann.village.gameplay.village;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
-
 import tann.village.Images;
-import tann.village.Main;
 import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectType;
-import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.panels.InventoryItem;
+import tann.village.screens.gameScreen.panels.InventoryPanel;
 
 
 public class Inventory{
@@ -21,7 +18,7 @@ public class Inventory{
 	InventoryItem morale;
 	InventoryItem fate;
 
-	Array<InventoryItem> items = new Array<>();
+	public Array<InventoryItem> items = new Array<>();
 
 	private static final EffectType[] inventoryEffect = new EffectType[]{EffectType.Food, EffectType.Wood, EffectType.Morale, EffectType.Fate};
 	
@@ -34,21 +31,12 @@ public class Inventory{
 	}
 	
 	public static final int ITEM_GAP=30;
-	private Group g;
-	public Inventory() {
-		
-		g = new Group();
-		g.setSize(InventoryItem.WIDTH, InventoryItem.HEIGHT*4+ITEM_GAP*3);
-		g.setPosition(GameScreen.BUTTON_BORDER, Main.height/2-g.getHeight()/2);
-		food = new InventoryItem(Images.food, 5);
-		g.addActor(food);
-		g.addActor(wood = new InventoryItem(Images.wood, 20));
-		g.addActor(morale = new InventoryItem(Images.morale, 10));
-		g.addActor(fate = new InventoryItem(Images.fate, 6, -6));
 
-		morale.setY(InventoryItem.HEIGHT+GAP);
-		wood.setY(InventoryItem.HEIGHT*2+GAP*2);
-		food.setY(InventoryItem.HEIGHT*3+GAP*3);
+	public Inventory() {
+		food = new InventoryItem(Images.food, 5);
+		wood = new InventoryItem(Images.wood);
+		morale = new InventoryItem(Images.morale);
+		fate = new InventoryItem(Images.fate);
 
 		morale.setValue(4);
 		food.setValue(0);
@@ -61,8 +49,10 @@ public class Inventory{
 		items.add(fate);
 	}
 
-	public Group getGroup(){
-		return g;
+	private InventoryPanel panel;
+	public InventoryPanel getGroup(){
+		if(panel==null) panel = new InventoryPanel(this);
+		return panel;
 	}
 	
 
@@ -122,21 +112,10 @@ public class Inventory{
 		return get(resourceType).getValue();
 	}
 
-	public void clearWisps() {
-		for(InventoryItem i:items) i.clearWisp();
-	}
-
-	public void showWisps() {
-		for(InventoryItem i:items) i.wisp();
-	}
-
-	public void resetFood() {
-		get(EffectType.Food).setValue(0);
-	}
-	
+	//TODO rename this after refactoring
 	public void imposeMaximums(){
 		for(InventoryItem item:items){
-			item.imposeMaximum();
+			item.imposeLimit();
 		}
 	}
 	

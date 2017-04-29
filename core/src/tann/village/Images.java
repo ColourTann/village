@@ -16,7 +16,8 @@ public class Images {
 	public static final TextureRegion boat_wheel = Main.atlas.findRegion("resource/ship_wheel");
 	
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
-	public static final TextureRegion tick = Main.atlas.findRegion("tick");
+    public static final TextureRegion tick = Main.atlas.findRegion("tick");
+    public static final TextureRegion hammer = Main.atlas.findRegion("hammer");
 	
 	// map stuff
 	public static final TextureRegion mask = Main.atlas.findRegion("mask");

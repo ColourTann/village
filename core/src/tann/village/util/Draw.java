@@ -147,7 +147,7 @@ public class Draw {
 
 	public static TextureRegion circle150;
 	public static void fillEllipse(Batch batch, float x, float y, float width, float height){
-		Draw.drawScaled(batch, circle150, x-width/2f, y-height/2f, width/150f, height/150f);
+		Draw.drawScaled(batch, circle150, x, y, width/150f, height/150f);
 	}
 	
 	public static void drawLine(Batch batch, float x, float y, float tX,
@@ -193,7 +193,10 @@ public class Draw {
 
 	public static void drawSize(Batch batch, TextureRegion textureRegion, float x, float y, float width, float height) {
 		batch.draw(textureRegion, x, y, 0, 0, textureRegion.getRegionWidth(), textureRegion.getRegionHeight(), width/textureRegion.getRegionWidth(), height/textureRegion.getRegionHeight(), 0);
-		
+	}
+
+	public static void drawSizeCentered(Batch batch, TextureRegion textureRegion, float x, float y, float width, float height) {
+		batch.draw(textureRegion, x-width/2, y-height/2, 0, 0, textureRegion.getRegionWidth(), textureRegion.getRegionHeight(), width/textureRegion.getRegionWidth(), height/textureRegion.getRegionHeight(), 0);
 	}
 
 	public static void fillActor(Batch batch, Actor a) {

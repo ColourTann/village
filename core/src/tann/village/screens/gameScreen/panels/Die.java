@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.bullet.BulletStuff;
 import tann.village.bullet.CollisionObject;
 import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
 import tann.village.gameplay.village.villager.die.Side;
@@ -268,7 +269,8 @@ public class Die {
 	public void prepareToReroll(){
 		if(!isStopped()) return;
 		rerolling = !rerolling;
-	}
+        RollManager.updateRolls();
+    }
 	
 	float timeInAir;
 	public void roll() {

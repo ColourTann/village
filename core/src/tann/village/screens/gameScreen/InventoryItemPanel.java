@@ -1,6 +1,7 @@
 package tann.village.screens.gameScreen;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
@@ -12,13 +13,17 @@ import tann.village.util.Layoo;
 import tann.village.util.TextBox;
 import tann.village.util.TextWisp;
 
-public class NumberPanel extends Group{
-	static final int WIDTH=70, HEIGHT=40;
+public class InventoryItemPanel extends Group{
+	static final int WIDTH=150, HEIGHT=100;
+	static final int TEXTURESIZE = 80;
 	private int value;
 	public int max;
-	public NumberPanel(int max) {
+	TextureRegion tr;
+	public InventoryItemPanel(TextureRegion tr, int value, int max) {
 		setSize(WIDTH, HEIGHT);
+		this.value=value;
 		this.max=max;
+		this.tr=tr;
 	}
 	
 	public void setValue(int value){
@@ -69,6 +74,9 @@ public class NumberPanel extends Group{
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(Colours.dark);
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
+		batch.setColor(Colours.z_white);
+		float gap = (getHeight() - TEXTURESIZE)/2;
+		Draw.drawSize(batch, tr, getX() + gap, getY()+gap, TEXTURESIZE, TEXTURESIZE);
 		super.draw(batch, parentAlpha);
 	}
 

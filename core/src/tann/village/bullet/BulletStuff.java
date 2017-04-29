@@ -182,7 +182,13 @@ public class BulletStuff {
 		}
 
 	}
-	
+
+	public static int numSelectedDice(){
+        int total=0;
+        for (Die d : BulletStuff.dice) if(d.rerolling) total++;
+        return total;
+    }
+
 	public static boolean isFinishedRolling(){
 		for (Die d : BulletStuff.dice) {
 			if (!d.isStopped()) return false;

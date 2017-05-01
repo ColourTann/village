@@ -20,22 +20,16 @@ import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.island.islands.TutorialIsland;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
-import tann.village.screens.gameScreen.panels.ConstructionPanel;
-import tann.village.screens.gameScreen.panels.Die;
-import tann.village.screens.gameScreen.panels.EventPanel;
-import tann.village.screens.gameScreen.panels.LevelupPanel;
-import tann.village.screens.gameScreen.panels.ObjectivePanel;
-import tann.village.screens.gameScreen.panels.VillagerPanel;
+import tann.village.screens.gameScreen.panels.*;
 import tann.village.gameplay.village.Inventory;
-import tann.village.screens.gameScreen.panels.UpkeepPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.screens.gameScreen.panels.review.StarvationPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel.LossReason;
-import tann.village.screens.gameScreen.panels.RollPanel;
 import tann.village.screens.gameScreen.panels.stats.StatsPanel;
 import tann.village.util.*;
 
@@ -119,6 +113,12 @@ public class GameScreen extends Screen{
             }
         });
         addActor(cButt);
+
+
+        CrystalBall ball = new CrystalBall();
+        int gap = 40;
+        ball.setPosition(getWidth() - ball.getWidth()-gap,getHeight()-ball.getHeight()-gap);
+        addActor(ball);
 	}
 	
 	public void center(Actor a){
@@ -136,7 +136,7 @@ public class GameScreen extends Screen{
 	@Override
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
-		Draw.draw(batch, bg, 0, 0);
+//		Draw.draw(batch, bg, 0, 0);
 //		Fonts.font.draw(batch, "state: "+state, 400, Main.height-Fonts.font.getAscent());
 	}
 
@@ -186,7 +186,8 @@ public class GameScreen extends Screen{
             RollManager.spendRoll();
 		}
 	}
-	
+
+
 	public void proceed() {
 		switch(state){
 		case Event:
@@ -267,6 +268,7 @@ public class GameScreen extends Screen{
 		for(Die d:BulletStuff.dice){
 			d.update(delta);
 		}
+		RollManager.updateRolls();
 	}
 	
 	private void finishRolling() {
@@ -319,7 +321,6 @@ public class GameScreen extends Screen{
 		center(reviewPanel);
 		addActor(reviewPanel);
 		addProceedButton(reviewPanel);
-		rollButtonPanel.setVisible(false);
 		Inventory.get().imposeMaximums();
 	}
 	

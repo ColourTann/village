@@ -48,12 +48,12 @@ public class RollPanel extends Group{
             batch.setColor(Colours.z_white);
             tr= Images.roll;
         }
-        if(locked){
-            batch.setColor(Colours.grey);
+        if(!locked){
+            batch.setColor(Colours.transparent);
         }
         Draw.drawSize(batch, tr, getX()+getWidth()/2-rollSize/2, getY() + getHeight()-rollSize, rollSize, rollSize);
 
-        if(rollsLeft == 0 && !locked){
+        if(rollsLeft > 0 && locked){
             Fonts.font.setColor(Colours.light);
         }
         else{

@@ -75,7 +75,7 @@ public class Inventory{
 	}
 	
 	public InventoryItem get(EffectType type){
-		switch(type){
+        switch(type){
 		case Food:
 			return food;
 		case Morale:
@@ -84,9 +84,7 @@ public class Inventory{
 			return wood;
 		case Fate:
 			return fate;
-
 		}
-
 		return null;
 	}
 	

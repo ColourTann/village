@@ -9,7 +9,7 @@ public class InventoryItem {
     private TextureRegion image;
 
     public InventoryItem(TextureRegion image) {
-        this(image, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        this(image, Integer.MAX_VALUE, Integer.MIN_VALUE);
     }
 
     public InventoryItem(TextureRegion image, int max) {

@@ -4,7 +4,7 @@ import tann.village.bullet.BulletStuff;
 import tann.village.screens.gameScreen.panels.RollPanel;
 
 public class RollManager {
-    static int maxRolls, rolls;
+   private static int maxRolls, rolls;
     public static void setMaximumRolls(int max){
         RollManager.maxRolls=max;
         updateRolls();
@@ -27,6 +27,7 @@ public class RollManager {
     public static void updateRolls(){
         getRollPanel().setRolls(RollManager.rolls, RollManager.maxRolls);
         getRollPanel().setDiceSelected(BulletStuff.numSelectedDice());
+        getRollPanel().setAllDiceLocks(BulletStuff.isFinishedRolling());
     }
 
     private static RollPanel panel;

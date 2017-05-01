@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.island.islands.TutorialIsland;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.mapScreen.MapScreen;
@@ -96,8 +97,8 @@ public class Main extends ApplicationAdapter {
 		logTime("bits");
 		BulletStuff.init();
 		logTime("bullet");
-//		setScreen(GameScreen.get());
-		setScreen(MapScreen.get());
+		self.travelTo(new TutorialIsland(null,0,9));
+//		setScreen(MapScreen.get());
 		logTime("screen");
 	}
 

@@ -25,9 +25,11 @@ public class Colours {
 	public static final Color brown_light;	
 	public static final Color brown_dark;
 	public static final Color red;
-	
-	
-	public static final Color z_white = new Color(1,1,1,1);
+    public static final Color double_dark;
+
+
+    public static final Color z_white = new Color(1,1,1,1);
+    public static final Color z_black = new Color(0,0,0,1);
 	public static final Color transparent = new Color(0,0,0,0);
 	private static Pixmap p;
 	static{
@@ -48,6 +50,7 @@ public class Colours {
 		brown_light = palette(11,0);
 		brown_dark = palette(12,0);
 		red = palette(13,0);
+		double_dark = palette(14,0);
 	}
 	
 	

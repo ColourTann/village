@@ -9,14 +9,14 @@ public class InventoryItem {
     private TextureRegion image;
 
     public InventoryItem(TextureRegion image) {
-        this(image, Integer.MAX_VALUE, Integer.MIN_VALUE);
+        this(image, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
     public InventoryItem(TextureRegion image, int max) {
         this(image, Integer.MIN_VALUE, max);
     }
 
-    public InventoryItem(TextureRegion image, int max, int min) {
+    public InventoryItem(TextureRegion image, int min, int max) {
         this.max=max;
         this.min=min;
         this.image=image;
@@ -28,10 +28,12 @@ public class InventoryItem {
 
     public void setValue(int value){
         this.value=value;
+        valueChanged();
     }
 
     public void changeValue(int delta){
         setValue(this.value += delta);
+        valueChanged();
     }
 
     public boolean canChangeBy(int delta){
@@ -44,6 +46,10 @@ public class InventoryItem {
 
     public void imposeLimit(){
         this.value = Math.max(min, Math.min(max, value));
+    }
+
+    public void valueChanged(){
+        getPanel().setValue(getValue());
     }
 
     private InventoryItemPanel panel;

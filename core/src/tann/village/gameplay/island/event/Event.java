@@ -9,13 +9,13 @@ import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.Inventory;
 
 public class Event {
-	
-	
-	public String title;
-	public String description;
-	public Array<Effect> effects;
-	public float chance;
-	int fate, variance;
+
+
+    final public String title;
+    final public String description;
+    final public Array<Effect> effects;
+    final public float chance;
+	final int fate, variance;
 	public Event (String title, String description, Array<Effect> effects, float chance, int fate, int variance){
 		this.title=title;
 		this.description=description;
@@ -46,6 +46,9 @@ public class Event {
 		GameScreen.get().showWisps();
 	}
 
+	public String toString(){
+	    return title;
+    }
 	
 	
 	

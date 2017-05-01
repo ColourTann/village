@@ -29,10 +29,9 @@ public class DiePanel extends Group{
 			final Side side = die.sides.get(i);
 			Runnable r = new Runnable() {
 				public void run() {
-					System.out.println("magpie");
 				}
 			};
-			Button butt =new Button(BUTTON_SIZE, BUTTON_SIZE, side.tr[0], Colours.transparent, r); 
+			Button butt =new Button(BUTTON_SIZE, BUTTON_SIZE, side.tr[0], Colours.transparent, r);
 			dieFaces.add(butt);
 			l.actor(butt);
 			if(i%3!=2){

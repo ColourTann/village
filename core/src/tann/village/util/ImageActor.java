@@ -8,10 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class ImageActor extends Actor{
 	
 	TextureRegion tr;
-	public ImageActor(TextureRegion tr, float width, float height) {
-		this.tr=tr;
-		setSize(width, height);
-	}
+    public ImageActor(TextureRegion tr, float width, float height) {
+        this.tr=tr;
+        setSize(width, height);
+    }
+
+    public ImageActor(TextureRegion tr) {
+        this(tr, tr.getRegionWidth(), tr.getRegionHeight());
+    }
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {

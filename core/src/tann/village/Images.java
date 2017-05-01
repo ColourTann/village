@@ -3,6 +3,8 @@ package tann.village;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Images {
@@ -18,6 +20,11 @@ public class Images {
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
     public static final TextureRegion tick = Main.atlas.findRegion("tick");
     public static final TextureRegion hammer = Main.atlas.findRegion("hammer");
+    public static final Texture ball = new Texture(Gdx.files.internal("ball.png"));
+    {
+        ball.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+    }
+    public static final TextureRegion crystal = Main.atlas.findRegion("crystal-ball");
 	
 	// map stuff
 	public static final TextureRegion mask = Main.atlas.findRegion("mask");

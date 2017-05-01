@@ -1,20 +1,16 @@
 package tann.village.screens.gameScreen;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
-import tann.village.util.Colours;
-import tann.village.util.Draw;
-import tann.village.util.Fonts;
-import tann.village.util.Layoo;
-import tann.village.util.TextBox;
-import tann.village.util.TextWisp;
+import tann.village.util.*;
 
 public class InventoryItemPanel extends Group{
-	static final int WIDTH=150, HEIGHT=100;
+	public static final int WIDTH=150, HEIGHT=100;
 	static final int TEXTURESIZE = 80;
 	private int value;
 	public int max;
@@ -24,6 +20,9 @@ public class InventoryItemPanel extends Group{
 		this.value=value;
 		this.max=max;
 		this.tr=tr;
+		imageActor = new ImageActor(tr, TEXTURESIZE, TEXTURESIZE);
+		setup();
+
 	}
 	
 	public void setValue(int value){
@@ -59,14 +58,18 @@ public class InventoryItemPanel extends Group{
 	public int getValue(){
 		return value;
 	}
-	
+
+    TextBox amount;
+	TextBox outOf;
+	ImageActor imageActor;
 	private void setup(){
 		clear();
-		TextBox amount = new TextBox(String.valueOf(getValue()), Fonts.font, WIDTH, Align.center);
-		TextBox outOf = new TextBox(max>0?"/"+max:"", Fonts.fontSmall, WIDTH, Align.center);
+		if(amount==null)amount = new TextBox(String.valueOf(getValue()), Fonts.font, WIDTH, Align.center);
+		if(outOf==null) outOf = new TextBox(max!=Integer.MAX_VALUE?"/"+max:"", Fonts.fontSmall, WIDTH, Align.center);
+        amount.setup(String.valueOf(getValue()));
 		outOf.setTextColour(Colours.brown_light);
 		Layoo l = new Layoo(this);
-		l.add(1, amount, 0, outOf, 1);
+		l.add(1,imageActor,1, amount, 0, outOf, 1);
 		l.layoo();
 	}
 	
@@ -75,8 +78,6 @@ public class InventoryItemPanel extends Group{
 		batch.setColor(Colours.dark);
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		batch.setColor(Colours.z_white);
-		float gap = (getHeight() - TEXTURESIZE)/2;
-		Draw.drawSize(batch, tr, getX() + gap, getY()+gap, TEXTURESIZE, TEXTURESIZE);
 		super.draw(batch, parentAlpha);
 	}
 

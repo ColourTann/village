@@ -19,8 +19,9 @@ import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.gameplay.island.event.Event;
+import tann.village.gameplay.island.event.EventCreator;
+import tann.village.gameplay.island.event.EventDebugPanel;
 import tann.village.gameplay.island.islands.Island;
-import tann.village.gameplay.island.islands.TutorialIsland;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
@@ -30,14 +31,12 @@ import tann.village.screens.gameScreen.panels.review.LossPanel;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.screens.gameScreen.panels.review.StarvationPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel.LossReason;
-import tann.village.screens.gameScreen.panels.stats.StatsPanel;
 import tann.village.util.*;
 
 public class GameScreen extends Screen{
 	public static final int BUTTON_BORDER=10;
 	private static GameScreen self;
 	public RollPanel rollButtonPanel;
-	public StatsPanel statsPanel;
 	public enum State{Event, Rolling, Review, Levelling}
 	public State state;
 	private static final int STARTING_VILLAGERS = 5;
@@ -79,9 +78,7 @@ public class GameScreen extends Screen{
 		});
 		Group inventoryGroup = Inventory.get().getGroup();
 		addActor(inventoryGroup);
-		inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight())/2);
-		addActor(statsPanel = new StatsPanel());
-		statsPanel.setPosition(Main.width-statsPanel.getWidth()-BUTTON_BORDER, Main.height/2-statsPanel.getHeight()/2);
+		inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight())/2+ 40) ;
 		for(int i=0;i<STARTING_VILLAGERS;i++){
 			villagers.add(new Villager(i));
 		}
@@ -115,8 +112,8 @@ public class GameScreen extends Screen{
         addActor(cButt);
 
 
-        CrystalBall ball = new CrystalBall();
-        int gap = 40;
+        CrystalBall ball = CrystalBall.get();
+        int gap = 30;
         ball.setPosition(getWidth() - ball.getWidth()-gap,getHeight()-ball.getHeight()-gap);
         addActor(ball);
 	}
@@ -131,12 +128,19 @@ public class GameScreen extends Screen{
 		BulletStuff.refresh(villagers);
 	}
 
-
+    EventDebugPanel edp;
+    public void toggleEventDebug(){
+        if(edp==null) {
+            edp = new EventDebugPanel(EventCreator.getEvents(EventCreator.EventType.Tutorial));
+            edp.setPosition(getWidth()/2-edp.getWidth()/2, getHeight()/2-edp.getHeight()/2);
+        }
+        if(!edp.remove()) addActor(edp);
+    }
 	
 	@Override
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
-//		Draw.draw(batch, bg, 0, 0);
+		Draw.draw(batch, bg, 0, 0);
 //		Fonts.font.draw(batch, "state: "+state, 400, Main.height-Fonts.font.getAscent());
 	}
 
@@ -156,6 +160,7 @@ public class GameScreen extends Screen{
 	public void keyPress(int keycode) {
 		switch(keycode){
 		case Input.Keys.SPACE:
+		    toggleEventDebug();
 			break;
 		}
 	}
@@ -330,7 +335,7 @@ public class GameScreen extends Screen{
 	}
 
 	public void addEffect(Effect effect){
-		reviewPanel.addItem(effect);
+        reviewPanel.addItem(effect);
 		Inventory.get().activate(effect);
 	}
 	

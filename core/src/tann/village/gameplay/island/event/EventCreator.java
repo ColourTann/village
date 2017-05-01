@@ -45,7 +45,7 @@ public class EventCreator {
 		e1=new Effect(EffectType.Wood, 2, ev);
 		e2=new Effect(EffectType.Morale, 1, ev);
 		e3=new Effect(EffectType.Fate, -2, ev);
-		fate=8; variance=5;
+		fate=7; variance=5;
 		chance=1; 
 		make();
 		
@@ -69,8 +69,8 @@ public class EventCreator {
 		//neutral//
 		title="Quiet day";
 		description="Nothing special";
-		fate=0; variance=10;
-		chance=2; 
+		fate=0; variance=3;
+		chance=0.1f;
 		make();
 
 		//not ok//
@@ -120,7 +120,7 @@ public class EventCreator {
 		e=new Effect(EffectType.Food, -3, ev);
 		e1=new Effect(EffectType.Wood, -3, ev);
 		e2=new Effect(EffectType.Fate, +2, ev);
-		fate=-3; variance=-1;
+		fate=-4; variance=1;
 		chance=1; 
 		make();
 	}

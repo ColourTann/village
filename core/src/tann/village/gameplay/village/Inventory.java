@@ -1,6 +1,5 @@
 package tann.village.gameplay.village;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.gameplay.effect.Cost;
@@ -32,16 +31,16 @@ public class Inventory{
 	
 	public static final int ITEM_GAP=30;
 
-	public Inventory() {
+	private Inventory() {
 		food = new InventoryItem(Images.food, 5);
 		wood = new InventoryItem(Images.wood);
 		morale = new InventoryItem(Images.morale);
-		fate = new InventoryItem(Images.fate);
+		fate = new FateInventoryItem(Images.fate);
 
 		morale.setValue(4);
-		food.setValue(0);
+		food.setValue(2);
 		wood.setValue(0);
-		fate.setValue(10);
+		fate.setValue(0);
 
 		items.add(food);
 		items.add(wood);
@@ -67,7 +66,7 @@ public class Inventory{
 	private void internalActivate(Effect effect, boolean inverse){
 		int value = effect.value*(inverse?-1:1);
 		InventoryItem item = get(effect.type);
-		if(item!=null) item.changeValue(value);
+        if(item!=null) item.changeValue(value);
 	}
 	
 	public InventoryItem get(Effect e){

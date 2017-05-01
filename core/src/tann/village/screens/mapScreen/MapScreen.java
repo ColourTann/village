@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 
 import tann.village.Images;
 import tann.village.Main;
+import tann.village.gameplay.island.event.EventCreator;
+import tann.village.gameplay.island.event.EventDebugPanel;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
@@ -30,6 +32,9 @@ public class MapScreen extends Screen{
 		for(Island i:map.islands){
 			addActor(i.getActor());
 		}
+        EventDebugPanel edp = new EventDebugPanel(EventCreator.getEvents(EventCreator.EventType.Tutorial));
+        edp.setPosition(getWidth()/2-edp.getWidth()/2, getHeight()/2-edp.getHeight()/2);
+        addActor(edp);
 	}
 	
 	@Override

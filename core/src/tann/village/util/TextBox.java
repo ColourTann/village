@@ -27,14 +27,21 @@ public class TextBox extends Actor{
 	int align;
 	Color textCol = Colours.light;
 	Color bgCol = Colours.transparent;
+	float maxWidth;
 	public TextBox(String text, BitmapFont font, float maxWidth, int align){
 		if(maxWidth==-1) maxWidth = 99999;
+		this.maxWidth=maxWidth;
 		this.align=align;
 		this.text=text;
 		this.font=font;
-		layout.setText(font, text, Colours.light, maxWidth, align, true);
-		setSize(Math.min(maxWidth, layout.width), layout.height);
+		setup(text);
 	}
+
+	public void setup(String text){
+	    this.text=text;
+        layout.setText(font, text, Colours.light, maxWidth, align, true);
+        setSize(Math.min(maxWidth, layout.width), layout.height);
+    }
 	
 	public void setBackgroundColour(Color col){
 		this.bgCol=col;

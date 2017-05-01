@@ -130,7 +130,8 @@ public class BulletStuff {
 	}
 
 	public static void update(float delta){
-		float physicsDelta = Math.min(1f / 30f, delta);
+        float physicsDelta = Math.min(1f / 30f, delta);
+        physicsDelta = 1/60f;
 		dynamicsWorld.stepSimulation(physicsDelta, 5, 1f / 60f);
 		for (ModelInstance mi : instances) {
 			if(mi instanceof CollisionObject){

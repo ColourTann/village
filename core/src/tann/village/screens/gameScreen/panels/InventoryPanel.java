@@ -11,7 +11,7 @@ import tann.village.util.Layoo;
 
 public class InventoryPanel extends Group {
     Inventory inventory;
-    public static final int WIDTH = 200, HEIGHT=350;
+    public static final int WIDTH = InventoryItemPanel.WIDTH, HEIGHT=350;
     public InventoryPanel(Inventory inventory){
         this.inventory = inventory;
         setSize(WIDTH, HEIGHT);
@@ -19,7 +19,7 @@ public class InventoryPanel extends Group {
         for(int i=0;i<inventory.items.size;i++){
             InventoryItem item = inventory.items.get(i);
             InventoryItemPanel panel = item.getPanel();
-            l.actor(panel);
+            if(panel!=null) l.actor(panel);
             if(i<inventory.items.size-1){
                 l.row(1);
             }

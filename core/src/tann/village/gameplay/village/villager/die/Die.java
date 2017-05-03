@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels;
+package tann.village.gameplay.village.villager.die;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -277,6 +277,7 @@ public class Die {
 		timeInAir=0;
 		rerolling=false;
 		unlock();
+        physical.body.clearForces();
 		randomise(12, 0, 7, 0, .7f, .7f);
 	}
 	
@@ -292,6 +293,7 @@ public class Die {
 	}
 	
 	private void randomise(float up, float upRand, float side, float sideRand, float rot, float rotRand){
+
 		float x = (float)(side + Maths.factor(sideRand))*Maths.mult();
 		float y = (float)(up + Maths.factor(upRand));
 		float z = (float)(side + Maths.factor(sideRand))*Maths.mult();
@@ -313,6 +315,8 @@ public class Die {
 
 	public void addToScreen() {
 		BulletStuff.instances.add(physical);
+        physical.body.setLinearVelocity(new Vector3());
+        physical.body.setAngularVelocity(new Vector3());
 		BulletStuff.dynamicsWorld.addRigidBody(physical.body, BulletStuff.OBJECT_FLAG, BulletStuff.ALL_FLAG);
 		physical.body.setContactCallbackFlag(BulletStuff.OBJECT_FLAG);
 		physical.body.setContactCallbackFilter(0);

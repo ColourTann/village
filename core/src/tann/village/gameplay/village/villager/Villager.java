@@ -10,10 +10,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
 import tann.village.gameplay.effect.Effect;
-import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.panels.Die;
+import tann.village.gameplay.village.villager.die.Die;
 import tann.village.util.Colours;
 
 public class Villager {
@@ -60,7 +59,7 @@ public class Villager {
 		this.xp+=amount;
 		while(xp>=xpToLevelUp){
 			xp-=xpToLevelUp;
-			GameScreen.get().addEffect(new Effect(EffectType.LevelUp, 1, EffectSource.Dice, die));
+			GameScreen.get().addEffect(new Effect(EffectType.LevelUp, 1, die));
 			GameScreen.get().villagersToLevelUp.add(this);
 		}
 	}

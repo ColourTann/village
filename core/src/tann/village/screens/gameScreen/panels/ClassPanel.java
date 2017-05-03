@@ -8,9 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
-import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
-import tann.village.gameplay.village.villager.die.DiePanel;
+import tann.village.gameplay.village.villager.die.*;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
@@ -22,7 +21,7 @@ public class ClassPanel extends Group{
 	private static final int BORDER = 3;
 	public ClassPanel(VillagerType type, float WIDTH) {
 		TextBox className = new TextBox(type.toString(), Fonts.fontSmall, WIDTH-BORDER*2, Align.center);
-		DiePanel panel = new DiePanel(new Die(type), WIDTH-BORDER*2);
+		DiePanel panel = new DiePanel(new tann.village.gameplay.village.villager.die.Die(type), WIDTH-BORDER*2);
 		setSize(WIDTH, panel.getHeight()+className.getHeight()+BORDER*2);
 		
 		Layoo l = new Layoo(this);

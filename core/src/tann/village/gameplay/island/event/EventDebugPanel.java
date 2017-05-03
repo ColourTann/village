@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 import tann.village.Main;
 import tann.village.gameplay.effect.Effect;
-import tann.village.screens.gameScreen.panels.EventPanel;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
@@ -43,7 +42,7 @@ public class EventDebugPanel extends Group {
                 }
                 if(good){
                     list.add(panel);
-                    panel.setPosition((12+e.fate-e.variance)*SingleEventPanel.WIDTH, level*SingleEventPanel.HEIGHT+40);
+                    panel.setPosition((12+e.fateLeft)*SingleEventPanel.WIDTH, level*SingleEventPanel.HEIGHT+40);
                     break;
                 }
             }
@@ -94,7 +93,7 @@ public class EventDebugPanel extends Group {
         private static int WIDTH = 30, HEIGHT = 30;
         public SingleEventPanel(Event e, int index) {
             this.e=e;
-            setSize((1+e.variance*2)*WIDTH,HEIGHT);
+            setSize((e.fateRight - e.fateLeft +1)*WIDTH,HEIGHT);
         }
 
         @Override
@@ -102,11 +101,11 @@ public class EventDebugPanel extends Group {
             float border = 2;
             batch.setColor(Colours.blue_dark);
             Draw.fillActor(batch,this);
-            batch.setColor(e.fate>0? Colours.blue_light:e.fate<0?Colours.red:Colours.grey);
+            batch.setColor((e.fateRight+e.fateLeft) >0? Colours.blue_light:(e.fateLeft+e.fateRight) <0?Colours.red:Colours.grey);
 
             Draw.fillRectangle(batch,getX()+border,getY()+border, getWidth()-border*2, getHeight()-border*2);
             String toDraw = e.title;
-            int maxLength = 1+Math.abs(e.variance)*6;
+            int maxLength = 1+Math.abs(e.fateRight-e.fateLeft)*6;
             if(e.title.length()>maxLength){
                 toDraw=e.title.substring(0, maxLength);
             }
@@ -129,7 +128,7 @@ public class EventDebugPanel extends Group {
         public boolean collidesWith(SingleEventPanel panel) {
             Event e1 = panel.e;
             Event e2 = e;
-            return ! (e1.fate-e1.variance > e2.fate+e2.variance || e1.fate+e1.variance < e2.fate - e2.variance);
+            return ! (e1.fateLeft  >  e2.fateRight || e1.fateRight < e2.fateLeft );
         }
     }
 }

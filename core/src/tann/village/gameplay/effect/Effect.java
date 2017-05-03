@@ -3,8 +3,9 @@ package tann.village.gameplay.effect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
+import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.panels.Die;
+import tann.village.gameplay.village.villager.die.Die;
 import tann.village.gameplay.village.Inventory;
 
 public class Effect {
@@ -17,7 +18,8 @@ public class Effect {
 		LevelUp(Images.level_up),
 		Morale(Images.morale), 
 		FoodStorage(Images.food_storage),
-		Fate(Images.fate), 
+		Fate(Images.fate),
+        Reroll(Images.roll),
 		Boat(Images.boat_wheel);
 
 		public TextureRegion region;
@@ -39,26 +41,29 @@ public class Effect {
 	public final EffectType type;
 	public final EffectSource source;
 	public int value;
+	public int duration;
 	public Die sourceDie;
+
+	public Effect(EffectType type, int value, EffectSource source, Die sourceDie, int duration){
+	    this.type=type; this.value=value; this.source=source; this.sourceDie=sourceDie; this.duration = duration;
+    }
+
 	public Effect(EffectType type, int value, EffectSource source, Die sourceDie){
-		this.type=type;
-		this.value=value;
-		this.source=source;
-		this.sourceDie = sourceDie;
-	}
-	
+	        this(type,value,source,sourceDie, -1);
+    }
+
+    public Effect(EffectType type, int value,  Die sourceDie){
+        this(type,value,EffectSource.Dice, sourceDie);
+    }
+
 	public Effect(EffectType type, int value, EffectSource source){
-		this.type=type;
-		this.value=value;
-		this.source=source;
+		this(type,value,source,null);
 	}
-	
+
 	public Effect(EffectType type, EffectSource source){
-		this.type=type;
-		this.value=0;
-		this.source=source;
+		this(type, 0, source);
 	}
-	
+
 	public void activate(){
 		switch(type){
 		case FoodStorage:
@@ -70,10 +75,12 @@ public class Effect {
 		case Brain:
 			sourceDie.villager.gainXP(value*2);
 			break;
+        case Reroll:
+            Village.get().addBuff(this);
 		}
 		GameScreen.get().addEffect(this);
 	}
-	
+
 	public String toString(){
 		return type +": "+value+" from "+source; 
 	}

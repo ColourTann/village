@@ -19,7 +19,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.village.villager.Villager;
-import tann.village.screens.gameScreen.panels.Die;
+import tann.village.gameplay.village.villager.die.Die;
 import tann.village.util.Colours;
 
 public class BulletStuff {

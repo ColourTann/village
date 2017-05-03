@@ -15,20 +15,19 @@ public class Event {
     final public String description;
     final public Array<Effect> effects;
     final public float chance;
-	final int fate, variance;
+	final int fateLeft, fateRight;
 	public Event (String title, String description, Array<Effect> effects, float chance, int fate, int variance){
 		this.title=title;
 		this.description=description;
 		this.effects=effects;
 		this.chance=chance;
-		this.fate=fate;
-		this.variance=variance;
+		this.fateLeft =fate;
+		this.fateRight =variance;
 	}
 	
 	public boolean isPotential() {
 		int currentFate = Inventory.get().getResourceAmount(EffectType.Fate);
-		int diff = currentFate-fate;
-		if(Math.abs(diff) > variance) return false;
+		if(currentFate<fateLeft || currentFate > fateRight) return false;
 		for(Effect e: effects){
 			if(!Inventory.get().isEffectValid(e)) return false;
 		}

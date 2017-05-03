@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Align;
 
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
-import tann.village.gameplay.village.villager.die.DiePanel;
+import tann.village.gameplay.village.villager.die.*;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.util.Colours;
@@ -61,7 +61,7 @@ public class LevelupPanel extends InfoPanel{
 			panel.addListener(new InputListener(){
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					villager.setDie(new Die(type));
+					villager.setDie(new tann.village.gameplay.village.villager.die.Die(type));
 					removeThis();
 					return super.touchDown(event, x, y, pointer, button);
 				}

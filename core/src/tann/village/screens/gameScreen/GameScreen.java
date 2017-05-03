@@ -1,7 +1,6 @@
 package tann.village.screens.gameScreen;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -88,7 +87,7 @@ public class GameScreen extends Screen{
 		addActor(upkeepPanel);
 		upkeepPanel.setPosition(BUTTON_BORDER, getHeight()-BUTTON_BORDER-upkeepPanel.getHeight());
 		setState(State.Event);
-		Sounds.playMusic(Sounds.get("beach", Music.class));
+//		Sounds.playMusic(Sounds.get("beach", Music.class));
 
         CircleButton cButt = new CircleButton(0, 0, 180, Colours.dark);
         cButt.setTexture(Images.hammer, 0.7f, .7f, 80, 80);
@@ -181,12 +180,13 @@ public class GameScreen extends Screen{
 //		if(rollButtonPanel.rollsLeft.getValue()<=0) return;
 		if(reroll && !BulletStuff.isFinishedRolling()) return;
 		int diceRolled = 0;
-		for (Die d : BulletStuff.dice) {
+		for (tann.village.gameplay.village.villager.die.Die d : BulletStuff.dice) {
 			if(d.rerolling){
 				d.roll();
 				diceRolled++;
 			}
 		}
+
 		if(diceRolled>0) {
             RollManager.spendRoll();
 		}
@@ -238,7 +238,7 @@ public class GameScreen extends Screen{
 		addActor(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 		addProceedButton(panel);
-		Inventory.get().imposeMaximums();
+		Inventory.get().imposeFoodMinimum();
 	}
 
 	private void levelup(Villager v){
@@ -270,7 +270,7 @@ public class GameScreen extends Screen{
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		for(Die d:BulletStuff.dice){
+		for(tann.village.gameplay.village.villager.die.Die d:BulletStuff.dice){
 			d.update(delta);
 		}
 		RollManager.updateRolls();
@@ -280,11 +280,11 @@ public class GameScreen extends Screen{
 		if(!BulletStuff.isFinishedRolling()) return;
 		refreshPanels();
 		upkeepPanel.activate();
-		for(Die d:BulletStuff.dice){
+		for(tann.village.gameplay.village.villager.die.Die d:BulletStuff.dice){
 			d.activate();
 		}
 		showWisps();
-		for(Die d: BulletStuff.dice){
+		for(tann.village.gameplay.village.villager.die.Die d: BulletStuff.dice){
 			d.villager.gainXP(1);
 			d.removeFromScreen();
 		}
@@ -302,17 +302,16 @@ public class GameScreen extends Screen{
 		center(eventPanel);
 		addActor(eventPanel);
 		addProceedButton(eventPanel);
-		Inventory.get().imposeMaximums();
+		Inventory.get().imposeLimits();
 	}
 
 	private void startRolling() {
 		BulletStuff.refresh(villagers);
-
-		RollManager.setMaximumRolls(2+Inventory.get().getResourceAmount(EffectType.Morale)/3);
+		RollManager.setMaximumRolls(Village.get().getRerolls());
 		RollManager.refreshRolls();
 		reviewPanel = new ReviewPanel(dayNum);
 		state=State.Rolling;
-		for(Die d: BulletStuff.dice){
+		for(tann.village.gameplay.village.villager.die.Die d: BulletStuff.dice){
 			d.addToScreen();
 			d.rerolling=true;
 		}
@@ -326,7 +325,7 @@ public class GameScreen extends Screen{
 		center(reviewPanel);
 		addActor(reviewPanel);
 		addProceedButton(reviewPanel);
-		Inventory.get().imposeMaximums();
+		Inventory.get().imposeLimits();
 	}
 	
 	public void increaseUpkeepEffect(Effect effect){

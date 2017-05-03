@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import tann.village.Images;
-import tann.village.screens.gameScreen.panels.Die;
+import tann.village.gameplay.village.villager.die.Die;
 
 public class DieShader implements Shader{
 	ShaderProgram program;

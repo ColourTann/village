@@ -44,8 +44,12 @@ public class InventoryItem {
         this.max+=delta;
     }
 
-    public void imposeLimit(){
-        this.value = Math.max(min, Math.min(max, value));
+    public void imposeMaximum(){
+        this.value = Math.min(max, value);
+    }
+
+    public void imposeMinimum(){
+        this.value = Math.max(0, value);
     }
 
     public void valueChanged(){

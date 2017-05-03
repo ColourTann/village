@@ -32,7 +32,7 @@ public class Inventory{
 	public static final int ITEM_GAP=30;
 
 	private Inventory() {
-		food = new InventoryItem(Images.food, 5);
+		food = new InventoryItem(Images.food, 0, 5);
 		wood = new InventoryItem(Images.wood);
 		morale = new InventoryItem(Images.morale);
 		fate = new FateInventoryItem(Images.fate);
@@ -109,12 +109,16 @@ public class Inventory{
 		return get(resourceType).getValue();
 	}
 
-	//TODO rename this after refactoring
-	public void imposeMaximums(){
+	public void imposeLimits(){
 		for(InventoryItem item:items){
-			item.imposeLimit();
+			item.imposeMaximum();
 		}
 	}
+
+	public void imposeFoodMinimum(){
+	    food.imposeMinimum();
+    }
+
 	
 	public boolean isEffectValid(Effect e){
 		if(get(e) == null) return true;

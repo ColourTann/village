@@ -28,33 +28,33 @@ public class BuildingGenerator {
 			l=0; // *********************level 0********************* //
 			title="Dock";
 			description="A short pier leading into the ocean";
-			w=9;
+			w=8;
 			b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
 			make();
 			
 			title="Bonfire";
 			description="A big bonfire can really bring the community together";
 			w=4;
-			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 1, b)});
+			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 2, b)});
 			make();
 			
 			title="Offering";
-			description="If the gods exist, it's a good idea to get on their favour";
+			description="If the gods exist, it's a good idea to get on their good side";
 			w=4;
 			f=2;
 			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 1, b)});
-			b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Fate, 1, b)});
+			b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Fate, 2, b)});
 			make();
 			
 			title="Crate";
 			description="A little extra storage for food can help out when times are hard";
-			w=5;
-			b1 = new BuildingEffect(BuildingEffectType.Permanent, new Effect[]{new Effect(EffectType.FoodStorage, 3, b)});
+			w=3;
+			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.FoodStorage, 2, b)});
 			make();
 			
 			title="Salvage Hut";
 			description="A place to sort through useful materials";
-			w=8;
+			w=7;
 			b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, 1, b)});
 			make();
 			break;
@@ -63,36 +63,35 @@ public class BuildingGenerator {
 			l=1; // *********************level 1********************* //
 			title="Palm Grove";
 			description="A small grove for harvesting fast-growing trees";
-			w=10; f=4;
+			w=8; f=3;
 			b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
 			b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, 1, b)});
 			make();
 			
 			title="Meeting Circle";
 			description="Your people can congregate here and have a chat!";
-			w=9;
+			w=5;
 			b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Morale, 1, b)});
 			b2= new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, -1, b)});
 			make();
 			
 			title="Shrimp Traps";
-			description="An effective food source! Requires maintenance though";
+			description="An effective food source!";
 			w=8;
-			f=6;
-			b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 3, b)});
-			b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, -1, b)});
+			f=2;
+			b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 2, b)});
 			make();
 			
 			title="Larder";
 			description="Large storage area for food";
-			w=9;
-			b1 = new BuildingEffect(BuildingEffectType.Permanent, new Effect[]{new Effect(EffectType.FoodStorage, 6, b)});
+			w=5;
+			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.FoodStorage, 6, b)});
 			make();
 			
 			title="Shrine";
 			description="An offering to the gods";
 			w=10;
-			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Fate, 2, b)});
+			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Fate, 5, b)});
 			b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 1, b)});
 			make();
 			break;

@@ -1,7 +1,8 @@
 package tann.village.gameplay.village;
 
 import tann.village.bullet.BulletStuff;
-import tann.village.screens.gameScreen.panels.RollPanel;
+import tann.village.screens.gameScreen.panels.ConfirmPanel;
+import tann.village.screens.gameScreen.panels.RerollPanel;
 
 public class RollManager {
    private static int maxRolls, rolls;
@@ -28,13 +29,22 @@ public class RollManager {
         getRollPanel().setRolls(RollManager.rolls, RollManager.maxRolls);
         getRollPanel().setDiceSelected(BulletStuff.numSelectedDice());
         getRollPanel().setAllDiceLocks(BulletStuff.isFinishedRolling());
+        getConfirmPanel().setClickable(BulletStuff.isFinishedRolling() && BulletStuff.numSelectedDice()==0);
     }
 
-    private static RollPanel panel;
-    public static RollPanel getRollPanel(){
+    private static RerollPanel panel;
+    public static RerollPanel getRollPanel(){
         if(panel==null){
-            panel = new RollPanel();
+            panel = new RerollPanel();
         }
         return panel;
+    }
+
+    private static ConfirmPanel confirmPanel;
+    public static ConfirmPanel getConfirmPanel(){
+        if(confirmPanel==null){
+            confirmPanel = new ConfirmPanel();
+        }
+        return confirmPanel;
     }
 }

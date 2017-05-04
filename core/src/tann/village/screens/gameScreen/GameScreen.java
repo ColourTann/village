@@ -3,10 +3,12 @@ package tann.village.screens.gameScreen;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -35,8 +37,12 @@ import tann.village.util.*;
 public class GameScreen extends Screen{
 	public static final int BUTTON_BORDER=10;
 	private static GameScreen self;
-	public RollPanel rollButtonPanel;
-	public enum State{Event, Rolling, Review, Levelling}
+    public RerollPanel rollButtonPanel;
+    public ConfirmPanel confirmPanel;
+    Group rollContainer;
+    private static final int ROLL_CONTAINER_OFFSCREEN = 200;
+
+    public enum State{Story, Event, Rolling, Review, Levelling}
 	public State state;
 	private static final int STARTING_VILLAGERS = 5;
 	public Array<Villager> villagers = new Array<>();
@@ -99,6 +105,10 @@ public class GameScreen extends Screen{
         });
         addActor(cButt);
 
+        rollContainer = new Group();
+        addActor(rollContainer);
+        rollContainer.setX(ROLL_CONTAINER_OFFSCREEN);
+
         cButt = new CircleButton(Main.width, 0, 180, Colours.dark);
         rollButtonPanel = RollManager.getRollPanel();
         cButt.setActor(rollButtonPanel, cButt.getWidth()/4-rollButtonPanel.getWidth()/2 + 20, cButt.getHeight()/2);
@@ -108,8 +118,18 @@ public class GameScreen extends Screen{
                 rollButtonClick();
             }
         });
-        addActor(cButt);
+        rollContainer.addActor(cButt);
 
+        cButt = new CircleButton(Main.width, 330, 110, Colours.dark);
+        confirmPanel = RollManager.getConfirmPanel();
+        cButt.setActor(confirmPanel, cButt.getWidth()/4-confirmPanel.getWidth()/2+10, cButt.getHeight()/2-confirmPanel.getHeight()/2);
+        cButt.setClickAction(new Runnable() {
+            @Override
+            public void run() {
+                confirmButtonClick();
+            }
+        });
+        rollContainer.addActor(cButt);
 
         CrystalBall ball = CrystalBall.get();
         int gap = 30;
@@ -166,18 +186,21 @@ public class GameScreen extends Screen{
 
 	public void rollButtonClick(){
 	    if(!BulletStuff.isFinishedRolling()) return;
-	    if(BulletStuff.numSelectedDice()==0){
-	        proceed();
-        }
-        else{
-            roll(true);
+        if(BulletStuff.numSelectedDice()==0) return;
+        roll(true);
+    }
+
+    public void confirmButtonClick(){
+        if(!BulletStuff.isFinishedRolling()) return;
+        if(BulletStuff.numSelectedDice()==0){
+            proceed();
         }
     }
 
 	public void roll(boolean reroll){
 
 		if(state!=State.Rolling) return;
-//		if(rollButtonPanel.rollsLeft.getValue()<=0) return;
+		if(!RollManager.hasRoll()) return;
 		if(reroll && !BulletStuff.isFinishedRolling()) return;
 		int diceRolled = 0;
 		for (tann.village.gameplay.village.villager.die.Die d : BulletStuff.dice) {
@@ -195,6 +218,9 @@ public class GameScreen extends Screen{
 
 	public void proceed() {
 		switch(state){
+        case Story:
+            setState(State.Event);
+            break;
 		case Event:
 			setState(State.Rolling);
 			break;
@@ -278,6 +304,7 @@ public class GameScreen extends Screen{
 	
 	private void finishRolling() {
 		if(!BulletStuff.isFinishedRolling()) return;
+        showRollContainer(false);
 		refreshPanels();
 		upkeepPanel.activate();
 		for(tann.village.gameplay.village.villager.die.Die d:BulletStuff.dice){
@@ -296,7 +323,11 @@ public class GameScreen extends Screen{
 		state=State.Event;
 		
 		Event event = island.getEventForTurn(dayNum);
-		
+
+		if(event.isStory() && dayNum != 0){
+		    state=State.Story;
+        }
+
 		eventPanel= new EventPanel(event, dayNum++);
 		event.action();
 		center(eventPanel);
@@ -306,6 +337,7 @@ public class GameScreen extends Screen{
 	}
 
 	private void startRolling() {
+	    showRollContainer(true);
 		BulletStuff.refresh(villagers);
 		RollManager.setMaximumRolls(Village.get().getRerolls());
 		RollManager.refreshRolls();
@@ -317,6 +349,10 @@ public class GameScreen extends Screen{
 		}
 		roll(false);
 	}
+
+	public void showRollContainer(boolean show){
+	    rollContainer.addAction(Actions.moveTo(show?0:ROLL_CONTAINER_OFFSCREEN, 0, .5f, Interpolation.pow2Out));
+    }
 	
 	private void showReview() {
 		state=State.Review;
@@ -405,12 +441,6 @@ public class GameScreen extends Screen{
 		push(constructionPanel);
 	}
 
-	public void addObjective() {
-		ObjectivePanel panel = new ObjectivePanel();
-		addActor(panel);
-		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()-panel.getHeight()-BUTTON_BORDER);
-	}
-
 	public void win() {
 		TextBox tb = new TextBox("You win! It took you "+dayNum+" turns :D", Fonts.fontBig, getWidth()/2, Align.center);
 		tb.setTextColour(Colours.blue_dark);
@@ -418,5 +448,12 @@ public class GameScreen extends Screen{
 		addActor(tb);
 		tb.setPosition(getWidth()/2, getHeight()/2, Align.center);
 	}
+
+	ObjectivePanel objectivePanel;
+    public void addObjectivePanel(ObjectivePanel panel) {
+        objectivePanel=panel;
+	    addActor(objectivePanel);
+	    objectivePanel.setPosition(getWidth()/2-objectivePanel.getWidth()/2, getHeight()-objectivePanel.getHeight());
+    }
 	
 }

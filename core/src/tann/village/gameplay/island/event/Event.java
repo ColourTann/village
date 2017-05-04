@@ -16,13 +16,15 @@ public class Event {
     final public Array<Effect> effects;
     final public float chance;
 	final int fateLeft, fateRight;
-	public Event (String title, String description, Array<Effect> effects, float chance, int fate, int variance){
+	final boolean story;
+	public Event (String title, String description, Array<Effect> effects, float chance, int fate, int variance, boolean story){
 		this.title=title;
 		this.description=description;
 		this.effects=effects;
 		this.chance=chance;
 		this.fateLeft =fate;
 		this.fateRight =variance;
+		this.story = story;
 	}
 	
 	public boolean isPotential() {
@@ -48,8 +50,9 @@ public class Event {
 	public String toString(){
 	    return title;
     }
-	
-	
-	
-	
+
+
+    public boolean isStory() {
+	    return story;
+    }
 }

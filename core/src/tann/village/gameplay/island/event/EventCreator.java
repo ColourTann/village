@@ -180,7 +180,7 @@ public class EventCreator {
 		if(e2!=null) fx.add(e2);
 		if(e3!=null) fx.add(e3);
 		if(e4!=null) fx.add(e4);
-		Event result = new Event(title,description,fx,chance, l, r);
+		Event result = new Event(title,description,fx,chance, l, r, false);
 		e=null;
 		e1=null;
 		e2=null;

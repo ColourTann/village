@@ -12,11 +12,11 @@ import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.InventoryItemPanel;
 import tann.village.util.*;
 
-public class RollPanel extends Group{
+public class RerollPanel extends Group{
 	
 	static final int WIDTH = 120, HEIGHT = 140, TICK_SIZE=80;
 
-	public RollPanel() {
+	public RerollPanel() {
 	    setTouchable(Touchable.disabled);
 		setSize(WIDTH, HEIGHT);
 	}
@@ -39,21 +39,18 @@ public class RollPanel extends Group{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 	    float rollSize = 80;
-        TextureRegion tr = null;
         if(diceSelected==0){
-            batch.setColor(Colours.green_light);
-            tr = Images.tick;
+            batch.setColor(Colours.grey);
         }
         else{
             batch.setColor(Colours.z_white);
-            tr= Images.roll;
         }
         if(!locked){
-            batch.setColor(Colours.transparent);
+            batch.setColor(Colours.grey);
         }
-        Draw.drawSize(batch, tr, getX()+getWidth()/2-rollSize/2, getY() + getHeight()-rollSize, rollSize, rollSize);
+        Draw.drawSize(batch, Images.roll, getX()+getWidth()/2-rollSize/2, getY() + getHeight()-rollSize, rollSize, rollSize);
 
-        if(rollsLeft > 0 && locked){
+        if(rollsLeft > 0 ){
             Fonts.font.setColor(Colours.light);
         }
         else{

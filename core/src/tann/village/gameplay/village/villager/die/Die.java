@@ -76,8 +76,8 @@ public class Die {
 			addSide(Side.brain);
 			break;
 		case Mystic:
-			addSide(Side.fateForFood);
-			addSide(Side.fateForWood);
+			addSide(Side.fate1);
+			addSide(Side.fate1);
 			addSide(Side.wood1);
 			addSide(Side.food1);
 			addSide(Side.skull);

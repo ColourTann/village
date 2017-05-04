@@ -26,19 +26,8 @@ public class BuildingEffectPanel extends Group{
 		l = new Layoo(this);
 		bonusType = new TextBox(buildingEffect.effectType.toString(), Fonts.fontSmall, WIDTH, Align.center);
 		l.actor(bonusType);
-		switch(buildingEffect.effectType){
-		case EveryTurn:
-		case Now:
-		case Permanent:
-			addEffectPanels();
-			break;
-		case Passive:
-			break;
-		default:
-			break;
-		
-		}
-		l.layoo();
+        addEffectPanels();
+        l.layoo();
 		
 	}
 	

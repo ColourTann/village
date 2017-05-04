@@ -46,10 +46,12 @@ public class InventoryItem {
 
     public void imposeMaximum(){
         this.value = Math.min(max, value);
+        valueChanged();
     }
 
     public void imposeMinimum(){
         this.value = Math.max(0, value);
+        valueChanged();
     }
 
     public void valueChanged(){

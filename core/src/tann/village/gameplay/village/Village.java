@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.building.Building;
-import tann.village.screens.gameScreen.panels.RollPanel;
+import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.panels.RerollPanel;
 
 public class Village {
 	
 	private List<Building> buildings  = new ArrayList<>();
 	private static Village self;
-	private RollPanel panel;
+	private RerollPanel panel;
     private List<Buff> buffs = new ArrayList<>();
 
 	public static Village get(){
@@ -42,6 +44,9 @@ public class Village {
 
 	public void addBuilding(Building b) {
 		buildings.add(b);
+		if(GameScreen.get().island.objective!=null){
+            GameScreen.get().island.objective.objectiveProgress(Objective.ObjectiveEffect.Building, 1);
+        }
 	}
 
     public void addBuff(Effect effect) {
@@ -60,6 +65,10 @@ public class Village {
             }
         }
         return total;
+    }
+
+    public int getNumBuildings(){
+        return buildings.size();
     }
 
 }

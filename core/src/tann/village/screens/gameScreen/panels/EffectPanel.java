@@ -69,7 +69,7 @@ public class EffectPanel extends Group {
 				(getHeight() - imageGap * 2));
 		BitmapFont font = Fonts.font;
 
-		if (effect.type != EffectType.Boat) {
+		if (effect.type != EffectType.BuildTown) {
 			float textStart = getHeight() - imageGap;
 			float textWidth = getWidth() - textStart - imageGap;
 			if (value > 0) {

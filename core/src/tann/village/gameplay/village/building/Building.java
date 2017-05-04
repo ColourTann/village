@@ -11,6 +11,7 @@ import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.effect.Effect.EffectType;
+import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.building.BuildingEffect.BuildingEffectType;
 
 public class Building {
@@ -40,7 +41,7 @@ public class Building {
 
 	public void onBuild() {
 		for(BuildingEffect bEff:buildingEffects){
-			if(bEff.effectType==BuildingEffectType.Now || bEff.effectType==BuildingEffectType.Permanent){
+			if(bEff.effectType==BuildingEffectType.Now){
 				for(Effect e:bEff.effects){
 					e.activate();
 				}

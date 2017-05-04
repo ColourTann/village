@@ -14,7 +14,10 @@ import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.gameplay.island.event.Event;
+import tann.village.gameplay.island.objective.BuildingObjective;
+import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.building.BuildingEffect;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 
@@ -99,7 +102,7 @@ public abstract class Island {
 		if(e2!=null) fx.add(e2);
 		if(e3!=null) fx.add(e3);
 		if(e4!=null) fx.add(e4);
-		Event event = new Event(title,description,fx,chance,fate,variance);
+		Event event = new Event(title,description,fx,chance,fate,variance,true);
 		e=null;
 		e1=null;
 		e2=null;
@@ -112,5 +115,14 @@ public abstract class Island {
 	private static void printBadEvent() {
 		System.out.println("error generating event "+title);
 	}
-	
+    public Objective objective;
+    public void addObjective(Effect effect){
+	    switch (effect.type){
+            case BuildTown:
+                objective = new BuildingObjective(effect.value);
+                break;
+        }
+        objective.init();
+        GameScreen.get().addObjectivePanel(objective.getPanel());
+    }
 }

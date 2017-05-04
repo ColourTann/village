@@ -15,7 +15,7 @@ public class Images {
 	public static final TextureRegion morale = Main.atlas.findRegion("resource/morale");
 	public static final TextureRegion fate = Main.atlas.findRegion("resource/fate");
 	public static final TextureRegion level_up = Main.atlas.findRegion("resource/levelup");
-	public static final TextureRegion boat_wheel = Main.atlas.findRegion("resource/ship_wheel");
+	public static final TextureRegion village = Main.atlas.findRegion("special/village");
 	
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
     public static final TextureRegion tick = Main.atlas.findRegion("tick");

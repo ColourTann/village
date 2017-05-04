@@ -36,9 +36,9 @@ public class TutorialIsland extends Island{
 		makeStory();
 		
 		turn=6;
-		title="You Must Build A Boat";
-		description="The weather is not getting better, to stand a chance at survival you have to escape!";
-		e = new Effect(EffectType.Boat, ev);
+		title="Build a village";
+		description="In order to survive you're going to need to build some buildings!";
+		e = new Effect(EffectType.BuildTown, 7, ev);
 		makeStory();
 		
 		turn=9;

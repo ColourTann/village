@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 
+import tann.village.screens.gameScreen.panels.SpinnerPanel;
 import tann.village.util.Button;
 import tann.village.util.Colours;
 import tann.village.util.Layoo;
@@ -18,6 +19,7 @@ public class DiePanel extends Group{
 		setSize(WIDTH, HEIGHT);
 		Layoo l = new Layoo(this);
 		this.die=die;
+
 		Array<Button> dieFaces = new Array<>();
 		for(int i=0;i<6;i++){
 			if(i==3){

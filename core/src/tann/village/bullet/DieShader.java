@@ -13,7 +13,7 @@ import tann.village.Images;
 import tann.village.gameplay.village.villager.die.Die;
 
 public class DieShader implements Shader{
-	ShaderProgram program;
+	static ShaderProgram program;
 	Camera camera;
 	RenderContext context;
 	int u_projTrans;
@@ -25,9 +25,12 @@ public class DieShader implements Shader{
 	int[] v_faces = new int[26];
 	@Override
 	public void init() {
-        String vert = Gdx.files.internal("shader/vertex.glsl").readString();
-        String frag = Gdx.files.internal("shader/fragment.glsl").readString();
-        program = new ShaderProgram(vert, frag);
+        System.out.println("init");
+        if(program==null) {
+            String vert = Gdx.files.internal("shader/vertex.glsl").readString();
+            String frag = Gdx.files.internal("shader/fragment.glsl").readString();
+            program = new ShaderProgram(vert, frag);
+        }
         if (!program.isCompiled()) throw new GdxRuntimeException(program.getLog());
         u_projTrans = program.getUniformLocation("u_projViewTrans");
         u_worldTrans = program.getUniformLocation("u_worldTrans");

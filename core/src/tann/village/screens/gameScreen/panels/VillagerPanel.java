@@ -15,15 +15,16 @@ import tann.village.util.TextBox;
 
 public class VillagerPanel extends InfoPanel{
 	Villager villager;
-	private static final int MAX_WIDTH = 360, HEIGHT = 270;
+	private static final int MAX_WIDTH = 320, HEIGHT = 250;
 	TextBox name;
 	TextBox profession;
 	public VillagerPanel(final Villager villager) {
 		setSize(MAX_WIDTH, HEIGHT);
-		setBackground(Colours.blue_dark);
+		setBackground(Colours.grey);
 		name = new TextBox(villager.firstName+" "+villager.lastName, Fonts.font, MAX_WIDTH, Align.center);
+		Fonts.fontSmall.setColor(Colours.light);
 		profession = new TextBox(villager.type+" "+villager.xp+"/"+villager.xpToLevelUp+" xp",Fonts.fontSmall, MAX_WIDTH, Align.center);
-		DiePanel panel = new DiePanel(villager.die, MAX_WIDTH);
+		SpinnerPanel panel = new SpinnerPanel(villager.die, MAX_WIDTH/2);
 		
 		Layoo l = new Layoo(this);
 		l.row(1);

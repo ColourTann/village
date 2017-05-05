@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.utils.Array;
 
+import tann.village.Images;
 import tann.village.bullet.BulletStuff;
 import tann.village.bullet.CollisionObject;
 import tann.village.gameplay.effect.Effect;
@@ -238,7 +239,8 @@ public class Die {
 		CollisionObject co = new CollisionObject(model, "die", new btBoxShape(new Vector3(0.5f, 0.5f, 0.5f)),
 				BulletStuff.mass);
 		physical = co;
-		co.transform.trn(MathUtils.random(-2.5f, 2.5f), 1.5f, MathUtils.random(-2.5f, 2.5f)); // starting position
+		float positionRand = 4;
+		co.transform.trn(MathUtils.random(-positionRand, positionRand), 1.5f, MathUtils.random(-positionRand, positionRand)); // starting position
 		co.body.setWorldTransform(co.transform);
 		co.body.setCollisionFlags(
 				co.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
@@ -368,6 +370,7 @@ public class Die {
 	}
 
 	public Color getColour() {
+	    if(villager==null) return Colours.dark;
 		return villager.getColour(); 
 	}
 	
@@ -385,7 +388,10 @@ public class Die {
 			texLocs[4*i+2] = s.tr[1].getRegionX()/width;
 			texLocs[4*i+3] = s.tr[1].getRegionY()/height;
 		}
-		TextureRegion lapel =villager.lapel; 
+        TextureRegion lapel = Images.lapel;
+		if(villager!=null){
+            lapel =villager.lapel;
+        }
 		texLocs[24]=lapel.getRegionX()/width;
 		texLocs[25]=lapel.getRegionY()/height;
 		

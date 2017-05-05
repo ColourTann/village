@@ -162,35 +162,15 @@ public class GameScreen extends Screen{
 	@Override
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
-//		Draw.draw(batch, bg, 0, 0);
+		Draw.draw(batch, bg, 0, 0);
 //		Fonts.font.draw(batch, "state: "+state, 400, Main.height-Fonts.font.getAscent());
 	}
 
 
-    Die d = new Die(new Villager(1));
-    Die d1 = new Die(new Villager(2));
-    Die d2 = new Die(new Villager(2));
 
-    Vector2[] positions = new Vector2[10000];
-    int loc = 0;
 
 	@Override
 	public void postDraw(Batch batch) {
-	    batch.setColor(Colours.double_dark);
-	    Draw.fillRectangle(batch,0,0,Main.width, Main.height);
-	    batch.end();
-        for(int i=positions.length-2;i>=0;i--){
-            positions[i+1] = positions[i];
-        }
-        positions[0] = new Vector2(Gdx.input.getX(), Main.height-Gdx.input.getY());
-        for(int i=0;i<positions.length;i++){
-            if(positions[i]==null)break;
-            BulletStuff.drawSpinnyDie3(d2, positions[i].x, positions[i].y, 100-i/10f);
-        }
-
-
-
-        batch.begin();
 	}
 
 	@Override

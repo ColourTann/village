@@ -80,7 +80,7 @@ public class LevelupPanel extends InfoPanel{
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.setColor(Colours.fate_darkest);
+		batch.setColor(Colours.grey);
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		super.draw(batch, parentAlpha);
 	}

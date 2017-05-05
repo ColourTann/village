@@ -21,7 +21,7 @@ public class Villager {
 
 	Color col;
 	public String firstName, lastName;
-	public int xp, xpToLevelUp = 10;
+	public int xp, xpToLevelUp = 1;
 	public VillagerType type;
 	public Die die;
 	public TextureRegion lapel;

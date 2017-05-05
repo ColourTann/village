@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
+import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
 import tann.village.gameplay.village.villager.die.*;
 import tann.village.util.Colours;
@@ -16,18 +17,26 @@ import tann.village.util.Fonts;
 import tann.village.util.Layoo;
 import tann.village.util.TextBox;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClassPanel extends Group{
 	
-	private static final int BORDER = 3;
+	private static final int BORDER =10;
 	public ClassPanel(VillagerType type, float WIDTH) {
 		TextBox className = new TextBox(type.toString(), Fonts.fontSmall, WIDTH-BORDER*2, Align.center);
-		DiePanel panel = new DiePanel(new tann.village.gameplay.village.villager.die.Die(type), WIDTH-BORDER*2);
-		setSize(WIDTH, panel.getHeight()+className.getHeight()+BORDER*2);
-		
+		SpinnerPanel panel = new SpinnerPanel(new tann.village.gameplay.village.villager.die.Die(type), WIDTH/2-BORDER*2);
+
+		setSize(WIDTH, panel.getHeight()+className.getHeight()+BORDER*4);
+
+
+
 		Layoo l = new Layoo(this);
+		l.row(1);
 		l.actor(className);
 		l.row(1);
 		l.actor(panel);
+        l.row(1);
 		l.layoo();
 		
 		addListener(new ClickListener(){
@@ -55,6 +64,18 @@ public class ClassPanel extends Group{
 		Draw.fillActor(batch, this);
 		super.draw(batch, parentAlpha);
 	}
+
+	static class DieSidesPanel extends Actor{
+	    List<Effect> effects = new ArrayList<>();
+        public DieSidesPanel(Die d) {
+            for(Side s:d.sides){
+                for(Effect e:s.effects){
+                    effects.add(e);
+                }
+            }
+
+        }
+    }
 	
 
 }

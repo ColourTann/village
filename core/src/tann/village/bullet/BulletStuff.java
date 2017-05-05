@@ -137,8 +137,6 @@ public class BulletStuff {
 
     public static void drawSpinnyDie3(Die die, float x, float y, float size){
 
-        float dist = 5;
-
         spinCam.position.set(-2.5f, 5, -2.5f);
         spinCam.lookAt(-1, 2.0f, -1);
         spinCam.update();
@@ -148,7 +146,7 @@ public class BulletStuff {
 
         Gdx.gl.glViewport((int)(x-Main.width*sizeFactor/2), (int)(y-Main.height*sizeFactor/2), (int)(Main.width*sizeFactor), (int)(Main.height*sizeFactor));
         die.physical.transform.setToRotation(Vector3.X, 0);
-        die.physical.transform.setToRotation(1,1,1,Main.ticks*200);
+        die.physical.transform.setToRotation(1,1,1,Main.ticks*100);
         modelBatch.begin(spinCam);
         modelBatch.render(die.physical, shader);
         modelBatch.end();

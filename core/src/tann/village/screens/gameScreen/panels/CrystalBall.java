@@ -3,6 +3,7 @@ package tann.village.screens.gameScreen.panels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -62,6 +63,8 @@ public class CrystalBall extends Group{
         super.act(delta);
     }
 
+    ShaderProgram normal = SpriteBatch.createDefaultShader();
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(Colours.double_dark);
@@ -70,7 +73,6 @@ public class CrystalBall extends Group{
 //        Draw.fillRectangle(batch, getX()-10, getY()-10, 500, 500);
         batch.setColor(Colours.light);
 //        Draw.drawSize(batch, Images.crystal, getX(), getY(), getWidth(), getHeight());
-
 
         float ballWidth = Images.ball.getWidth();
         float scaleIncrease = 10f;
@@ -90,7 +92,7 @@ public class CrystalBall extends Group{
         Draw.drawScaled(batch, Images.ball, getX(), getY(), getWidth()/ballWidth, getHeight()/ballWidth);
         batch.end();
         batch.begin();
-        batch.setShader(SpriteBatch.createDefaultShader());
+        batch.setShader(normal);
 
 
         batch.setColor(Colours.blue_light);

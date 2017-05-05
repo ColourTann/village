@@ -92,7 +92,7 @@ void main() {
 	// draw grey face if applicable
 	colour =texture2D(u_texture, face+UV);
 	colour.rgb=vec3(0.3,0.3,0.3);
-	colour.a = colour.a*wrongSide;
+	colour.a = 0.01;
 	gl_FragColor.rgb =  gl_FragColor.rgb *(1.0-colour.a) +colour.rgb*(colour.a);
 
 	float i = s_0x+s_0y+s_1x+s_1y+s_2x+s_2y+s_3x+s_3y+s_4x+s_4y+s_5x+s_5y +h_0x+h_0y+h_1x+h_1y+h_2x+h_2y+h_3x+h_3y+h_4x+h_4y+h_5x+h_5y;

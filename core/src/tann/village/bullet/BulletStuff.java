@@ -18,9 +18,12 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.utils.Array;
+import tann.village.Main;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.Colours;
+import tann.village.util.Slider;
 
 public class BulletStuff {
 	
@@ -29,7 +32,8 @@ public class BulletStuff {
 	public final static short OBJECT_FLAG = 1 << 9;
 	public final static short ALL_FLAG = -1;
 	public static ShaderProgram shaderProgram;
-	static PerspectiveCamera cam;
+    static PerspectiveCamera cam;
+    public static PerspectiveCamera spinCam;
 	static CameraInputController camController;
 	static ModelBatch modelBatch;
 	public static Array<ModelInstance> instances = new Array<>();
@@ -61,7 +65,9 @@ public class BulletStuff {
 		cam.position.set(0f, 8f, -2f);
 		cam.lookAt(0, 0, 0);
 		cam.update();
-		camController = new CameraInputController(cam);
+        camController = new CameraInputController(cam);
+		spinCam= new PerspectiveCamera(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
 		
 		ModelBuilder mb = new ModelBuilder();
 		mb.begin();
@@ -126,8 +132,28 @@ public class BulletStuff {
 	    modelBatch.render(instances, shader);
 	    modelBatch.end();
 //	    modelBatch.render(walls);
-	    
 	}
+
+
+    public static void drawSpinnyDie3(Die die, float x, float y, float size){
+
+        float dist = 5;
+
+        spinCam.position.set(-2.5f, 5, -2.5f);
+        spinCam.lookAt(-1, 2.0f, -1);
+        spinCam.update();
+
+        float initialSize = 200;
+        float sizeFactor = size/initialSize;
+
+        Gdx.gl.glViewport((int)(x-Main.width*sizeFactor/2), (int)(y-Main.height*sizeFactor/2), (int)(Main.width*sizeFactor), (int)(Main.height*sizeFactor));
+        die.physical.transform.setToRotation(Vector3.X, 0);
+        die.physical.transform.setToRotation(1,1,1,Main.ticks*200);
+        modelBatch.begin(spinCam);
+        modelBatch.render(die.physical, shader);
+        modelBatch.end();
+        Gdx.gl.glViewport(0,0,Main.width, Main.height);
+    }
 
 	public static void update(float delta){
         float physicsDelta = Math.min(1f / 30f, delta);
@@ -196,4 +222,6 @@ public class BulletStuff {
 		}
 		return true;
 	}
+
+
 }

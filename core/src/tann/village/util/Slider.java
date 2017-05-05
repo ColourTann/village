@@ -88,7 +88,7 @@ public class Slider extends Actor{
 		boolean added =(ScissorStack.pushScissors(clip));
 		if(added){
 			batch.setColor(foreGround);
-//			Fonts.font.draw(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2), Align.center);
+			Fonts.font.draw(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2), 500, Align.center, true);
 			batch.flush();
 			ScissorStack.popScissors();
 		}

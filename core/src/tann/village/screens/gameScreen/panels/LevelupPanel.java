@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 
+import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
 import tann.village.gameplay.village.villager.die.*;
@@ -20,58 +21,52 @@ import tann.village.util.TextBox;
 public class LevelupPanel extends InfoPanel{
 	
 	
-	private static final int LEFT_WIDTH = 400;
-	private static final int RIGHT_WIDTH = 300;
-	private static final int WIDTH = LEFT_WIDTH+RIGHT_WIDTH;
-	private static final int HEIGHT = 650;
+    private static final int CLASS_WIDTH = 270;
+    private static final int WIDTH = 850;
+    private static final int HEIGHT = 600;
+    ClassPanel top;
+    ClassPanel[] choices;
 	public LevelupPanel(final Villager villager, VillagerType[] options) {
 		
 		setSize(WIDTH, HEIGHT);
-		
-		Group leftGroup = new Group();
-		leftGroup.setSize(LEFT_WIDTH, HEIGHT);
-		Layoo left = new Layoo(leftGroup);
-		addActor(leftGroup);
-		
-		TextBox levelup = new TextBox("Level up!", Fonts.fontBig, LEFT_WIDTH, Align.center);
-		TextBox nameBox = new TextBox(villager.firstName+" "+villager.lastName, Fonts.font, LEFT_WIDTH, Align.center);
-		TextBox professionBox = new TextBox(villager.type.toString(), Fonts.font, LEFT_WIDTH, Align.center);
-		DiePanel mainPanel = new DiePanel(villager.die, LEFT_WIDTH*.9f);
-		left.row(1);
-		left.actor(levelup);
-		left.row(1);
-		left.actor(nameBox);
-		left.row(1);
-		left.actor(professionBox);
-		left.row(1);
-		left.actor(mainPanel);
-		left.row(1);
-		left.layoo();
-		
-		
-		Group rightGroup = new Group();
-		rightGroup.setSize(RIGHT_WIDTH, HEIGHT);
-		Layoo right = new Layoo(rightGroup);
-		addActor(rightGroup);
-		rightGroup.setPosition(LEFT_WIDTH, 0);
-		
+
+
+		Layoo mainLayoo = new Layoo(this);
+        TextBox levelup = new TextBox("Level up!", Fonts.fontBig, WIDTH, Align.center);
+        TextBox nameBox = new TextBox(villager.firstName+" "+villager.lastName, Fonts.fontSmall, WIDTH, Align.center);
+
+        mainLayoo.row(1);
+        mainLayoo.actor(levelup);
+        mainLayoo.row(1);
+        mainLayoo.actor(nameBox);
+        mainLayoo.row(1);
+
+        top = new ClassPanel(villager.type, villager, CLASS_WIDTH, false);
+
+        mainLayoo.actor(top);
+
+        mainLayoo.row(5);
+
+
+        choices = new ClassPanel[3];
 		for(int i=0;i<3;i++){
 			final VillagerType type =options[i]; 
-			ClassPanel panel = new ClassPanel(type, RIGHT_WIDTH-20);
-			panel.addListener(new InputListener(){
+			choices[i] = new ClassPanel(type, villager, CLASS_WIDTH, true);
+            choices[i].addListener(new InputListener(){
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					villager.setDie(new tann.village.gameplay.village.villager.die.Die(type));
+					villager.setDie(new Die(type));
 					removeThis();
 					return super.touchDown(event, x, y, pointer, button);
 				}
 			});
-			right.row(1);
-			right.actor(panel);
+            mainLayoo.gap(1);
+            mainLayoo.actor(choices[i]);
 		}
-		right.row(1);
-		right.layoo();
-	}
+        mainLayoo.gap(1);
+        mainLayoo.row(1);
+        mainLayoo.layoo();
+    }
 	
 	public void removeThis(){
 		remove();
@@ -80,9 +75,16 @@ public class LevelupPanel extends InfoPanel{
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.setColor(Colours.grey);
-		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
-		super.draw(batch, parentAlpha);
+        super.draw(batch, parentAlpha);
+        batch.setColor(Colours.green_light);
+        int width = 5;
+        for(ClassPanel cp:choices){
+            Draw.drawArrow(batch, getX()+cp.getX(Align.center), getY()+cp.getY(Align.top)+40, getX()+cp.getX(Align.center), getY()+cp.getY(Align.top)+5, width);
+        }
+
+        Draw.drawLine(batch, getX()+top.getX(Align.center), getY()+top.getY(Align.bottom), getX()+top.getX(Align.center), getY()+choices[1].getY(Align.top)+10, width);
+        float mid = getY()+choices[1].getY(Align.top)+(top.getY(Align.bottom)-choices[1].getY(Align.top))/2;
+        Draw.drawLine(batch, getX()+choices[0].getX(Align.center)-width/2f, mid, getX()+choices[2].getX(Align.center)+width/2f, mid, width);
 	}
 
 }

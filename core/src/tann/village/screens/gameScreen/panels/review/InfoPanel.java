@@ -11,7 +11,7 @@ public class InfoPanel extends Group{
 
 	static final int BORDER= 2;
 	
-	private Color background = Colours.dark;
+	protected Color background = Colours.dark;
 	
 	public void setBackground(Color col){
 		this.background=col;

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.village.villager.die.Die;
+import tann.village.util.Draw;
 
 public class SpinnerPanel extends Actor {
     Die d;

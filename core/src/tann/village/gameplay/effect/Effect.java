@@ -12,14 +12,14 @@ import tann.village.gameplay.village.Inventory;
 public class Effect {
 
 	public enum EffectType{
-		Brain(Images.brain), 
-		Food(Images.food), 
-		Wood(Images.wood),
+        Food(Images.food),
+        Wood(Images.wood),
 		Skull(Images.side_skull),
-		LevelUp(Images.level_up),
-		Morale(Images.morale), 
-		FoodStorage(Images.food_storage),
-		Fate(Images.fate),
+        LevelUp(Images.level_up),
+        Morale(Images.morale),
+        FoodStorage(Images.food_storage),
+        Fate(Images.fate),
+        Brain(Images.brain),
         Reroll(Images.roll),
 		BuildTown(Images.village);
 

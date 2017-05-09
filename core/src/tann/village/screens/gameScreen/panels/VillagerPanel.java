@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 
 import tann.village.gameplay.village.villager.Villager;
+import tann.village.gameplay.village.villager.die.Die;
 import tann.village.gameplay.village.villager.die.DiePanel;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
@@ -24,7 +25,7 @@ public class VillagerPanel extends InfoPanel{
 		name = new TextBox(villager.firstName+" "+villager.lastName, Fonts.font, MAX_WIDTH, Align.center);
 		Fonts.fontSmall.setColor(Colours.light);
 		profession = new TextBox(villager.type+" "+villager.xp+"/"+villager.xpToLevelUp+" xp",Fonts.fontSmall, MAX_WIDTH, Align.center);
-		SpinnerPanel panel = new SpinnerPanel(villager.die, MAX_WIDTH/2);
+		SpinnerPanel panel = new SpinnerPanel(new Die(villager.type, villager), MAX_WIDTH/2);
 		
 		Layoo l = new Layoo(this);
 		l.row(1);

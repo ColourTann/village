@@ -203,4 +203,15 @@ public class Draw {
 		Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());
 	}
 
+	public static void drawArrow(Batch batch, float x, float y, float x1, float y1, int width){
+	    Draw.drawLine(batch, x,y,x1,y1,width);
+	    double angle = Math.atan2(y1-y, x1-x);
+	    int angleDiff = -40;
+	    int dist = 20;
+	    double angle1 = angle + angleDiff;
+        double angle2 = angle - angleDiff;
+        Draw.drawLine(batch, x1, y1, x1+(float)(Math.cos(angle1)*dist), y1+(float)(Math.sin(angle1)*dist), width);
+        Draw.drawLine(batch, x1, y1, x1+(float)(Math.cos(angle2)*dist), y1+(float)(Math.sin(angle2)*dist), width);
+    }
+
 }

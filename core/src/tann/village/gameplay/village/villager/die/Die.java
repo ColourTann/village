@@ -40,13 +40,24 @@ public class Die {
 		setup(villager.type);
 		construct();
 	}
-	
-	public Die(VillagerType type){
-		setup(type);
-		this.type=type;
-		construct();
-	}
-	
+
+    public Die(VillagerType type){
+        setup(type);
+        this.type=type;
+        construct();
+    }
+
+    // special weird die
+    public Die(VillagerType type, Villager villager){
+        this.villager=villager;
+        this.type=type;
+        setup(type);
+        construct();
+        glowOverride = true;
+    }
+
+    boolean glowOverride;
+
 	public void setup(VillagerType type){
 		switch(type){
 			// level 0
@@ -149,6 +160,7 @@ public class Die {
 	}
 	
 	public int getSide(){
+	    if(glowOverride) return -1;
 		if(rerolling) return 50;
 		if(lockedSide >=0) return lockedSide;
 		if(!isStopped()) return -1;

@@ -135,7 +135,7 @@ public class GameScreen extends Screen{
         rollContainer.addActor(cButt);
 
         CrystalBall ball = CrystalBall.get();
-        int gap = 30;
+        int gap = 40;
         ball.setPosition(getWidth() - ball.getWidth()-gap,getHeight()-ball.getHeight()-gap);
         addActor(ball);
 	}
@@ -198,9 +198,7 @@ public class GameScreen extends Screen{
 
     public void confirmButtonClick(){
         if(!BulletStuff.isFinishedRolling()) return;
-        if(BulletStuff.numSelectedDice()==0){
             proceed();
-        }
     }
 
 	public void roll(boolean reroll){

@@ -108,12 +108,17 @@ public class CrystalBall extends Group{
         super.draw(batch, parentAlpha);
     }
 
-    private static float starSize = 10;
-    private static float radius = WIDTH/2 + 10;
+    private static float starSize = 33;
+    private static float radius = WIDTH/2 + 20;
     private void drawStar(Batch batch, float i){
-        Draw.fillEllipse(batch,
-                (float)(getX()+WIDTH/2 + radius * Math.sin(i*Math.PI/6f))-starSize/2,
+
+        Draw.drawSize(batch, Images.fate, (float)(getX()+WIDTH/2 + radius * Math.sin(i*Math.PI/6f))-starSize/2,
                 (float)(getY()+HEIGHT/2 +radius * Math.cos(i*Math.PI/6f))-starSize/2,
                 starSize, starSize);
+
+//        Draw.fillEllipse(batch,
+//                (float)(getX()+WIDTH/2 + radius * Math.sin(i*Math.PI/6f))-starSize/2,
+//                (float)(getY()+HEIGHT/2 +radius * Math.cos(i*Math.PI/6f))-starSize/2,
+//                starSize, starSize);
     }
 }

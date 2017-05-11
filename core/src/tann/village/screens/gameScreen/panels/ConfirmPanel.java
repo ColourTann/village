@@ -13,15 +13,21 @@ public class ConfirmPanel extends Actor{
 
     }
 
-    boolean clickable;
-    public void setClickable(boolean clickable){
-        this.clickable=clickable;
+    boolean clickable, rolling;
+    public void setRolling(boolean rolling){
+        this.rolling=rolling;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(clickable?Colours.green_light:Colours.grey);
-        Draw.drawSize(batch, Images.tick, getX(), getY(), getWidth(), getHeight());
+        if(!rolling){
+            batch.setColor(Colours.green_light);
+            Draw.drawSize(batch, Images.tick, getX(), getY(), getWidth(), getHeight());
+        }
+        else{
+            batch.setColor(Colours.grey);
+            Draw.drawLoadingAnimation(batch, getX()+getWidth()/2, getY()+getHeight()/2, 30, 10, 2, 3);
+        }
         super.draw(batch, parentAlpha);
     }
 }

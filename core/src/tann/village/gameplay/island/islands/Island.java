@@ -65,8 +65,13 @@ public abstract class Island {
 			if(e.chance>=randomRoll)return e;
 			randomRoll -= e.chance;
 		}
-		System.err.print("No event generated for some reason, getting random event");
-		return validEvents.get((int)(Math.random()*validEvents.size()));
+		if(validEvents.size()!=0){
+            System.err.print("No event generated for some reason, getting random valid event");
+            return validEvents.get((int)(Math.random()*validEvents.size()));
+        }
+        System.err.print("No event generated for some reason, getting random event");
+        return randomEventsPool.get((int)(Math.random()*randomEventsPool.size()));
+
 	}
 	
 	private static List<Event> validEvents = new ArrayList<>();

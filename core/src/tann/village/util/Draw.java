@@ -2,6 +2,7 @@ package tann.village.util;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -212,6 +213,17 @@ public class Draw {
         double angle2 = angle - angleDiff;
         Draw.drawLine(batch, x1, y1, x1+(float)(Math.cos(angle1)*dist), y1+(float)(Math.sin(angle1)*dist), width);
         Draw.drawLine(batch, x1, y1, x1+(float)(Math.cos(angle2)*dist), y1+(float)(Math.sin(angle2)*dist), width);
+    }
+
+    public static void drawLoadingAnimation(Batch batch, float x, float y, float radius, float size, float speed, int numDots){
+	    for(int i=0;i<numDots;i++){
+	        double angle = ((Math.PI*2)/numDots)*i;
+	        angle += Main.ticks*speed;
+            float drawX = (float)(x + Math.sin(angle)*radius);
+            float drawY = (float)(y + Math.cos(angle)*radius);
+	        Draw.fillEllipse(batch, drawX-size/2, drawY-size/2, size, size);
+        }
+
     }
 
 }

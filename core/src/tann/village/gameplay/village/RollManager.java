@@ -29,7 +29,7 @@ public class RollManager {
         getRollPanel().setRolls(RollManager.rolls, RollManager.maxRolls);
         getRollPanel().setDiceSelected(BulletStuff.numSelectedDice());
         getRollPanel().setAllDiceLocks(BulletStuff.isFinishedRolling());
-        getConfirmPanel().setClickable(BulletStuff.isFinishedRolling() && BulletStuff.numSelectedDice()==0);
+        getConfirmPanel().setRolling(!BulletStuff.isFinishedRolling());
     }
 
     private static RerollPanel panel;

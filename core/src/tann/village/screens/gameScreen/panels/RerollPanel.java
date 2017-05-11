@@ -43,12 +43,19 @@ public class RerollPanel extends Group{
             batch.setColor(Colours.grey);
         }
         else{
-            batch.setColor(Colours.z_white);
+            batch.setColor(Colours.light);
+            if(rollsLeft <= 0 ){
+                batch.setColor(Colours.red);
+            }
         }
         if(!locked){
             batch.setColor(Colours.grey);
+            Draw.drawLoadingAnimation(batch, getX()+getWidth()/2, getY()+getHeight()/3*2, 30, 10, 2, 3);
         }
-        Draw.drawSize(batch, Images.roll, getX()+getWidth()/2-rollSize/2, getY() + getHeight()-rollSize, rollSize, rollSize);
+        else{
+
+            Draw.drawSize(batch, Images.roll, getX()+getWidth()/2-rollSize/2, getY() + getHeight()-rollSize, rollSize, rollSize);
+        }
 
         if(rollsLeft > 0 ){
             Fonts.font.setColor(Colours.light);

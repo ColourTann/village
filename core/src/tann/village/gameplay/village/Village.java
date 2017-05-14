@@ -16,7 +16,7 @@ public class Village {
 	private static Village self;
 	private RerollPanel panel;
     private List<Buff> buffs = new ArrayList<>();
-
+    Inventory inventory;
 	public static Village get(){
 		if(self==null){
 			self = new Village();
@@ -26,7 +26,8 @@ public class Village {
 	}
 
 	public void setup(){
-
+        buildings.clear();
+        buffs.clear();;
     }
 
 	public void upkeep(){

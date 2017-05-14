@@ -33,7 +33,7 @@ import tann.village.util.Sounds;
 
 public class Main extends ApplicationAdapter {
 	public static int width = 1000, height = 700;
-	String version = "0.2";
+	public static String version = "0.2";
 	SpriteBatch batch;
 	Stage stage;
 	OrthographicCamera orthoCam;
@@ -86,10 +86,6 @@ public class Main extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(stage);
 		stage.addListener(new InputListener() {
 			public boolean keyDown(InputEvent event, int keycode) {
-				switch (keycode) {
-				case Keys.ESCAPE:
-					return false;
-				}
 				currentScreen.keyPress(keycode);
 				return true;
 			}
@@ -132,16 +128,16 @@ public class Main extends ApplicationAdapter {
 		case LEFT:
 			screen.setPosition(Main.width, 0);
 			screen.addAction(Actions.sequence(Actions.moveTo(0, 0, speed, interp), ra));
-			previousScreen.addAction(Actions.moveTo(-Main.width, 0, speed, interp));
+			if(previousScreen!=null)previousScreen.addAction(Actions.moveTo(-Main.width, 0, speed, interp));
 			break;
 		case RIGHT:
 			screen.setPosition(-Main.width, 0);
 			screen.addAction(Actions.sequence(Actions.moveTo(0, 0, speed, interp), ra));
-			previousScreen.addAction(Actions.moveTo(Main.width, 0, speed, interp));
+            if(previousScreen!=null)previousScreen.addAction(Actions.moveTo(Main.width, 0, speed, interp));
 			break;
 
 		}
-		previousScreen.addAction(Actions.after(Actions.removeActor()));
+        if(previousScreen!=null)previousScreen.addAction(Actions.after(Actions.removeActor()));
 	}
 
 	public void setScreen(Screen screen) {
@@ -215,12 +211,11 @@ public class Main extends ApplicationAdapter {
 		Fonts.fontSmall.draw(batch, String.valueOf(average)+":"+Gdx.graphics.getFramesPerSecond(), 0, 60);
 	}
 
+    public static float tickMult=1;
 
 	public void update(float delta) {
-		if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-			delta /= 10f;
-		}
-
+	    tickMult= Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)?0.2f:1;
+	    delta *= tickMult;
 		BulletStuff.update(delta);
 
 		ticks += delta;
@@ -229,9 +224,10 @@ public class Main extends ApplicationAdapter {
 	}
 
 	public void travelTo(Island island) {
+	    BulletStuff.reset();
 		island.setup();
 		GameScreen.get().init(island, Village.get());
-		setScreen(GameScreen.get());
+		setScreen(GameScreen.get(), TransitionType.LEFT, Interpolation.pow2Out, .5f);
 	}
 
 }

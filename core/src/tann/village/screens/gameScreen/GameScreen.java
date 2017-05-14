@@ -64,6 +64,10 @@ public class GameScreen extends Screen{
 		return self;
 	}
 
+	public static void nullScreen(){
+	    self=null;
+    }
+
 	public GameScreen() {
 		
 	}
@@ -165,7 +169,7 @@ public class GameScreen extends Screen{
 	@Override
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
-		Draw.draw(batch, bg, 0, 0);
+		Draw.draw(batch, bg, getX(), getY());
 //		Fonts.font.draw(batch, "state: "+state, 400, Main.height-Fonts.font.getAscent());
 	}
 
@@ -186,14 +190,26 @@ public class GameScreen extends Screen{
 
 	@Override
 	public void keyPress(int keycode) {
-		switch(keycode){
-		case Input.Keys.SPACE:
-		    toggleEventDebug();
-			break;
+        switch(keycode){
+            case Input.Keys.SPACE:
+                toggleEventDebug();
+                break;
+            case Input.Keys.ESCAPE:
+                toggleEscMenu();
+                break;
 		}
 	}
 
-	public void rollButtonClick(){
+    private void toggleEscMenu() {
+        if(stack.size==0 || stack.get(stack.size-1)!=EscMenu.get()){
+            push(EscMenu.get());
+        }
+        else{
+            pop();
+        }
+    }
+
+    public void rollButtonClick(){
 	    if(!BulletStuff.isFinishedRolling()) return;
         if(BulletStuff.numSelectedDice()==0) return;
         roll(true);

@@ -1,5 +1,6 @@
 package tann.village.bullet;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -49,7 +50,7 @@ public class BulletStuff {
 	static btConstraintSolver constraintSolver;
 	static Shader shader;
 	private static Vector3 dieClickPosition = new Vector3();
-
+    static final float camX=0, camY=8, camZ=-2;
 	public static void init(){
 		Bullet.init();
 		collisionConfig = new btDefaultCollisionConfiguration();
@@ -62,7 +63,7 @@ public class BulletStuff {
 		modelBatch = new ModelBatch();
 		
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(0f, 8f, -2f);
+		cam.position.set(camX, camY, camZ);
 		cam.lookAt(0, 0, 0);
 		cam.update();
         camController = new CameraInputController(cam);
@@ -71,7 +72,7 @@ public class BulletStuff {
 		
 		ModelBuilder mb = new ModelBuilder();
 		mb.begin();
-		final float wallSize = 4.2f;
+		final float wallSize = 4.5f;
 		final float wallThickness = 0.5f;
 		mb.node().id = "ground";
 		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,new Material(ColorAttribute.createDiffuse(Colours.green_light))).box(wallSize*2, wallThickness, wallSize*2);
@@ -127,7 +128,6 @@ public class BulletStuff {
 
 	public static void render() {
 		camController.update();
-	    Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	    modelBatch.begin(cam);
 	    modelBatch.render(instances, shader);
 	    modelBatch.end();
@@ -154,9 +154,9 @@ public class BulletStuff {
     }
 
 	public static void update(float delta){
-        float physicsDelta = Math.min(1f / 30f, delta);
-        physicsDelta = 1/60f;
-		dynamicsWorld.stepSimulation(physicsDelta, 5, 1f / 60f);
+        float physicsDelta = Math.min(1f / 30f*Main.tickMult, delta);
+        physicsDelta = 1/60f*Main.tickMult;
+		dynamicsWorld.stepSimulation(physicsDelta, 5, 1f / 60f*Main.tickMult);
 		for (ModelInstance mi : instances) {
 			if(mi instanceof CollisionObject){
 				((CollisionObject)mi).update();
@@ -222,4 +222,11 @@ public class BulletStuff {
 	}
 
 
+    public static void reset() {
+        for(Die d:dice){
+	        d.dispose();
+        }
+        dice.clear();
+        instances.clear();
+    }
 }

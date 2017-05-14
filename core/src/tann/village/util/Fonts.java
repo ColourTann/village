@@ -3,6 +3,7 @@ package tann.village.util;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -32,6 +33,14 @@ public class Fonts {
 		fontBig = generator.generateFont(parameter); // font size 12 pixels
 		fontBig.setColor(Colours.light);
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
-		
 	}
+
+	public static void draw(Batch batch, String string, BitmapFont font, Color col, float x, float y, float width, float height){
+	    draw(batch,string, font,col,x,y,width,height,Align.center);
+    }
+
+    public static void draw(Batch batch, String string, BitmapFont font, Color col, float x, float y, float width, float height, int align){
+        font.setColor(col);
+        font.draw(batch, string, x, y+height/2+font.getCapHeight()/2, width, align, true);
+    }
 }

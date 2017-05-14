@@ -15,11 +15,11 @@ import tann.village.Main;
 
 public class Slider extends Actor{
 	final static int defaultWidth=80, defaultHeight=9;
-	final static int gap=1;
+	final static int gap=2;
 	
 	//preset sliders//
-	public static Slider SFX=  new Slider("sfx", .5f, Colours.dark, Colours.light);
-	public static Slider music=  new Slider("music", .5f, Colours.dark, Colours.light);
+	public static Slider SFX=  new Slider("sfx", .5f, Colours.light, Colours.dark);
+	public static Slider music=  new Slider("music", .5f, Colours.light, Colours.dark);
 	static{
 		music.addSlideAction(new Runnable() {
 			
@@ -79,7 +79,8 @@ public class Slider extends Actor{
 		batch.setColor(backGround);
 		Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), gap);
 		Draw.fillRectangle(batch, getX()+gap, getY()+gap, (getWidth()-gap*2)*value, getHeight()-gap*2);
-//		Fonts.font.draw(batch, title, (int)(getX()+getWidth()/2), (int)(getY()+getHeight()/2), Align.center);
+        Fonts.fontSmall.setColor(Colours.brown_light);
+		Fonts.fontSmall.draw(batch, title, (int)(getX()), (int)(getY()+getHeight()/2+Fonts.fontSmall.getCapHeight()/2), getWidth(), Align.center, true);
 		batch.flush();
 		clip.x=getParent().getX()+getX();
 		clip.y=getParent().getY()+getY();

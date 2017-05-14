@@ -409,4 +409,9 @@ public class Die {
 		
 		return texLocs;
 	}
+
+    public void dispose() {
+        BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
+        physical.dispose();
+    }
 }

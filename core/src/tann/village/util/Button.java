@@ -26,9 +26,7 @@ public class Button extends Group{
 		this.imageScale=imageScale;
 		setSize(width, height);
 	}
-	
-	
-	
+
 	public void setRunnable(final Runnable runnable){
 		addListener(new InputListener(){
 			@Override

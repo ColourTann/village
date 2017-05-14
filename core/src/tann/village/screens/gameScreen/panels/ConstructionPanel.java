@@ -3,6 +3,7 @@ package tann.village.screens.gameScreen.panels;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.gameplay.island.BuildingGenerator;
@@ -10,17 +11,24 @@ import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.building.Building;
 import tann.village.gameplay.village.Inventory;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
+import tann.village.util.Colours;
+import tann.village.util.Fonts;
 import tann.village.util.Layoo;
+import tann.village.util.TextBox;
 
 public class ConstructionPanel extends InfoPanel{
 
 	Array<BuildingPanel> availables = new Array<>();
-	static final float WIDTH = 550, HEIGHT = 300;
+	static final float WIDTH = 550, HEIGHT = 330;
 	public ConstructionPanel() {
 		setSize(WIDTH, HEIGHT);
 
 		Layoo l = new Layoo(this);
-		l.row(1);
+        l.row(1);
+        Fonts.font.setColor(Colours.light);
+        TextBox title = new TextBox("Build something!", Fonts.font, WIDTH, Align.center);
+        l.actor(title);
+        l.row(1);
 		l.gap(1);
 		
 		for(int i=0;i<3;i++){

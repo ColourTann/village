@@ -15,7 +15,8 @@ import tann.village.Main;
 public class Draw {
 	
 	public static void setup(){
-		circle150 = Main.atlas.findRegion("circle150");
+        circle150 = Main.atlas.findRegion("circle150");
+        circle300 = Main.atlas.findRegion("circle300");
 	}
 	
 	public static Draw draww = new Draw();
@@ -146,9 +147,10 @@ public class Draw {
 		Draw.drawScaled(batch, Draw.getSq(), x, y, width, height);
 	}
 
-	public static TextureRegion circle150;
+    public static TextureRegion circle150;
+    public static TextureRegion circle300;
 	public static void fillEllipse(Batch batch, float x, float y, float width, float height){
-		Draw.drawScaled(batch, circle150, x, y, width/150f, height/150f);
+		Draw.drawScaled(batch, circle300, x, y, width/300f, height/300f);
 	}
 	
 	public static void drawLine(Batch batch, float x, float y, float tX,

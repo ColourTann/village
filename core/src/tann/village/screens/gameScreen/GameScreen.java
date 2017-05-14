@@ -56,7 +56,7 @@ public class GameScreen extends Screen{
 	static int dayNum=0;
 	EventPanel eventPanel;
 	ConstructionPanel constructionPanel = new ConstructionPanel();
-	
+	public EachTurnPanel eachTurnPanel = new EachTurnPanel();
 	public static GameScreen get(){
 		if(self==null){
 			self= new GameScreen();
@@ -84,6 +84,9 @@ public class GameScreen extends Screen{
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
+
+		addActor(eachTurnPanel);
+
 		Group inventoryGroup = Inventory.get().getGroup();
 		addActor(inventoryGroup);
 		inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight())/2+ 40) ;
@@ -382,7 +385,7 @@ public class GameScreen extends Screen{
 	private ProceedButton proceedButton = new ProceedButton();
 	
 	public void addProceedButton(Actor relativeTo){
-		int dist = 10;
+		int dist = 10+20;
 		proceedButton.setColor(Colours.green_light);
 		addActor(proceedButton);
 		proceedButton.setLinkedActor(relativeTo);

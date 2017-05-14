@@ -65,6 +65,9 @@ public class EffectPanel extends Group {
 		Draw.fillRectangle(batch, getX() + border, getY() + border, getWidth() - border * 2, getHeight() - border * 2);
 
 		batch.setColor(Colours.z_white);
+		if(effect.type==EffectType.Fate){
+            batch.setColor(effect.value>0?Colours.blue_light:Colours.red);
+        }
 		Draw.drawSize(batch, effect.type.region, getX() + imageGap, getY() + imageGap, (getHeight() - imageGap * 2),
 				(getHeight() - imageGap * 2));
 		BitmapFont font = Fonts.font;

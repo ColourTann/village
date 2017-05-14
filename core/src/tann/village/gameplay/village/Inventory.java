@@ -39,7 +39,7 @@ public class Inventory{
 
 		morale.setValue(4);
 		food.setValue(2);
-		wood.setValue(0);
+		wood.setValue(10);
 		fate.setValue(0);
 
 		items.add(food);

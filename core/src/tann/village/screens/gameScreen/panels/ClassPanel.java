@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
+import tann.village.Images;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
@@ -85,7 +86,9 @@ public class ClassPanel extends Group{
         l.gap(1);
         for(TextureRegion tr:fx){
             ImageActor actor = new ImageActor(tr, iconSize, iconSize);
-            //TODO continue working here!
+            if(actor.tr== Images.fate){
+                actor.setColor(Colours.blue_light);
+            }
             l.actor(actor);
             x++;
             l.gap(1);

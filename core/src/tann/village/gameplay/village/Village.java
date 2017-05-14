@@ -6,6 +6,7 @@ import java.util.List;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.building.Building;
+import tann.village.gameplay.village.building.BuildingEffect;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.RerollPanel;
 
@@ -46,6 +47,13 @@ public class Village {
 		buildings.add(b);
 		if(GameScreen.get().island.objective!=null){
             GameScreen.get().island.objective.objectiveProgress(Objective.ObjectiveEffect.Building, 1);
+        }
+        for(BuildingEffect be:b.buildingEffects){
+		    if(be.effectType== BuildingEffect.BuildingEffectType.EveryTurn){
+		        for(Effect e:be.effects){
+                    GameScreen.get().eachTurnPanel.addEffect(e);
+                }
+            }
         }
 	}
 

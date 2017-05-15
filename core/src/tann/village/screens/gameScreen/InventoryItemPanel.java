@@ -1,5 +1,6 @@
 package tann.village.screens.gameScreen;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -7,11 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
+import tann.village.Images;
 import tann.village.util.*;
 
 public class InventoryItemPanel extends Group{
-	public static final int WIDTH=150, HEIGHT=100;
-	static final int TEXTURESIZE = 80;
+	public static final int WIDTH=130, HEIGHT=100;
+	static final int TEXTURESIZE = 60;
 	private int value;
 	public int max;
 	TextureRegion tr;
@@ -64,13 +66,23 @@ public class InventoryItemPanel extends Group{
 	ImageActor imageActor;
 	private void setup(){
 		clear();
+		Color col = null;
+        if(tr== Images.fate){
+             col = (getValue()>0?Colours.blue_light:getValue()<0?Colours.red:Colours.grey);
+        }
 		if(amount==null)amount = new TextBox(String.valueOf(getValue()), Fonts.font, WIDTH, Align.center);
 		if(outOf==null) outOf = new TextBox(max!=Integer.MAX_VALUE?"/"+max:"", Fonts.fontSmall, WIDTH, Align.center);
         amount.setup(String.valueOf(getValue()));
-		outOf.setTextColour(Colours.brown_light);
-		Layoo l = new Layoo(this);
-		l.add(1,imageActor,1, amount, 0, outOf, 1);
-		l.layoo();
+        outOf.setTextColour(Colours.brown_light);
+        Layoo l = new Layoo(this);
+        l.add(1,imageActor,1, amount, 0, outOf, 1);
+
+        if(col!=null){
+            amount.setTextColour(col);
+            imageActor.setColor(col);
+        }
+        l.layoo();
+
 	}
 	
 	@Override

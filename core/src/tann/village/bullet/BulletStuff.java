@@ -221,7 +221,6 @@ public class BulletStuff {
 		return true;
 	}
 
-
     public static void reset() {
         for(Die d:dice){
 	        d.dispose();

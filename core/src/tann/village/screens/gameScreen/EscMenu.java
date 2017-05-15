@@ -36,7 +36,6 @@ public class EscMenu extends InfoPanel {
         l.add(1, quit, 1, restart, 1);
         l.row(1);
         l.layoo();
-
         quit.setRunnable(new Runnable() {
             @Override
             public void run() {

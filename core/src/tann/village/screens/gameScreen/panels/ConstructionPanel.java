@@ -68,10 +68,10 @@ public class ConstructionPanel extends InfoPanel{
 	public void attemptToBuy(Building b){
 		// maybe have an inventory manager class to deal with this kind of thing.
 		// doesn't really make sense to pass it onto gamescreen :P
-		if(!Inventory.get().checkCost(b.cost)){
+		if(!Village.getInventory().checkCost(b.cost)){
 			return;
 		}
-		Inventory.get().spendCost(b.cost);
+		Village.getInventory().spendCost(b.cost);
 		Village.get().addBuilding(b);
 		resetAvailablePanels();
 		b.onBuild();

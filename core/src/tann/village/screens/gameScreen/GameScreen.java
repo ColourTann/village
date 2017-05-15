@@ -52,8 +52,7 @@ public class GameScreen extends Screen{
 	
 	TextureRegion bg = Main.atlas.findRegion("gamescreen");
 	public Array<Villager> villagersToLevelUp = new Array<>();
-	ReviewPanel reviewPanel = new ReviewPanel(dayNum);
-	static int dayNum=0;
+	ReviewPanel reviewPanel = new ReviewPanel(Village.get().getDayNum());
 	EventPanel eventPanel;
 	ConstructionPanel constructionPanel = new ConstructionPanel();
 	public EachTurnPanel eachTurnPanel = new EachTurnPanel();
@@ -91,17 +90,15 @@ public class GameScreen extends Screen{
 
 		addActor(eachTurnPanel);
 
-		Group inventoryGroup = Inventory.get().getGroup();
+		InventoryPanel inventoryGroup = Village.getInventory().getGroup();
 		addActor(inventoryGroup);
-		inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight())/2+ 40) ;
+		inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight())) ;
 		for(int i=0;i<STARTING_VILLAGERS;i++){
 			villagers.add(new Villager(i));
 		}
 		refreshBulletStuff();
-		upkeepPanel.addEffect(new Effect(EffectType.Food, -2, EffectSource.Upkeep));
-		upkeepPanel.build();
-		addActor(upkeepPanel);
-		upkeepPanel.setPosition(BUTTON_BORDER, getHeight()-BUTTON_BORDER-upkeepPanel.getHeight());
+        Village.get().getUpkeep().addEffect(new Effect(EffectType.Food, -2, EffectSource.Upkeep));
+
 		setState(State.Event);
 //		Sounds.playMusic(Sounds.get("beach", Music.class));
 
@@ -141,18 +138,16 @@ public class GameScreen extends Screen{
         });
         rollContainer.addActor(cButt);
 
-        CrystalBall ball = CrystalBall.get();
-        int gap = 40;
-        ball.setPosition(getWidth() - ball.getWidth()-gap,getHeight()-ball.getHeight()-gap);
-        addActor(ball);
+//        CrystalBall ball = CrystalBall.get();
+//        int gap = 40;
+//        ball.setPosition(getWidth() - ball.getWidth()-gap,getHeight()-ball.getHeight()-gap);
+//        addActor(ball);
 	}
 	
 	public void center(Actor a){
         a.setPosition(getWidth()/2-a.getWidth()/2, (getHeight())/2-a.getHeight()/2);
 	}
 	
-	UpkeepPanel upkeepPanel = new UpkeepPanel();
-
 	private void refreshBulletStuff() {
 		BulletStuff.refresh(villagers);
 	}
@@ -252,11 +247,11 @@ public class GameScreen extends Screen{
 			setState(State.Review);
 			break;
 		case Review:
-			if(Inventory.get().getResourceAmount(EffectType.Food)<0){
+			if(Village.getInventory().getResourceAmount(EffectType.Food)<0){
 				showStarvation();
 				break;
 			}
-			if(Inventory.get().getResourceAmount(EffectType.Morale)<=0){
+			if(Village.getInventory().getResourceAmount(EffectType.Morale)<=0){
 				showLoss();
 				break;
 			}
@@ -272,14 +267,14 @@ public class GameScreen extends Screen{
 	}
 	
 	private void showLoss() {
-		LossPanel panel = new LossPanel(LossReason.Morale, dayNum);
+		LossPanel panel = new LossPanel(LossReason.Morale, Village.get().getDayNum());
 		addActor(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 	}
 
 	private void showStarvation() {
-		int food = Inventory.get().getResourceAmount(EffectType.Food);
-		int wood = Inventory.get().getResourceAmount(EffectType.Wood);
+		int food = Village.getInventory().getResourceAmount(EffectType.Food);
+		int wood = Village.getInventory().getResourceAmount(EffectType.Wood);
 		int missing = 0;
 		if(food<0) missing -= food;
 		if(wood<0) missing -= wood;
@@ -287,7 +282,7 @@ public class GameScreen extends Screen{
 		addActor(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 		addProceedButton(panel);
-		Inventory.get().imposeFoodMinimum();
+		Village.getInventory().imposeFoodMinimum();
 	}
 
 	private void levelup(Villager v){
@@ -329,7 +324,7 @@ public class GameScreen extends Screen{
 		if(!BulletStuff.isFinishedRolling()) return;
         showRollContainer(false);
 		refreshPanels();
-		upkeepPanel.activate();
+		Village.get().getUpkeep().activate();
 		for(tann.village.gameplay.village.villager.die.Die d:BulletStuff.dice){
 			d.activate();
 		}
@@ -345,18 +340,19 @@ public class GameScreen extends Screen{
 	private void showEvent() {
 		state=State.Event;
 		
-		Event event = island.getEventForTurn(dayNum);
+		Event event = island.getEventForTurn(Village.get().getDayNum());
 
-		if(event.isStory() && dayNum != 0){
+		if(event.isStory() && Village.get().getDayNum() != 0){
 		    state=State.Story;
         }
 
-		eventPanel= new EventPanel(event, dayNum++);
+		eventPanel= new EventPanel(event, Village.get().getDayNum());
+		Village.get().nextDay();
 		event.action();
 		center(eventPanel);
 		addActor(eventPanel);
 		addProceedButton(eventPanel);
-		Inventory.get().imposeLimits();
+		Village.getInventory().imposeLimits();
 	}
 
 	private void startRolling() {
@@ -364,7 +360,7 @@ public class GameScreen extends Screen{
 		BulletStuff.refresh(villagers);
 		RollManager.setMaximumRolls(Village.get().getRerolls());
 		RollManager.refreshRolls();
-		reviewPanel = new ReviewPanel(dayNum);
+		reviewPanel = new ReviewPanel(Village.get().getDayNum());
 		state=State.Rolling;
 		for(tann.village.gameplay.village.villager.die.Die d: BulletStuff.dice){
 			d.addToScreen();
@@ -384,17 +380,16 @@ public class GameScreen extends Screen{
 		center(reviewPanel);
 		addActor(reviewPanel);
 		addProceedButton(reviewPanel);
-		Inventory.get().imposeLimits();
+		Village.getInventory().imposeLimits();
 	}
 	
 	public void increaseUpkeepEffect(Effect effect){
-		upkeepPanel.addEffect(effect);
-		upkeepPanel.build();
+        Village.get().getUpkeep().addEffect(effect);
 	}
 
 	public void addEffect(Effect effect){
         reviewPanel.addItem(effect);
-		Inventory.get().activate(effect);
+		Village.getInventory().activate(effect);
 	}
 	
 	
@@ -448,11 +443,11 @@ public class GameScreen extends Screen{
 	}
 
 	public void refreshPanels() {
-		//Inventory.get().clearWisps();
+		//Village.getInventory().clearWisps();
 	}
 
 	public void showWisps() {
-		//Inventory.get().showWisps();
+		//Village.getInventory().showWisps();
 	}
 
 	public void finishedLevellingUp() {
@@ -465,7 +460,7 @@ public class GameScreen extends Screen{
 	}
 
 	public void win() {
-		TextBox tb = new TextBox("You win! It took you "+dayNum+" turns :D", Fonts.fontBig, getWidth()/2, Align.center);
+		TextBox tb = new TextBox("You win! It took you "+Village.get().getDayNum()+" turns :D", Fonts.fontBig, getWidth()/2, Align.center);
 		tb.setTextColour(Colours.blue_dark);
 		tb.setBackgroundColour(Colours.dark);
 		addActor(tb);

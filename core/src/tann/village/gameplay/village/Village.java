@@ -16,7 +16,14 @@ public class Village {
 	private static Village self;
 	private RerollPanel panel;
     private List<Buff> buffs = new ArrayList<>();
-    Inventory inventory;
+    private Inventory inventory;
+    public Upkeep getUpkeep() {
+        return upkeep;
+    }
+
+    private Upkeep upkeep;
+
+    private int dayNum=0;
 	public static Village get(){
 		if(self==null){
 			self = new Village();
@@ -25,9 +32,24 @@ public class Village {
 		return self;
 	}
 
+	public int getDayNum(){
+	    return dayNum;
+    }
+
+    public void nextDay(){
+	    dayNum++;
+    }
+
+	public static Inventory getInventory(){
+	    return get().inventory;
+    }
+
 	public void setup(){
+	    dayNum=0;
         buildings.clear();
-        buffs.clear();;
+        buffs.clear();
+        inventory = new Inventory();
+        upkeep= new Upkeep();
     }
 
 	public void upkeep(){
@@ -67,7 +89,7 @@ public class Village {
     }
 
     private int getBonusRerolls(){
-	    int total = Inventory.get().getResourceAmount(Effect.EffectType.Morale)/3;
+	    int total = inventory.getResourceAmount(Effect.EffectType.Morale)/3;
 	    for(Buff b : buffs){
 	        if(b.buffType == Effect.EffectType.Reroll){
 	            total += b.value;

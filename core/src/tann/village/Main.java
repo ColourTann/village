@@ -226,6 +226,7 @@ public class Main extends ApplicationAdapter {
 	public void travelTo(Island island) {
 	    BulletStuff.reset();
 		island.setup();
+		Village.get().setup();
 		GameScreen.get().init(island, Village.get());
 		setScreen(GameScreen.get(), TransitionType.LEFT, Interpolation.pow2Out, .5f);
 	}

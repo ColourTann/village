@@ -5,11 +5,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
+import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.island.event.Event;
 import tann.village.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventPanel extends Group{
 	
@@ -65,8 +69,9 @@ public class EventPanel extends Group{
 			Effect effect = e.effects.get(i);
 			if(effect.source==EffectSource.Upkeep){
 				UpkeepPanel upkeepShow = new UpkeepPanel();
-				upkeepShow.addEffect(effect);
-				upkeepShow.build();
+                List<Effect> effects = new ArrayList<>();
+                effects.add(effect);
+				upkeepShow.build(effects);
 				if(count%items_per_row==0) height += upkeepShow.getHeight();
 				l.actor(upkeepShow);
 			}

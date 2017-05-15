@@ -68,7 +68,7 @@ public class Effect {
 	public void activate(){
 		switch(type){
 		case FoodStorage:
-			Inventory.get().get(EffectType.Food).addMax(value);
+			Village.getInventory().get(EffectType.Food).addMax(value);
 			return;
         case BuildTown:
             GameScreen.get().island.addObjective(this);

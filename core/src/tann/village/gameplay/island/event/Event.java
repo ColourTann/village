@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.effect.Effect.EffectType;
+import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.Inventory;
 
@@ -28,10 +29,10 @@ public class Event {
 	}
 	
 	public boolean isPotential() {
-		int currentFate = Inventory.get().getResourceAmount(EffectType.Fate);
+		int currentFate = Village.getInventory().getResourceAmount(EffectType.Fate);
 		if(currentFate<fateLeft || currentFate > fateRight) return false;
 		for(Effect e: effects){
-			if(!Inventory.get().isEffectValid(e)) return false;
+			if(!Village.getInventory().isEffectValid(e)) return false;
 		}
 		return true;
 	}

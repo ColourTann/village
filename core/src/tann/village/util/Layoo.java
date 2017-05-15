@@ -10,7 +10,7 @@ public class Layoo {
 	private Group parent;
 	private Row currentRow;
 	private Row actuallyAColumn = new Row();
-	
+    public boolean debug=false;
 	public Layoo(Group parent) {
 		this.parent=parent;
 	}
@@ -102,7 +102,7 @@ public class Layoo {
 			if(e.r!=null) e.r.layoo();
 		}
 	}
-	static final boolean debug=false;
+
 	class Row{
 		public static final float INITIAL_GAP=.000000001f;
 		List<Element> elements = new ArrayList<>();

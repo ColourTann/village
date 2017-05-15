@@ -19,7 +19,7 @@ public class InfoPanel extends Group{
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.setColor(Colours.light);
+		batch.setColor(Colours.dark);
 		Draw.fillRectangle(batch, getX()-BORDER, getY()-BORDER, getWidth()+BORDER*2, getHeight()+BORDER*2);
 		batch.setColor(background);
 		Draw.fillActor(batch, this);

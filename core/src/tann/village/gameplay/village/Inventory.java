@@ -17,25 +17,19 @@ public class Inventory{
 	InventoryItem morale;
 	InventoryItem fate;
 
+
 	public Array<InventoryItem> items = new Array<>();
 
 	private static final EffectType[] inventoryEffect = new EffectType[]{EffectType.Food, EffectType.Wood, EffectType.Morale, EffectType.Fate};
 	
-	private static Inventory instance;
-	public static Inventory get(){
-		if(instance==null){
-			instance = new Inventory();
-		}
-		return instance;
-	}
-	
+
 	public static final int ITEM_GAP=30;
 
-	private Inventory() {
+	public Inventory() {
 		food = new InventoryItem(Images.food, 0, 5);
 		wood = new InventoryItem(Images.wood);
 		morale = new InventoryItem(Images.morale);
-		fate = new FateInventoryItem(Images.fate);
+		fate = new InventoryItem(Images.fate);
 
 		morale.setValue(4);
 		food.setValue(2);

@@ -64,7 +64,7 @@ public class BulletStuff {
 		
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(camX, camY, camZ);
-		cam.lookAt(0, 0, 0);
+		cam.lookAt(0, 0, .1f);
 		cam.update();
         camController = new CameraInputController(cam);
 		spinCam= new PerspectiveCamera(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -72,7 +72,7 @@ public class BulletStuff {
 		
 		ModelBuilder mb = new ModelBuilder();
 		mb.begin();
-		final float wallSize = 4.5f;
+		final float wallSize = 3.9f;
 		final float wallThickness = 0.5f;
 		mb.node().id = "ground";
 		mb.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal,new Material(ColorAttribute.createDiffuse(Colours.green_light))).box(wallSize*2, wallThickness, wallSize*2);

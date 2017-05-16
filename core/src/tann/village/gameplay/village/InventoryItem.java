@@ -42,6 +42,7 @@ public class InventoryItem {
 
     public void addMax(int delta){
         this.max+=delta;
+        getPanel().setMax(max);
     }
 
     public void imposeMaximum(){

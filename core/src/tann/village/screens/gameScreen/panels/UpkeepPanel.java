@@ -5,6 +5,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.village.Inventory;
+import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.EffectPanel;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class UpkeepPanel extends InfoPanel{
 
-	static final int EXTRA= 20;
+	static final int EXTRA= 10;
 
 
 	public UpkeepPanel() {
@@ -28,7 +30,7 @@ public class UpkeepPanel extends InfoPanel{
 	public void build(List<Effect> effects){
 		clear();
 		TextBox title = new TextBox("Upkeep", Fonts.font, 599, Align.center);
-		setSize(Math.max(title.getWidth(), EffectPanel.WIDTH*effects.size())+EXTRA, InventoryPanel.HEIGHT);
+		setSize(Math.max(title.getWidth(), (EffectPanel.WIDTH+EXTRA)*effects.size())+EXTRA, InventoryPanel.HEIGHT);
 		Layoo l = new Layoo(this);
 		l.row(1);
 		l.actor(title);
@@ -41,7 +43,6 @@ public class UpkeepPanel extends InfoPanel{
 		}
 		l.row(1);
 		l.layoo();
-		
 	}
 
     @Override

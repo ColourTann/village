@@ -32,8 +32,8 @@ public class Inventory{
 		fate = new InventoryItem(Images.fate);
 
 		morale.setValue(4);
-		food.setValue(2);
-		wood.setValue(10);
+		food.setValue(0);
+		wood.setValue(0);
 		fate.setValue(0);
 
 		items.add(food);

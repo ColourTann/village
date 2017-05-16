@@ -251,8 +251,8 @@ public class Die {
 		CollisionObject co = new CollisionObject(model, "die", new btBoxShape(new Vector3(0.5f, 0.5f, 0.5f)),
 				BulletStuff.mass);
 		physical = co;
-		float positionRand = 4;
-		co.transform.trn(MathUtils.random(-positionRand, positionRand), 1.5f, MathUtils.random(-positionRand, positionRand)); // starting position
+		float positionRand = 3.5f;
+		co.transform.trn(MathUtils.random(-positionRand, positionRand), 1, MathUtils.random(-positionRand, positionRand)); // starting position
 		co.body.setWorldTransform(co.transform);
 		co.body.setCollisionFlags(
 				co.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);

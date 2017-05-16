@@ -47,9 +47,9 @@ public class GameScreen extends Screen{
 
     public enum State{Story, Event, Rolling, Review, Levelling}
 	public State state;
-	private static final int STARTING_VILLAGERS = 5;
+	private static final int STARTING_VILLAGERS = 20;
 	public Array<Villager> villagers = new Array<>();
-	
+	CircleButton constructionButt;
 	TextureRegion bg = Main.atlas.findRegion("gamescreen");
 	public Array<Villager> villagersToLevelUp = new Array<>();
 	ReviewPanel reviewPanel = new ReviewPanel(Village.get().getDayNum());
@@ -102,21 +102,20 @@ public class GameScreen extends Screen{
 		setState(State.Event);
 //		Sounds.playMusic(Sounds.get("beach", Music.class));
 
-        CircleButton cButt = new CircleButton(0, 0, 180, Colours.dark);
-        cButt.setTexture(Images.hammer, 0.7f, .7f, 80, 80);
-        cButt.setClickAction(new Runnable() {
+        constructionButt = new CircleButton(0, 0, 180, Colours.dark);
+        constructionButt.setTexture(Images.hammer, 0.7f, .7f, 80, 80);
+        constructionButt.setClickAction(new Runnable() {
             @Override
             public void run() {
                 openBuildingPanel();
             }
         });
-        addActor(cButt);
+        addActor(constructionButt);
 
         rollContainer = new Group();
         addActor(rollContainer);
-        rollContainer.setX(ROLL_CONTAINER_OFFSCREEN);
 
-        cButt = new CircleButton(Main.width, 0, 180, Colours.dark);
+        CircleButton cButt = new CircleButton(Main.width, 0, 180, Colours.dark);
         rollButtonPanel = RollManager.getRollPanel();
         cButt.setActor(rollButtonPanel, cButt.getWidth()/4-rollButtonPanel.getWidth()/2 + 20, cButt.getHeight()/2);
         cButt.setClickAction(new Runnable() {
@@ -126,6 +125,7 @@ public class GameScreen extends Screen{
             }
         });
         rollContainer.addActor(cButt);
+
 
         cButt = new CircleButton(Main.width, 330, 110, Colours.dark);
         confirmPanel = RollManager.getConfirmPanel();
@@ -471,7 +471,9 @@ public class GameScreen extends Screen{
     public void addObjectivePanel(ObjectivePanel panel) {
         objectivePanel=panel;
 	    addActor(objectivePanel);
-	    objectivePanel.setPosition(getWidth()/2-objectivePanel.getWidth()/2, getHeight()-objectivePanel.getHeight());
+//	    objectivePanel.setPosition(0, constructionButt.getHeight()/2+(Main.height-constructionButt.getHeight()/2)/2-objectivePanel.getHeight()/2);
+        objectivePanel.setPosition(0, getHeight()/2-objectivePanel.getHeight()/2);
+        objectivePanel.slideIn();
     }
 	
 }

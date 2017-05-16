@@ -14,6 +14,10 @@ public class InventoryPanel extends Group {
     public InventoryPanel(Inventory inventory){
         this.inventory = inventory;
         setSize(WIDTH, HEIGHT);
+        layout();
+    }
+
+    public void layout(){
         Layoo l = new Layoo(this);
         l.gap(2);
         for(int i=0;i<inventory.items.size;i++){

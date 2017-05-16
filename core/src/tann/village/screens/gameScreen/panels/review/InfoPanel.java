@@ -9,7 +9,7 @@ import tann.village.util.Draw;
 
 public class InfoPanel extends Group{
 
-	static final int BORDER= 2;
+	static final int BORDER= 3;
 	
 	protected Color background = Colours.dark;
 	
@@ -19,7 +19,7 @@ public class InfoPanel extends Group{
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.setColor(Colours.dark);
+		batch.setColor(Colours.brown_dark);
 		Draw.fillRectangle(batch, getX()-BORDER, getY()-BORDER, getWidth()+BORDER*2, getHeight()+BORDER*2);
 		batch.setColor(background);
 		Draw.fillActor(batch, this);

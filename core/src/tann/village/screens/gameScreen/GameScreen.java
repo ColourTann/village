@@ -47,7 +47,7 @@ public class GameScreen extends Screen{
 
     public enum State{Story, Event, Rolling, Review, Levelling}
 	public State state;
-	private static final int STARTING_VILLAGERS = 20;
+	private static final int STARTING_VILLAGERS = 5;
 	public Array<Villager> villagers = new Array<>();
 	CircleButton constructionButt;
 	TextureRegion bg = Main.atlas.findRegion("gamescreen");

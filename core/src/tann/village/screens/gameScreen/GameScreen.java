@@ -2,6 +2,7 @@ package tann.village.screens.gameScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
@@ -100,7 +101,7 @@ public class GameScreen extends Screen{
         Village.get().getUpkeep().addEffect(new Effect(EffectType.Food, -2, EffectSource.Upkeep));
 
 		setState(State.Event);
-//		Sounds.playMusic(Sounds.get("beach", Music.class));
+		Sounds.playMusic(Sounds.beach);
 
         constructionButt = new CircleButton(0, 0, 180, Colours.dark);
         constructionButt.setTexture(Images.hammer, 0.7f, .7f, 80, 80);
@@ -212,6 +213,7 @@ public class GameScreen extends Screen{
 
     public void confirmButtonClick(){
         if(!BulletStuff.isFinishedRolling()) return;
+        Sounds.playSound(Sounds.accept,1,1);
             proceed();
     }
 
@@ -221,6 +223,7 @@ public class GameScreen extends Screen{
 		if(!RollManager.hasRoll()) return;
 		if(reroll && !BulletStuff.isFinishedRolling()) return;
 		int diceRolled = 0;
+
 		for (tann.village.gameplay.village.villager.die.Die d : BulletStuff.dice) {
 			if(d.rerolling){
 				d.roll();
@@ -230,6 +233,7 @@ public class GameScreen extends Screen{
 
 		if(diceRolled>0) {
             RollManager.spendRoll();
+            Sounds.playSound(Sounds.roll,1,1);
 		}
 	}
 
@@ -432,7 +436,9 @@ public class GameScreen extends Screen{
 	}
 	public void pop(){
 		if(stack.size>0){
-			stack.removeIndex(stack.size-1).remove();
+		    Actor a = stack.removeIndex(stack.size-1);
+		    a.clipEnd();
+		    a.remove();
 		}
 		if(stack.size==0){
 			inputBlocker.remove();
@@ -455,6 +461,7 @@ public class GameScreen extends Screen{
 	}
 	
 	public void openBuildingPanel() {
+	    Sounds.playSound(Sounds.buildPanel, 1, 1);
 		constructionPanel.setPosition(Main.width/2-constructionPanel.getWidth()/2, Main.height/2-constructionPanel.getHeight()/2);
 		push(constructionPanel);
 	}

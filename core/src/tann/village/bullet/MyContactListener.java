@@ -15,19 +15,7 @@ import tann.village.util.Sounds;
 public class MyContactListener extends ContactListener {
 
 	
-	Sound[] clacks;
-	int numClacks = 4;
-	Sound[] clocks;
-	int numClocks = 4;
 	public MyContactListener() {
-		clacks = new Sound[numClacks];
-		for(int i=0;i<numClacks;i++){
-			clacks[i]=Sounds.get("clack"+i, Sound.class);
-		}
-		clocks = new Sound[numClocks];
-		for(int i=0;i<numClocks;i++){
-			clocks[i]=Sounds.get("clock"+i, Sound.class);
-		}
 	}
 	List<Integer> collisions = new ArrayList<>();
 	long second;
@@ -52,10 +40,10 @@ public class MyContactListener extends ContactListener {
 		float magnitude = Math.abs(cp.getDistance());
 		if(magnitude>=0.02){
 			if(wall){
-				clocks[(int)(Math.random()*clocks.length)].play(.2f, 1.f+(float)Math.random()*.8f, 0);
+				Sounds.playSound(Sounds.clocks, .2f, 1.f+(float)Math.random()*.8f);
 			}
 			else{
-				clacks[(int)(Math.random()*clacks.length)].play(Math.abs(magnitude*3), (float)(.8f+Math.random()*.2f), 0);
+				Sounds.playSound(Sounds.clacks, Math.abs(magnitude*3), (float)(.8f+Math.random()*.2f));
 			}
 			
 		}

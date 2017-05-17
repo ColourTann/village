@@ -13,35 +13,30 @@ public class Sounds {
 
 	public static AssetManager am= new AssetManager();
 
+    public static String[] clacks;
+    public static String[] clocks;
+    public static String[] cancel;
+    public static String buildPanel;
+    public static String build;
+
+    public static String unshake;
+    public static String[] shake;
+    public static String[] roll;
+    public static String accept;
+
+    public static String beach;
 	public static void setup(){
 		//sfx//
-		for(int i=0;i<=3;i++){
-			makeSound("sfx/clack"+i+".wav", Sound.class);	
-			makeSound("sfx/clock"+i+".wav", Sound.class);	
-		}
-		makeSound("music/beach.mp3", Music.class);
-		
-//		makeSound("sfx/loaded.ogg", Sound.class);
-//		makeSound("sfx/point.ogg", Sound.class);
-//		
-//		makeSound("sfx/snake_enemycrash.ogg", Sound.class);
-//		makeSound("sfx/snake_playercrash.ogg", Sound.class);
-//		makeSound("sfx/snake_move.ogg", Sound.class);
-//		
-//		makeSound("sfx/space_shoot.ogg", Sound.class);
-//		makeSound("sfx/space_stationhit.ogg", Sound.class);
-//		makeSound("sfx/space_warp.ogg", Sound.class);
-//		makeSound("sfx/space_asteroidkill.ogg", Sound.class);
-//		
-//		makeSound("sfx/turtle_die.ogg", Sound.class);
-//		makeSound("sfx/turtle_duck.ogg", Sound.class);
-//		makeSound("sfx/turtle_jump.ogg", Sound.class);
-//		
-//		//music//
-//		makeSound("music/turtle.ogg", Music.class);
-//		makeSound("music/snake.ogg", Music.class);
-//		makeSound("music/space.ogg", Music.class);
-		
+        clacks = makeSounds("clack", 4);
+        clocks = makeSounds("clock", 4);
+        cancel = makeSounds("drum/cancel", 1);
+        buildPanel = makeSound("sfx/buildpanel.wav", Sound.class);
+        build = makeSound("sfx/build.wav", Sound.class);
+		beach = makeSound("music/beach.mp3", Music.class);
+        shake = makeSounds("shake", 4);
+        unshake = makeSound("sfx/unshake.wav", Sound.class);
+        roll = makeSounds("roll", 6);
+        accept = makeSound("sfx/accept.wav", Sound.class);
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
 		Array<Sound> sounds = new Array<Sound>();
@@ -57,16 +52,24 @@ public class Sounds {
 	}
 	
 	public static <T> T get(String name, Class<T> type){
-		String folder = type==Sound.class?"sfx":"music";
-		name=folder+"/"+name;
-		if(type==Sound.class) name=name+".wav";
-		if(type==Music.class) name=name+".mp3";
 		return am.get(name, type);
+
 	}
-	
-	private static void makeSound(String path, Class type){
-		am.load(path, type);
-	}
+
+    private static String makeSound(String path, Class type){
+        am.load(path, type);
+        return path;
+    }
+
+    private static String[] makeSounds(String path, int amount){
+        String[] strings = new String[amount];
+        for(int i=0;i<amount;i++){
+            String s = "sfx/"+path+"_"+i+".wav";
+            makeSound(s, Sound.class);
+            strings[i]=s;
+        }
+        return strings;
+    }
 	
 	private static ArrayList<Fader> faders = new ArrayList<Sounds.Fader>();
 	
@@ -84,7 +87,8 @@ public class Sounds {
 	
 	private static Music previousMusic;
 	private static Music currentMusic;
-	public static void playMusic(Music m){
+	public static void playMusic(String path){
+        Music m = Sounds.get(path, Music.class);
 		previousMusic=currentMusic;
 		if(previousMusic!=null)previousMusic.stop();
 		currentMusic=m;
@@ -123,12 +127,17 @@ public class Sounds {
 	}
 
 	static HashMap<String, Sound> soundMap = new HashMap<String, Sound>();
-	public static void playSound(String string) {
+	public static void playSound(String string, float volume, float pitch) {
 		Sound s = soundMap.get(string);
 		if(s==null){
 			s=get(string, Sound.class);
 			soundMap.put(string, s);
 		}
-		s.play(Slider.SFX.getValue());		
+		s.play(Slider.SFX.getValue()*2*volume, pitch, 0);
 	}
+
+	public static void playSound(String[] strings, float volume, float pitch){
+        playSound(strings[((int)(Math.random()* strings.length))], volume, pitch);
+    }
+
 }

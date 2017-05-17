@@ -34,7 +34,7 @@ public class UpkeepPanel extends InfoPanel{
 		Layoo l = new Layoo(this);
 		l.row(1);
 		l.actor(title);
-		l.row(1);
+		l.row(2);
 		l.abs(-ReviewPanel.SMALL_GAP);
 		for(Effect e:effects){
 			l.abs(ReviewPanel.SMALL_GAP);

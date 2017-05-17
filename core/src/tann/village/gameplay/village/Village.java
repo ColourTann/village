@@ -9,6 +9,7 @@ import tann.village.gameplay.village.building.Building;
 import tann.village.gameplay.village.building.BuildingEffect;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.RerollPanel;
+import tann.village.util.Sounds;
 
 public class Village {
 	
@@ -67,7 +68,8 @@ public class Village {
 	}
 
 	public void addBuilding(Building b) {
-		buildings.add(b);
+        Sounds.playSound(Sounds.build,1,1);
+        buildings.add(b);
 		if(GameScreen.get().island.objective!=null){
             GameScreen.get().island.objective.objectiveProgress(Objective.ObjectiveEffect.Building, 1);
         }

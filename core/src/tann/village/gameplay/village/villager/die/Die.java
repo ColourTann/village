@@ -28,6 +28,7 @@ import tann.village.gameplay.village.villager.Villager.VillagerType;
 import tann.village.gameplay.village.villager.die.Side;
 import tann.village.util.Colours;
 import tann.village.util.Maths;
+import tann.village.util.Sounds;
 
 public class Die {
 	
@@ -283,6 +284,12 @@ public class Die {
 	public void prepareToReroll(){
 		if(!isStopped()) return;
 		rerolling = !rerolling;
+		if(rerolling){
+            Sounds.playSound(Sounds.shake,.3f,1);
+        }
+        else{
+            Sounds.playSound(Sounds.unshake,.3f,1);
+        }
         RollManager.updateRolls();
     }
 	

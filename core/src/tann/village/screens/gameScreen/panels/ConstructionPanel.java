@@ -11,10 +11,7 @@ import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.building.Building;
 import tann.village.gameplay.village.Inventory;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
-import tann.village.util.Colours;
-import tann.village.util.Fonts;
-import tann.village.util.Layoo;
-import tann.village.util.TextBox;
+import tann.village.util.*;
 
 public class ConstructionPanel extends InfoPanel{
 
@@ -84,4 +81,9 @@ public class ConstructionPanel extends InfoPanel{
 			bp.setBuilding(BuildingGenerator.random(levelToGenerate));
 		}
 	}
+
+    @Override
+    public void clipEnd() {
+        Sounds.playSound(Sounds.cancel, 1, 1);
+    }
 }

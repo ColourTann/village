@@ -66,6 +66,7 @@ public class Main extends ApplicationAdapter {
 	public void create() {
 		logTime(null);
 		logTime("start");
+        Sounds.setup();
 		atlas = new TextureAtlas(Gdx.files.internal("atlas_image.atlas"));
 		atlas_3d = new TextureAtlas(Gdx.files.internal("3d/atlas_image.atlas"));
 		for(Texture t: atlas_3d.getTextures()){
@@ -78,7 +79,7 @@ public class Main extends ApplicationAdapter {
 		self = this;
 		Draw.setup();
 		Fonts.setup();
-		Sounds.setup();
+
 		logTime("setup");
 		stage = new Stage(new FitViewport(Main.width, Main.height));
 		orthoCam = (OrthographicCamera) stage.getCamera();

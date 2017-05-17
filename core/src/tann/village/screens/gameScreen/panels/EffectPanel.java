@@ -75,13 +75,15 @@ public class EffectPanel extends Group {
 		if (effect.type != EffectType.BuildTown) {
 			float textStart = getHeight() - imageGap;
 			float textWidth = getWidth() - textStart - imageGap;
-			if (value > 0) {
-				Fonts.font.setColor(Colours.light);
-			} else if (value < 0) {
-				Fonts.font.setColor(Colours.red);
+			Color col = Colours.light;
+			 if (value < 0) {
+				col = Colours.red;
 			}
-			font.draw(batch, (value > 0 ? "+" : "") + value, getX() + textStart,
-					getY() + getHeight() / 2f + font.getXHeight() * .35f, textWidth, Align.center, false);
+			String s= (value > 0 ? "+" : "") + value;
+			 int fiddle = 2;
+			Fonts.draw(batch, s, Fonts.font, col, getX()+textStart, getY()+fiddle, getWidth()-textStart, getHeight());
+//			font.draw(batch, , getX() + textStart,
+//					getY() + getHeight() / 2f + font.getXHeight() * .35f, textWidth, Align.center, false);
 		}
 
 		super.draw(batch, parentAlpha);

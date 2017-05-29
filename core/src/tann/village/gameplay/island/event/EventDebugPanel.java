@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import tann.village.Main;
 import tann.village.gameplay.effect.Effect;
 import tann.village.util.Colours;
@@ -20,10 +21,10 @@ public class EventDebugPanel extends Group {
 
     Map<Integer, List<SingleEventPanel>> map = new HashMap<>();
 
-    public EventDebugPanel(List<Event> events) {
+    public EventDebugPanel(Array<Event> events) {
         int max = 0;
         setSize(SingleEventPanel.WIDTH * 25, 400);
-        for(int i=0;i<events.size();i++){
+        for(int i=0;i<events.size;i++){
             Event e = events.get(i);
             SingleEventPanel panel = new SingleEventPanel(e, i);
 

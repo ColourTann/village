@@ -26,18 +26,12 @@ public class EventPanel extends Group{
     private static final int BORDER = 10;
 	Color border = Colours.grey;
 	public EventPanel(Event e, int dayNumber) {
-	    int fate = 0;
 	    if(e.isStory()){
 	        border = Colours.brown_light;
         }
-        else{
-	        for(Effect eff:e.effects){
-	            if(eff.type== Effect.EffectType.Fate){
-	                fate = eff.value;
-	                border = fate<0?Colours.blue_light:Colours.red;
-                }
-            }
-        }
+        int goodness = e.getGoodness();
+	    if(goodness==1) border = Colours.blue_light;
+	    if(goodness==-1) border = Colours.red;
 		int height=0;
 		
 		this.dayNumber=dayNumber;
@@ -50,23 +44,17 @@ public class EventPanel extends Group{
 		height += description.getHeight();
 		
 		Layoo l = new Layoo(this);
-//		l.row(1);
-//		l.actor(day);
-//
 		l.row(1);
 		l.actor(event);
 		l.row(1);
 		l.actor(description);
 		int count =0;
-		for(int i=0;i<e.effects.size;i++){
-		    if(e.effects.get(i).type== Effect.EffectType.Fate){
-		        continue;
+        for(int i=0;i<e.effects.size;i++){
+            Effect effect = e.effects.get(i);
+            if(count%items_per_row==0) {
+                l.row(1);
+
             }
-			if(count%items_per_row==0) {
-				l.row(1);
-				
-			}
-			Effect effect = e.effects.get(i);
 			if(effect.source==EffectSource.Upkeep){
 				UpkeepPanel upkeepShow = new UpkeepPanel();
                 List<Effect> effects = new ArrayList<>();
@@ -90,8 +78,8 @@ public class EventPanel extends Group{
 		setSize(WIDTH, height + 80);
 		l.layoo();
 
-		if(fate!=0) {
-            SideFatePanel panel = new SideFatePanel(fate);
+		if(e.fateDelta!=0) {
+            SideFatePanel panel = new SideFatePanel(e.fateDelta);
             addActor(panel);
             panel.setPosition(getWidth() + BORDER, getHeight() / 2 - panel.getHeight() / 2);
         }

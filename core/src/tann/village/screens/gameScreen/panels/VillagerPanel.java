@@ -42,7 +42,7 @@ public class VillagerPanel extends InfoPanel{
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				GameScreen.get().pop();
-				return super.touchDown(event, x, y, pointer, button);
+				return true;
 			}
 		});
 	}

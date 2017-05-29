@@ -14,14 +14,22 @@ public class Event {
 
     final public String title;
     final public String description;
+    final public Array<Outcome> outcomes;
     final public Array<Effect> effects;
+    final public Array<Effect> requirements;
+    final public int fateDelta;
     final public float chance;
 	final int fateLeft, fateRight;
 	final boolean story;
-	public Event (String title, String description, Array<Effect> effects, float chance, int fate, int variance, boolean story){
+	public final int turn;
+	public Event (String title, String description, Array<Effect> effects, Array<Outcome> outcomes, Array<Effect> requirements, float chance, int fate, int variance, int fateDelta, boolean story, int turn){
+	    this.turn=turn;
+	    this.requirements=requirements;
+	    this.effects=effects;
+	    this.fateDelta=fateDelta;
 		this.title=title;
 		this.description=description;
-		this.effects=effects;
+		this.outcomes=outcomes;
 		this.chance=chance;
 		this.fateLeft =fate;
 		this.fateRight =variance;
@@ -31,13 +39,15 @@ public class Event {
 	public boolean isPotential() {
 		int currentFate = Village.getInventory().getResourceAmount(EffectType.Fate);
 		if(currentFate<fateLeft || currentFate > fateRight) return false;
-		for(Effect e: effects){
-			if(!Village.getInventory().isEffectValid(e)) return false;
-		}
+        for(Effect e: requirements){
+            if(!Village.getInventory().isEffectValid(e)) return false;
+        }
 		return true;
 	}
 	
-	
+	public int getGoodness(){
+        return -(int)(Math.signum(fateDelta));
+    }
 
 	public void action() {
 		GameScreen.get().refreshPanels();
@@ -49,7 +59,7 @@ public class Event {
 	}
 
 	public String toString(){
-	    return title;
+	    return title+":"+fateDelta;
     }
 
 

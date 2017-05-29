@@ -82,6 +82,7 @@ public class GameScreen extends Screen{
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				if(event.isHandled())return true;
+				if(stack.size>0) return true;
 				if(state==State.Rolling){
 					BulletStuff.click(x, y, button);
 				}
@@ -239,6 +240,10 @@ public class GameScreen extends Screen{
 
 
 	public void proceed() {
+        if(Village.getInventory().getResourceAmount(EffectType.Morale)<=0){
+            showLoss();
+            return;
+        }
 		switch(state){
         case Story:
             setState(State.Event);
@@ -253,10 +258,6 @@ public class GameScreen extends Screen{
 		case Review:
 			if(Village.getInventory().getResourceAmount(EffectType.Food)<0){
 				showStarvation();
-				break;
-			}
-			if(Village.getInventory().getResourceAmount(EffectType.Morale)<=0){
-				showLoss();
 				break;
 			}
 			if(villagersToLevelUp.size>0){
@@ -350,6 +351,19 @@ public class GameScreen extends Screen{
 		    state=State.Story;
         }
 
+        if(event.isStory() && Village.get().getDayNum() == 0){
+
+        }
+        else {
+            int goodness = event.getGoodness();
+            String[] sound = null;
+            if (goodness == -1) sound = Sounds.eventNegBird;
+            else if (goodness == 1) sound = Sounds.eventPosBird;
+            else sound = Sounds.eventNeuBird;
+
+            Sounds.playSound(sound, 1, 1);
+        }
+
 		eventPanel= new EventPanel(event, Village.get().getDayNum());
 		Village.get().nextDay();
 		event.action();
@@ -424,7 +438,7 @@ public class GameScreen extends Screen{
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 					pop();
-					return super.touchDown(event, x, y, pointer, button);
+					return true;
 				}
 			});
 		}
@@ -437,7 +451,6 @@ public class GameScreen extends Screen{
 	public void pop(){
 		if(stack.size>0){
 		    Actor a = stack.removeIndex(stack.size-1);
-		    a.clipEnd();
 		    a.remove();
 		}
 		if(stack.size==0){

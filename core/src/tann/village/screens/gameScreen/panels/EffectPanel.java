@@ -80,7 +80,7 @@ public class EffectPanel extends Group {
 				col = Colours.red;
 			}
 			String s= (value > 0 ? "+" : "") + value;
-			 int fiddle = 2;
+			 float fiddle = 2;
 			Fonts.draw(batch, s, Fonts.font, col, getX()+textStart, getY()+fiddle, getWidth()-textStart, getHeight());
 //			font.draw(batch, , getX() + textStart,
 //					getY() + getHeight() / 2f + font.getXHeight() * .35f, textWidth, Align.center, false);

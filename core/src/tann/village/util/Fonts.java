@@ -21,17 +21,15 @@ public class Fonts {
 	public static BitmapFont fontBig;
 	
 	public static void setup(){
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/berylium bd.ttf"));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Aller_Lt.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 22;
+		parameter.size = 20;
 		fontSmall = generator.generateFont(parameter); // font size 12 pixels
-		fontSmall.setColor(Colours.light);
-		parameter.size=40;
-		font= generator.generateFont(parameter); // font size 12 pixels
-		font.setColor(Colours.light);
-		parameter.size=55;
+        parameter.size=39;
+        font= generator.generateFont(parameter); // font size 12 pixels
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Cinzel-Regular.otf"));
+        parameter.size=55;
 		fontBig = generator.generateFont(parameter); // font size 12 pixels
-		fontBig.setColor(Colours.light);
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 	}
 

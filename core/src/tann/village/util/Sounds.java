@@ -24,6 +24,16 @@ public class Sounds {
     public static String[] roll;
     public static String accept;
 
+    public static String eventPos;
+    public static String eventNeg;
+    public static String eventNeu;
+
+    public static String[] eventPosBird;
+    public static String[] eventNegBird;
+    public static String[] eventNeuBird;
+
+
+
     public static String beach;
 	public static void setup(){
 		//sfx//
@@ -32,11 +42,21 @@ public class Sounds {
         cancel = makeSounds("drum/cancel", 1);
         buildPanel = makeSound("sfx/buildpanel.wav", Sound.class);
         build = makeSound("sfx/build.wav", Sound.class);
-		beach = makeSound("music/beach.mp3", Music.class);
+		beach = makeSound("music/beach2.mp3", Music.class);
         shake = makeSounds("shake", 4);
         unshake = makeSound("sfx/unshake.wav", Sound.class);
         roll = makeSounds("roll", 6);
         accept = makeSound("sfx/accept.wav", Sound.class);
+
+        eventPos = makeSound("sfx/positive.wav", Sound.class);
+        eventNeg = makeSound("sfx/negative.wav", Sound.class);
+        eventNeu = makeSound("sfx/neutral.wav", Sound.class);
+
+        eventPosBird = makeSounds("positivebird", 6, ".wav");
+        eventNegBird = makeSounds("negativebird", 3, ".wav");
+        eventNeuBird = makeSounds("neutralbird", 8, ".wav");
+
+
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
 		Array<Sound> sounds = new Array<Sound>();
@@ -62,9 +82,13 @@ public class Sounds {
     }
 
     private static String[] makeSounds(String path, int amount){
+        return makeSounds(path,amount,".wav");
+    }
+
+    private static String[] makeSounds(String path, int amount, String extension){
         String[] strings = new String[amount];
         for(int i=0;i<amount;i++){
-            String s = "sfx/"+path+"_"+i+".wav";
+            String s = "sfx/"+path+"_"+i+extension;
             makeSound(s, Sound.class);
             strings[i]=s;
         }

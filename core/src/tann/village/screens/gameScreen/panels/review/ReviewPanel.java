@@ -7,13 +7,14 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.gameplay.effect.Effect;
 import tann.village.screens.gameScreen.panels.EffectPanel;
+import tann.village.screens.gameScreen.panels.EventPanel;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
 import tann.village.util.Layoo;
 import tann.village.util.TextBox;
 
-public class ReviewPanel extends InfoPanel{
+public class ReviewPanel extends Group{
 	
 	static final int items_per_row=3;
 	static final int itemWidth = (int)EffectPanel.WIDTH;
@@ -100,4 +101,13 @@ public class ReviewPanel extends InfoPanel{
 			}
 		}
 	}
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        batch.setColor(Colours.brown_dark);
+        Draw.fillRectangle(batch, getX()- EventPanel.BORDER, getY()-EventPanel.BORDER, getWidth()+EventPanel.BORDER*2, getHeight()+EventPanel.BORDER*2);
+        batch.setColor(Colours.dark);
+        Draw.fillActor(batch,this);
+        super.draw(batch, parentAlpha);
+    }
 }

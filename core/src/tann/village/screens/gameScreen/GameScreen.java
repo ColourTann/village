@@ -25,6 +25,7 @@ import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.event.EventDebugPanel;
+import tann.village.gameplay.island.event.Outcome;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
@@ -139,7 +140,7 @@ public class GameScreen extends Screen{
             }
         });
         rollContainer.addActor(cButt);
-
+        showRollContainer(false);
 //        CrystalBall ball = CrystalBall.get();
 //        int gap = 40;
 //        ball.setPosition(getWidth() - ball.getWidth()-gap,getHeight()-ball.getHeight()-gap);
@@ -369,7 +370,9 @@ public class GameScreen extends Screen{
 		event.action();
 		center(eventPanel);
 		addActor(eventPanel);
-		addProceedButton(eventPanel);
+		if(event.outcomes.size==0) {
+            addProceedButton(eventPanel);
+        }
 		Village.getInventory().imposeLimits();
 	}
 
@@ -491,9 +494,14 @@ public class GameScreen extends Screen{
     public void addObjectivePanel(ObjectivePanel panel) {
         objectivePanel=panel;
 	    addActor(objectivePanel);
-//	    objectivePanel.setPosition(0, constructionButt.getHeight()/2+(Main.height-constructionButt.getHeight()/2)/2-objectivePanel.getHeight()/2);
         objectivePanel.setPosition(0, getHeight()/2-objectivePanel.getHeight()/2);
         objectivePanel.slideIn();
+    }
+
+    public void chooseOutcome(Outcome o) {
+        eventPanel.remove();
+        o.activate();
+        proceed();
     }
 	
 }

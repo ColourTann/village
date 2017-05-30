@@ -10,6 +10,7 @@ import tann.village.Images;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.island.event.Event;
+import tann.village.gameplay.island.event.Outcome;
 import tann.village.util.*;
 
 import java.util.ArrayList;
@@ -23,11 +24,11 @@ public class EventPanel extends Group{
 	public static final int WIDTH = 370;
 	private static final int items_per_row = 3;
 	private static final int GAP = 30;
-    private static final int BORDER = 10;
+    public static final int BORDER = 10;
 	Color border = Colours.grey;
 	public EventPanel(Event e, int dayNumber) {
 	    if(e.isStory()){
-	        border = Colours.brown_light;
+	        border = Colours.blue_dark;
         }
         int goodness = e.getGoodness();
 	    if(goodness==1) border = Colours.blue_light;
@@ -38,7 +39,7 @@ public class EventPanel extends Group{
 		this.e=e;
 		day = new TextBox("Event", Fonts.font, WIDTH-GAP, Align.center);
 		height += day.getHeight();
-		event = new TextBox(e.title, Fonts.fontBig, WIDTH-GAP, Align.center);
+		event = new TextBox(e.title, Fonts.fontBig, 99999, Align.center);
 		height += event.getHeight();
 		description = new TextBox(e.description, Fonts.fontSmall, WIDTH-GAP, Align.left);
 		height += description.getHeight();
@@ -75,8 +76,23 @@ public class EventPanel extends Group{
 			
 		}
 		l.row(1);
-		setSize(WIDTH, height + 80);
-		l.layoo();
+
+        if(e.outcomes.size>0){
+            l.gap(1);
+            for(int i=0;i<e.outcomes.size;i++){
+                Outcome o = e.outcomes.get(i);
+                l.actor(o.getPanel());
+                l.gap(1);
+            }
+            l.row(1);
+            TextBox tb = new TextBox("Choose One", Fonts.fontSmall, WIDTH, Align.center);
+            l.actor(tb);
+            l.row(1);
+        }
+
+
+        setSize(WIDTH + (e.outcomes.size>0?240:0), height + 80 + e.outcomes.size>0?300:0);
+        l.layoo();
 
 		if(e.fateDelta!=0) {
             SideFatePanel panel = new SideFatePanel(e.fateDelta);

@@ -82,10 +82,19 @@ public class EventCreator {
         make();
 
         //neutral//
-        title="Quiet day";
-        description="Nothing special";
+        description="labour";
+        e = new Effect(EffectType.Food, 1, ev);
+        e1= new Effect(EffectType.Wood, 1, ev);
+        addOutcome();
+        description = "conservative";
+        e = new Effect(EffectType.Wood, 1, ev);
+        e1= new Effect(EffectType.Food, 1, ev);
+        addOutcome();
+        title="Election day";
+        description="Choose wisely!";
         l =-12; r =12;
-        chance=0.2f;
+        chance=99990.2f;
+
         make();
 
         title="Clear skies";
@@ -198,7 +207,7 @@ public class EventCreator {
 
 	private static Array<Outcome> outcomes = new Array<>();
 
-	private void addOutcome(){
+	private static void addOutcome(){
         Array<Effect> fx = new Array<>();
         if(e!=null) fx.add(e);
         if(e1!=null) fx.add(e1);
@@ -228,7 +237,6 @@ public class EventCreator {
             printBadEvent("chance");
             return;
         }
-
         if(r<l) {
             printBadEvent("r<1");
             return;
@@ -240,7 +248,7 @@ public class EventCreator {
         Array<Effect> reqs = new Array<>();
         Array<Effect> fx = new Array<>();
         if(e!=null) fx.add(e);
-		if(e1!=null) fx.add(e1);
+        if(e1!=null) fx.add(e1);
 		if(e2!=null) fx.add(e2);
 		if(e3!=null) fx.add(e3);
 		if(e4!=null) fx.add(e4);

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Outcome {
-    Array<Effect> effects = new Array<>();
-    String description;
+    public Array<Effect> effects = new Array<>();
+    public String description;
 
     public Outcome(String description, Array<Effect> events) {
         this.effects = events;

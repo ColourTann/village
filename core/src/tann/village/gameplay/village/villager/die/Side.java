@@ -47,8 +47,10 @@ public class Side {
 
 	public static Side morale1 = make(Images.get("morale1"), EffectType.Morale, 1);
 	public static Side morale2 = make(Images.get("morale2"), EffectType.Morale, 2);
-	public static Side fate1= make(Images.get("fate1"), EffectType.Fate, 1);
-	public static Side fate2ForWoodAndFood= make(Images.get("fate2woodminus1foodminus1"), EffectType.Fate, 2, EffectType.Wood, -1, EffectType.Food, -1);
+    public static Side fate1= make(Images.get("fate1"), EffectType.Fate, 1);
+    public static Side fate2= make(Images.get("fate2"), EffectType.Fate, 2);
+    public static Side fate2ForWoodAndFood= make(Images.get("fate2woodminus1foodminus1"), EffectType.Fate, 2, EffectType.Wood, -1, EffectType.Food, -1);
+    public static Side gem1 = make(Images.get("emerald"), EffectType.Gem, 2, EffectType.Wood, -1, EffectType.Food, -1);
 	public static Side fateForWood= make(Images.get("fate1woodminus1"), EffectType.Fate, 1, EffectType.Wood, -1);
 	public static Side fateForFood= make(Images.get("fate1foodminus1"), EffectType.Fate, 1, EffectType.Food, -1);
 	

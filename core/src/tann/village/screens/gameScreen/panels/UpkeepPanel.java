@@ -22,7 +22,7 @@ public class UpkeepPanel extends InfoPanel{
 
 
 	public UpkeepPanel() {
-		setBackground(Colours.brown_dark);
+		setBackground(Colours.brown_light);
 		build(new ArrayList<>());
 	}
 	

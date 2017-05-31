@@ -82,18 +82,10 @@ public class EventCreator {
         make();
 
         //neutral//
-        description="labour";
-        e = new Effect(EffectType.Food, 1, ev);
-        e1= new Effect(EffectType.Wood, 1, ev);
-        addOutcome();
-        description = "conservative";
-        e = new Effect(EffectType.Wood, 1, ev);
-        e1= new Effect(EffectType.Food, 1, ev);
-        addOutcome();
-        title="Election day";
-        description="Choose wisely!";
+        title="Quiet day";
+        description="Thankfully uneventful";
         l =-12; r =12;
-        chance=99990.2f;
+        chance=0.2f;
 
         make();
 

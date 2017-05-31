@@ -28,7 +28,7 @@ public class ClassPanel extends Group{
 	public ClassPanel(VillagerType type, Villager villager, float WIDTH, boolean pickable) {
 	    d = new Die(type, villager);
 		TextBox className = new TextBox(type.toString(), Fonts.fontSmall, WIDTH-BORDER*2, Align.center);
-        setSize(WIDTH, 200);
+        setSize(WIDTH, 220);
 
 
         float leftSize = WIDTH/5*3;
@@ -44,6 +44,9 @@ public class ClassPanel extends Group{
 		Layoo l = new Layoo(this);
 		l.row(1);
 		l.actor(className);
+		l.row(1);
+		TextBox classDescription = new TextBox(type.description, Fonts.fontSmall, WIDTH, Align.center);
+		l.actor(classDescription);
 		l.row(1);
 		l.add(1,panel,1,rightGroup,1);
         l.row(1);

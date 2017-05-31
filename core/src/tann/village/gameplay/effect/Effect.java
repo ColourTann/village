@@ -21,7 +21,8 @@ public class Effect {
         Fate(Images.fate),
         Brain(Images.brain),
         Reroll(Images.roll),
-		BuildTown(Images.village);
+		BuildTown(Images.village),
+        Gem(Images.gem);
 
 		public TextureRegion region;
 		boolean special;

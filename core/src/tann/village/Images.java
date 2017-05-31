@@ -20,7 +20,9 @@ public class Images {
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
     public static final TextureRegion tick = Main.atlas.findRegion("tick");
     public static final TextureRegion hammer = Main.atlas.findRegion("hammer");
+    public static final TextureRegion gem = Main.atlas.findRegion("resource/gem");
     public static final Texture ball = new Texture(Gdx.files.internal("ball.png"));
+
     {
         ball.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }

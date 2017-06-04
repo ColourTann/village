@@ -3,7 +3,6 @@ package tann.village;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,7 +20,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.island.islands.Island;
-import tann.village.gameplay.island.islands.TutorialIsland;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.mapScreen.MapScreen;
@@ -94,8 +92,8 @@ public class Main extends ApplicationAdapter {
 		logTime("bits");
 		BulletStuff.init();
 		logTime("bullet");
-		self.travelTo(new TutorialIsland(null,0,9));
-//		setScreen(MapScreen.get());
+//		self.travelTo(new TutorialIsland(null,0,9));
+		setScreen(MapScreen.get());
 		logTime("screen");
 	}
 
@@ -138,12 +136,16 @@ public class Main extends ApplicationAdapter {
 			break;
 
 		}
-        if(previousScreen!=null)previousScreen.addAction(Actions.after(Actions.removeActor()));
+        if(previousScreen!=null){
+		    previousScreen.removeFromScreen();
+		    previousScreen.addAction(Actions.after(Actions.removeActor()));
+        }
 	}
 
 	public void setScreen(Screen screen) {
 		if (previousScreen != null) {
 			previousScreen.clearActions();
+			previousScreen.removeFromScreen();
 			previousScreen.remove();
 		}
 		if (currentScreen != null) {
@@ -228,6 +230,7 @@ public class Main extends ApplicationAdapter {
 	    BulletStuff.reset();
 		island.setup();
 		Village.get().setup();
+		GameScreen.reset();
 		GameScreen.get().init(island, Village.get());
 		setScreen(GameScreen.get(), TransitionType.LEFT, Interpolation.pow2Out, .5f);
 	}

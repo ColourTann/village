@@ -32,9 +32,6 @@ public class MapScreen extends Screen{
 		for(Island i:map.islands){
 			addActor(i.getActor());
 		}
-        EventDebugPanel edp = new EventDebugPanel(EventCreator.getEvents(EventCreator.EventType.Tutorial));
-        edp.setPosition(getWidth()/2-edp.getWidth()/2, getHeight()/2-edp.getHeight()/2);
-        addActor(edp);
 	}
 	
 	@Override
@@ -47,30 +44,6 @@ public class MapScreen extends Screen{
 	int size = 200;
 	@Override
 	public void postDraw(Batch batch) {
-		batch.end();
-		buff.bind();
-		buff.begin();
-		batch.begin();
-		batch.enableBlending();
-		batch.setBlendFunction(Gdx.gl20.GL_SRC_ALPHA, Gdx.gl20.GL_ZERO);
-		batch.setColor(Colours.dark);
-		Draw.fillRectangle(batch, 0, 0, Main.width, Main.height);
-		
-		for(Island i:map.islands){
-			i.getActor().drawMask(batch);
-		}
-//		batch.draw(Images.mask, Gdx.input.getX()-size/2, Gdx.input.getY()-size/2, size, size);
-		
-		batch.end();
-		buff.end();
-		
-		batch.setBlendFunction(Gdx.gl20.GL_SRC_ALPHA, Gdx.gl20.GL_ONE_MINUS_SRC_ALPHA);
-		
-		batch.begin();
-		
-		
-		
-		Draw.draw(batch,buff.getColorBufferTexture(),0,0);
 	}
 
 	@Override

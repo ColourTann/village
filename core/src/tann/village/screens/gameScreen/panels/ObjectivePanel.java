@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 
+import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.island.objective.Objective;
@@ -17,35 +18,37 @@ import tann.village.util.*;
 public class ObjectivePanel extends Group{
 	
 
-	int WIDTH = 100, HEIGHT = 200;
+	int WIDTH = 100, HEIGHT = 60, OBJHEIGHT= 140;
 	
-	Objective obj;
-	public ObjectivePanel(Objective obj) {
+	Array<Objective> objectives = new Array<>();
+	public ObjectivePanel() {
 		setSize(WIDTH, HEIGHT);
-		this.obj=obj;
         refresh();
 	}
 
 	public void addObject(Objective obj){
-	    this.obj=obj;
+	    objectives.add(obj);
+        setSize(WIDTH, HEIGHT + OBJHEIGHT *objectives.size);
 	    refresh();
     }
 
 	public void refresh(){
-		clear();
+	    clearChildren();
 		Layoo l = new Layoo(this);
 
 		TextBox title  = new TextBox("Objective", Fonts.fontSmall, WIDTH, Align.center);
-
-        TextBox objText = new TextBox(obj.getTitleString(), Fonts.fontSmall, WIDTH, Align.center);
-        TextBox progress = new TextBox(obj.getProgressString(), Fonts.fontSmall, WIDTH, Align.center);
-
         l.row(1);
         l.actor(title);
-        l.row(1);
-        l.actor(objText);
-        l.row(1);
-        l.actor(progress);
+
+		for(Objective obj:objectives){
+            TextBox objText = new TextBox(obj.getTitleString(), Fonts.fontSmall, WIDTH, Align.center);
+            TextBox progress = new TextBox(obj.getProgressString(), Fonts.fontSmall, WIDTH, Align.center);
+            l.row(1);
+            l.actor(objText);
+            l.row(1);
+            l.actor(progress);
+        }
+
         l.row(1);
 		l.layoo();
 	}
@@ -57,8 +60,4 @@ public class ObjectivePanel extends Group{
         super.draw(batch, parentAlpha);
     }
 
-    public void slideIn() {
-	    setPosition(getX()-getWidth(), getY());
-	    addAction(Actions.moveTo(0, getY(), .5f, Interpolation.pow2Out));
-    }
 }

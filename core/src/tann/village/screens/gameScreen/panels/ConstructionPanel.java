@@ -10,6 +10,7 @@ import tann.village.gameplay.island.BuildingGenerator;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.building.Building;
 import tann.village.gameplay.village.Inventory;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.util.*;
 
@@ -57,9 +58,9 @@ public class ConstructionPanel extends InfoPanel{
 				}
 			});
 		}
-		
+
 		resetAvailablePanels();
-		
+
 	}
 	
 	public void attemptToBuy(Building b){
@@ -78,7 +79,7 @@ public class ConstructionPanel extends InfoPanel{
 		int levelToGenerate = 0;
 		levelToGenerate = Math.min(1, levelToGenerate);
 		for(BuildingPanel bp:availables){
-			bp.setBuilding(BuildingGenerator.random(levelToGenerate));
+			bp.setBuilding(GameScreen.get().island.getRandomBuilding());
 		}
 	}
 

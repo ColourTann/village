@@ -31,10 +31,20 @@ public class Buff {
 
 
     public boolean expired() {
-        return turnsLeft <=0;
+        return turnsLeft ==0;
     }
 
     public void upkeep() {
-        turnsLeft--;
+        if (turnsLeft > 0) turnsLeft--;
+    }
+
+    public void process(Effect effect) {
+        switch(buffType){
+            case FoodBonus:
+                if(effect.source == Effect.EffectSource.Dice){
+                    effect.value = Math.max(0, effect.value + value);
+                }
+                break;
+        }
     }
 }

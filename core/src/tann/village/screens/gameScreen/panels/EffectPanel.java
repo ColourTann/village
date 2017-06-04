@@ -72,7 +72,7 @@ public class EffectPanel extends Group {
 				(getHeight() - imageGap * 2));
 		BitmapFont font = Fonts.font;
 
-		if (effect.type != EffectType.BuildTown) {
+		if (!effect.type.objective) {
 			float textStart = getHeight() - imageGap;
 			float textWidth = getWidth() - textStart - imageGap;
 			Color col = Colours.light;

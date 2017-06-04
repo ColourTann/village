@@ -14,10 +14,11 @@ public class InventoryPanel extends Group {
     public InventoryPanel(Inventory inventory){
         this.inventory = inventory;
         setSize(WIDTH, HEIGHT);
-        layout();
+        layout(false);
     }
 
-    public void layout(){
+    public void layout(boolean slide){
+        clearChildren();
         Layoo l = new Layoo(this);
         l.gap(2);
         for(int i=0;i<inventory.items.size;i++){
@@ -30,7 +31,7 @@ public class InventoryPanel extends Group {
         UpkeepPanel upkeepPanel = Village.get().getUpkeep().getPanel();
         l.actor(upkeepPanel);
         l.gap(1);
-        l.layoo();
+        l.layoo(slide);
     }
 
     @Override

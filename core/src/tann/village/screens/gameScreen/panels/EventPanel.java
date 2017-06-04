@@ -91,7 +91,7 @@ public class EventPanel extends Group{
         }
 
 
-        setSize(WIDTH + (e.outcomes.size>0?240:0), height + 80 + e.outcomes.size>0?300:0);
+        setSize(Math.max(WIDTH, event.getWidth()+30), height + 80 + e.outcomes.size>0?300:0);
         l.layoo();
 
 		if(e.fateDelta!=0) {

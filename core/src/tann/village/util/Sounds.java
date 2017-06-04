@@ -24,13 +24,19 @@ public class Sounds {
     public static String[] roll;
     public static String accept;
 
-    public static String eventPos;
-    public static String eventNeg;
-    public static String eventNeu;
+
+    public static String marimba_too_happy;
+    public static String marimba_happy;
+    public static String marimba_sad;
+    public static String marimba_dingdong;
+    public static String marimba_low_chords;
+    public static String marimba_single_high;
+
 
     public static String[] eventPosBird;
     public static String[] eventNegBird;
     public static String[] eventNeuBird;
+
 
 
 
@@ -48,9 +54,13 @@ public class Sounds {
         roll = makeSounds("roll", 6);
         accept = makeSound("sfx/accept.wav", Sound.class);
 
-        eventPos = makeSound("sfx/positive.wav", Sound.class);
-        eventNeg = makeSound("sfx/negative.wav", Sound.class);
-        eventNeu = makeSound("sfx/neutral.wav", Sound.class);
+        marimba_too_happy = makeSound("sfx/marimba_too_happy.wav", Sound.class);
+        marimba_happy = makeSound("sfx/marimba_happy.wav", Sound.class);
+        marimba_sad = makeSound("sfx/marimba_sad.wav", Sound.class);
+        marimba_dingdong = makeSound("sfx/marimba_dingdong.wav", Sound.class);
+        marimba_low_chords = makeSound("sfx/marimba_low_chords.wav", Sound.class);
+        marimba_single_high = makeSound("sfx/marimba_single_high.wav", Sound.class);
+
 
         eventPosBird = makeSounds("positivebird", 6, ".wav");
         eventNegBird = makeSounds("negativebird", 3, ".wav");

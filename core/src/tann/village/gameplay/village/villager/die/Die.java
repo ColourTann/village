@@ -36,6 +36,7 @@ public class Die {
 	public Villager villager;
 	public VillagerType type;
 	public CollisionObject physical;
+	public TextureRegion lapel;
 	public Die(Villager villager) {
 		this.villager=villager;
 		setup(villager.type);
@@ -60,6 +61,8 @@ public class Die {
     boolean glowOverride;
 
 	public void setup(VillagerType type){
+	    this.type=type;
+        this.lapel = type.lapel;
 	    for(Side s:type.sides){
 	        addSide(s);
         }
@@ -187,7 +190,7 @@ public class Die {
 	
 	public boolean rerolling;
 	public void prepareToReroll(){
-		if(!isStopped()) return;
+        if(!isStopped()) return;
 		rerolling = !rerolling;
 		if(rerolling){
             Sounds.playSound(Sounds.shake,.3f,1);
@@ -312,18 +315,17 @@ public class Die {
 			texLocs[4*i+2] = s.tr[1].getRegionX()/width;
 			texLocs[4*i+3] = s.tr[1].getRegionY()/height;
 		}
-        TextureRegion lapel = Images.lapel;
-		if(villager!=null){
-            lapel =villager.lapel;
-        }
 		texLocs[24]=lapel.getRegionX()/width;
 		texLocs[25]=lapel.getRegionY()/height;
 		
 		return texLocs;
 	}
 
+	boolean disposed;
     public void dispose() {
-        BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
-        physical.dispose();
+        if(disposed) System.err.println("WARNING: TRYING TO DISPOSE DIE AGAIN");
+        disposed=true;
+        removeFromScreen();
+//        physical.dispose();
     }
 }

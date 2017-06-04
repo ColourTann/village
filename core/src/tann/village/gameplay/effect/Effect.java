@@ -21,14 +21,25 @@ public class Effect {
         Fate(Images.fate),
         Brain(Images.brain),
         Reroll(Images.roll),
-		BuildTown(Images.village),
-        Gem(Images.gem);
+        Gem(Images.gem),
+        Survive(Images.village, true),
+        BuildTown(Images.village, true),
+        FoodBonus(),
+        CollectGems(Images.village, true),
+        TimeLimit(Images.village, true);
 
-		public TextureRegion region;
+        public boolean objective;
+        public TextureRegion region;
 		boolean special;
-		EffectType(TextureRegion region){
-			this.region=region;
-		}
+        EffectType(){
+            this.region=Images.dotdotdot;
+        }
+        EffectType(TextureRegion region){
+            this.region=region;
+        }
+        EffectType(TextureRegion region, boolean objective){
+            this.region=region; this.objective=objective;
+        }
 		EffectType(TextureRegion region, String extraText){
 			this.region=region;
 			this.special=true;
@@ -46,8 +57,12 @@ public class Effect {
 	public int duration;
 	public Die sourceDie;
 
-	public Effect(EffectType type, int value, EffectSource source, Die sourceDie, int duration){
-	    this.type=type; this.value=value; this.source=source; this.sourceDie=sourceDie; this.duration = duration;
+    public Effect(EffectType type, int value, EffectSource source, Die sourceDie, int duration){
+        this.type=type; this.value=value; this.source=source; this.sourceDie=sourceDie; this.duration = duration;
+    }
+
+    public Effect(EffectType type, int value, EffectSource source, int duration){
+       this(type, value, source, null, duration);
     }
 
 	public Effect(EffectType type, int value, EffectSource source, Die sourceDie){
@@ -67,28 +82,31 @@ public class Effect {
 	}
 
 	public void activate(){
-		switch(type){
-		case FoodStorage:
-			Village.getInventory().get(EffectType.Food).addMax(value);
-			return;
-        case BuildTown:
-            GameScreen.get().island.addObjective(this);
-			return;
-		case Brain:
-			sourceDie.villager.gainXP(value*2);
-			break;
-        case Reroll:
-            Village.get().addBuff(this);
-		}
-		GameScreen.get().addEffect(this);
+        Effect e = this.copy();
+        e.internalActivate();
 	}
+
+	private void internalActivate(){
+        switch(type){
+            case FoodStorage:
+                Village.getInventory().get(EffectType.Food).addMax(value);
+                return;
+            case Brain:
+                sourceDie.villager.gainXP(value);
+                break;
+            case Reroll:
+            case FoodBonus:
+                Village.get().addBuff(this);
+        }
+        GameScreen.get().addEffect(this);
+    }
 
 	public String toString(){
 		return type +": "+value+" from "+source; 
 	}
 	
 	public Effect copy(){
-		Effect result = new Effect(type, value, source);
+		Effect result = new Effect(type, value, source, sourceDie);
 		return result;
 	}
 

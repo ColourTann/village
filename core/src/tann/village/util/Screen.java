@@ -84,4 +84,6 @@ public abstract class Screen extends Group{
 	public void setActive(boolean active) {
 		this.active=active;
 	}
+
+	public void removeFromScreen(){}
 }

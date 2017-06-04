@@ -28,7 +28,7 @@ public class Upkeep {
         }
         if(!added) effects.add(effect);
         updatePanel();
-        Village.getInventory().getGroup().layout();
+        Village.getInventory().getGroup().layout(false);
     }
 
     public void reset(){

@@ -1,30 +1,45 @@
 package tann.village.gameplay.island.objective;
 
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.ObjectivePanel;
+import tann.village.util.Sounds;
 
 public abstract class Objective {
 
 
+    public String getVictoryText(){
+        return "You win!";
+    };
 
+    public abstract boolean isDeath();
 
-    public enum ObjectiveEffect{Building};
+    public enum ObjectiveEffect{Building, Turn, Gem};
     int current, required;
 
     private ObjectivePanel panel;
-
-    public ObjectivePanel getPanel(){
-        if(panel==null){
-            panel = new ObjectivePanel(this);
-        }
-        return panel;
-    }
 
     protected String getDefaultProgressString() {
         return current+"/"+required;
     }
 
     public abstract void init();
-    public abstract void objectiveProgress(ObjectiveEffect type, int amount);
+    public void objectiveProgress(ObjectiveEffect type, int amount){
+        internalObjectiveProgress(type, amount);
+        if(isComplete()){
+            complete();
+        }
+        GameScreen.get().objectivePanel.refresh();
+    }
+
+    public void complete(){
+        GameScreen.get().win();
+        Sounds.playSound(Sounds.marimba_too_happy,1,1);
+    }
+
+    protected abstract void internalObjectiveProgress(ObjectiveEffect type, int amount);
     public abstract String getTitleString();
     public abstract String getProgressString();
+    public boolean isComplete(){
+        return current >= required;
+    }
 }

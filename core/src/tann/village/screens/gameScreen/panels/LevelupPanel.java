@@ -12,11 +12,7 @@ import tann.village.gameplay.village.villager.Villager.VillagerType;
 import tann.village.gameplay.village.villager.die.*;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
-import tann.village.util.Colours;
-import tann.village.util.Draw;
-import tann.village.util.Fonts;
-import tann.village.util.Layoo;
-import tann.village.util.TextBox;
+import tann.village.util.*;
 
 public class LevelupPanel extends InfoPanel{
 	
@@ -57,7 +53,8 @@ public class LevelupPanel extends InfoPanel{
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 					villager.setDie(new Die(type));
 					removeThis();
-					return super.touchDown(event, x, y, pointer, button);
+                    Sounds.playSound(Sounds.marimba_single_high,1,1);
+                    return super.touchDown(event, x, y, pointer, button);
 				}
 			});
             mainLayoo.gap(1);

@@ -16,6 +16,7 @@ public class Inventory{
 	InventoryItem wood;
 	InventoryItem morale;
 	InventoryItem fate;
+	InventoryItem gems;
 
 
 	public Array<InventoryItem> items = new Array<>();
@@ -58,6 +59,13 @@ public class Inventory{
 	}
 	
 	private void internalActivate(Effect effect, boolean inverse){
+	    if(effect.type == EffectType.Gem){
+	        if(gems == null){
+	            gems = new InventoryItem(Images.gem);
+	            items.insert(0,gems);
+	            getGroup().layout(true);
+            }
+        }
 		int value = effect.value*(inverse?-1:1);
 		InventoryItem item = get(effect.type);
         if(item!=null) item.changeValue(value);
@@ -77,6 +85,9 @@ public class Inventory{
 			return wood;
 		case Fate:
 			return fate;
+        case Gem:
+            return gems;
+
 		}
 		return null;
 	}
@@ -100,6 +111,9 @@ public class Inventory{
 	}
 
 	public int getResourceAmount(EffectType resourceType){
+	    if(resourceType==EffectType.Gem && gems == null){
+	        return 0;
+        }
 		return get(resourceType).getValue();
 	}
 
@@ -119,4 +133,15 @@ public class Inventory{
 		return get(e).canChangeBy(e.value);
 	}
 
+    public void showWisps() {
+	    for(InventoryItem ii: items){
+	        ii.getPanel().wisp();
+        }
+    }
+
+    public void resetWisps() {
+        for(InventoryItem ii: items){
+            ii.getPanel().clearWisp();
+        }
+    }
 }

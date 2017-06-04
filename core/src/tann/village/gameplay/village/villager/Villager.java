@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectType;
@@ -19,19 +20,31 @@ import tann.village.util.Colours;
 public class Villager {
 
 	public static final int MAX_LEVEL = 2;
+    public static Array<VillagerType> basicVillagerTypes = new Array<>(new VillagerType[]{
+            VillagerType.Villager,
+            VillagerType.Fisher,
+            VillagerType.SongKeeper,
+            VillagerType.Mystic,
+            VillagerType.Gatherer,
+            VillagerType.Chopper,
+            VillagerType.Farmer,
+            VillagerType.Leader,
+            VillagerType.FateWeaver,
+            VillagerType.Explorer,
+            VillagerType.Builder
+    });
 
-	Color col;
+    Color col;
 	public String firstName, lastName;
-	public int xp, xpToLevelUp = 1;
+	public int xp, xpToLevelUp = 3;
 	public VillagerType type;
 	public Die die;
-	public TextureRegion lapel;
+
 	private static final Color[] colours = new Color[]{(Colours.blue_light), (Colours.fate_light), (Colours.green_light), (Colours.brown_light), (Colours.red)};
 	
 	public Villager(int index) {
 		this.type=VillagerType.Villager;
 //		this.type=VillagerType.values()[(int)(Math.random()*VillagerType.values().length)];
-		this.lapel = Images.lapel;
 		setupDie();
 		firstName=generateName(true);
 		lastName=generateName(false);
@@ -45,7 +58,8 @@ public class Villager {
 		this.die=die;
 		this.die.villager=this;
 		this.type=die.type;
-		xpToLevelUp = (type.level+1)*10;
+		xpToLevelUp = (type.level+3);
+
 	}
 	
 	private void setupDie() {
@@ -85,43 +99,32 @@ public class Villager {
 		return col;
 	}
 
-	public static VillagerType[] getRandomVillagerTypes(int level, int amount){
-		VillagerType[] results = new VillagerType[amount];
-		List<VillagerType> availables = new ArrayList<>();
-		for(VillagerType t:VillagerType.values()){
-			if(t.level==level){
-				availables.add(t);
-			}
-		}
-		if(availables.size()<amount) return null;
-		Collections.shuffle(availables);
-		for(int i=0;i<amount;i++){
-			results[i]=availables.remove(0);
-		}
-		return results;
-	}
+
 	
 	public enum VillagerType{
-		Villager(0,"no description maybe?",                     Side.food1, Side.food1, Side.wood1, Side.wood1, Side.brain, Side.skull),
+		Villager(0,"no description maybe?",                     Images.lapel,    Side.food1, Side.food1, Side.wood1, Side.wood1, Side.brain, Side.skull),
         // 1
-		Fisher(1, "Catch lots of fish!.. on a good day",        Side.food3, Side.food2, Side.food1, Side.brain, Side.skull, Side.skull),
-        SonngKeeper(1, "Remember the ancients",                 Side.morale1, Side.morale1, Side.food1, Side.food1, Side.wood1, Side.brain),
-        Mystic(1, "Rituals of the stone",                       Side.fate1, Side.fate1, Side.food1, Side.brain, Side.skull, Side.brain),
-        Gatherer(1, "Be careful whilst foraging!",              Side.food2, Side.wood2, Side.food2, Side.food1, Side.skull, Side.brain),
-        Chopper(1, "Tok tok tok",                               Side.wood2, Side.wood2, Side.wood1, Side.wood1, Side.food1, Side.brain),
+		Fisher(1, "Catch lots of fish!.. on a good day",        Images.lapel1,   Side.food3, Side.food2, Side.food1, Side.brain, Side.skull, Side.skull),
+        SongKeeper(1, "Remember the ancients",                  Images.lapel1,   Side.morale1, Side.morale1, Side.food1, Side.food1, Side.wood1, Side.brain),
+        Mystic(1, "Rituals of the stone",                       Images.lapel1,   Side.fate1, Side.fate1, Side.food1, Side.brain, Side.skull, Side.brain),
+        Gatherer(1, "Be careful whilst foraging!",              Images.lapel1,   Side.food2, Side.wood2, Side.food2, Side.food1, Side.skull, Side.brain),
+        Chopper(1, "Tok tok tok",                               Images.lapel1,   Side.wood2, Side.wood2, Side.wood1, Side.wood1, Side.food1, Side.brain),
         // 2
-		Farmer(2, "Grow crops to keep the village fed",         Side.food3, Side.food3, Side.food2, Side.wood2, Side.food1, Side.brain),
-        Leader(2, "Strong leader listens to all",               Side.morale2, Side.morale1, Side.morale1, Side.wood2, Side.brain, Side.brain),
-        FateWeaver(2, "Appease the gods for a better future",   Side.fate2, Side.fate2, Side.fate1, Side.skull, Side.skull, Side.brain),
-        Explorer(2, "Search the island for opportunity!",       Side.fate1, Side.morale1, Side.wood2, Side.food2, Side.food3, Side.brain),
-        Builder(2, "Construct a strong village",                Side.wood3, Side.wood3, Side.wood2, Side.wood2, Side.wood1, Side.brain);
+		Farmer(2, "Grow crops to keep the village fed",         Images.lapel2,   Side.food3, Side.food3, Side.food2, Side.wood2, Side.food1, Side.brain),
+        Leader(2, "Strong leader listens to all",               Images.lapel2,   Side.morale2, Side.morale1, Side.morale1, Side.wood2, Side.brain, Side.brain),
+        FateWeaver(2, "Appease the gods for a better future",   Images.lapel2,   Side.fate2, Side.fate2, Side.fate1, Side.skull, Side.skull, Side.brain),
+        Explorer(2, "Search the island for opportunity!",       Images.lapel2,   Side.fate1, Side.morale1, Side.wood2, Side.food2, Side.food3, Side.brain),
+        Builder(2, "Construct a strong village",                Images.lapel2,   Side.wood3, Side.wood3, Side.wood2, Side.wood2, Side.wood1, Side.brain);
 		public int level;
 		public String description;
 		public Side[] sides;
-		VillagerType(int level, String description, Side... sides){
+        public TextureRegion lapel;
+
+        VillagerType(int level, String description, TextureRegion lapel, Side... sides){
 		    if(sides.length!=6){
 		        System.err.println("side error making "+this);
             }
+            this.lapel = lapel;
 		    this.level=level;
             this.description=description;
             this.sides=sides;

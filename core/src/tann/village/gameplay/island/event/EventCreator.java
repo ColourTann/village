@@ -1,8 +1,6 @@
 package tann.village.gameplay.island.event;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.utils.Array;
@@ -13,7 +11,7 @@ import tann.village.gameplay.effect.Effect.EffectType;
 
 public class EventCreator {
 	public enum EventType{
-		Tutorial, Animals
+		Tutorial,
 	}
 	
 	private static Map<EventType, Array<Event>> eventMap = new HashMap<>();
@@ -23,8 +21,7 @@ public class EventCreator {
 		events = new Array<>();
 		
 		switch(type){
-			case Tutorial: makeTutorialEvents(); break;
-			case Animals: makeAnimalEvents(); break;
+			case Tutorial: makeBasicEvents(); break;
 		}
 		
 		eventMap.put(type, events);
@@ -41,7 +38,7 @@ public class EventCreator {
 	// story-only
     private static int turn;
 	
-	public static void makeTutorialEvents() {
+	public static void makeBasicEvents() {
         //great//
         title="Supply Crate";
         description="A crate from the ship washes ashore!";
@@ -93,7 +90,7 @@ public class EventCreator {
         description="Everyone wakes up with a clear head.";
         l =0; r =3;
         chance=1f;
-        e=new Effect(EffectType.Reroll, +1, ev);
+        e=new Effect(EffectType.Reroll, +1, ev, 1);
         make();
 
         //not ok//
@@ -120,7 +117,7 @@ public class EventCreator {
 
         //bad//
         title="Heatwave";
-        description="The heat is getting you down, your people need shelter!";
+        description="The sweltering heat is draining the village";
         e=new Effect(EffectType.Morale, -1, ev);
         l =-6; r =-2; fd =1;
         chance=1;
@@ -157,17 +154,17 @@ public class EventCreator {
         make();
 	}
 
-	public static void makeTutorialIslandEvents(){
+	public static void makeTutorialIslandStory(){
         turn=0;
-        title="Stranded!";
-        description="A sudden storm causes your ship to crash upon an island. It looks like there are only 5 survivors. You manage to salvage some supplies before they're carried away by the waves.";
+        title="Land ho!";
+        description="Your team has found land again, it looks like a perfect place to start a new village!";
         e = new Effect(EffectType.Food, 3, EffectSource.Event);
         e1 = new Effect(EffectType.Wood, 3, EffectSource.Event);
         makeStory();
 
         turn=4;
         title="Hunger";
-        description="The reduced rations you decided on are not enough keep you alive on the island. Upkeep increased by two.";
+        description="The village grows hungry. Upkeep increased by two.";
         e = new Effect(EffectType.Food, -2, EffectSource.Upkeep);
         makeStory();
 
@@ -185,17 +182,93 @@ public class EventCreator {
     }
 
     public static Array<Event> getEvents(){
-	    Array<Event> eventsToReturn = new Array<>();
-	    for(Event e:events){
-	        eventsToReturn.add(e);
-        }
-	    events.clear();
+	    Array<Event> eventsToReturn = events;
+	    events = new Array<Event>();
         return eventsToReturn;
     }
-	
-	private static void makeAnimalEvents() {
-		
-	}
+
+
+    public static void makeStormStory() {
+        turn=0;
+        title="A stormy beach";
+        description="This island chills you, good job you brought a lot of supplies.";
+        e = new Effect(EffectType.FoodStorage, 2, EffectSource.Event);
+        e2 = new Effect(EffectType.Food, 7, EffectSource.Event);
+        e3 = new Effect(EffectType.Wood, 5, EffectSource.Event);
+        makeStory();
+
+        turn=2;
+        title="Survive";
+        description="There's a storm on the way, you think that if you can weather the storm you will claim the island";
+        e = new Effect(EffectType.Survive, 20, EffectSource.Event);
+        makeStory();
+
+        turn=7;
+        title="Dark skies";
+        description="The weather takes a turn, you must be ready soon!";
+        e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
+        makeStory();
+
+        turn=9;
+        title="Storm";
+        description="The storm has hit you, it will be tough to survive this. Warning: All dice collect -1 food.";
+        e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
+        e1 = new Effect(EffectType.Wood, -1, EffectSource.Upkeep);
+        e2 = new Effect(EffectType.FoodBonus, -1, EffectSource.Event, -1);
+        makeStory();
+
+        turn=13;
+        title="Thunderstorm";
+        description="And then the rain started";
+        e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
+        e1 = new Effect(EffectType.Wood, -1, EffectSource.Upkeep);
+        makeStory();
+
+        turn=15;
+        title="Gap";
+        description="A gap in the clouds, finally! Dice collect normal food now!";
+        e = new Effect(EffectType.Food, +1, EffectSource.Upkeep);
+        e1 = new Effect(EffectType.Wood, +1, EffectSource.Upkeep);
+        e2 = new Effect(EffectType.FoodBonus, +1, EffectSource.Event);
+
+        turn=18;
+        title="Light";
+        description="The storm is clearing";
+        e = new Effect(EffectType.Food, +1, EffectSource.Upkeep);
+        e1 = new Effect(EffectType.Wood, +1, EffectSource.Upkeep);
+        makeStory();
+    }
+
+    public static void makeGemStory() {
+        turn=0;
+        title="Red Island";
+        description="The island faintly glows red, you are worried that it may erupt";
+        e2 = new Effect(EffectType.Food, 2, EffectSource.Event);
+        e3 = new Effect(EffectType.Wood, 200, EffectSource.Event);
+        makeStory();
+
+        turn=3;
+        title="Crimson Dreams";
+        description="The eldest villager wakes up from a dream. They tell of a great catastrophe unless 7 crisom gems are offered to the gods here.";
+        e = new Effect(EffectType.CollectGems, 7, EffectSource.Event);
+        e1= new Effect(EffectType.TimeLimit, 20, EffectSource.Event);
+        e2 = new Effect(EffectType.Gem, 1, ev);
+        makeStory();
+
+        turn=8;
+        title="Blood Skies";
+        description="The sky has turned deep red, the heat makes it hard to work. -1 permanent reroll";
+        e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
+        e = new Effect(EffectType.Reroll, -1, EffectSource.Upkeep, -1);
+        makeStory();
+
+        turn=15;
+        title="Maroon Sickness";
+        description="A sickness afflicts the village, you need to get the remaining gems fast";
+        e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
+        e1 = new Effect(EffectType.Wood, -1, EffectSource.Upkeep);
+        makeStory();
+    }
 
 	private static Array<Outcome> outcomes = new Array<>();
 

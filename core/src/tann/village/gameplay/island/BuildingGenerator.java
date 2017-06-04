@@ -15,125 +15,125 @@ import tann.village.gameplay.village.building.BuildingEffect.BuildingEffectType;
 
 public class BuildingGenerator {
 
-	public static Map<Integer, Array<Building>> buildings = new HashMap<>();
+	private static Array<Building> buildings = new Array<>();
 	private static String title, description;
 	private static BuildingEffect b1;
 	private static BuildingEffect b2;
 	private static int w,f,l;
-	public static void init(int level){
-		EffectSource b = EffectSource.Building;
-		buildings.put(level, new Array<Building>());
-		switch(level){
-		case 0:
-			l=0; // *********************level 0********************* //
-			title="Dock";
-			description="A short pier leading into the ocean";
-			w=8;
-			b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
-			make();
-			
-			title="Bonfire";
-			description="A big bonfire can really bring the community together";
-			w=4;
-			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 2, b)});
-			make();
-			
-			title="Offering";
-			description="If the gods exist, it's a good idea to get on their good side";
-			w=4;
-			f=2;
-			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 1, b)});
-			b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Fate, 2, b)});
-			make();
-			
-			title="Crate";
-			description="A little extra storage for food can help out when times are hard";
-			w=3;
-			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.FoodStorage, 2, b)});
-			make();
-			
-			title="Salvage Hut";
-			description="A place to sort through useful materials";
-			w=7;
-			b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, 1, b)});
-			make();
-			break;
-			
-		case 1:
-			l=1; // *********************level 1********************* //
-			title="Palm Grove";
-			description="A small grove for harvesting fast-growing trees";
-			w=8; f=3;
-			b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
-			b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, 1, b)});
-			make();
-			
-			title="Meeting Circle";
-			description="Your people can congregate here and have a chat!";
-			w=5;
-			b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Morale, 1, b)});
-			b2= new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, -1, b)});
-			make();
-			
-			title="Shrimp Traps";
-			description="An effective food source!";
-			w=8;
-			f=2;
-			b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 2, b)});
-			make();
-			
-			title="Larder";
-			description="Large storage area for food";
-			w=5;
-			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.FoodStorage, 6, b)});
-			make();
-			
-			title="Shrine";
-			description="An offering to the gods";
-			w=10;
-			b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Fate, 5, b)});
-			b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 1, b)});
-			make();
-			break;
-		}
-		
-		
-		
-		
-		//altar
-		
-		//shrine
-		
-		//treehouse
-		
-		//+3 fate when built 
-		//pay 2 food to skip event
-		
-		//+4 fate when built
-		//+1 fate per turn
-		
-		//now
-		//each turn
-		//permanent bonus
-		//ability or passive
-	}
-	
-	private static void make(){
+    private static EffectSource b = EffectSource.Building;
+	public static void makeBasicBuildings(){
+
+        l=0; // *********************level 0********************* //
+        title="Dock";
+        description="A short pier leading into the ocean";
+        w=8;
+        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
+        make();
+
+        title="Bonfire";
+        description="A big bonfire can really bring the community together";
+        w=4;
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 2, b)});
+        make();
+
+        title="Offering";
+        description="If the gods exist, it's a good idea to get on their good side";
+        w=4;
+        f=2;
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 1, b)});
+        b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Fate, 2, b)});
+        make();
+
+        title="Crate";
+        description="A little extra storage for food can help out when times are hard";
+        w=3;
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.FoodStorage, 2, b)});
+        make();
+
+        title="Salvage Hut";
+        description="A place to sort through useful materials";
+        w=7;
+        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, 1, b)});
+        make();
+
+        // *********************level 1********************* //
+
+        l=1;
+        title="Palm Grove";
+        description="A small grove for harvesting fast-growing trees";
+        w=13; f=3;
+        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
+        b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, 1, b)});
+        make();
+
+        title="Larder";
+        description="Large storage area for food";
+        w=5;
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.FoodStorage, 6, b)});
+        make();
+
+        title="Shrine";
+        description="An offering to the gods";
+        w=10;
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Fate, 4, b)});
+        b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 1, b)});
+        make();
+    }
+
+    public static void makeGemBuildings(){
+        title = "Excavation";
+        description = "";
+        w = 5;
+        f = 3;
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Gem, 1, b)});
+        b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, -1, b)});
+        make();
+
+        title = "Fountain";
+        description = "";
+        w = 15;
+        f = 5;
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Gem, 2, b)});
+        make();
+
+        title = "Excavation";
+        description = "";
+        w = 5;
+        f = 3;
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Gem, 1, b)});
+        b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, -1, b)});
+        make();
+
+        title = "Fountain";
+        description = "";
+        w = 15;
+        f = 5;
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Gem, 2, b)});
+        make();
+    }
+
+    private static void make(){
 		if(title==null||description==null||b1==null){
 			System.out.println("Something went wrong making "+title+":"+description);
 		}
 		Array<BuildingEffect> effects = new Array<>();
 		if(b1!=null)effects.add(b1);
 		if(b2!=null)effects.add(b2);
-		buildings.get(l).add(new Building(title, description, l, new Cost(w, f), effects));
+		buildings.add(new Building(title, description, l, new Cost(w, f), effects));
 		w=0; f=0;
 		title=null; description=null;
 		b1=null;
 		b2=null;
 	}
 
-	public static Building random(int level) {
-		if(buildings.get(level)==null || buildings.get(level).size==0) init(level);
-		return buildings.get(level).removeIndex((int)(Math.random()*buildings.get(level).size));
-	}
+	public static Array<Building> getBuildings(){
+        Array<Building> result = buildings;
+        buildings = new Array<Building>();
+        return result;
+    }
+
+//	public static Building random(int level) {
+//		if(buildings.get(level)==null || buildings.get(level).size==0) init(level);
+//		return buildings.get(level).removeIndex((int)(Math.random()*buildings.get(level).size));
+//	}
 }

@@ -20,7 +20,8 @@ public class Images {
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
     public static final TextureRegion tick = Main.atlas.findRegion("tick");
     public static final TextureRegion hammer = Main.atlas.findRegion("hammer");
-    public static final TextureRegion gem = Main.atlas.findRegion("resource/gem");
+    public static final TextureRegion gem = Main.atlas.findRegion("resource/emerald");
+    public static final TextureRegion dotdotdot = Main.atlas.findRegion("resource/special");
     public static final Texture ball = new Texture(Gdx.files.internal("ball.png"));
 
     {
@@ -31,7 +32,8 @@ public class Images {
 	// map stuff
 	public static final TextureRegion mask = Main.atlas.findRegion("mask");
 	public static final TextureRegion island0 = Main.atlas.findRegion("map/island0");
-	public static final TextureRegion island1 = Main.atlas.findRegion("map/island1");
+    public static final TextureRegion island1 = Main.atlas.findRegion("map/island1");
+    public static final TextureRegion island2 = Main.atlas.findRegion("map/island2");
 	
 	
 	//3d
@@ -57,8 +59,13 @@ public class Images {
 	public static final TextureRegion side_fateForFood = Main.atlas_3d.findRegion("dice/face/fate1foodminus1");
 	public static final TextureRegion side_fateForWood = Main.atlas_3d.findRegion("dice/face/fate1woodminus1");
 	public static final TextureRegion side_2fateForWoodAndFood = Main.atlas_3d.findRegion("dice/face/fate2woodminus1foodminus1");
-	
-	public static final TextureRegion lapel = Main.atlas_3d.findRegion("dice/lapel/c");
+
+    public static final TextureRegion lapel = Main.atlas_3d.findRegion("dice/lapel/0");
+    public static final TextureRegion lapel1 = Main.atlas_3d.findRegion("dice/lapel/1");
+    public static final TextureRegion lapel2 = Main.atlas_3d.findRegion("dice/lapel/2");
+    public static final TextureRegion lapel3 = Main.atlas_3d.findRegion("dice/lapel/3");
+    public static final TextureRegion lapel4 = Main.atlas_3d.findRegion("dice/lapel/4");
+    public static final TextureRegion lapel5 = Main.atlas_3d.findRegion("dice/lapel/5");
 	
 	private static Map<String, TextureRegion[]> threeDTextures = new HashMap<>();
 	private static TextureRegion[] makeFace(String name){

@@ -37,23 +37,27 @@ public class InventoryItemPanel extends Group{
 		setup();
 	}
 	
-	int wispAmount=0;
+	int prevAmount=0;
+
 	public void clearWisp(){
-		wispAmount=0;
+		prevAmount=value;
 	}
-	
+
+	TextWisp tWisp;
 	public void wisp(){
-		if(wispAmount==0)return;
-		TextWisp tWisp = new TextWisp((wispAmount>0?"+":"")+wispAmount, getWidth()/2, getHeight()+Fonts.font.getCapHeight());
-		if(wispAmount<0){
+
+        int diff = value-prevAmount;
+		if(diff==0)return;
+		tWisp = new TextWisp((diff>0?"+":"")+diff,  getWidth()/2, 0);
+        if(diff<0){
 			tWisp.setColor(Colours.red);
 		}
 		addActor(tWisp);
+		clearWisp();
 	}
 	
 	public void changeValue(int delta){
 		this.value+=delta;
-		wispAmount+=delta;
 		setup();
 	}
 	
@@ -65,13 +69,14 @@ public class InventoryItemPanel extends Group{
 	TextBox outOf;
 	ImageActor imageActor;
 	private void setup(){
-		clear();
+        clearChildren();
 		Color col = null;
         if(tr== Images.fate){
              col = (getValue()>0?Colours.blue_light:getValue()<0?Colours.red:Colours.grey);
         }
 		if(amount==null)amount = new TextBox(String.valueOf(getValue()), Fonts.font, WIDTH, Align.center);
 		if(outOf==null) outOf = new TextBox(max!=Integer.MAX_VALUE?"/"+max:"", Fonts.fontSmall, WIDTH, Align.center);
+		outOf.setup(max!=Integer.MAX_VALUE?"/"+max:"");
         amount.setup(String.valueOf(getValue()));
         outOf.setTextColour(Colours.brown_light);
         Layoo l = new Layoo(this);
@@ -82,15 +87,17 @@ public class InventoryItemPanel extends Group{
             imageActor.setColor(col);
         }
         l.layoo();
-
+        if(tWisp!=null){
+            addActor(tWisp);
+        }
 	}
-	
+
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(Colours.dark);
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 		batch.setColor(Colours.z_white);
-		super.draw(batch, parentAlpha);
+        super.draw(batch, parentAlpha);
 	}
 
 	public void maxOut() {

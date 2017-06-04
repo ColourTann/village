@@ -50,7 +50,8 @@ public class Event {
     }
 
 	public void action() {
-		GameScreen.get().refreshPanels();
+		GameScreen.get().resetWisps();
+		new Effect(EffectType.Fate, fateDelta, EffectSource.Event).activate();
 		for(Effect e:effects){
 			if(e.source==EffectSource.Upkeep) GameScreen.get().increaseUpkeepEffect(e);
 			else e.activate();

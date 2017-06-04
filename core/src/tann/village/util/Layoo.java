@@ -3,8 +3,10 @@ package tann.village.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class Layoo {
 	private Group parent;
@@ -66,9 +68,13 @@ public class Layoo {
 	public void add(float gap1, Actor a1, float gap2, Actor a2, float gap3, Actor a3, float gap4){
 		gap(gap1); actor(a1); gap(gap2); actor(a2); gap(gap3); actor(a3); gap(gap4);
 	}
-	
-	public void layoo(){
-		if(currentRow!=null){
+
+    public void layoo(){
+	    layoo(false);
+    }
+
+	public void layoo(boolean slide){
+        if(currentRow!=null){
 			actuallyAColumn.add(currentRow);
 		}
 		actuallyAColumn.add(Row.INITIAL_GAP);
@@ -99,7 +105,7 @@ public class Layoo {
 		}
 		//tell rows to lay themselves out
 		for(Element e:actuallyAColumn.elements){
-			if(e.r!=null) e.r.layoo();
+			if(e.r!=null) e.r.layoo(slide);
 		}
 	}
 
@@ -139,7 +145,7 @@ public class Layoo {
 			this.y=y;
 		}
 		
-		public void layoo() {
+		public void layoo(boolean slide) {
 			add(INITIAL_GAP);
 			float totalWidth=0;
 			float totalGap=0;
@@ -157,7 +163,14 @@ public class Layoo {
 					currentX+=e.gap*gapFactor;
 				}
 				if(e.a!=null) {
-					e.a.setPosition(currentX, y+getHeight()/2-e.a.getHeight()/2);
+				    float newX = currentX;
+				    float newY = y+getHeight()/2-e.a.getHeight()/2;
+				    if(slide){
+				        e.a.addAction(Actions.moveTo(newX, newY, .5f, Interpolation.pow2Out));
+                    }
+                    else{
+                        e.a.setPosition(newX, newY);
+                    }
 					currentX += e.a.getWidth();
 				}
 				if(e.absGap!=0){

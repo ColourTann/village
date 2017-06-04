@@ -129,7 +129,7 @@ public class BulletStuff {
 	public static void render() {
 		camController.update();
 	    modelBatch.begin(cam);
-	    modelBatch.render(instances, shader);
+        modelBatch.render(instances, shader);
 	    modelBatch.end();
 //	    modelBatch.render(walls);
 	}
@@ -215,8 +215,10 @@ public class BulletStuff {
     }
 
 	public static boolean isFinishedRolling(){
-		for (Die d : BulletStuff.dice) {
-			if (!d.isStopped()) return false;
+        for (Die d : BulletStuff.dice) {
+			if (!d.isStopped()){
+			    return false;
+            }
 		}
 		return true;
 	}

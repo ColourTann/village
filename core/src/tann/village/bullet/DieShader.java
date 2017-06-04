@@ -25,7 +25,6 @@ public class DieShader implements Shader{
 	int[] v_faces = new int[26];
 	@Override
 	public void init() {
-        System.out.println("init");
         if(program==null) {
             String vert = Gdx.files.internal("shader/vertex.glsl").readString();
             String frag = Gdx.files.internal("shader/fragment.glsl").readString();

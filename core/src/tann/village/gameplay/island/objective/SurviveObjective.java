@@ -1,13 +1,9 @@
 package tann.village.gameplay.island.objective;
 
-import tann.village.gameplay.village.Village;
-import tann.village.screens.gameScreen.GameScreen;
 
-public class BuildingObjective extends Objective{
-
-
-    public BuildingObjective(int numBuildings) {
-        this.required = numBuildings;
+public class SurviveObjective extends Objective {
+    public SurviveObjective(int numTurns) {
+        this.required=numTurns;
     }
 
     @Override
@@ -17,24 +13,23 @@ public class BuildingObjective extends Objective{
 
     @Override
     public void init() {
-        this.current = Village.get().getNumBuildings();
+
     }
 
     @Override
     public void internalObjectiveProgress(ObjectiveEffect type, int amount) {
-        if(type==ObjectiveEffect.Building){
+        if(type == ObjectiveEffect.Turn){
             this.current += amount;
         }
     }
 
     @Override
     public String getTitleString() {
-        return "Build "+required+" buildings";
+        return "Survive "+required+" turns";
     }
 
     @Override
     public String getProgressString() {
         return getDefaultProgressString();
     }
-
 }

@@ -23,7 +23,7 @@ public class TextWisp extends Actor{
 		this.c=c;
 	}
 	
-	static float speed=16;
+	static float speed=0;
 	@Override
 	public void act(float delta) {
 		setY(getY()+delta*speed);
@@ -35,7 +35,12 @@ public class TextWisp extends Actor{
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		Fonts.font.setColor(c.r, c.g, c.b, duration/initialDuration);
+	    float alp = duration/initialDuration;
+	    alp = 1- (1-alp)*(1-alp)*(1-alp)*(1-alp);
+
+//        batch.setColor(Colours.withAlpha(Colours.dark, alp));
+//        Draw.fillRectangle(batch,getX()-100,getY()-100,200,200);
+		Fonts.font.setColor(c.r, c.g, c.b, alp);
 		Fonts.font.draw(batch, text, getX(), getY(), 0, Align.center, false);
 	}
 	

@@ -1,25 +1,20 @@
 package tann.village.gameplay.island.islands;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-import tann.village.Images;
 import tann.village.gameplay.effect.Effect;
-import tann.village.gameplay.effect.Effect.EffectSource;
-import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.gameplay.island.event.Event;
-import tann.village.gameplay.island.objective.BuildingObjective;
-import tann.village.gameplay.island.objective.Objective;
-import tann.village.gameplay.village.building.BuildingEffect;
+import tann.village.gameplay.island.objective.*;
+import tann.village.gameplay.village.building.Building;
+import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.util.Colours;
-import tann.village.util.Draw;
+import tann.village.gameplay.island.objective.Objective.ObjectiveEffect;
 
 public abstract class Island {
 
@@ -27,7 +22,10 @@ public abstract class Island {
 	public boolean explored;
 	TextureRegion tr;
 	int x,y;
-	
+
+	protected Array<Villager.VillagerType> availablesVillagerTypes = new Array<>();
+    protected Array<Building> availableBuildings = new Array<>();
+
 	public Island(TextureRegion tr, int x, int y){
 		this.tr=tr;
 		this.x=x; this.y=y;
@@ -77,16 +75,20 @@ public abstract class Island {
 	private static Array<Event> validEvents = new Array<>();
 	private static Array<Event> randomEventsPool = new Array<>();
 	private static HashMap<Integer, Event> storyEvents = new HashMap<>();
-	
-	abstract void setupRandomPool();
-	abstract void setupStory();
-	
+
+    protected abstract void setupRandomPool();
+    protected abstract void setupStory();
+    protected abstract void setupClasses();
+    protected abstract void setupBuildings();
+
 	public void setup(){
 		validEvents.clear();
 		storyEvents.clear();
 		randomEventsPool.clear();
 		setupRandomPool();
 		setupStory();
+		setupBuildings();
+		setupClasses();
 	}
 	
 	public void addEvents(Array<Event> events, boolean story){
@@ -101,14 +103,70 @@ public abstract class Island {
 	}
 	
 
-    public Objective objective;
+    public Array<Objective> objectives = new Array<Objective>();
     public void addObjective(Effect effect){
+        Objective objective = null;
 	    switch (effect.type){
             case BuildTown:
                 objective = new BuildingObjective(effect.value);
                 break;
+            case CollectGems:
+                objective = new GemsObjective(effect.value);
+                break;
+            case TimeLimit:
+                objective = new TimeLimitObjective(effect.value);
+                break;
+            case Survive:
+                objective = new SurviveObjective(effect.value);
+                break;
         }
         objective.init();
-        GameScreen.get().addObjectivePanel(objective.getPanel());
+        GameScreen.get().addObjectiveToPanel(objective);
+        objectives.add(objective);
+    }
+
+    public void objectiveProgress(ObjectiveEffect type, int i) {
+        for(Objective o:objectives){
+            o.objectiveProgress(type, i);
+        }
+    }
+
+    public abstract String getVictoryText();
+
+    public Building getRandomBuilding() {
+        return availableBuildings.random();
+    }
+
+    public Villager.VillagerType[] getRandomVillagerTypes(int level, int amount){
+        Villager.VillagerType[] results = new Villager.VillagerType[amount];
+        List<Villager.VillagerType> availables = new ArrayList<>();
+        for(Villager.VillagerType t: availablesVillagerTypes){
+            if(t.level==level){
+                availables.add(t);
+            }
+        }
+        if(availables.size()<amount) return null;
+        Collections.shuffle(availables);
+        for(int i=0;i<amount;i++){
+            results[i]=availables.remove(0);
+        }
+        return results;
+    }
+
+    public enum ObjectiveOutcome{Success, Fail, Nothing}
+    public ObjectiveOutcome objectivesCompletes() {
+        if(objectives.size==0){
+            return ObjectiveOutcome.Nothing;
+        }
+        boolean complete = true;
+        for(Objective o:objectives){
+            if(o.isComplete() && o.isDeath()){
+               return ObjectiveOutcome.Fail;
+            }
+            if(!o.isComplete() && !o.isDeath()){
+                complete = false;
+            }
+        }
+        return complete?ObjectiveOutcome.Success:ObjectiveOutcome.Nothing;
     }
 }

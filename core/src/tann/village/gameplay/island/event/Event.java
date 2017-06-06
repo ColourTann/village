@@ -22,7 +22,9 @@ public class Event {
 	final int fateLeft, fateRight;
 	final boolean story;
 	public final int turn;
-	public Event (String title, String description, Array<Effect> effects, Array<Outcome> outcomes, Array<Effect> requirements, float chance, int fate, int variance, int fateDelta, boolean story, int turn){
+	public int uses;
+	public Event (String title, String description, Array<Effect> effects, Array<Outcome> outcomes, Array<Effect> requirements, float chance, int fate, int variance, int fateDelta, boolean story, int turn, int uses){
+	    this.uses=uses;
 	    this.turn=turn;
 	    this.requirements=requirements;
 	    this.effects=effects;
@@ -38,7 +40,7 @@ public class Event {
 	
 	public boolean isPotential() {
 		int currentFate = Village.getInventory().getResourceAmount(EffectType.Fate);
-		if(currentFate<fateLeft || currentFate > fateRight) return false;
+		if(currentFate<fateLeft || currentFate > fateRight || uses<=0) return false;
         for(Effect e: requirements){
             if(!Village.getInventory().isEffectValid(e)) return false;
         }
@@ -51,10 +53,10 @@ public class Event {
 
 	public void action() {
 		GameScreen.get().resetWisps();
-		new Effect(EffectType.Fate, fateDelta, EffectSource.Event).activate();
+		new Effect(EffectType.Fate, fateDelta, EffectSource.Event).activate(false);
 		for(Effect e:effects){
 			if(e.source==EffectSource.Upkeep) GameScreen.get().increaseUpkeepEffect(e);
-			else e.activate();
+			else e.activate(false);
 		}
 		GameScreen.get().showWisps();
 	}

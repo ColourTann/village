@@ -123,8 +123,9 @@ public class Inventory{
 		}
 	}
 
-	public void imposeFoodMinimum(){
+	public void imposeFoodAndWoodMinimum(){
 	    food.imposeMinimum();
+	    wood.imposeMinimum();
     }
 
 	

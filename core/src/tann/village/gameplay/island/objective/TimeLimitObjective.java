@@ -1,5 +1,6 @@
 package tann.village.gameplay.island.objective;
 
+import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.Sounds;
 
@@ -16,7 +17,7 @@ public class TimeLimitObjective extends Objective {
 
     @Override
     public void init() {
-
+            this.current = Village.get().getDayNum();
     }
 
     @Override

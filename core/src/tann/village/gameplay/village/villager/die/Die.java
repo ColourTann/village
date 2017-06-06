@@ -239,7 +239,7 @@ public class Die {
 	
 	public void activate() {
 		rerolling=false;
-		for(Effect e:sides.get(getSide()).effects) e.activate();
+		for(Effect e:sides.get(getSide()).effects) e.activate(true);
 	}
 
 	public void addToScreen() {

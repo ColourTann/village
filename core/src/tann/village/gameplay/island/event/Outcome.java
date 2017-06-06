@@ -18,7 +18,7 @@ public class Outcome {
 
     public void activate(){
         for(Effect e: effects){
-            e.activate();
+            e.activate(false);
         }
     }
 

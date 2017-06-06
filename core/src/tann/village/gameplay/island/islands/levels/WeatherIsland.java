@@ -14,6 +14,7 @@ public class WeatherIsland extends Island {
     @Override
     protected void setupRandomPool() {
         EventCreator.makeBasicEvents();
+        EventCreator.makeStormEvents();
         addEvents(EventCreator.getEvents(), false);
     }
 

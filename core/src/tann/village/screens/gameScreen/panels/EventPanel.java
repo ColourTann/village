@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
-import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
@@ -20,7 +19,7 @@ public class EventPanel extends Group{
 	
 	Event e;
 	int dayNumber;
-	TextBox day, event, description;
+	TextBox day, eventTitle, description;
 	public static final int WIDTH = 370;
 	private static final int items_per_row = 3;
 	private static final int GAP = 30;
@@ -39,14 +38,14 @@ public class EventPanel extends Group{
 		this.e=e;
 		day = new TextBox("Event", Fonts.font, WIDTH-GAP, Align.center);
 		height += day.getHeight();
-		event = new TextBox(e.title, Fonts.fontBig, 99999, Align.center);
-		height += event.getHeight();
+		eventTitle = new TextBox(e.title, Fonts.fontBig, 99999, Align.center);
+		height += eventTitle.getHeight();
 		description = new TextBox(e.description, Fonts.fontSmall, WIDTH-GAP, Align.left);
 		height += description.getHeight();
 		
 		Layoo l = new Layoo(this);
 		l.row(1);
-		l.actor(event);
+		l.actor(eventTitle);
 		l.row(1);
 		l.actor(description);
 		int count =0;
@@ -91,7 +90,13 @@ public class EventPanel extends Group{
         }
 
 
-        setSize(Math.max(WIDTH, event.getWidth()+30), height + 80 + e.outcomes.size>0?300:0);
+        float width = Math.max(WIDTH, eventTitle.getWidth()+30);
+        if(e.outcomes.size>0){
+            //TODO GC?
+            width = e.outcomes.get(0).getPanel().getWidth()*2 + GAP*3;
+        }
+
+        setSize(width, height + 80 + e.outcomes.size>0?300:0);
         l.layoo();
 
 		if(e.fateDelta!=0) {
@@ -113,8 +118,8 @@ public class EventPanel extends Group{
 	}
 
 	static class SideFatePanel extends Group{
-	    static final int gap = 10;
-	    static final int iconSize = 40;
+	    static final int gap = 5;
+	    static final int iconSize = 30;
         public SideFatePanel(int fateDelta) {
             setSize(iconSize + gap*2, gap + (1+ Math.abs(fateDelta)) * (gap+iconSize));
             TextBox tb = new TextBox(fateDelta>0?"+":"-", Fonts.fontBig, 50, Align.center);

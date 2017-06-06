@@ -19,7 +19,7 @@ public class Slider extends Actor{
 	
 	//preset sliders//
 	public static Slider SFX=  new Slider("sfx", .5f, Colours.light, Colours.dark);
-	public static Slider music=  new Slider("music", .5f, Colours.light, Colours.dark);
+	public static Slider music=  new Slider("ambience", .5f, Colours.light, Colours.dark);
 	static{
 		music.addSlideAction(new Runnable() {
 			

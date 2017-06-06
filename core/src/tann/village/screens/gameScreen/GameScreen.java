@@ -1,19 +1,15 @@
 package tann.village.screens.gameScreen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.Images;
@@ -31,9 +27,7 @@ import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
-import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.panels.*;
-import tann.village.gameplay.village.Inventory;
 import tann.village.screens.gameScreen.panels.review.LossPanel;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.screens.gameScreen.panels.review.StarvationPanel;
@@ -265,7 +259,7 @@ public class GameScreen extends Screen{
 			setState(State.Review);
 			break;
 		case Review:
-			if(Village.getInventory().getResourceAmount(EffectType.Food)<0 || Village.getInventory().getResourceAmount(EffectType.Food)<0){
+			if(Village.getInventory().getResourceAmount(EffectType.Food)<0 || Village.getInventory().getResourceAmount(EffectType.Wood)<0){
 				showStarvation();
 				break;
 			}
@@ -289,14 +283,13 @@ public class GameScreen extends Screen{
 	private void showStarvation() {
 		int food = Village.getInventory().getResourceAmount(EffectType.Food);
 		int wood = Village.getInventory().getResourceAmount(EffectType.Wood);
-		int missing = 0;
-		if(food<0) missing -= food;
-		if(wood<0) missing -= wood;
-		StarvationPanel panel = new StarvationPanel(food, wood);
+		int foodMissing = Math.max(0, -food);
+		int woodMissing = Math.max(0, -wood);
+		StarvationPanel panel = new StarvationPanel(foodMissing, woodMissing);
 		addActor(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 		addProceedButton(panel);
-		Village.getInventory().imposeFoodMinimum();
+		Village.getInventory().imposeFoodAndWoodMinimum();
 	}
 
 	boolean levelledUpAlready=false;
@@ -443,12 +436,14 @@ public class GameScreen extends Screen{
         Village.get().getUpkeep().addEffect(effect);
 	}
 
-	public void addEffect(Effect effect){
+	public void addEffect(Effect effect, boolean addToReview){
 	    Village.get().process(effect);
 	    if(effect.type.objective){
                 island.addObjective(effect);
         }
-        reviewPanel.addItem(effect);
+        if(addToReview) {
+            reviewPanel.addItem(effect);
+        }
 		Village.getInventory().activate(effect);
 	}
 	

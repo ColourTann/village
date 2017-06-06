@@ -43,7 +43,7 @@ public class Building {
 		for(BuildingEffect bEff:buildingEffects){
 			if(bEff.effectType==BuildingEffectType.Now){
 				for(Effect e:bEff.effects){
-					e.activate();
+					e.activate(false);
 				}
 			}
 		}
@@ -54,7 +54,7 @@ public class Building {
 		for(BuildingEffect bEff:buildingEffects){
 			if(bEff.effectType==BuildingEffectType.EveryTurn){
 				for(Effect e:bEff.effects){
-					e.activate();
+					e.activate(true);
 				}
 			}
 		}

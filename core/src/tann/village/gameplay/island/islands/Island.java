@@ -49,6 +49,7 @@ public abstract class Island {
 	
 	private static Event getRandomEvent(){
 		// make a list of possible events
+        Event toReturn = null;
 		validEvents.clear();
 		float totalChance =0;
 		for(Event e: randomEventsPool){
@@ -60,15 +61,18 @@ public abstract class Island {
 		if(validEvents.size==0) return null;
 		float randomRoll = (float) (Math.random()*totalChance);
 		for(Event e:validEvents){
-			if(e.chance>=randomRoll)return e;
+			if(e.chance>=randomRoll){
+			    toReturn = e;
+			    break;
+            }
 			randomRoll -= e.chance;
 		}
-		if(validEvents.size!=0){
+		if(toReturn == null){
             System.err.print("No event generated for some reason, getting random valid event");
-            return validEvents.get((int)(Math.random()*validEvents.size));
+            toReturn = validEvents.get((int)(Math.random()*validEvents.size));
         }
-        System.err.print("No event generated for some reason, getting random event");
-        return randomEventsPool.get((int)(Math.random()*randomEventsPool.size));
+		toReturn.uses--;
+        return toReturn;
 
 	}
 	

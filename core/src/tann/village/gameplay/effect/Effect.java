@@ -65,9 +65,10 @@ public class Effect {
        this(type, value, source, null, duration);
     }
 
-	public Effect(EffectType type, int value, EffectSource source, Die sourceDie){
-	        this(type,value,source,sourceDie, -1);
+    public Effect(EffectType type, int value, EffectSource source, Die sourceDie){
+        this(type,value,source,sourceDie, -1);
     }
+
 
     public Effect(EffectType type, int value,  Die sourceDie){
         this(type,value,EffectSource.Dice, sourceDie);
@@ -81,12 +82,12 @@ public class Effect {
 		this(type, 0, source);
 	}
 
-	public void activate(){
+	public void activate(boolean addToReview){
         Effect e = this.copy();
-        e.internalActivate();
+        e.internalActivate(addToReview);
 	}
 
-	private void internalActivate(){
+	private void internalActivate(boolean addToReview){
         switch(type){
             case FoodStorage:
                 Village.getInventory().get(EffectType.Food).addMax(value);
@@ -98,7 +99,7 @@ public class Effect {
             case FoodBonus:
                 Village.get().addBuff(this);
         }
-        GameScreen.get().addEffect(this);
+        GameScreen.get().addEffect(this, addToReview);
     }
 
 	public String toString(){
@@ -106,7 +107,7 @@ public class Effect {
 	}
 	
 	public Effect copy(){
-		Effect result = new Effect(type, value, source, sourceDie);
+		Effect result = new Effect(type, value, source, sourceDie, duration);
 		return result;
 	}
 

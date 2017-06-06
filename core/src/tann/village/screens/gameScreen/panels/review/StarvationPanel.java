@@ -19,12 +19,12 @@ public class StarvationPanel extends InfoPanel{
 	public StarvationPanel(int foodMissing, int woodMissing) {
 
         GameScreen.get().resetWisps();
-	    TextBox ranOut = new TextBox("You ran out of "+(foodMissing<0?"food":"") + ((foodMissing<0 && woodMissing<0)?" and " :"") +((woodMissing<0)?"wood":"") +"!", Fonts.font, -1, Align.center);
+	    TextBox ranOut = new TextBox("You ran out of "+(foodMissing>0?"food":"") + ((foodMissing>0 && woodMissing>0)?" and " :"") +((woodMissing>0)?"wood":"") +"!", Fonts.font, -1, Align.center);
 
-        int amountMissing = (foodMissing<0?foodMissing:0)+(woodMissing<0?woodMissing:0);
+        int amountMissing = foodMissing + woodMissing;
 
 		TextBox missing = new TextBox("Missing "+amountMissing+" resource"+(amountMissing==1?"":"s"), Fonts.fontSmall, -1, Align.center);
-		int moraleLoss = 1 + amountMissing/2;
+		int moraleLoss = 1 + Math.abs(amountMissing/2);
 		Effect moraleLossEffect =new Effect(EffectType.Morale, -moraleLoss, EffectSource.Upkeep);
 		EffectPanel moralePanel=new EffectPanel(moraleLossEffect);
 		Village.getInventory().activate(moraleLossEffect);

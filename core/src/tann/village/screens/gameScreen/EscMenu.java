@@ -39,12 +39,14 @@ public class EscMenu extends InfoPanel {
         quit.setRunnable(new Runnable() {
             @Override
             public void run() {
+                GameScreen.get().pop();
                 Main.self.setScreen(MapScreen.get(), Main.TransitionType.LEFT, Interpolation.bounce.pow2Out , .5f);
             }
         });
         restart.setRunnable(new Runnable() {
             @Override
             public void run() {
+                GameScreen.get().pop();
                 Island island = GameScreen.get().island;
                 GameScreen.nullScreen();
                 Main.self.travelTo(island);

@@ -74,7 +74,7 @@ public class Villager {
 		this.xp+=amount;
 		while(xp>=xpToLevelUp){
 			xp-=xpToLevelUp;
-			GameScreen.get().addEffect(new Effect(EffectType.LevelUp, 1, die));
+			GameScreen.get().addEffect(new Effect(EffectType.LevelUp, 1, die), false);
 			GameScreen.get().villagersToLevelUp.add(this);
 		}
 	}
@@ -109,11 +109,13 @@ public class Villager {
         Mystic(1, "Rituals of the stone",                       Images.lapel1,   Side.fate1, Side.fate1, Side.food1, Side.brain, Side.skull, Side.brain),
         Gatherer(1, "Be careful whilst foraging!",              Images.lapel1,   Side.food2, Side.wood2, Side.food2, Side.food1, Side.skull, Side.brain),
         Chopper(1, "Tok tok tok",                               Images.lapel1,   Side.wood2, Side.wood2, Side.wood1, Side.wood1, Side.food1, Side.brain),
+        Digger(1, "Have to find the gems",                      Images.lapel2,   Side.gem1, Side.skull, Side.skull, Side.skull, Side.skull, Side.brain),
         // 2
 		Farmer(2, "Grow crops to keep the village fed",         Images.lapel2,   Side.food3, Side.food3, Side.food2, Side.wood2, Side.food1, Side.brain),
         Leader(2, "Strong leader listens to all",               Images.lapel2,   Side.morale2, Side.morale1, Side.morale1, Side.wood2, Side.brain, Side.brain),
         FateWeaver(2, "Appease the gods for a better future",   Images.lapel2,   Side.fate2, Side.fate2, Side.fate1, Side.skull, Side.skull, Side.brain),
         Explorer(2, "Search the island for opportunity!",       Images.lapel2,   Side.fate1, Side.morale1, Side.wood2, Side.food2, Side.food3, Side.brain),
+        ShineEye(2, "The gems call to me",                      Images.lapel2,   Side.gem1, Side.gem1, Side.skull, Side.skull, Side.skull, Side.brain),
         Builder(2, "Construct a strong village",                Images.lapel2,   Side.wood3, Side.wood3, Side.wood2, Side.wood2, Side.wood1, Side.brain);
 		public int level;
 		public String description;

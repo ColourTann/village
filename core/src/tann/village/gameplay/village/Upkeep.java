@@ -42,7 +42,7 @@ public class Upkeep {
 
     public void activate() {
         for(Effect e:effects){
-            GameScreen.get().addEffect(e);
+            GameScreen.get().addEffect(e, true);
         }
     }
 

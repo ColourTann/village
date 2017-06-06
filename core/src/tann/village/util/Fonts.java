@@ -21,11 +21,11 @@ public class Fonts {
 	public static BitmapFont fontBig;
 	
 	public static void setup(){
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Aller_Lt.ttf"));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/ElMessiri-Regular.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 17;
+		parameter.size = 20;
 		fontSmall = generator.generateFont(parameter);
-        parameter.size=39;
+        parameter.size=44;
         font= generator.generateFont(parameter);
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Cinzel-Regular.otf"));
         parameter.size=55;

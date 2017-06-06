@@ -1,6 +1,8 @@
 package tann.village.gameplay.island.objective;
 
 
+import tann.village.gameplay.village.Village;
+
 public class SurviveObjective extends Objective {
     public SurviveObjective(int numTurns) {
         this.required=numTurns;
@@ -13,7 +15,7 @@ public class SurviveObjective extends Objective {
 
     @Override
     public void init() {
-
+        this.current = Village.get().getDayNum();
     }
 
     @Override

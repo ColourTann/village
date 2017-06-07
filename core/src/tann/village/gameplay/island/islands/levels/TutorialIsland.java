@@ -17,6 +17,7 @@ public class TutorialIsland extends Island {
 	@Override
 	protected void setupRandomPool() {
         EventCreator.makeBasicEvents();
+        EventCreator.makeTutorialIslandEvents();
 	    addEvents(EventCreator.getEvents(), false);
 	}
 

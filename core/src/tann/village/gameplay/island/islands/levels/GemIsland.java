@@ -14,6 +14,7 @@ public class GemIsland extends Island{
     @Override
     protected void setupRandomPool() {
         EventCreator.makeBasicEvents();
+        EventCreator.makeGemEvents();
         addEvents(EventCreator.getEvents(), false);
     }
 

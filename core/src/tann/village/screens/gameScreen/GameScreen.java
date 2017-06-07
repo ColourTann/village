@@ -160,7 +160,7 @@ public class GameScreen extends Screen{
     EventDebugPanel edp;
     public void toggleEventDebug(){
         if(edp==null) {
-            edp = new EventDebugPanel(EventCreator.getEvents(EventCreator.EventType.Tutorial));
+            edp = new EventDebugPanel(island.getRandomEvents());
             edp.setPosition(getWidth()/2-edp.getWidth()/2, getHeight()/2-edp.getHeight()/2);
         }
         if(!edp.remove()) addActor(edp);

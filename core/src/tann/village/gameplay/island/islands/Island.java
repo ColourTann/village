@@ -80,6 +80,10 @@ public abstract class Island {
 	private static Array<Event> randomEventsPool = new Array<>();
 	private static HashMap<Integer, Event> storyEvents = new HashMap<>();
 
+	public Array<Event> getRandomEvents(){
+        return randomEventsPool;
+    }
+
     protected abstract void setupRandomPool();
     protected abstract void setupStory();
     protected abstract void setupClasses();

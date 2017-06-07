@@ -14,20 +14,8 @@ public class EventCreator {
 		Tutorial,
 	}
 	
-	private static Map<EventType, Array<Event>> eventMap = new HashMap<>();
 	private static Array<Event> events = new Array<>();
-	public static Array<Event> getEvents(EventType type){
-		if(eventMap.get(type)!=null) return eventMap.get(type);
-		events = new Array<>();
-		
-		switch(type){
-			case Tutorial: makeBasicEvents(); break;
-		}
-		
-		eventMap.put(type, events);
-		return events;
-	}
-	
+
 	private static String title, description; // title  description
 	private static int l, r; // l, r
     private static int fd; // fate delta
@@ -86,20 +74,7 @@ public class EventCreator {
         chance=0.2f;
         make();
 
-        title="Clear skies";
-        description="Everyone wakes up with a clear head.";
-        l =0; r =3;
-        chance=1f;
-        e=new Effect(EffectType.Reroll, +1, ev, 1);
-        make();
-
         //not ok//
-        title="Cursed Orange";
-        description="Lightning strikes the ground as someone picked an orange from a tree";
-        l =-1; r =3; fd=-1;
-        chance=1;
-        e=new Effect(EffectType.Food, 1, ev);
-        make();
 
         title="Tiny Thieves";
         description="A few monkeys run off with handfuls of food!";
@@ -112,14 +87,6 @@ public class EventCreator {
         description="Rot starts to set in";
         e=new Effect(EffectType.Wood, -1, ev);
         l =-7; r =-1;
-        chance=1;
-        make();
-
-        //bad//
-        title="Heatwave";
-        description="The sweltering heat is draining the village";
-        e=new Effect(EffectType.Morale, -1, ev);
-        l =-6; r =-2; fd =1;
         chance=1;
         make();
 
@@ -153,6 +120,22 @@ public class EventCreator {
         chance=1;
         make();
 	}
+
+	public static void makeTutorialIslandEvents(){
+        title="Heatwave";
+        description="The sweltering heat is draining the village";
+        e=new Effect(EffectType.Morale, -1, ev);
+        l =-6; r =-2; fd =1;
+        chance=1;
+        make();
+
+        title="Clear skies";
+        description="Everyone wakes up with a clear head.";
+        l =0; r =3;
+        chance=1f;
+        e=new Effect(EffectType.Reroll, +1, ev, 1);
+        make();
+    }
 
 	public static void makeTutorialIslandStory(){
         turn=0;
@@ -298,7 +281,6 @@ public class EventCreator {
         title="Crimson Dreams";
         description="The eldest villager wakes up from a dream. They tell of a great catastrophe unless 7 crisom gems are offered to the gods here.";
         e = new Effect(EffectType.CollectGems, 7, EffectSource.Event);
-        e1= new Effect(EffectType.TimeLimit, 20, EffectSource.Event);
         e2 = new Effect(EffectType.Gem, 1, ev);
         makeStory();
 
@@ -309,22 +291,84 @@ public class EventCreator {
         e = new Effect(EffectType.Reroll, -1, EffectSource.Upkeep, -1);
         makeStory();
 
-        turn=15;
+        turn=12;
         title="Maroon Sickness";
         description="A sickness afflicts the village, you need to get the remaining gems fast";
         e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
         e1 = new Effect(EffectType.Wood, -1, EffectSource.Upkeep);
-        e2 = new Effect(EffectType.FoodBonus, -1, EffectSource.Upkeep);
+        makeStory();
+
+        turn=18;
+        title="Burning ground";
+        description="The ground shifts beneath your feet";
+        e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
+        e1 = new Effect(EffectType.Wood, -1, EffectSource.Upkeep);
+        makeStory();
+
+        turn=22;
+        title="Dire omen";
+        description="The sky turns black, the gods grow tired of your sloth.";
+        e = new Effect(EffectType.Food, -2, EffectSource.Upkeep);
+        e1 = new Effect(EffectType.Wood, -2, EffectSource.Upkeep);
+        e2 = new Effect(EffectType.Fate, -1, EffectSource.Upkeep);
         makeStory();
     }
 
     public static void makeGemEvents(){
-        title="Heatwave";
-        description="The sweltering heat is draining the village";
-        e=new Effect(EffectType.Morale, -1, ev);
-        l =-6; r =-2; fd =1;
+        title="Shooting star";
+        description="Incredible! A shooting star lands at the outskirts of your village. Inside you find a small red gem.";
+        e=new Effect(EffectType.Gem, 1, ev);
+        l =2; r =12; fd =-2;
         chance=1;
         make();
+
+        title="Starstorm";
+        description="A barrage from the skies assaults the village. In the carnage you find a lot of red shards and one whole gem.";
+        e=new Effect(EffectType.Gem, 1, ev);
+        e1 = new Effect(EffectType.FoodStorage, -3, ev);
+        e2 = new Effect(EffectType.Food, -3, ev);
+        e3 = new Effect(EffectType.Wood, -2, ev);
+        e4 = new Effect(EffectType.Morale, -2, ev);
+        l =-12; r =-1; fd =2;
+        chance=1;
+        make();
+
+        title="Lights in the sky";
+        description = "Cower inside";
+        e = new Effect(EffectType.Morale, -1, ev);
+        addOutcome();
+        description = "make an offering";
+        e = new Effect(EffectType.Food, -4, ev);
+        e1 = new Effect(EffectType.Fate, 2, ev);
+        addOutcome();
+        description= "A dance of red and green in the sky awes and frightens the village";
+        l =-2; r =2; fd =0;
+        chance = .7f;
+        make();
+
+        title="Cursed Orange";
+        description="Lightning strikes the ground as someone picked an orange from a tree";
+        l =-2; r =1; fd=-1;
+        chance=1;
+        e=new Effect(EffectType.Food, 1, ev);
+        make();
+
+        title = "Astral Visitor";
+        description = "A shining deer approaches the village, it seems unafraid. It doesn't linger long and once it's gone you notice it left you something";
+        e = new Effect(EffectType.Gem, 2, ev);
+        l = 3; r=12; fd = -4;
+        chance = 2;
+        make();
+
+        title = "Fury";
+        description = "A ferocious bull charges through the village and eats your food";
+        e = new Effect(EffectType.Food, -2, ev);
+        e1 = new Effect(EffectType.FoodStorage, -2, ev);
+        e2 = new Effect(EffectType.Morale, -2, ev);
+        l = -12; r=-1; fd = +3;
+        make();
+
+
     }
 
 	private static Array<Outcome> outcomes = new Array<>();

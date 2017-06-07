@@ -23,12 +23,12 @@ public class EventDebugPanel extends Group {
 
     public EventDebugPanel(Array<Event> events) {
         int max = 0;
-        setSize(SingleEventPanel.WIDTH * 25, 400);
+        setSize(SingleEventPanel.WIDTH * 25, 600);
         for(int i=0;i<events.size;i++){
             Event e = events.get(i);
             SingleEventPanel panel = new SingleEventPanel(e, i);
 
-            for(int level=0;level<10;level++){
+            for(int level=0;level<15;level++){
                 if(map.get(level)==null){
                     map.put(level, new ArrayList<SingleEventPanel>());
                     max++;
@@ -84,7 +84,7 @@ public class EventDebugPanel extends Group {
             batch.setColor(Colours.fate_darkest);
             Fonts.fontSmall.setColor(Colours.dark);
             Draw.fillRectangle(batch, getX()+i*SingleEventPanel.WIDTH, getY(), 1, getHeight());
-            Fonts.fontSmall.draw(batch, (i-12)+"", getX()+(i+.2f)*SingleEventPanel.WIDTH, getY()+10);
+            Fonts.fontSmall.draw(batch, (i-12)+"", getX()+(i+.2f)*SingleEventPanel.WIDTH, getY()+20);
         }
         super.draw(batch, parentAlpha);
     }
@@ -111,17 +111,12 @@ public class EventDebugPanel extends Group {
                 toDraw=e.title.substring(0, maxLength);
             }
             Fonts.fontSmall.setColor(Colours.light);
-            Fonts.fontSmall.draw(batch, toDraw, getX(), getY()+getHeight()/2, getWidth(), Align.center, false);
-            int fateDiff=0;
-            for(Effect eff: e.effects){
-                if(eff.type== Effect.EffectType.Fate){
-                    fateDiff = eff.value;
-                }
-            }
+            Fonts.fontSmall.draw(batch, toDraw, getX(), getY()+getHeight()/2+7, getWidth(), Align.center, false);
+            int fateDiff=e.fateDelta;
             batch.setColor(fateDiff>0?Colours.blue_light:Colours.red);
             int orbSize = 10;
             for(int i=0;i<Math.abs(fateDiff);i++){
-                Draw.fillEllipse(batch, getX()+getWidth()/2-orbSize/2*Math.abs(fateDiff)+i*orbSize, getY()+getHeight()-orbSize-3, orbSize, orbSize);
+                Draw.fillEllipse(batch, getX()+getWidth()/2-orbSize/2*Math.abs(fateDiff)+i*orbSize, getY()+getHeight()-orbSize, orbSize, orbSize);
             }
             super.draw(batch, parentAlpha);
         }

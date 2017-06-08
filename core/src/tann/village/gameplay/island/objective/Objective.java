@@ -25,15 +25,7 @@ public abstract class Objective {
     public abstract void init();
     public void objectiveProgress(ObjectiveEffect type, int amount){
         internalObjectiveProgress(type, amount);
-        if(isComplete()){
-            complete();
-        }
         GameScreen.get().objectivePanel.refresh();
-    }
-
-    public void complete(){
-        GameScreen.get().win();
-        Sounds.playSound(Sounds.marimba_too_happy,1,1);
     }
 
     protected abstract void internalObjectiveProgress(ObjectiveEffect type, int amount);

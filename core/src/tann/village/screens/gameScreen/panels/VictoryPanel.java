@@ -11,9 +11,9 @@ import tann.village.util.*;
 public class VictoryPanel extends InfoPanel{
 
     public VictoryPanel(String text) {
-        setSize(300,500);
+        setSize(250,150);
         TextBox tb = new TextBox(text, Fonts.font, getWidth()-20, Align.center);
-        TextButton ok = new TextButton(70, 30, "Ok!");
+        TextButton ok = new TextButton(70, 30, "Noice!");
         Layoo l = new Layoo(this);
         l.row(1);
         l.actor(tb);

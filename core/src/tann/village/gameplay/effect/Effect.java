@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.villager.die.Die;
@@ -98,7 +99,12 @@ public class Effect {
             case Reroll:
             case FoodBonus:
                 Village.get().addBuff(this);
+                break;
+            case Gem:
+                GameScreen.get().island.objectiveProgress(Objective.ObjectiveEffect.Gem, this.value);
+                break;
         }
+
         GameScreen.get().addEffect(this, addToReview);
     }
 

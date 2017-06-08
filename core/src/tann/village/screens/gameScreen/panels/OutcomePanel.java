@@ -13,10 +13,10 @@ import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.*;
 
 public class OutcomePanel extends Group {
-    public static int WIDTH = 270, HEIGHTBASE = 100;
+    public static int WIDTH = 270, HEIGHTBASE = 10, HEIGHTADD = 70;
     Color border = Colours.dark;
     public OutcomePanel(Outcome o) {
-        setSize(WIDTH, HEIGHTBASE*((o.effects.size+1)/2));
+        setSize(WIDTH, HEIGHTBASE+HEIGHTADD*((o.effects.size+1)/2));
         Layoo l = new Layoo(this);
         l.row(1);
         Fonts.fontSmall.setColor(Colours.light);
@@ -28,7 +28,10 @@ public class OutcomePanel extends Group {
             Effect e=o.effects.get(i);
             l.actor(new EffectPanel(e));
             l.gap(1);
-            if(i%2 == 1 && i < o.effects.size-1) l.row(1);
+            if(i%2 == 1 && i < o.effects.size-1) {
+                l.row(1);
+                l.gap(1);
+            }
         }
         l.row(1);
         l.layoo();

@@ -390,7 +390,7 @@ public class GameScreen extends Screen{
 		Village.getInventory().imposeLimits();
 	}
 
-    private boolean checkEnd() {
+    public boolean checkEnd() {
         Island.ObjectiveOutcome outcome = island.objectivesCompletes();
         if(outcome== Island.ObjectiveOutcome.Fail){
             showLoss();
@@ -404,6 +404,11 @@ public class GameScreen extends Screen{
     }
 
     private void startRolling() {
+
+        if(checkEnd()){
+            return;
+        }
+
         levelledUpAlready=false;
 	    showRollContainer(true);
 		BulletStuff.refresh(villagers);
@@ -511,6 +516,7 @@ public class GameScreen extends Screen{
 
 	public void win() {
 	    addActor(inputBlocker);
+        Sounds.playSound(Sounds.marimba_too_happy,1,1);
 	    String vicText = island.getVictoryText();
 	    VictoryPanel vp = new VictoryPanel(vicText);
 	    vp.setPosition(getWidth()/2-vp.getWidth()/2, getHeight()/2 - vp.getHeight()/2);

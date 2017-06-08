@@ -73,6 +73,7 @@ public class ConstructionPanel extends InfoPanel{
 		Village.get().addBuilding(b);
 		resetAvailablePanels();
 		b.onBuild();
+		GameScreen.get().checkEnd();
 	}
 
 	private void resetAvailablePanels() {

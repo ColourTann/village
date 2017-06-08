@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
+import tann.village.Main;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.Village;
@@ -30,16 +31,20 @@ public class UpkeepPanel extends InfoPanel{
 	public void build(List<Effect> effects){
 		clear();
 		TextBox title = new TextBox("Upkeep", Fonts.font, 599, Align.center);
-		setSize(Math.max(title.getWidth(), (EffectPanel.WIDTH+EXTRA)*effects.size())+EXTRA, InventoryPanel.HEIGHT);
+		setSize(Math.max(title.getWidth(), (EffectPanel.WIDTH+EXTRA)*Math.min(2,effects.size()))+EXTRA, InventoryPanel.HEIGHT* (Math.max(1, (effects.size()-1)/2)));
 		Layoo l = new Layoo(this);
 		l.row(1);
 		l.actor(title);
 		l.row(2);
-		l.abs(-ReviewPanel.SMALL_GAP);
-		for(Effect e:effects){
-			l.abs(ReviewPanel.SMALL_GAP);
+		l.abs(ReviewPanel.SMALL_GAP);
+		for(int i=0; i<effects.size();i++){
+		    if(i%2==0 && i != 0){
+		        l.row(1);
+            }
+            Effect e=effects.get(i);
 			l.actor(new EffectPanel(e));
-			
+            l.abs(ReviewPanel.SMALL_GAP);
+
 		}
 		l.row(1);
 		l.layoo();

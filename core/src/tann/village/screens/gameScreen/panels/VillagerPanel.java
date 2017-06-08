@@ -16,7 +16,7 @@ import tann.village.util.TextBox;
 
 public class VillagerPanel extends InfoPanel{
 	Villager villager;
-	private static final int MAX_WIDTH = 370, HEIGHT = 250;
+	private static final int MAX_WIDTH = 400, HEIGHT = 250;
 	TextBox name;
 	TextBox profession;
 	public VillagerPanel(final Villager villager) {

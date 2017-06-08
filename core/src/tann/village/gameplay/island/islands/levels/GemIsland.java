@@ -26,8 +26,8 @@ public class GemIsland extends Island{
 
     @Override
     protected void setupClasses() {
-//        availablesVillagerTypes.addAll(Villager.basicVillagerTypes);
-        availablesVillagerTypes.addAll(Villager.VillagerType.ShineEye, Villager.VillagerType.Digger, Villager.VillagerType.Digger, Villager.VillagerType.Digger, Villager.VillagerType.Digger);
+        availablesVillagerTypes.addAll(Villager.basicVillagerTypes);
+        availablesVillagerTypes.addAll(Villager.VillagerType.ShineEye, Villager.VillagerType.Digger, Villager.VillagerType.ShineEye, Villager.VillagerType.Digger);
     }
 
     @Override

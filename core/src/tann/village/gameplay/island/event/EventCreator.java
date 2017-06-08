@@ -286,9 +286,8 @@ public class EventCreator {
 
         turn=8;
         title="Blood Skies";
-        description="The sky has turned deep red, the heat makes it hard to work. -1 permanent reroll";
+        description="The sky has turned deep red, the heat makes it hard to work";
         e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
-        e = new Effect(EffectType.Reroll, -1, EffectSource.Upkeep, -1);
         makeStory();
 
         turn=12;
@@ -308,9 +307,8 @@ public class EventCreator {
         turn=22;
         title="Dire omen";
         description="The sky turns black, the gods grow tired of your sloth.";
-        e = new Effect(EffectType.Food, -2, EffectSource.Upkeep);
+        e = new Effect(EffectType.Food, -3, EffectSource.Upkeep);
         e1 = new Effect(EffectType.Wood, -2, EffectSource.Upkeep);
-        e2 = new Effect(EffectType.Fate, -1, EffectSource.Upkeep);
         makeStory();
     }
 
@@ -338,12 +336,13 @@ public class EventCreator {
         e = new Effect(EffectType.Morale, -1, ev);
         addOutcome();
         description = "make an offering";
-        e = new Effect(EffectType.Food, -4, ev);
-        e1 = new Effect(EffectType.Fate, 2, ev);
+        e = new Effect(EffectType.Food, -2, ev);
+        e1 = new Effect(EffectType.Wood, -2, ev);
+        e2 = new Effect(EffectType.Fate, 2, ev);
         addOutcome();
         description= "A dance of red and green in the sky awes and frightens the village";
         l =-2; r =2; fd =0;
-        chance = .7f;
+        chance = .4f;
         make();
 
         title="Cursed Orange";

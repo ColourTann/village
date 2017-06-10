@@ -5,6 +5,7 @@ import tann.village.gameplay.island.BuildingGenerator;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.village.villager.Villager;
+import tann.village.util.Sounds;
 
 public class WeatherIsland extends Island {
     public WeatherIsland(TextureRegion tr, int x, int y) {
@@ -33,6 +34,16 @@ public class WeatherIsland extends Island {
     protected void setupBuildings() {
         BuildingGenerator.makeBasicBuildings();
         this.availableBuildings = BuildingGenerator.getBuildings();
+    }
+
+    @Override
+    protected String getBackgroundString() {
+        return "gamescreen2";
+    }
+
+    @Override
+    public String getAmbienceString() {
+        return Sounds.storm;
     }
 
     @Override

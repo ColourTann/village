@@ -9,7 +9,7 @@ import tann.village.util.Draw;
 
 public class InfoPanel extends Group{
 
-	static final int BORDER= 3;
+	public static final int BORDER= 3;
 	
 	protected Color background = Colours.dark;
 	

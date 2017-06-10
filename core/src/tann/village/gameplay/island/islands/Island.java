@@ -8,6 +8,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
+import tann.village.Main;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.objective.*;
@@ -88,6 +89,10 @@ public abstract class Island {
     protected abstract void setupStory();
     protected abstract void setupClasses();
     protected abstract void setupBuildings();
+    protected abstract String getBackgroundString();
+    public abstract String getAmbienceString();
+
+    public TextureRegion background;
 
 	public void setup(){
 		validEvents.clear();
@@ -97,7 +102,8 @@ public abstract class Island {
 		setupStory();
 		setupBuildings();
 		setupClasses();
-	}
+		background = Main.atlas.findRegion(getBackgroundString());
+    }
 	
 	public void addEvents(Array<Event> events, boolean story){
 		if(story){

@@ -28,11 +28,6 @@ public class IslandActor extends Actor{
 		});
 	}
 
-	
-	public void drawMask(Batch batch){
-		Draw.drawSize(batch, Images.mask, (int)(getX()+getWidth()/2-maskSize/2), (int)(Gdx.graphics.getHeight()-getY()-getHeight()/2-maskSize/2), maskSize, maskSize);
-	}
-	
 	public void draw(Batch batch, float parentAlpha){
 		batch.setColor(Colours.z_white);
 		Draw.draw(batch, island.tr, getX(), getY());

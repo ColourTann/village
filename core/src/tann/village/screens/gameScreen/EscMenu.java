@@ -39,6 +39,7 @@ public class EscMenu extends InfoPanel {
         quit.setRunnable(new Runnable() {
             @Override
             public void run() {
+                Sounds.stopMusic();
                 GameScreen.get().pop();
                 Main.self.setScreen(MapScreen.get(), Main.TransitionType.LEFT, Interpolation.bounce.pow2Out , .5f);
             }

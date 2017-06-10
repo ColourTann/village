@@ -81,40 +81,37 @@ public class BuildingGenerator {
     }
 
     public static void makeGemBuildings(){
-        title = "Excavation";
-        description = "";
+        title = "Mining";
         w = 5;
         f = 3;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Gem, 1, b)});
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Gem, 3, b)});
         b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, -1, b)});
         make();
 
         title = "Fountain";
-        description = "";
         w = 15;
         f = 5;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Gem, 2, b)});
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Gem, 5, b)});
         make();
 
-        title = "Excavation";
-        description = "";
-        w = 5;
-        f = 3;
+        title = "Expedition";
+        w = 10;
+        f = 2;
+        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Gem, 2, b)});
+        b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, 1, b)});
+        make();
+
+        title = "Ocean sifting";
+        w = 4;
+        f = 1;
         b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Gem, 1, b)});
-        b2 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Morale, -1, b)});
-        make();
-
-        title = "Fountain";
-        description = "";
-        w = 15;
-        f = 5;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Effect[]{new Effect(EffectType.Gem, 2, b)});
         make();
     }
 
     private static void make(){
-		if(title==null||description==null||b1==null){
-			System.out.println("Something went wrong making "+title+":"+description);
+		if(title==null||b1==null){
+			System.err.println("Something went wrong making "+title+":"+description);
+			return;
 		}
 		Array<BuildingEffect> effects = new Array<>();
 		if(b1!=null)effects.add(b1);

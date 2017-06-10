@@ -279,8 +279,8 @@ public class EventCreator {
 
         turn=3;
         title="Crimson Dreams";
-        description="The eldest villager wakes up from a dream. They tell of a great catastrophe unless 7 crisom gems are offered to the gods here.";
-        e = new Effect(EffectType.CollectGems, 7, EffectSource.Event);
+        description="The eldest villager wakes up from a dream. They tell of a great catastrophe unless 13 crisom gems are offered to the gods here.";
+        e = new Effect(EffectType.CollectGems, 13, EffectSource.Event);
         e2 = new Effect(EffectType.Gem, 1, ev);
         makeStory();
 
@@ -290,21 +290,14 @@ public class EventCreator {
         e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
         makeStory();
 
-        turn=12;
-        title="Maroon Sickness";
-        description="A sickness afflicts the village, you need to get the remaining gems fast";
-        e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
-        e1 = new Effect(EffectType.Wood, -1, EffectSource.Upkeep);
-        makeStory();
-
-        turn=18;
+        turn=16;
         title="Burning ground";
         description="The ground shifts beneath your feet";
         e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
         e1 = new Effect(EffectType.Wood, -1, EffectSource.Upkeep);
         makeStory();
 
-        turn=22;
+        turn=24;
         title="Dire omen";
         description="The sky turns black, the gods grow tired of your sloth.";
         e = new Effect(EffectType.Food, -3, EffectSource.Upkeep);
@@ -316,7 +309,7 @@ public class EventCreator {
         title="Shooting star";
         description="Incredible! A shooting star lands at the outskirts of your village. Inside you find a small red gem.";
         e=new Effect(EffectType.Gem, 1, ev);
-        l =2; r =12; fd =-2;
+        l =0; r =12; fd =-2;
         chance=1;
         make();
 
@@ -340,7 +333,7 @@ public class EventCreator {
         e1 = new Effect(EffectType.Wood, -2, ev);
         e2 = new Effect(EffectType.Fate, 2, ev);
         addOutcome();
-        description= "A dance of red and green in the sky awes and frightens the village";
+        description= "A dance of red and green in the sky awes the village";
         l =-2; r =2; fd =0;
         chance = .4f;
         make();

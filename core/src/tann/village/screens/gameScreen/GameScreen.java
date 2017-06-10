@@ -53,7 +53,6 @@ public class GameScreen extends Screen{
 	private static final int STARTING_VILLAGERS = 5;
 	public Array<Villager> villagers = new Array<>();
 	CircleButton constructionButt;
-	TextureRegion bg = Main.atlas.findRegion("gamescreen");
 	public Array<Villager> villagersToLevelUp = new Array<>();
 	ReviewPanel reviewPanel = new ReviewPanel(Village.get().getDayNum());
 	EventPanel eventPanel;
@@ -104,7 +103,7 @@ public class GameScreen extends Screen{
         Village.get().getUpkeep().addEffect(new Effect(EffectType.Food, -2, EffectSource.Upkeep));
 
 		setState(State.Event);
-		Sounds.playMusic(Sounds.beach);
+		Sounds.playMusic(island.getAmbienceString());
 
         constructionButt = new CircleButton(0, 0, 180, Colours.dark);
         constructionButt.setTexture(Images.hammer, 0.7f, .7f, 80, 80);
@@ -169,7 +168,7 @@ public class GameScreen extends Screen{
 	@Override
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
-		Draw.draw(batch, bg, getX(), getY());
+		Draw.draw(batch, island.background, getX(), getY());
 //		Fonts.font.draw(batch, "state: "+state, 400, Main.height-Fonts.font.getAscent());
 	}
 
@@ -275,6 +274,7 @@ public class GameScreen extends Screen{
 	}
 	
 	public void showLoss() {
+        Sounds.playSound(Sounds.marimba_sad,1,1);
 		LossPanel panel = new LossPanel(LossReason.Morale, Village.get().getDayNum());
 		addActor(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
@@ -496,7 +496,9 @@ public class GameScreen extends Screen{
 		    a.remove();
 		}
 		if(stack.size==0){
-			inputBlocker.remove();
+		    if(inputBlocker!=null){
+                inputBlocker.remove();
+            }
 		}
 		else{
 			stack.get(stack.size-1).toFront();

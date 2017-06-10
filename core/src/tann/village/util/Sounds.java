@@ -41,6 +41,10 @@ public class Sounds {
 
 
     public static String beach;
+    public static String gem;
+    public static String storm;
+
+
 	public static void setup(){
 		//sfx//
         clacks = makeSounds("clack", 4);
@@ -48,7 +52,6 @@ public class Sounds {
         cancel = makeSounds("drum/cancel", 1);
         buildPanel = makeSound("sfx/buildpanel.wav", Sound.class);
         build = makeSound("sfx/build.wav", Sound.class);
-		beach = makeSound("music/beach2.mp3", Music.class);
         shake = makeSounds("shake", 4);
         unshake = makeSound("sfx/unshake.wav", Sound.class);
         roll = makeSounds("roll", 6);
@@ -66,6 +69,10 @@ public class Sounds {
         eventNegBird = makeSounds("negativebird", 3, ".wav");
         eventNeuBird = makeSounds("neutralbird", 8, ".wav");
 
+        //music//
+        beach = makeSound("music/beach2.mp3", Music.class);
+        gem = makeSound("music/gem.mp3", Music.class);
+        storm = makeSound("music/storm.mp3", Music.class);
 
 		//stuff to attempt to load sounds properly//
 		am.finishLoading();
@@ -123,14 +130,18 @@ public class Sounds {
 	private static Music currentMusic;
 	public static void playMusic(String path){
         Music m = Sounds.get(path, Music.class);
+        stopMusic();
 		previousMusic=currentMusic;
-		if(previousMusic!=null)previousMusic.stop();
 		currentMusic=m;
 		currentMusic.play();
 		currentMusic.setLooping(true);
 		updateMusicVolume();
 	}
-	
+
+	public static void stopMusic(){
+	    if(currentMusic!=null)  currentMusic.stop();
+    }
+
 	public static void updateMusicVolume(){
 		if(currentMusic!=null)currentMusic.setVolume(Slider.music.getValue());
 	}

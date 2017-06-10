@@ -22,7 +22,7 @@ public class VictoryPanel extends InfoPanel{
         l.row(1);
         l.layoo();
         ok.setRunnable(
-                ()-> Main.self.setScreen(MapScreen.get(), Main.TransitionType.LEFT, Interpolation.pow2Out, 1)
+                ()-> {Main.self.setScreen(MapScreen.get(), Main.TransitionType.LEFT, Interpolation.pow2Out, 1); Sounds.stopMusic();}
         );
     }
 }

@@ -7,6 +7,7 @@ import tann.village.gameplay.island.BuildingGenerator;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.village.villager.Villager;
+import tann.village.util.Sounds;
 
 public class TutorialIsland extends Island {
 
@@ -26,6 +27,16 @@ public class TutorialIsland extends Island {
         EventCreator.makeTutorialIslandStory();
         addEvents(EventCreator.getEvents(), true);
 	}
+
+    @Override
+    protected String getBackgroundString() {
+        return "gamescreen";
+    }
+
+    @Override
+    public String getAmbienceString() {
+        return Sounds.beach;
+    }
 
     @Override
     protected void setupClasses() {

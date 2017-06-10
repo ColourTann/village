@@ -39,6 +39,5 @@ public class TimeLimitObjective extends Objective {
 
     public void complete(){
         GameScreen.get().showLoss();
-        Sounds.playSound(Sounds.marimba_sad,1,1);
     }
 }

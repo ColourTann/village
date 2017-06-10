@@ -30,7 +30,6 @@ public class Images {
     public static final TextureRegion crystal = Main.atlas.findRegion("crystal-ball");
 	
 	// map stuff
-	public static final TextureRegion mask = Main.atlas.findRegion("mask");
 	public static final TextureRegion island0 = Main.atlas.findRegion("map/island0");
     public static final TextureRegion island1 = Main.atlas.findRegion("map/island1");
     public static final TextureRegion island2 = Main.atlas.findRegion("map/island2");

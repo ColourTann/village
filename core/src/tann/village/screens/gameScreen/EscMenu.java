@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 import tann.village.Main;
+import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.screens.mapScreen.MapScreen;
@@ -47,6 +48,7 @@ public class EscMenu extends InfoPanel {
         restart.setRunnable(new Runnable() {
             @Override
             public void run() {
+                BulletStuff.reset();
                 GameScreen.get().pop();
                 Island island = GameScreen.get().island;
                 GameScreen.nullScreen();

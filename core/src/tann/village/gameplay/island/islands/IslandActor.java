@@ -3,15 +3,19 @@ package tann.village.gameplay.island.islands;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
+import com.badlogic.gdx.utils.Align;
 import tann.village.Images;
 import tann.village.Main;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
+import tann.village.util.Fonts;
+import tann.village.util.TextBox;
 
-public class IslandActor extends Actor{
+public class IslandActor extends Group{
 	
 	Island island;
 	int maskSize = 180;
@@ -26,11 +30,15 @@ public class IslandActor extends Actor{
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
+        TextBox tb = new TextBox(island.getIslandName(), Fonts.fontSmall, 2000, Align.center);
+        addActor(tb);
+        tb.setPosition(getWidth()/2-tb.getWidth()/2, -tb.getHeight()-20);
 	}
 
 	public void draw(Batch batch, float parentAlpha){
 		batch.setColor(Colours.z_white);
 		Draw.draw(batch, island.tr, getX(), getY());
+		super.draw(batch, parentAlpha);
 	}
 	
 }

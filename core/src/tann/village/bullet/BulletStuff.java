@@ -50,7 +50,7 @@ public class BulletStuff {
 	static btConstraintSolver constraintSolver;
 	static Shader shader;
 	private static Vector3 dieClickPosition = new Vector3();
-    static final float camX=0, camY=8, camZ=-2;
+    static final float camX=0, camY=9, camZ=-2;
 	public static void init(){
 		Bullet.init();
 		collisionConfig = new btDefaultCollisionConfiguration();

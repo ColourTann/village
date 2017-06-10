@@ -37,7 +37,7 @@ public class InventoryItem {
     }
 
     public boolean canChangeBy(int delta){
-        return value+delta > min && value+delta < max;
+        return value+delta >= min && value+delta <= max;
     }
 
     public void addMax(int delta){

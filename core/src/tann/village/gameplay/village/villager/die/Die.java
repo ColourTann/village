@@ -242,20 +242,6 @@ public class Die {
 		for(Effect e:sides.get(getSide()).effects) e.activate(true);
 	}
 
-	public void addToScreen() {
-		BulletStuff.instances.add(physical);
-        physical.body.setLinearVelocity(new Vector3());
-        physical.body.setAngularVelocity(new Vector3());
-		BulletStuff.dynamicsWorld.addRigidBody(physical.body, BulletStuff.OBJECT_FLAG, BulletStuff.ALL_FLAG);
-		physical.body.setContactCallbackFlag(BulletStuff.OBJECT_FLAG);
-		physical.body.setContactCallbackFilter(0);
-	}
-
-	public void removeFromScreen() {
-		BulletStuff.instances.removeValue(physical, true);
-		BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
-	}
-
 	public void destroy() {
 		removeFromScreen();
 	}
@@ -324,8 +310,22 @@ public class Die {
 	boolean disposed;
     public void dispose() {
         if(disposed) System.err.println("WARNING: TRYING TO DISPOSE DIE AGAIN");
-        disposed=true;
         removeFromScreen();
-//        physical.dispose();
+        disposed=true;
+    }
+
+    public void removeFromScreen() {
+        BulletStuff.instances.removeValue(physical, true);
+        BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
+        BulletStuff.dynamicsWorld.removeCollisionObject(physical.body);
+    }
+
+    public void addToScreen() {
+        BulletStuff.instances.add(physical);
+        physical.body.setLinearVelocity(new Vector3());
+        physical.body.setAngularVelocity(new Vector3());
+        BulletStuff.dynamicsWorld.addRigidBody(physical.body, BulletStuff.OBJECT_FLAG, BulletStuff.ALL_FLAG);
+        physical.body.setContactCallbackFlag(BulletStuff.OBJECT_FLAG);
+        physical.body.setContactCallbackFilter(0);
     }
 }

@@ -61,7 +61,7 @@ public class BuildingGenerator {
         l=1;
         title="Palm Grove";
         description="A small grove for harvesting fast-growing trees";
-        w=13; f=3;
+        w=11; f=3;
         b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Food, 1, b)});
         b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Effect[]{new Effect(EffectType.Wood, 1, b)});
         make();
@@ -128,9 +128,4 @@ public class BuildingGenerator {
         buildings = new Array<Building>();
         return result;
     }
-
-//	public static Building random(int level) {
-//		if(buildings.get(level)==null || buildings.get(level).size==0) init(level);
-//		return buildings.get(level).removeIndex((int)(Math.random()*buildings.get(level).size));
-//	}
 }

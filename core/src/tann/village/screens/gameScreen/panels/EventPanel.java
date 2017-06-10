@@ -135,6 +135,7 @@ public class EventPanel extends Group{
                 l.actor(ia);
                 l.row(1);
             }
+            l.row(1);
             l.layoo();
         }
 

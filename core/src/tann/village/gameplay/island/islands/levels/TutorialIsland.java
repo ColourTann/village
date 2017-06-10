@@ -39,6 +39,11 @@ public class TutorialIsland extends Island {
     }
 
     @Override
+    public String getIslandName() {
+        return "Outset Island\n(you should start here probably!)";
+    }
+
+    @Override
     protected void setupClasses() {
         this.availablesVillagerTypes.addAll(Villager.basicVillagerTypes);
     }

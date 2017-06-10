@@ -272,8 +272,10 @@ public class GameScreen extends Screen{
 			break;
 		}
 	}
-	
+
+	boolean lost;
 	public void showLoss() {
+	    lost = true;
         Sounds.playSound(Sounds.marimba_sad,1,1);
 		LossPanel panel = new LossPanel(LossReason.Morale, Village.get().getDayNum());
 		addActor(panel);
@@ -391,6 +393,9 @@ public class GameScreen extends Screen{
 	}
 
     public boolean checkEnd() {
+        if(lost){
+            return true;
+        }
         Island.ObjectiveOutcome outcome = island.objectivesCompletes();
         if(outcome== Island.ObjectiveOutcome.Fail){
             showLoss();
@@ -517,6 +522,7 @@ public class GameScreen extends Screen{
 	}
 
 	public void win() {
+
 	    addActor(inputBlocker);
         Sounds.playSound(Sounds.marimba_too_happy,1,1);
 	    String vicText = island.getVictoryText();
@@ -526,9 +532,14 @@ public class GameScreen extends Screen{
 	}
 
     public void chooseOutcome(Outcome o) {
-        eventPanel.remove();
-        o.activate();
-        proceed();
+	    if(o.isValid()) {
+            eventPanel.remove();
+            o.activate();
+            proceed();
+        }
+        else{
+	        Sounds.playSound(Sounds.error, 1, 1);
+        }
     }
 
     public void resetWisps(){

@@ -31,7 +31,7 @@ import tann.village.util.Sounds;
 
 public class Main extends ApplicationAdapter {
 	public static int width = 1000, height = 700;
-	public static String version = "0.2";
+	public static String version = "0.3";
 	SpriteBatch batch;
 	Stage stage;
 	OrthographicCamera orthoCam;
@@ -137,7 +137,7 @@ public class Main extends ApplicationAdapter {
 
 		}
         if(previousScreen!=null){
-		    previousScreen.removeFromScreen();
+            previousScreen.removeFromScreen();
 		    previousScreen.addAction(Actions.after(Actions.removeActor()));
         }
 	}
@@ -227,7 +227,7 @@ public class Main extends ApplicationAdapter {
 	}
 
 	public void travelTo(Island island) {
-	    BulletStuff.reset();
+//	    BulletStuff.reset();
 		island.setup();
 		Village.get().setup();
 		GameScreen.reset();

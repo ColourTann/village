@@ -47,6 +47,11 @@ public class WeatherIsland extends Island {
     }
 
     @Override
+    public String getIslandName() {
+        return "StormRock";
+    }
+
+    @Override
     public String getVictoryText() {
         return "You win!";
     }

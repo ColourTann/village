@@ -23,6 +23,7 @@ public class Sounds {
     public static String[] shake;
     public static String[] roll;
     public static String accept;
+    public static String error;
 
 
     public static String marimba_too_happy;
@@ -56,6 +57,7 @@ public class Sounds {
         unshake = makeSound("sfx/unshake.wav", Sound.class);
         roll = makeSounds("roll", 6);
         accept = makeSound("sfx/accept.wav", Sound.class);
+        error= makeSound("sfx/error.wav", Sound.class);
 
         marimba_too_happy = makeSound("sfx/marimba_too_happy.wav", Sound.class);
         marimba_happy = makeSound("sfx/marimba_happy.wav", Sound.class);

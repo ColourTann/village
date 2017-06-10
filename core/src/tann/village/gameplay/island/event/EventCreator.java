@@ -21,7 +21,8 @@ public class EventCreator {
     private static int fd; // fate delta
     private static int uses=999;
 	private static float chance;
-	private static Effect e, e1, e2, e3, e4; // effects
+    private static Effect e, e1, e2, e3, e4; // effects
+    private static Effect req, req1, req2, req3, req4; // effects
 	private static EffectSource ev = EffectSource.Event;
 
 	// story-only
@@ -34,6 +35,8 @@ public class EventCreator {
         e=new Effect(EffectType.Food, 2, ev);
         e1=new Effect(EffectType.Wood, 2, ev);
         e2=new Effect(EffectType.Morale, 1, ev);
+        req = e;
+        req1 = e1;
         l =3; r =12; fd=-3;
         chance=1;
         make();
@@ -42,6 +45,7 @@ public class EventCreator {
         description="Hundreds of small fish have come near the shore, it's easy to grab a bunch of them!";
         e=new Effect(EffectType.Food, 3, ev);
         l =2; r =12; fd=-1;
+        req = e;
         chance=1;
         make();
 
@@ -50,6 +54,7 @@ public class EventCreator {
         e=new Effect(EffectType.Wood, +2, ev);
         e1=new Effect(EffectType.Morale, +1, ev);
         l =2; r =12; fd=-2;
+        req= e;
         chance=1;
         make();
 
@@ -79,6 +84,7 @@ public class EventCreator {
         title="Tiny Thieves";
         description="A few monkeys run off with handfuls of food!";
         e=new Effect(EffectType.Food, -2, ev);
+        req = e;
         l =-7; r =0; fd =1;
         chance=1;
         make();
@@ -86,6 +92,7 @@ public class EventCreator {
         title="Rot";
         description="Rot starts to set in";
         e=new Effect(EffectType.Wood, -1, ev);
+        req = e;
         l =-7; r =-1;
         chance=1;
         make();
@@ -100,6 +107,7 @@ public class EventCreator {
         title="Gorilla";
         description="Ook Ook OOK!!";
         e=new Effect(EffectType.Food, -4, ev);
+        req = e;
         l =-12; r =-1; fd=2;
         chance=1;
         make();
@@ -108,6 +116,7 @@ public class EventCreator {
         description="Some of your food is gone, along with some storage!";
         e=new Effect(EffectType.Food, -1, ev);
         e1=new Effect(EffectType.FoodStorage, -1, ev);
+        req = e;
         l =-8; r =0; fd=1;
         chance=1;
         make();
@@ -116,6 +125,8 @@ public class EventCreator {
         description="The weather has taken a turn and washed away your supplies.";
         e=new Effect(EffectType.Food, -3, ev);
         e1=new Effect(EffectType.Wood, -3, ev);
+        req = e;
+        req1 = e1;
         l =-12; r =-1; fd=2;
         chance=1;
         make();
@@ -145,19 +156,19 @@ public class EventCreator {
         e1 = new Effect(EffectType.Wood, 3, EffectSource.Event);
         makeStory();
 
-        turn=4;
-        title="Hunger";
-        description="The village grows hungry. Upkeep increased by two.";
-        e = new Effect(EffectType.Food, -2, EffectSource.Upkeep);
-        makeStory();
-
-        turn=6;
+        turn=3;
         title="Build a village";
         description="In order to survive you're going to need to make this a home.";
         e = new Effect(EffectType.BuildTown, 7, ev);
         makeStory();
 
-        turn=9;
+        turn=8;
+        title="Hunger";
+        description="The village grows hungry. Upkeep increased by one.";
+        e = new Effect(EffectType.Food, -1, EffectSource.Upkeep);
+        makeStory();
+
+        turn=16;
         title="Cold";
         description="The nights are getting colder, you need fuel to keep warm.";
         e = new Effect(EffectType.Wood, -1, EffectSource.Upkeep);
@@ -223,7 +234,7 @@ public class EventCreator {
     public static void makeStormEvents(){
 
         description = "A cold night";
-        e = new Effect(EffectType.Morale, -2, ev);
+        e1 = new Effect(EffectType.Morale, -2, ev);
         addOutcome();
         description = "Quickly, repair the roof!";
         e = new Effect(EffectType.Wood, -3, ev);
@@ -232,6 +243,7 @@ public class EventCreator {
         description="Huge hailstones batter your huts";
         l =-5; r =-1; fd =1;
         chance=1;
+        req = e1;
         make();
 
         title = "Momentary Repose";
@@ -245,12 +257,14 @@ public class EventCreator {
         description= "The storm in the night washed up a grisly prize";
         e = new Effect(EffectType.Food, 5, ev);
         e1 = new Effect(EffectType.Morale, 1, ev);
-        fd = -3; l=3; r=12;
+        req = e;
+        fd = -3; l=1; r=12;
         make();
 
         title = "Relentless Rain";
         description = "It never stops";
         e = new Effect(EffectType.Food, -1, ev);
+        req = e;
         fd=0; l=-2; r=0;
         make();
 
@@ -259,6 +273,8 @@ public class EventCreator {
         e= new Effect(EffectType.Food, -2, ev);
         e1= new Effect(EffectType.FoodStorage, -2, ev);
         e2= new Effect(EffectType.Wood, -2, ev);
+        req =e;
+        req1 = e2;
         fd = 2; l=-4; r=2;
         make();
 
@@ -300,7 +316,7 @@ public class EventCreator {
         turn=24;
         title="Dire omen";
         description="The sky turns black, the gods grow tired of your sloth.";
-        e = new Effect(EffectType.Food, -3, EffectSource.Upkeep);
+        e = new Effect(EffectType.Food, -2, EffectSource.Upkeep);
         e1 = new Effect(EffectType.Wood, -2, EffectSource.Upkeep);
         makeStory();
     }
@@ -321,12 +337,14 @@ public class EventCreator {
         e3 = new Effect(EffectType.Wood, -2, ev);
         e4 = new Effect(EffectType.Morale, -2, ev);
         l =-12; r =-1; fd =2;
+        req = e2;
+        req1 = e3;
         chance=1;
         make();
 
         title="Lights in the sky";
         description = "Cower inside";
-        e = new Effect(EffectType.Morale, -1, ev);
+        e3 = new Effect(EffectType.Morale, -1, ev);
         addOutcome();
         description = "make an offering";
         e = new Effect(EffectType.Food, -2, ev);
@@ -336,6 +354,7 @@ public class EventCreator {
         description= "A dance of red and green in the sky awes the village";
         l =-2; r =2; fd =0;
         chance = .4f;
+        req = e3;
         make();
 
         title="Cursed Orange";
@@ -343,6 +362,7 @@ public class EventCreator {
         l =-2; r =1; fd=-1;
         chance=1;
         e=new Effect(EffectType.Food, 1, ev);
+        req = e;
         make();
 
         title = "Astral Visitor";
@@ -357,8 +377,10 @@ public class EventCreator {
         e = new Effect(EffectType.Food, -2, ev);
         e1 = new Effect(EffectType.FoodStorage, -2, ev);
         e2 = new Effect(EffectType.Morale, -2, ev);
+        req = e;
         l = -12; r=-1; fd = +3;
         make();
+        req = e;
 
 
     }
@@ -399,19 +421,29 @@ public class EventCreator {
             printBadEvent("title/desc");
 			return;
 		}
-        Array<Effect> reqs = new Array<>();
         Array<Effect> fx = new Array<>();
         if(e!=null) fx.add(e);
         if(e1!=null) fx.add(e1);
-		if(e2!=null) fx.add(e2);
-		if(e3!=null) fx.add(e3);
-		if(e4!=null) fx.add(e4);
-		Event result = new Event(title,description,fx, outcomes, reqs, chance, l, r, fd, story, turn, uses);
+        if(e2!=null) fx.add(e2);
+        if(e3!=null) fx.add(e3);
+        if(e4!=null) fx.add(e4);
+        Array<Effect> reqs = new Array<>();
+        if(req!=null) reqs.add(req);
+        if(req1!=null) reqs.add(req1);
+        if(req2!=null) reqs.add(req2);
+        if(req3!=null) reqs.add(req3);
+        if(req4!=null) reqs.add(req4);
+        Event result = new Event(title,description,fx, outcomes, reqs, chance, l, r, fd, story, turn, uses);
         e=null;
 		e1=null;
 		e2=null;
 		e3=null;
 		e4=null;
+        req=null;
+        req1=null;
+        req2=null;
+        req3=null;
+        req4=null;
 		uses=999;
 		description = null;
 		l=0; r=0; fd=0;

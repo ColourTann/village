@@ -11,22 +11,19 @@ import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.effect.Effect.EffectType;
+import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.building.BuildingEffect.BuildingEffectType;
 
 public class Building {
-	
-	
+
 	public String name;
 	String description;
 	public int level;
 	public Cost cost;
-	
 	public Array<BuildingEffect> buildingEffects;
 	public TextureRegion image = Main.atlas.findRegion("building/hut");
-	
-	
-	
+
 	public Building(String name, String description, int level, Cost cost, Array<BuildingEffect> buildingEffects) {
 		this.name=name;
 		this.description=description;
@@ -35,11 +32,8 @@ public class Building {
 		this.buildingEffects = buildingEffects;
 	}
 	
-	
-	
-	
-
 	public void onBuild() {
+        Village.getInventory().resetWisps();
 		for(BuildingEffect bEff:buildingEffects){
 			if(bEff.effectType==BuildingEffectType.Now){
 				for(Effect e:bEff.effects){
@@ -47,8 +41,8 @@ public class Building {
 				}
 			}
 		}
+        Village.getInventory().showWisps();
 	}
-	
 
 	public void upkeep() {
 		for(BuildingEffect bEff:buildingEffects){

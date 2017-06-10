@@ -91,6 +91,7 @@ public abstract class Island {
     protected abstract void setupBuildings();
     protected abstract String getBackgroundString();
     public abstract String getAmbienceString();
+    public abstract String getIslandName();
 
     public TextureRegion background;
 

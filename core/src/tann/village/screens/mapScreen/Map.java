@@ -15,9 +15,9 @@ public class Map {
 
 	
 	public Map() {
-		addIsland(new TutorialIsland(Images.island0, Gdx.graphics.getWidth()/2, 150));
-        addIsland(new WeatherIsland(Images.island1, Gdx.graphics.getWidth()/3, 350));
-        addIsland(new GemIsland(Images.island2, Gdx.graphics.getWidth()/3*2, 500));
+		addIsland(new TutorialIsland(Images.island0, Gdx.graphics.getWidth()/2, 250));
+        addIsland(new WeatherIsland(Images.island1, Gdx.graphics.getWidth()/3, 450));
+        addIsland(new GemIsland(Images.island2, Gdx.graphics.getWidth()/3*2, 600));
 	}
 	List<Island> islands = new ArrayList<>();
 	public void addIsland(Island i){

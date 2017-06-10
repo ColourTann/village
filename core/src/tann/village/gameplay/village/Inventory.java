@@ -28,7 +28,7 @@ public class Inventory{
 
 	public Inventory() {
 		food = new InventoryItem(Images.food, 0, 5);
-		wood = new InventoryItem(Images.wood);
+		wood = new InventoryItem(Images.wood, 0, Integer.MAX_VALUE);
 		morale = new InventoryItem(Images.morale);
 		fate = new InventoryItem(Images.fate);
 
@@ -128,6 +128,10 @@ public class Inventory{
 	    wood.imposeMinimum();
     }
 
+    public boolean isEffectValidAllowOvershoot(Effect e){
+	    if(e.value>0) return true;
+	    return isEffectValid(e);
+    }
 	
 	public boolean isEffectValid(Effect e){
 		if(get(e) == null) return true;

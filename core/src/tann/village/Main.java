@@ -31,7 +31,7 @@ import tann.village.util.Sounds;
 
 public class Main extends ApplicationAdapter {
 	public static int width = 1000, height = 700;
-	public static String version = "0.3";
+	public static String version = "0.3.1";
 	SpriteBatch batch;
 	Stage stage;
 	OrthographicCamera orthoCam;
@@ -233,6 +233,7 @@ public class Main extends ApplicationAdapter {
 		GameScreen.reset();
 		GameScreen.get().init(island, Village.get());
 		setScreen(GameScreen.get(), TransitionType.LEFT, Interpolation.pow2Out, .5f);
+		GameScreen.get().pop();
 	}
 
 }

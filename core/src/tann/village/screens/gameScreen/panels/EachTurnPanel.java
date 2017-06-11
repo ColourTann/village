@@ -33,7 +33,7 @@ public class EachTurnPanel extends Group{
     }
 
     private void layout(){
-        clear();
+        clearChildren();
         int gap = 10;
         TextBox tb = new TextBox("Each turn:", Fonts.fontSmall, 999, Align.center);
         setSize(gap+(EffectPanel.WIDTH+gap)*panels.size(), tb.getHeight() + EffectPanel.HEIGHT + gap*3);

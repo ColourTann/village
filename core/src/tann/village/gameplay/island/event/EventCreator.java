@@ -295,7 +295,7 @@ public class EventCreator {
 
         turn=3;
         title="Crimson Dreams";
-        description="The eldest villager wakes up from a dream. They tell of a great catastrophe unless 13 crisom gems are offered to the gods here.";
+        description="The eldest villager wakes up from a dream. They tell of a great catastrophe unless 13 crimson gems are offered to the gods here.";
         e = new Effect(EffectType.CollectGems, 13, EffectSource.Event);
         e2 = new Effect(EffectType.Gem, 1, ev);
         makeStory();

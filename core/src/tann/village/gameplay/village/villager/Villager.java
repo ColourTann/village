@@ -36,7 +36,8 @@ public class Villager {
 
     Color col;
 	public String firstName, lastName;
-	public int xp, xpToLevelUp = 3;
+	public int xp;
+	public static final int xpToLevelUp = 3;
 	public VillagerType type;
 	public Die die;
 
@@ -58,8 +59,6 @@ public class Villager {
 		this.die=die;
 		this.die.villager=this;
 		this.type=die.type;
-		xpToLevelUp = (type.level+3);
-
 	}
 	
 	private void setupDie() {

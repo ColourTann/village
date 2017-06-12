@@ -15,7 +15,7 @@ import tann.village.util.*;
 public class OutcomePanel extends Group {
     public static int WIDTH = 270, HEIGHTBASE = 10, HEIGHTADD = 70;
     Color border = Colours.dark;
-    public OutcomePanel(Outcome o) {
+    public OutcomePanel(final Outcome o) {
         setSize(WIDTH, HEIGHTBASE+HEIGHTADD*((o.effects.size+1)/2));
         Layoo l = new Layoo(this);
         l.row(1);

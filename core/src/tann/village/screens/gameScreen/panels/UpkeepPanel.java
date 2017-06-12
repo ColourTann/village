@@ -24,7 +24,7 @@ public class UpkeepPanel extends InfoPanel{
 
 	public UpkeepPanel() {
 		setBackground(Colours.brown_light);
-		build(new ArrayList<>());
+		build(new ArrayList<Effect>());
 	}
 	
 

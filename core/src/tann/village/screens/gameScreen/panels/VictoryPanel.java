@@ -21,8 +21,12 @@ public class VictoryPanel extends InfoPanel{
         l.actor(ok);
         l.row(1);
         l.layoo();
-        ok.setRunnable(
-                ()-> {Main.self.setScreen(MapScreen.get(), Main.TransitionType.LEFT, Interpolation.pow2Out, 1); Sounds.stopMusic();}
+        ok.setRunnable(new Runnable() {
+            @Override
+            public void run() {
+                Main.self.setScreen(MapScreen.get(), Main.TransitionType.LEFT, Interpolation.pow2Out, 1); Sounds.stopMusic();
+            }
+        }
         );
     }
 }

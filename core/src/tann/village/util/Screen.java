@@ -11,7 +11,7 @@ import tann.village.Main.MainState;
 import tann.village.bullet.BulletStuff;
 import tann.village.screens.mapScreen.MapScreen;
 
-public abstract class Screen extends Group{
+public abstract class Screen extends Lay{
 	//screenshake stuff//
 	private float shakeMagnitude=0;
 	private static float shakeFrequency=100;

@@ -16,8 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.*;
 import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.village.Village;
@@ -59,10 +59,30 @@ public class Main extends ApplicationAdapter {
 		}
 		previousTime = System.currentTimeMillis();
 	}
-	
+
+	public Main(){};
+
+	public Main(int width, int height){
+	    Main.width = width;
+	    Main.height=height;
+    }
+
+    @Override
+    public void resize(int width, int height) {
+//        Main.width = width;
+//        Main.height=height;
+        orthoCam.setToOrtho(false, width, height);
+        if(currentScreen!=null){
+            currentScreen.layChain();
+        }
+    }
+
 	@Override
 	public void create() {
-		logTime(null);
+	    Main.width = Gdx.graphics.getWidth();
+	    Main.height = Gdx.graphics.getHeight();
+        System.out.println("MAGPIE: "+Gdx.graphics.getWidth());
+        logTime(null);
 		logTime("start");
         Sounds.setup();
 		atlas = new TextureAtlas(Gdx.files.internal("atlas_image.atlas"));
@@ -79,7 +99,11 @@ public class Main extends ApplicationAdapter {
 		Fonts.setup();
 
 		logTime("setup");
-		stage = new Stage(new FitViewport(Main.width, Main.height));
+//        stage = new Stage(new ScalingViewport(Scaling.none, Main.width, Main.height));
+        stage = new Stage(new FitViewport(500, 500));
+        stage = new Stage(new ExtendViewport(500, 500));
+        stage = new Stage(new FillViewport(500, 500));
+        stage = new Stage(new ScreenViewport());
 		orthoCam = (OrthographicCamera) stage.getCamera();
 		batch = (SpriteBatch) stage.getBatch();
 		Gdx.input.setInputProcessor(stage);
@@ -235,5 +259,4 @@ public class Main extends ApplicationAdapter {
 		setScreen(GameScreen.get(), TransitionType.LEFT, Interpolation.pow2Out, .5f);
 		GameScreen.get().pop();
 	}
-
 }

@@ -151,7 +151,7 @@ public class EventCreator {
 	public static void makeTutorialIslandStory(){
         turn=0;
         title="Land ho!";
-        description="You've has found land again, it looks like a perfect place to start a new village!";
+        description="You've found land again, it looks like a perfect place to start a new village!";
         e = new Effect(EffectType.Food, 3, EffectSource.Event);
         e1 = new Effect(EffectType.Wood, 3, EffectSource.Event);
         makeStory();

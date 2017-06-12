@@ -10,7 +10,7 @@ public class VillageDesktop {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.samples=3;
-		config.resizable=false;
+		config.resizable=true;
 		config.vSyncEnabled=true;
 		config.foregroundFPS=60;
 		config.width=Main.width;

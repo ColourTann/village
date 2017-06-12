@@ -46,6 +46,10 @@ public class GameScreen extends Screen{
         self=null;
     }
 
+    @Override
+    protected void layout(Layoo l) {
+        System.out.println("laying!");
+    }
 
 
     public enum State{Story, Event, Rolling, Review, Levelling}
@@ -168,7 +172,7 @@ public class GameScreen extends Screen{
 	@Override
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
-		Draw.draw(batch, island.background, getX(), getY());
+		Draw.drawSize(batch, island.background, getX(), getY(), getWidth(), getHeight());
 //		Fonts.font.draw(batch, "state: "+state, 400, Main.height-Fonts.font.getAscent());
 	}
 

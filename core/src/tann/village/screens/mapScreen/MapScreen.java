@@ -68,7 +68,7 @@ public class MapScreen extends Screen{
 	}
 
     @Override
-    protected void layout(Layoo l) {
+    protected void layout() {
 
     }
 }

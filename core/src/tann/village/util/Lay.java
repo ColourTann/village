@@ -15,9 +15,9 @@ public abstract class Lay extends Group {
                 System.err.println(a.getClass()+" is not a lay");
             }
         }
-        layout(new Layoo(this));
+        layout();
     }
 
     // in this method, set up the size of self and placement of children
-    protected abstract void layout(Layoo l);
+    protected abstract void layout();
 }

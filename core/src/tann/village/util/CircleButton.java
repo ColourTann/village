@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class CircleButton extends Group{
     public CircleButton(float x, float y, final float radius, Color col) {
-        setPosition(x-radius, y-radius);
+       setCirclePosition(x,y);
         setSize(radius*2, radius*2);
         setColor(col);
         addListener(new InputListener(){
@@ -23,6 +23,10 @@ public class CircleButton extends Group{
                 return true;
             }
         });
+    }
+
+    public void setCirclePosition(float x, float y){
+        setPosition(x-getWidth()/2, y-getHeight()/2);
     }
 
     Runnable clickAction;

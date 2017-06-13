@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Align;
 import tann.village.Images;
 import tann.village.util.*;
 
-public class InventoryItemPanel extends Group{
+public class InventoryItemPanel extends Lay{
 	public static final int WIDTH=130, HEIGHT=100;
 	static final int TEXTURESIZE = 60;
 	private int value;
@@ -22,10 +22,15 @@ public class InventoryItemPanel extends Group{
 		this.value=value;
 		this.max=max;
 		this.tr=tr;
-		imageActor = new ImageActor(tr, TEXTURESIZE, TEXTURESIZE);
-		setup();
+        imageActor = new ImageActor(tr, TEXTURESIZE, TEXTURESIZE);
+        setup();
+        layout();
+    }
 
-	}
+    @Override
+    protected void layout() {
+
+    }
 	
 	public void setValue(int value){
 		this.value=value;
@@ -108,4 +113,6 @@ public class InventoryItemPanel extends Group{
 	public void addMax(int value) {
 		setMax(max+value);
 	}
+
+
 }

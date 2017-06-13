@@ -47,8 +47,15 @@ public class GameScreen extends Screen{
     }
 
     @Override
-    protected void layout(Layoo l) {
+    protected void layout() {
         System.out.println("laying!");
+        setSize(Main.width, Main.height);
+        InventoryPanel inventoryGroup = Village.getInventory().getGroup();
+        inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight()));
+        cButt1.setCirclePosition(Main.width, 0);
+        cButt2.setCirclePosition(Main.width, 350);
+        showRollContainer(lastRollContainerShow);
+
     }
 
 
@@ -61,6 +68,8 @@ public class GameScreen extends Screen{
 	ReviewPanel reviewPanel = new ReviewPanel(Village.get().getDayNum());
 	EventPanel eventPanel;
 	ConstructionPanel constructionPanel;
+    CircleButton cButt1;
+    CircleButton cButt2;
 	public EachTurnPanel eachTurnPanel = new EachTurnPanel();
 	public static GameScreen get(){
 		if(self==null){
@@ -97,9 +106,8 @@ public class GameScreen extends Screen{
 
 		addActor(eachTurnPanel);
 
-		InventoryPanel inventoryGroup = Village.getInventory().getGroup();
-		addActor(inventoryGroup);
-		inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight())) ;
+
+		addActor(Village.getInventory().getGroup());
 		for(int i=0;i<STARTING_VILLAGERS;i++){
 			villagers.add(new Villager(i));
 		}
@@ -122,34 +130,31 @@ public class GameScreen extends Screen{
         rollContainer = new Group();
         addActor(rollContainer);
 
-        CircleButton cButt = new CircleButton(Main.width, 0, 180, Colours.dark);
+        cButt1 = new CircleButton(Main.width, 0, 180, Colours.dark);
         rollButtonPanel = RollManager.getRollPanel();
-        cButt.setActor(rollButtonPanel, cButt.getWidth()/4-rollButtonPanel.getWidth()/2 + 20, cButt.getHeight()/2);
-        cButt.setClickAction(new Runnable() {
+        cButt1.setActor(rollButtonPanel, cButt1.getWidth()/4-rollButtonPanel.getWidth()/2 + 20, cButt1.getHeight()/2);
+        cButt1.setClickAction(new Runnable() {
             @Override
             public void run() {
                 rollButtonClick();
             }
         });
-        rollContainer.addActor(cButt);
+        rollContainer.addActor(cButt1);
 
 
-        cButt = new CircleButton(Main.width, 330, 110, Colours.dark);
+        cButt2= new CircleButton(Main.width, 330, 110, Colours.dark);
         confirmPanel = RollManager.getConfirmPanel();
-        cButt.setActor(confirmPanel, cButt.getWidth()/4-confirmPanel.getWidth()/2+10, cButt.getHeight()/2-confirmPanel.getHeight()/2);
-        cButt.setClickAction(new Runnable() {
+        cButt2.setActor(confirmPanel, cButt2.getWidth()/4-confirmPanel.getWidth()/2+10, cButt2.getHeight()/2-confirmPanel.getHeight()/2);
+        cButt2.setClickAction(new Runnable() {
             @Override
             public void run() {
                 confirmButtonClick();
             }
         });
-        rollContainer.addActor(cButt);
+        rollContainer.addActor(cButt2);
         showRollContainer(false);
-//        CrystalBall ball = CrystalBall.get();
-//        int gap = 40;
-//        ball.setPosition(getWidth() - ball.getWidth()-gap,getHeight()-ball.getHeight()-gap);
-//        addActor(ball);
         constructionPanel= new ConstructionPanel();
+        layout();
 	}
 	
 	public void center(Actor a){
@@ -432,7 +437,9 @@ public class GameScreen extends Screen{
 		roll(false);
 	}
 
+	boolean lastRollContainerShow;
 	public void showRollContainer(boolean show){
+	    lastRollContainerShow=show;
 	    rollContainer.addAction(Actions.moveTo(show?0:ROLL_CONTAINER_OFFSCREEN, 0, .5f, Interpolation.pow2Out));
     }
 	

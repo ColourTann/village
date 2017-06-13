@@ -6,14 +6,20 @@ import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.InventoryItem;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.InventoryItemPanel;
+import tann.village.util.Lay;
 import tann.village.util.Layoo;
 
-public class InventoryPanel extends Group {
+public class InventoryPanel extends Lay {
     Inventory inventory;
-    public static final int WIDTH = Main.width, HEIGHT=InventoryItemPanel.HEIGHT;
+    public static final int  HEIGHT=InventoryItemPanel.HEIGHT;
     public InventoryPanel(Inventory inventory){
         this.inventory = inventory;
-        setSize(WIDTH, HEIGHT);
+        layout();
+    }
+
+    @Override
+    protected void layout() {
+        setSize(Main.width, HEIGHT);
         layout(false);
     }
 
@@ -38,4 +44,6 @@ public class InventoryPanel extends Group {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
     }
+
+
 }

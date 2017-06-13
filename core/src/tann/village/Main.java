@@ -69,8 +69,8 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void resize(int width, int height) {
-//        Main.width = width;
-//        Main.height=height;
+        Main.width = width;
+        Main.height=height;
         orthoCam.setToOrtho(false, width, height);
         if(currentScreen!=null){
             currentScreen.layChain();

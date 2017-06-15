@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
-public class CircleButton extends Group{
+public class CircleButton extends Lay{
     public CircleButton(float x, float y, final float radius, Color col) {
         setSize(radius*2, radius*2);
         setCirclePosition(x,y);
@@ -56,5 +56,11 @@ public class CircleButton extends Group{
             Draw.drawSizeCentered(batch, tr, getX()+textureX*getWidth(), getY()+textureY*getHeight(), textureWidth, textureHeight);
         }
         super.draw(batch, parentAlpha);
+    }
+
+    @Override
+    protected void layout() {
+        System.out.println("laying out circle");
+        System.out.println(getChildren().size);
     }
 }

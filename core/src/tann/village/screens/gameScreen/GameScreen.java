@@ -46,18 +46,6 @@ public class GameScreen extends Screen{
         self=null;
     }
 
-    @Override
-    protected void layout() {
-        System.out.println("laying!");
-        setSize(Main.width, Main.height);
-        InventoryPanel inventoryGroup = Village.getInventory().getGroup();
-        inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight()));
-        cButt1.setCirclePosition(Main.width, 0);
-        cButt2.setCirclePosition(Main.width, 350);
-        showRollContainer(lastRollContainerShow);
-
-    }
-
 
     public enum State{Story, Event, Rolling, Review, Levelling}
 	public State state;
@@ -127,12 +115,10 @@ public class GameScreen extends Screen{
         });
         addActor(constructionButt);
 
-        rollContainer = new Group();
+        rollContainer = new BasicLay();
         addActor(rollContainer);
 
         cButt1 = new CircleButton(Main.width, 0, 180, Colours.dark);
-        rollButtonPanel = RollManager.getRollPanel();
-        cButt1.setActor(rollButtonPanel, cButt1.getWidth()/4-rollButtonPanel.getWidth()/2 + 20, cButt1.getHeight()/2);
         cButt1.setClickAction(new Runnable() {
             @Override
             public void run() {
@@ -143,8 +129,7 @@ public class GameScreen extends Screen{
 
 
         cButt2= new CircleButton(Main.width, 330, 110, Colours.dark);
-        confirmPanel = RollManager.getConfirmPanel();
-        cButt2.setActor(confirmPanel, cButt2.getWidth()/4-confirmPanel.getWidth()/2+10, cButt2.getHeight()/2-confirmPanel.getHeight()/2);
+
         cButt2.setClickAction(new Runnable() {
             @Override
             public void run() {
@@ -154,8 +139,33 @@ public class GameScreen extends Screen{
         rollContainer.addActor(cButt2);
         showRollContainer(false);
         constructionPanel= new ConstructionPanel();
-        layout();
+        layChain();
 	}
+
+    @Override
+    protected void layout() {
+        setSize(Main.width, Main.height);
+
+        // inventory stuff
+
+        InventoryPanel inventoryGroup = Village.getInventory().getGroup();
+        inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight()));
+
+        //reroll stuff
+
+        float rerollSize = Main.h(35)*2;
+        float confirmSize = Main.h(18)*2;
+        cButt1.setSize(rerollSize, rerollSize);
+        cButt1.setCirclePosition(Main.width, 0);
+        cButt2.setSize(confirmSize, confirmSize);
+        cButt2.setCirclePosition(Main.width, Main.h(60));
+        showRollContainer(lastRollContainerShow);
+        rollButtonPanel = RollManager.getRollPanel();
+        cButt1.setActor(rollButtonPanel, cButt1.getWidth()/4-rollButtonPanel.getWidth()/2 + 20, cButt1.getHeight()/2);
+        confirmPanel = RollManager.getConfirmPanel();
+        cButt2.setActor(confirmPanel, cButt2.getWidth()/4-confirmPanel.getWidth()/2+10, cButt2.getHeight()/2-confirmPanel.getHeight()/2);
+    }
+
 	
 	public void center(Actor a){
         a.setPosition(getWidth()/2-a.getWidth()/2, (getHeight())/2-a.getHeight()/2);

@@ -9,27 +9,26 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
 import tann.village.Images;
+import tann.village.Main;
 import tann.village.util.*;
 
 public class InventoryItemPanel extends Lay{
-	public static final int WIDTH=130, HEIGHT=100;
-	static final int TEXTURESIZE = 60;
 	private int value;
 	public int max;
 	TextureRegion tr;
 	public InventoryItemPanel(TextureRegion tr, int value, int max) {
-		setSize(WIDTH, HEIGHT);
 		this.value=value;
 		this.max=max;
 		this.tr=tr;
+        float TEXTURESIZE = Main.height/10f;
         imageActor = new ImageActor(tr, TEXTURESIZE, TEXTURESIZE);
-        setup();
         layout();
     }
 
     @Override
     protected void layout() {
-
+        setSize(Main.height/4f, Main.height/8f);
+        setup();
     }
 	
 	public void setValue(int value){
@@ -79,12 +78,13 @@ public class InventoryItemPanel extends Lay{
         if(tr== Images.fate){
              col = (getValue()>0?Colours.blue_light:getValue()<0?Colours.red:Colours.grey);
         }
-		if(amount==null)amount = new TextBox(String.valueOf(getValue()), Fonts.font, WIDTH, Align.center);
-		if(outOf==null) outOf = new TextBox(max!=Integer.MAX_VALUE?"/"+max:"", Fonts.fontSmall, WIDTH, Align.center);
+		if(amount==null)amount = new TextBox(String.valueOf(getValue()), Fonts.font, getWidth(), Align.center);
+		if(outOf==null) outOf = new TextBox(max!=Integer.MAX_VALUE?"/"+max:"", Fonts.fontSmall, getWidth(), Align.center);
 		outOf.setup(max!=Integer.MAX_VALUE?"/"+max:"");
         amount.setup(String.valueOf(getValue()));
         outOf.setTextColour(Colours.brown_light);
         Layoo l = new Layoo(this);
+        imageActor.setSize(Main.height/10f,Main.height/10f);
         l.add(1,imageActor,1, amount, 0, outOf, 1);
 
         if(col!=null){

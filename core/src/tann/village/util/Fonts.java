@@ -23,12 +23,12 @@ public class Fonts {
 	public static void setup(){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/ElMessiri-Regular.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 20;
+        parameter.size = (int)Main.h(20/700f*100);
 		fontSmall = generator.generateFont(parameter);
-        parameter.size=44;
+        parameter.size=(int)Main.h(44/700f*100);
         font= generator.generateFont(parameter);
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Cinzel-Regular.otf"));
-        parameter.size=55;
+        parameter.size=(int)Main.h(55/700f*100);
 		fontBig = generator.generateFont(parameter);
 		generator.dispose();
 	}
@@ -41,4 +41,5 @@ public class Fonts {
         font.setColor(col);
         font.draw(batch, string, x, y+height/2+font.getCapHeight()/2, width, align, true);
     }
+
 }

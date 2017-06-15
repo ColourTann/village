@@ -31,7 +31,7 @@ public class UpkeepPanel extends InfoPanel{
 	public void build(List<Effect> effects){
 		clear();
 		TextBox title = new TextBox("Upkeep", Fonts.font, 599, Align.center);
-		setSize(Math.max(title.getWidth(), (EffectPanel.WIDTH+EXTRA)*Math.min(2,effects.size()))+EXTRA, InventoryPanel.HEIGHT* (Math.max(1, (effects.size()-1)/2)));
+		setSize(Math.max(title.getWidth(), (EffectPanel.WIDTH+EXTRA)*Math.min(2,effects.size()))+EXTRA, Main.height/10f* (Math.max(1, (effects.size()-1)/2)));
 		Layoo l = new Layoo(this);
 		l.row(1);
 		l.actor(title);

@@ -69,9 +69,13 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void resize(int width, int height) {
+        System.out.println("resizing");
         Main.width = width;
         Main.height=height;
         orthoCam.setToOrtho(false, width, height);
+        stage.getViewport().update(width, height);
+        Fonts.setup();
+        BulletStuff.resize();
         if(currentScreen!=null){
             currentScreen.layChain();
         }
@@ -79,6 +83,7 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+        System.out.println("creating");
 	    Main.width = Gdx.graphics.getWidth();
 	    Main.height = Gdx.graphics.getHeight();
         System.out.println("MAGPIE: "+Gdx.graphics.getWidth());
@@ -259,4 +264,12 @@ public class Main extends ApplicationAdapter {
 		setScreen(GameScreen.get(), TransitionType.LEFT, Interpolation.pow2Out, .5f);
 		GameScreen.get().pop();
 	}
+
+	public static float w(float factor){
+	    return Main.width/100f*factor;
+    }
+
+    public static float h(float factor){
+	    return Main.height/100f*factor;
+    }
 }

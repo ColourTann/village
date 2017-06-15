@@ -11,7 +11,6 @@ import tann.village.util.Layoo;
 
 public class InventoryPanel extends Lay {
     Inventory inventory;
-    public static final int  HEIGHT=InventoryItemPanel.HEIGHT;
     public InventoryPanel(Inventory inventory){
         this.inventory = inventory;
         layout();
@@ -19,7 +18,7 @@ public class InventoryPanel extends Lay {
 
     @Override
     protected void layout() {
-        setSize(Main.width, HEIGHT);
+        setSize(Main.width, Main.height/10f);
         layout(false);
     }
 

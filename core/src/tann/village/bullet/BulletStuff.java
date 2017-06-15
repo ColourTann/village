@@ -61,7 +61,7 @@ public class BulletStuff {
 		dynamicsWorld.setGravity(new Vector3(0, -30f, 0));
 		contactListener = new MyContactListener();
 		modelBatch = new ModelBatch();
-		
+
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(camX, camY, camZ);
 		cam.lookAt(0, 0, .1f);
@@ -69,7 +69,6 @@ public class BulletStuff {
         camController = new CameraInputController(cam);
 		spinCam= new PerspectiveCamera(60, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		
 		ModelBuilder mb = new ModelBuilder();
 		mb.begin();
 		final float wallSize = 3.9f;
@@ -115,7 +114,12 @@ public class BulletStuff {
 		shader = new DieShader();
 	    shader.init();
 	}
-	
+
+	public static void resize(){
+	    cam.viewportWidth=Main.width;
+	    cam.viewportHeight=Main.height;
+	    cam.update();
+	}
 	
 	public static void refresh(Array<Villager> villagers) {
 		dice.clear();

@@ -7,19 +7,26 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Align;
 import tann.village.Images;
+import tann.village.Main;
 import tann.village.gameplay.village.RollManager;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.InventoryItemPanel;
 import tann.village.util.*;
 
-public class RerollPanel extends Group{
+public class RerollPanel extends Lay{
 	
-	static final int WIDTH = 120, HEIGHT = 140, TICK_SIZE=80;
+	static final int TICK_SIZE=80;
 
 	public RerollPanel() {
 	    setTouchable(Touchable.disabled);
-		setSize(WIDTH, HEIGHT);
+	    layout();
 	}
+
+    @Override
+    protected void layout() {
+        System.out.println("reroll layout");
+        setSize(Main.h(20), Main.h(20));
+    }
 
 	static int rollsLeft,maximumRolls, diceSelected;
 	static boolean locked;
@@ -38,7 +45,8 @@ public class RerollPanel extends Group{
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-	    float rollSize = 80;
+
+	    float rollSize = Main.h(15);
         if(diceSelected==0){
             batch.setColor(Colours.grey);
         }
@@ -50,11 +58,11 @@ public class RerollPanel extends Group{
         }
         if(!locked){
             batch.setColor(Colours.grey);
-            Draw.drawLoadingAnimation(batch, getX()+getWidth()/2, getY()+getHeight()/3*2, 30, 10, 2, 3);
+            Draw.drawLoadingAnimation(batch, getX()+getWidth()/2, getY()+getHeight()/3*2, Main.h(3), Main.h(2), 2, 3);
         }
         else{
 
-            Draw.drawSize(batch, Images.roll, getX()+getWidth()/2-rollSize/2, getY() + getHeight()-rollSize, rollSize, rollSize);
+            Draw.drawSize(batch, Images.roll, getX()+getWidth()/2-rollSize/2, getY() + getHeight()-rollSize/2, rollSize, rollSize);
         }
 
         if(rollsLeft > 0 ){
@@ -63,6 +71,7 @@ public class RerollPanel extends Group{
         else{
             Fonts.font.setColor(Colours.grey);
         }
-        Fonts.font.draw(batch, rollsLeft+"/"+maximumRolls, getX()+getWidth()/4, getY()+40, getWidth()/2, Align.center, false);
+        Fonts.font.draw(batch, rollsLeft+"/"+maximumRolls, getX()+getWidth()/4, getY()+Main.h(5), getWidth()/2, Align.center, false);
     }
+
 }

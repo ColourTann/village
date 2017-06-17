@@ -12,7 +12,7 @@ import tann.village.util.TextBox;
 
 public class BuildingEffectPanel extends Group{
 
-	public static final float WIDTH = (EffectPanel.WIDTH)*2;
+	public static final float WIDTH = (EffectPanel.staticWidth())*2;
 	public static final float HEIGHT = 63;
 	
 	TextBox bonusType;

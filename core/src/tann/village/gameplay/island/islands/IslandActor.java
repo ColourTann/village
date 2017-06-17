@@ -10,12 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 import tann.village.Images;
 import tann.village.Main;
-import tann.village.util.Colours;
-import tann.village.util.Draw;
-import tann.village.util.Fonts;
-import tann.village.util.TextBox;
+import tann.village.util.*;
 
-public class IslandActor extends Group{
+public class IslandActor extends Lay{
 	
 	Island island;
 	int maskSize = 180;
@@ -40,5 +37,9 @@ public class IslandActor extends Group{
 		Draw.draw(batch, island.tr, getX(), getY());
 		super.draw(batch, parentAlpha);
 	}
-	
+
+    @Override
+    public void layout() {
+
+    }
 }

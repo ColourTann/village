@@ -59,8 +59,6 @@ public class CircleButton extends Lay{
     }
 
     @Override
-    protected void layout() {
-        System.out.println("laying out circle");
-        System.out.println(getChildren().size);
+    public void layout() {
     }
 }

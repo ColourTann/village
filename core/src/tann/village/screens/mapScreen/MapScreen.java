@@ -68,7 +68,7 @@ public class MapScreen extends Screen{
 	}
 
     @Override
-    protected void layout() {
+    public void layout() {
 
     }
 }

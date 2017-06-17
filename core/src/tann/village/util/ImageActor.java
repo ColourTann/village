@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import tann.village.screens.gameScreen.BasicLay;
 
-public class ImageActor extends Actor{
+public class ImageActor extends BasicLay{
 	
 	public TextureRegion tr;
     public ImageActor(TextureRegion tr, float width, float height) {
@@ -25,4 +26,8 @@ public class ImageActor extends Actor{
 	}
 
 
+    @Override
+    public void layout() {
+
+    }
 }

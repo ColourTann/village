@@ -11,7 +11,7 @@ import tann.village.gameplay.effect.Effect;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EachTurnPanel extends Group{
+public class EachTurnPanel extends Lay{
     public EachTurnPanel() {
 
     }
@@ -32,11 +32,11 @@ public class EachTurnPanel extends Group{
         }
     }
 
-    private void layout(){
+    public void layout(){
         clearChildren();
         int gap = 10;
         TextBox tb = new TextBox("Each turn:", Fonts.fontSmall, 999, Align.center);
-        setSize(gap+(EffectPanel.WIDTH+gap)*panels.size(), tb.getHeight() + EffectPanel.HEIGHT + gap*3);
+        setSize(gap+(EffectPanel.staticWidth()+gap)*panels.size(), tb.getHeight() + EffectPanel.staticHeight() + gap*3);
         Layoo l = new Layoo(this);
         l.row(1);
         l.actor(tb);

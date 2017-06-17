@@ -23,8 +23,7 @@ public class RerollPanel extends Lay{
 	}
 
     @Override
-    protected void layout() {
-        System.out.println("reroll layout");
+    public void layout() {
         setSize(Main.h(20), Main.h(20));
     }
 
@@ -58,7 +57,7 @@ public class RerollPanel extends Lay{
         }
         if(!locked){
             batch.setColor(Colours.grey);
-            Draw.drawLoadingAnimation(batch, getX()+getWidth()/2, getY()+getHeight()/3*2, Main.h(3), Main.h(2), 2, 3);
+            Draw.drawLoadingAnimation(batch, getX()+getWidth()/2, getY()+getHeight()/3*2+Main.h(3), Main.h(3), Main.h(2), 2, 3);
         }
         else{
 
@@ -71,7 +70,7 @@ public class RerollPanel extends Lay{
         else{
             Fonts.font.setColor(Colours.grey);
         }
-        Fonts.font.draw(batch, rollsLeft+"/"+maximumRolls, getX()+getWidth()/4, getY()+Main.h(5), getWidth()/2, Align.center, false);
+        Fonts.font.draw(batch, rollsLeft+"/"+maximumRolls, getX()+getWidth()/4, getY()+Main.h(8), getWidth()/2, Align.center, false);
     }
 
 }

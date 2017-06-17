@@ -40,7 +40,6 @@ public class GameScreen extends Screen{
     public RerollPanel rollButtonPanel;
     public ConfirmPanel confirmPanel;
     Group rollContainer;
-    private static final int ROLL_CONTAINER_OFFSCREEN = 200;
 
     public static void reset() {
         self=null;
@@ -106,7 +105,6 @@ public class GameScreen extends Screen{
 		Sounds.playMusic(island.getAmbienceString());
 
         constructionButt = new CircleButton(0, 0, 180, Colours.dark);
-        constructionButt.setTexture(Images.hammer, 0.7f, .7f, 80, 80);
         constructionButt.setClickAction(new Runnable() {
             @Override
             public void run() {
@@ -143,7 +141,7 @@ public class GameScreen extends Screen{
 	}
 
     @Override
-    protected void layout() {
+    public void layout() {
         setSize(Main.width, Main.height);
 
         // inventory stuff
@@ -164,6 +162,20 @@ public class GameScreen extends Screen{
         cButt1.setActor(rollButtonPanel, cButt1.getWidth()/4-rollButtonPanel.getWidth()/2 + 20, cButt1.getHeight()/2);
         confirmPanel = RollManager.getConfirmPanel();
         cButt2.setActor(confirmPanel, cButt2.getWidth()/4-confirmPanel.getWidth()/2+10, cButt2.getHeight()/2-confirmPanel.getHeight()/2);
+
+        constructionButt.setSize(Main.h(60), Main.h(60));
+        constructionButt.setTexture(Images.hammer, 0.7f, .7f, Main.h(13), Main.h(13));
+        constructionButt.setCirclePosition(0,0);
+
+        if(eventPanel!=null){
+            center(eventPanel);
+        }
+        if(reviewPanel!=null){
+            center(reviewPanel);
+        }
+        if(proceedButton!=null){
+            proceedButton.refreshPosition();
+        }
     }
 
 	
@@ -188,7 +200,6 @@ public class GameScreen extends Screen{
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
 		Draw.drawSize(batch, island.background, getX(), getY(), getWidth(), getHeight());
-//		Fonts.font.draw(batch, "state: "+state, 400, Main.height-Fonts.font.getAscent());
 	}
 
 
@@ -388,9 +399,6 @@ public class GameScreen extends Screen{
 		    state=State.Story;
         }
 
-        if(event.isStory() && dayNum == 0){
-
-        }
         else {
             int goodness = event.getGoodness();
             String[] sound = null;
@@ -450,7 +458,7 @@ public class GameScreen extends Screen{
 	boolean lastRollContainerShow;
 	public void showRollContainer(boolean show){
 	    lastRollContainerShow=show;
-	    rollContainer.addAction(Actions.moveTo(show?0:ROLL_CONTAINER_OFFSCREEN, 0, .5f, Interpolation.pow2Out));
+	    rollContainer.addAction(Actions.moveTo(show?0:Main.h(50), 0, .5f, Interpolation.pow2Out));
     }
 	
 	private void showReview() {
@@ -482,11 +490,9 @@ public class GameScreen extends Screen{
 	private ProceedButton proceedButton = new ProceedButton();
 	
 	public void addProceedButton(Actor relativeTo){
-		int dist = 10+20;
 		proceedButton.setColor(Colours.green_light);
 		addActor(proceedButton);
 		proceedButton.setLinkedActor(relativeTo);
-		proceedButton.setPosition(Main.width/2-proceedButton.getWidth()/2, relativeTo.getY()-proceedButton.getHeight()-dist);
 	}
 	
 	public void addVillagerPanel(Villager villager) {

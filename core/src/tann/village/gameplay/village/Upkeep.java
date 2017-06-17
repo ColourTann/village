@@ -1,5 +1,6 @@
 package tann.village.gameplay.village;
 
+import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Effect;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.UpkeepPanel;
@@ -15,7 +16,7 @@ public class Upkeep {
         return panel;
     }
 
-    List<Effect> effects = new ArrayList<>();
+    Array<Effect> effects = new Array<>();
 
     public void addEffect(Effect effect){
         boolean added = false;
@@ -37,7 +38,8 @@ public class Upkeep {
     }
 
     private void updatePanel() {
-        getPanel().build(effects);
+        getPanel().setEffects(effects);
+        getPanel().layout();
     }
 
     public void activate() {

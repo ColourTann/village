@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
+import tann.village.screens.gameScreen.BasicLay;
 
-public class TextWisp extends Actor{
+public class TextWisp extends BasicLay{
 	public String text;
 	Color c = Colours.green_dark;
 	final float initialDuration = 1.3f;

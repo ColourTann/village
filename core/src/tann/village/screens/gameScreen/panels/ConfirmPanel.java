@@ -3,14 +3,19 @@ package tann.village.screens.gameScreen.panels;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import tann.village.Images;
+import tann.village.Main;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
+import tann.village.util.Lay;
 
-public class ConfirmPanel extends Actor{
-    static final int WIDTH = 100, HEIGHT = 100;
+public class ConfirmPanel extends Lay{
     public ConfirmPanel() {
-        setSize(WIDTH, HEIGHT);
+        layout();
+    }
 
+    @Override
+    public void layout() {
+        setSize(Main.h(16), Main.h(16));
     }
 
     boolean clickable, rolling;
@@ -30,4 +35,6 @@ public class ConfirmPanel extends Actor{
         }
         super.draw(batch, parentAlpha);
     }
+
+
 }

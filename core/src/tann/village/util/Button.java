@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
-public class Button extends Group{
+public class Button extends Lay{
 	private TextureRegion region;
 	private Color backgroundColour = Colours.dark;
 	private float imageScale;
@@ -58,4 +58,8 @@ public class Button extends Group{
 		super.draw(batch, parentAlpha);
 	}
 
+    @Override
+    public void layout() {
+
+    }
 }

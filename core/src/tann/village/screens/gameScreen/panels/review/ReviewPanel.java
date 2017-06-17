@@ -5,21 +5,17 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
+import tann.village.Main;
 import tann.village.gameplay.effect.Effect;
 import tann.village.screens.gameScreen.panels.EffectPanel;
 import tann.village.screens.gameScreen.panels.EventPanel;
-import tann.village.util.Colours;
-import tann.village.util.Draw;
-import tann.village.util.Fonts;
-import tann.village.util.Layoo;
-import tann.village.util.TextBox;
+import tann.village.util.*;
 
-public class ReviewPanel extends Group{
+public class ReviewPanel extends Lay{
 	
 	static final int items_per_row=3;
-	static final int itemWidth = (int)EffectPanel.WIDTH;
-	static final int itemHeight = (int)EffectPanel.HEIGHT;
-	static final int WIDTH = 380;
+	static final int itemWidth = (int)EffectPanel.staticWidth();
+	static final int itemHeight = (int)EffectPanel.staticHeight();
 	public static final float SMALL_GAP=10;
 	int day;
 	
@@ -31,7 +27,12 @@ public class ReviewPanel extends Group{
 	public ReviewPanel(int day) {
 		this.day=day;
 	}
-	
+
+    @Override
+    public void layout() {
+        build();
+    }
+
 	Array<EffectPanel> diceEffects = new Array<>();
 	Array<EffectPanel> buildingEffects = new Array<>();
 	Array<EffectPanel> upkeepEffects = new Array<>();
@@ -62,33 +63,35 @@ public class ReviewPanel extends Group{
 	}
 	Layoo l;
 	public void build(){
-		int height = 0;
+	    clearChildren();
+	    float width = EffectPanel.staticWidth() * 3 + Main.w(10);
+		float height = 0;
 		l = new Layoo(this);
 		l.row(2);
-		title = new TextBox("Day "+day+" review", Fonts.font, WIDTH, Align.center);
+		title = new TextBox("Day "+day+" review", Fonts.font, width, Align.center);
 		height += title.getHeight();
 		l.actor(title);
 		if(upkeepEffects.size>0){
 			addItems("Upkeep", upkeepEffects);
-			height += ((upkeepEffects.size+2)/3)*EffectPanel.HEIGHT + Fonts.fontSmall.getLineHeight() + 20;
+			height += ((upkeepEffects.size+2)/3)*EffectPanel.staticHeight() + Fonts.fontSmall.getLineHeight() + 20;
 		}
 		if(buildingEffects.size>0){
 			addItems("Buildings", buildingEffects);
-			height += ((buildingEffects.size+2)/3)*EffectPanel.HEIGHT + Fonts.fontSmall.getLineHeight() + 20;
+			height += ((buildingEffects.size+2)/3)*EffectPanel.staticHeight() + Fonts.fontSmall.getLineHeight() + 20;
 		}
 		if(diceEffects.size>0){
 			addItems("Dice", diceEffects);
-			height += ((diceEffects.size+2)/3)*EffectPanel.HEIGHT + Fonts.fontSmall.getLineHeight() + 20;
+			height += ((diceEffects.size+2)/3)*EffectPanel.staticHeight() + Fonts.fontSmall.getLineHeight() + 20;
 		}
 		l.row(1);
-		setSize(WIDTH, height + 50);
+		setSize(width, height + Main.h(10));
 		l.layoo();
 	}
 
 	private void addItems(String title, Array<EffectPanel> items){
 		
 		l.row(3);
-		TextBox tb = new TextBox(title, Fonts.fontSmall, WIDTH, Align.center);
+		TextBox tb = new TextBox(title, Fonts.fontSmall, 999, Align.center);
 		l.actor(tb);
 
 		
@@ -110,4 +113,5 @@ public class ReviewPanel extends Group{
         Draw.fillActor(batch,this);
         super.draw(batch, parentAlpha);
     }
+
 }

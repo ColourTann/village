@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
+import tann.village.Main;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 
 import javax.sound.sampled.Line;
@@ -47,7 +48,7 @@ public class TextButton extends Group{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        int BORDER = InfoPanel.BORDER;
+        int BORDER = (int)(Main.h(.4f));
         super.draw(batch, parentAlpha);
         batch.setColor(Colours.brown_dark);
         Draw.fillRectangle(batch, getX()-BORDER, getY()-BORDER, getWidth()+BORDER*2, getHeight()+BORDER*2);

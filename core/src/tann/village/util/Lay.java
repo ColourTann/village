@@ -19,5 +19,5 @@ public abstract class Lay extends Group {
     }
 
     // in this method, set up the size of self and placement of children
-    protected abstract void layout();
+    public abstract void layout();
 }

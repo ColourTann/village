@@ -8,27 +8,40 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
+import tann.village.Main;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
+import tann.village.util.Lay;
 
-public class EffectPanel extends Group {
+public class EffectPanel extends Lay {
 
 	final static float imageSize = .7f;
 	public static final float heightMult = .6666667f;
-	public static final float WIDTH = 110;
-	public static final float HEIGHT = 45;
 	HashMap<EffectType, Integer> effectAmounts = new HashMap<>();
 	public Effect effect;
 	public int value;
 
 	public EffectPanel(Effect effect) {
 		this.effect = effect;
-		setSize(WIDTH, HEIGHT);
+		layout();
 		this.value = effect.value;
 	}
+
+    public static float staticWidth(){
+        return Main.h(17);
+    }
+
+    public static float staticHeight(){
+        return Main.h(7);
+    }
+
+    @Override
+    public void layout() {
+        setSize(staticWidth(), staticHeight());
+    }
 
 	public void changeValue(int value) {
 		this.value += value;
@@ -42,7 +55,7 @@ public class EffectPanel extends Group {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		float imageGap = getHeight() * (1 - imageSize) / 2f;
-		float border = 3;
+		int border = Math.max(1,(int)(Main.h(.3f)));
 
 		// batch.setColor(new Color(1,0,1,.3f));
 		// Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());

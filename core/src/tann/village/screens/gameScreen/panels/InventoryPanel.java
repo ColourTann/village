@@ -6,6 +6,7 @@ import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.InventoryItem;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.InventoryItemPanel;
+import tann.village.util.Draw;
 import tann.village.util.Lay;
 import tann.village.util.Layoo;
 
@@ -16,9 +17,13 @@ public class InventoryPanel extends Lay {
         layout();
     }
 
+    public static float invItemHeight(){
+        return Math.min(Main.h(15), Main.w(8));
+    }
+
     @Override
-    protected void layout() {
-        setSize(Main.width, Main.height/10f);
+    public void layout() {
+        setSize(Main.width, invItemHeight());
         layout(false);
     }
 

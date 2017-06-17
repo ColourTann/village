@@ -8,8 +8,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
+import tann.village.screens.gameScreen.BasicLay;
 
-public class TextBox extends Actor{
+public class TextBox extends BasicLay{
 	
 	public static HashMap<BitmapFont, Float> fontHeights;
 	static{

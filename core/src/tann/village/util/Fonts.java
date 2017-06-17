@@ -23,8 +23,8 @@ public class Fonts {
 	public static void setup(){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/ElMessiri-Regular.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = (int)Main.h(20/700f*100);
-		fontSmall = generator.generateFont(parameter);
+        parameter.size = (int)Main.h(24/700f*100);
+        fontSmall = generator.generateFont(parameter);
         parameter.size=(int)Main.h(44/700f*100);
         font= generator.generateFont(parameter);
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Cinzel-Regular.otf"));

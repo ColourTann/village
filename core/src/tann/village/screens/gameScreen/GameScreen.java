@@ -22,6 +22,7 @@ import tann.village.gameplay.island.event.EventDebugPanel;
 import tann.village.gameplay.island.event.Outcome;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
+import tann.village.gameplay.village.InventoryItem;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
@@ -73,6 +74,7 @@ public class GameScreen extends Screen{
 	
 	public Island island;
 	public Village village;
+	VillagerBarPanel vbp;
 	public void init(Island island, Village village){
 		this.village=village;
 		this.island=island;
@@ -135,6 +137,9 @@ public class GameScreen extends Screen{
         rollContainer.addActor(cButt2);
         showRollContainer(false);
         constructionPanel= new ConstructionPanel();
+        vbp = new VillagerBarPanel();
+        addActor(vbp);
+
         layChain();
 	}
 
@@ -164,6 +169,10 @@ public class GameScreen extends Screen{
         constructionCircle.setTexture(Images.hammer, 0.7f, .7f, Main.h(13), Main.h(13));
         constructionCircle.setCirclePosition(0,0);
 
+        vbp.setPosition(InventoryItemPanel.totalWidth(), Main.height-vbp.getHeight());
+
+        System.out.println(vbp.getX()+":"+vbp.getY());
+
         if(eventPanel!=null){
             center(eventPanel);
         }
@@ -173,6 +182,9 @@ public class GameScreen extends Screen{
         if(proceedButton!=null){
             proceedButton.refreshPosition();
         }
+
+
+
     }
 
     public static float getConstructionCircleSize(){

@@ -27,7 +27,7 @@ public class InventoryPanel extends Lay {
     public void layout(boolean slide){
         clearChildren();
         Layoo l = new Layoo(this);
-        for(int i=0;i<inventory.items.size;i++){
+        for(int i=inventory.items.size-1;i>=0;i--){
             InventoryItem item = inventory.items.get(i);
             InventoryItemPanel panel = item.getPanel();
             l.actor(panel);

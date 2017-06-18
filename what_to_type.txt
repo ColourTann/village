@@ -1,1 +1,20 @@
 ./gradlew.bat desktop:dist
+
+{
+    "platform": "windows64",
+    "jdk": "java-1.8.0-openjdk-1.8.0.121-1.b13.ojdkbuild.windows.x86_64.zip",
+    "executable": "village",
+    "classpath": [
+        "village.jar"
+    ],
+    "mainclass": "tann.village.Main",
+    "vmargs": [
+       "Xmx1G"
+    ],
+    "resources": [
+        "../core/src",
+        "../android/assets"
+    ],
+    "minimizejre": "hard",
+    "output": "out-win"
+}

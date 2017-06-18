@@ -15,6 +15,7 @@ import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.gameplay.village.villager.die.Side;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.villager.die.Die;
+import tann.village.screens.gameScreen.panels.VillagerIcon;
 import tann.village.util.Colours;
 
 public class Villager {
@@ -59,6 +60,7 @@ public class Villager {
 		this.die=die;
 		this.die.villager=this;
 		this.type=die.type;
+        getIcon().layout();
 	}
 	
 	private void setupDie() {
@@ -76,21 +78,36 @@ public class Villager {
 			GameScreen.get().addEffect(new Effect(EffectType.LevelUp, 1, die), false);
 			GameScreen.get().villagersToLevelUp.add(this);
 		}
+        this.potentialXp=0;
+        getIcon().layout();
 	}
-	
-	private static String[] firstNames;
-	private static String[] lastNames;
+
+	public int potentialXp;
+
+	public void addPotentialXP(int value){
+	    this.potentialXp+=value;
+	    getIcon().layout();
+    }
+
+	private static Array<String> firstNames;
+	private static Array<String> lastNames;
 	
 	public static String generateName(boolean first){
-		if(firstNames==null){
-			firstNames = Gdx.files.internal("names/first.txt").readString().replaceAll("\r", "").split("\n");
-			lastNames = Gdx.files.internal("names/last.txt").readString().replaceAll("\r", "").split("\n");
+		if(firstNames==null||firstNames.size==0) {
+            firstNames = new Array<>(Gdx.files.internal("names/first.txt").readString().replaceAll("\r", "").split("\n"));
+        }
+        if(lastNames==null||lastNames.size==0){
+			lastNames = new Array<>(Gdx.files.internal("names/last.txt").readString().replaceAll("\r", "").split("\n"));
 		}
 		if(first){
-			return firstNames[(int)(Math.random()*firstNames.length)];
+            String result = firstNames.random();
+            firstNames.removeValue(result, true);
+            return result;
 		}
 		else{
-			return lastNames[(int)(Math.random()*lastNames.length)];
+            String result = lastNames.random();
+            lastNames.removeValue(result, true);
+            return result;
 		}
 	}
 
@@ -98,9 +115,14 @@ public class Villager {
 		return col;
 	}
 
+	VillagerIcon icon;
+    public VillagerIcon getIcon() {
+        if(icon==null)icon = new VillagerIcon(this);
+        return icon;
+    }
 
-	
-	public enum VillagerType{
+
+    public enum VillagerType{
 		Villager(0,"no description maybe?",                     Images.lapel,    Side.food1, Side.food1, Side.wood1, Side.wood1, Side.brain, Side.skull),
         // 1
 		Fisher(1, "Catch lots of fish!.. on a good day",        Images.lapel1,   Side.food3, Side.food2, Side.food1, Side.brain, Side.skull, Side.skull),

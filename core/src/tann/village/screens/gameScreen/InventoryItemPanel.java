@@ -29,6 +29,10 @@ public class InventoryItemPanel extends Lay{
         return Main.h(14);
     }
 
+    public static float extraBitWidth(){ return Main.h(8);}
+
+    public static float totalWidth(){ return invPanelWidth() + extraBitWidth();}
+
     @Override
     public void layout() {
         setSize(invPanelWidth(), invPanelHeight());
@@ -168,7 +172,7 @@ public class InventoryItemPanel extends Lay{
         @Override
         public void layout() {
             Layoo l = new Layoo(this);
-            setSize(Main.h(8), invPanelHeight());
+            setSize(extraBitWidth(), invPanelHeight());
             BitmapFont font = Fonts.fontSmallish;
             if(plus!=0){
                 TextBox plusBox = new TextBox("+"+plus, font, 999, Align.center);

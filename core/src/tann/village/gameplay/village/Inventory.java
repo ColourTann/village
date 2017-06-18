@@ -76,6 +76,9 @@ public class Inventory{
         if(item!=null){
             item.addDelta(e.value, invert);
         }
+        if(e.type==EffectType.Brain){
+            e.sourceDie.villager.addPotentialXP(e.value*(invert?-1:1));
+        }
     }
 
     public void addDelta(Array<Effect> effects, boolean invert) {

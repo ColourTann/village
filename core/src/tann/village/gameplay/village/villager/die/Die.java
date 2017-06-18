@@ -276,7 +276,6 @@ public class Die {
 	boolean locked = true;
 	public void lock(){
 		if (locked) return;
-        System.out.println("locking");
         lockedSide = getSide();
 		locked = true;
 		physical.body.setDamping(2, 50);

@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Align;
+import tann.village.Main;
 import tann.village.screens.gameScreen.BasicLay;
 
 public class ImageActor extends BasicLay{
@@ -22,6 +24,10 @@ public class ImageActor extends BasicLay{
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
         batch.setColor(getColor());
+        if(flash){
+            float freq = 3.5f;
+            batch.setColor(Colours.withAlpha(getColor(), (float)(Math.sin(Main.ticks*freq)+1)/2));
+        }
         Draw.drawSize(batch, tr, getX(), getY(), getWidth(), getHeight());
 	}
 
@@ -30,4 +36,11 @@ public class ImageActor extends BasicLay{
     public void layout() {
 
     }
+
+    boolean flash;
+    public void flash(boolean flash) {
+        System.out.println("flash");
+        this.flash=flash;
+    }
+
 }

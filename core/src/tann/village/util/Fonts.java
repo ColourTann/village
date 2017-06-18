@@ -15,8 +15,9 @@ import com.badlogic.gdx.utils.Align;
 import tann.village.Main;
 
 public class Fonts {
-	
-	public static BitmapFont fontSmall;
+
+    public static BitmapFont fontSmall;
+    public static BitmapFont fontSmallish;
 	public static BitmapFont font;
 	public static BitmapFont fontBig;
 	
@@ -25,6 +26,8 @@ public class Fonts {
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = (int)Main.h(24/700f*100);
         fontSmall = generator.generateFont(parameter);
+        parameter.size=(int)Main.h(30/700f*100);
+        fontSmallish= generator.generateFont(parameter);
         parameter.size=(int)Main.h(44/700f*100);
         font= generator.generateFont(parameter);
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Cinzel-Regular.otf"));

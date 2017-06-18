@@ -2,7 +2,6 @@ package tann.village.screens.gameScreen;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -19,7 +18,6 @@ import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.gameplay.island.event.Event;
-import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.event.EventDebugPanel;
 import tann.village.gameplay.island.event.Outcome;
 import tann.village.gameplay.island.islands.Island;
@@ -50,11 +48,11 @@ public class GameScreen extends Screen{
 	public State state;
 	private static final int STARTING_VILLAGERS = 5;
 	public Array<Villager> villagers = new Array<>();
-	CircleButton constructionButt;
+	public CircleButton constructionCircle;
 	public Array<Villager> villagersToLevelUp = new Array<>();
 	ReviewPanel reviewPanel = new ReviewPanel(Village.get().getDayNum());
 	EventPanel eventPanel;
-	ConstructionPanel constructionPanel;
+	public ConstructionPanel constructionPanel;
     CircleButton cButt1;
     CircleButton cButt2;
 	public EachTurnPanel eachTurnPanel = new EachTurnPanel();
@@ -104,14 +102,14 @@ public class GameScreen extends Screen{
 		setState(State.Event);
 		Sounds.playMusic(island.getAmbienceString());
 
-        constructionButt = new CircleButton(0, 0, 180, Colours.dark);
-        constructionButt.setClickAction(new Runnable() {
+        constructionCircle = new CircleButton(0, 0, 180, Colours.dark);
+        constructionCircle.setClickAction(new Runnable() {
             @Override
             public void run() {
                 openBuildingPanel();
             }
         });
-        addActor(constructionButt);
+        addActor(constructionCircle);
 
         rollContainer = new BasicLay();
         addActor(rollContainer);
@@ -151,9 +149,8 @@ public class GameScreen extends Screen{
 
         //reroll stuff
 
-        float rerollSize = Main.h(35)*2;
         float confirmSize = Main.h(18)*2;
-        cButt1.setSize(rerollSize, rerollSize);
+        cButt1.setSize(getConstructionCircleSize(), getConstructionCircleSize());
         cButt1.setCirclePosition(Main.width, 0);
         cButt2.setSize(confirmSize, confirmSize);
         cButt2.setCirclePosition(Main.width, Main.h(60));
@@ -163,9 +160,9 @@ public class GameScreen extends Screen{
         confirmPanel = RollManager.getConfirmPanel();
         cButt2.setActor(confirmPanel, cButt2.getWidth()/4-confirmPanel.getWidth()/2+10, cButt2.getHeight()/2-confirmPanel.getHeight()/2);
 
-        constructionButt.setSize(Main.h(60), Main.h(60));
-        constructionButt.setTexture(Images.hammer, 0.7f, .7f, Main.h(13), Main.h(13));
-        constructionButt.setCirclePosition(0,0);
+        constructionCircle.setSize(getConstructionCircleSize(), getConstructionCircleSize());
+        constructionCircle.setTexture(Images.hammer, 0.7f, .7f, Main.h(13), Main.h(13));
+        constructionCircle.setCirclePosition(0,0);
 
         if(eventPanel!=null){
             center(eventPanel);
@@ -178,6 +175,9 @@ public class GameScreen extends Screen{
         }
     }
 
+    public static float getConstructionCircleSize(){
+        return Main.h(52);
+    }
 	
 	public void center(Actor a){
         a.setPosition(getWidth()/2-a.getWidth()/2, (getHeight())/2-a.getHeight()/2);
@@ -376,6 +376,7 @@ public class GameScreen extends Screen{
 			d.removeFromScreen();
 		}
 		showWisps();
+        Village.getInventory().clearDeltas();
 	}
 	
 
@@ -453,6 +454,7 @@ public class GameScreen extends Screen{
 			d.rerolling=true;
 		}
 		roll(false);
+        Village.get().getUpkeep().activateDelta();
 	}
 
 	boolean lastRollContainerShow;

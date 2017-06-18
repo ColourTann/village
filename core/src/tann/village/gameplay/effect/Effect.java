@@ -12,7 +12,11 @@ import tann.village.gameplay.village.Inventory;
 
 public class Effect {
 
-	public enum EffectType{
+    public Effect getInverse() {
+        return new Effect(type, -value, source, sourceDie, duration);
+    }
+
+    public enum EffectType{
         Food(Images.food),
         Wood(Images.wood),
 		Skull(Images.side_skull),

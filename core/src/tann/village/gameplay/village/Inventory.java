@@ -70,7 +70,32 @@ public class Inventory{
 		InventoryItem item = get(effect.type);
         if(item!=null) item.changeValue(value);
 	}
-	
+
+    public void addDelta(Effect e, boolean invert){
+        InventoryItem item = get(e);
+        if(item!=null){
+            item.addDelta(e.value, invert);
+        }
+    }
+
+    public void addDelta(Array<Effect> effects, boolean invert) {
+        for (Effect e : effects) {
+            addDelta(e, invert);
+        }
+    }
+
+    public void addDelta(Effect[] effects, boolean invert) {
+        for (Effect e : effects) {
+            addDelta(e, invert);
+        }
+    }
+
+    public void clearDeltas(){
+	    for(InventoryItem item:items){
+	        item.clearDelta();
+        }
+    }
+
 	public InventoryItem get(Effect e){
 		return get(e.type);
 	}
@@ -149,4 +174,5 @@ public class Inventory{
             ii.getPanel().clearWisp();
         }
     }
+
 }

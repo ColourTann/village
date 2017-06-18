@@ -61,7 +61,7 @@ public class RerollPanel extends Lay{
         }
         else{
 
-            Draw.drawSize(batch, Images.roll, getX()+getWidth()/2-rollSize/2, getY() + getHeight()-rollSize/2, rollSize, rollSize);
+            Draw.drawSize(batch, Images.roll, getX()+getWidth()/2-rollSize/2, getY()+Main.h(7), rollSize, rollSize);
         }
 
         if(rollsLeft > 0 ){
@@ -70,7 +70,7 @@ public class RerollPanel extends Lay{
         else{
             Fonts.font.setColor(Colours.grey);
         }
-        Fonts.font.draw(batch, rollsLeft+"/"+maximumRolls, getX()+getWidth()/4, getY()+Main.h(8), getWidth()/2, Align.center, false);
+        Fonts.font.draw(batch, rollsLeft+"/"+maximumRolls, getX()+getWidth()/4, getY()+Main.h(6), getWidth()/2, Align.center, false);
     }
 
 }

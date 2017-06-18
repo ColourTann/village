@@ -69,7 +69,6 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void resize(int width, int height) {
-        System.out.println("resizing");
         Main.width = width;
         Main.height=height;
         orthoCam.setToOrtho(false, width, height);
@@ -83,10 +82,8 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-        System.out.println("creating");
 	    Main.width = Gdx.graphics.getWidth();
 	    Main.height = Gdx.graphics.getHeight();
-        System.out.println("MAGPIE: "+Gdx.graphics.getWidth());
         logTime(null);
 		logTime("start");
         Sounds.setup();

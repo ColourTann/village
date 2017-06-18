@@ -42,6 +42,12 @@ public class Upkeep {
         getPanel().layout();
     }
 
+    public void activateDelta(){
+        for(Effect e:effects){
+            Village.getInventory().addDelta(e, false);
+        }
+    }
+
     public void activate() {
         for(Effect e:effects){
             GameScreen.get().addEffect(e, true);

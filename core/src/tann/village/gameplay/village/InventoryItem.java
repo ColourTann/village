@@ -67,5 +67,22 @@ public class InventoryItem {
         return panel;
     }
 
+    int pos;
+    int neg;
 
+    public void addDelta(int value, boolean invert) {
+        if(value>0){
+            pos += value*(invert?-1:1);
+        }
+        else{
+            neg += value*(invert?-1:1);
+        }
+        getPanel().setDeltas(pos,neg);
+    }
+
+    public void clearDelta() {
+        pos=0;
+        neg=0;
+        getPanel().setDeltas(pos,neg);
+    }
 }

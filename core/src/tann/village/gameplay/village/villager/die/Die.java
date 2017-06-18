@@ -23,6 +23,7 @@ import tann.village.bullet.BulletStuff;
 import tann.village.bullet.CollisionObject;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.village.RollManager;
+import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
 import tann.village.gameplay.village.villager.die.Side;
@@ -203,6 +204,9 @@ public class Die {
 	
 	float timeInAir;
 	public void roll() {
+	    if(lockedSide>=0){
+            Village.getInventory().addDelta(sides.get(lockedSide).effects, true);
+        }
 		timeInAir=0;
 		rerolling=false;
 		unlock();
@@ -269,13 +273,15 @@ public class Die {
 		}
 	}
 	
-	boolean locked;
+	boolean locked = true;
 	public void lock(){
 		if (locked) return;
-		lockedSide = getSide();
+        System.out.println("locking");
+        lockedSide = getSide();
 		locked = true;
 		physical.body.setDamping(2, 50);
 		glow = 1;
+        Village.getInventory().addDelta(sides.get(lockedSide).effects, false);
 	}
 	
 	public float getGlow(){
@@ -315,12 +321,14 @@ public class Die {
     }
 
     public void removeFromScreen() {
+        lockedSide=-1;
         BulletStuff.instances.removeValue(physical, true);
         BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
         BulletStuff.dynamicsWorld.removeCollisionObject(physical.body);
     }
 
     public void addToScreen() {
+        lockedSide=-1;
         BulletStuff.instances.add(physical);
         physical.body.setLinearVelocity(new Vector3());
         physical.body.setAngularVelocity(new Vector3());

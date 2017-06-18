@@ -5,6 +5,7 @@ import tann.village.Main;
 import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.InventoryItem;
 import tann.village.gameplay.village.Village;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.InventoryItemPanel;
 import tann.village.util.Draw;
 import tann.village.util.Lay;
@@ -17,30 +18,21 @@ public class InventoryPanel extends Lay {
         layout();
     }
 
-    public static float invItemHeight(){
-        return Math.min(Main.h(15), Main.w(8));
-    }
-
     @Override
     public void layout() {
-        setSize(Main.width, invItemHeight());
+        setSize(InventoryItemPanel.invPanelWidth(), Main.height - GameScreen.getConstructionCircleSize()/2);
         layout(false);
     }
 
     public void layout(boolean slide){
         clearChildren();
         Layoo l = new Layoo(this);
-        l.gap(2);
         for(int i=0;i<inventory.items.size;i++){
-            l.gap(1);
             InventoryItem item = inventory.items.get(i);
             InventoryItemPanel panel = item.getPanel();
             l.actor(panel);
+            l.row(1);
         }
-        l.gap(3);
-        UpkeepPanel upkeepPanel = Village.get().getUpkeep().getPanel();
-        l.actor(upkeepPanel);
-        l.gap(1);
         l.layoo(slide);
     }
 

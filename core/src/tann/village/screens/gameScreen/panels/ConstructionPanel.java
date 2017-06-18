@@ -88,4 +88,8 @@ public class ConstructionPanel extends InfoPanel{
     public void clipEnd() {
         Sounds.playSound(Sounds.cancel, 1, 1);
     }
+
+    public static float staticHeight() {
+	    return 300;
+    }
 }

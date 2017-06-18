@@ -16,10 +16,8 @@ public class Layoo {
 	public Layoo(Group parent) {
 		this.parent=parent;
 	}
-	
-	// The plan is for gaps to be relative to total available space.
-	// So you can go vGap(1); vAdd(actor); vGap(2); and that means the bottom gap will be twice as big as the top gap
-	
+	private static final boolean intPos = true;
+
 	public void row(float g){
 		if(currentRow!=null){
 			actuallyAColumn.add(currentRow);
@@ -165,6 +163,10 @@ public class Layoo {
 				if(e.a!=null) {
 				    float newX = currentX;
 				    float newY = y+getHeight()/2-e.a.getHeight()/2;
+                    if(intPos){
+                        newX = (int)newX;
+                        newY = (int)newY;
+                    }
 				    if(slide){
 				        e.a.addAction(Actions.moveTo(newX, newY, .5f, Interpolation.pow2Out));
                     }

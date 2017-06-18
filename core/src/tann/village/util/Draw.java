@@ -174,11 +174,11 @@ public class Draw {
 		return (float) (rad * 180f / Math.PI);
 	}
 
-	private static Texture wSq;
+	private static TextureRegion wSq;
 
-	public static Texture getSq() {
+	public static TextureRegion getSq() {
 		if (wSq == null) {
-			wSq = new Texture(Gdx.files.internal("pixel.png"));
+			wSq = Main.atlas.findRegion("pixel");
 		}
 		return wSq;
 	}

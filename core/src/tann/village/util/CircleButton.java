@@ -18,7 +18,7 @@ public class CircleButton extends Lay{
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 float centerX = x-getWidth()/2, centerY = y-getHeight()/2;
                 double dist = Math.sqrt(centerX*centerX + centerY*centerY);
-                if(dist>radius) return false;
+                if(dist>getWidth()/2) return false;
                 if(clickAction!=null) clickAction.run();
                 return true;
             }

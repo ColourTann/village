@@ -5,6 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 
 public abstract class Lay extends Group {
 
+    public Lay() {
+        setTransform(false);
+    }
+
     // on resize, call layChain of the topmost LayGroupThing
     public void layChain(){
         for(Actor a: getChildren()){

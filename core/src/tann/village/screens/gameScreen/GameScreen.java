@@ -171,8 +171,6 @@ public class GameScreen extends Screen{
 
         vbp.setPosition(InventoryItemPanel.totalWidth(), Main.height-vbp.getHeight());
 
-        System.out.println(vbp.getX()+":"+vbp.getY());
-
         if(eventPanel!=null){
             center(eventPanel);
         }
@@ -182,9 +180,6 @@ public class GameScreen extends Screen{
         if(proceedButton!=null){
             proceedButton.refreshPosition();
         }
-
-
-
     }
 
     public static float getConstructionCircleSize(){

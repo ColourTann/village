@@ -22,16 +22,21 @@ import tann.village.gameplay.island.event.EventDebugPanel;
 import tann.village.gameplay.island.event.Outcome;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
-import tann.village.gameplay.village.InventoryItem;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.panels.*;
+import tann.village.screens.gameScreen.panels.InventoryItemPanel;
+import tann.village.screens.gameScreen.panels.ProceedButton;
+import tann.village.screens.gameScreen.panels.TextBar.TextBar;
+import tann.village.screens.gameScreen.panels.VillagerBarPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.screens.gameScreen.panels.review.StarvationPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel.LossReason;
 import tann.village.util.*;
+import tann.village.util.BasicLay;
+import tann.village.util.EscMenu;
 
 public class GameScreen extends Screen{
 	public static final int BUTTON_BORDER=10;
@@ -74,7 +79,8 @@ public class GameScreen extends Screen{
 	
 	public Island island;
 	public Village village;
-	VillagerBarPanel vbp;
+	tann.village.screens.gameScreen.panels.VillagerBarPanel vbp;
+	TextBar textBar;
 	public void init(Island island, Village village){
 		this.village=village;
 		this.island=island;
@@ -139,6 +145,9 @@ public class GameScreen extends Screen{
         constructionPanel= new ConstructionPanel();
         vbp = new VillagerBarPanel();
         addActor(vbp);
+
+        textBar = new TextBar();
+        addActor(textBar);
 
         layChain();
 	}
@@ -237,7 +246,7 @@ public class GameScreen extends Screen{
 	}
 
     private void toggleEscMenu() {
-        if(stack.size==0 || stack.get(stack.size-1)!=EscMenu.get()){
+        if(stack.size==0 || stack.get(stack.size-1)!= tann.village.util.EscMenu.get()){
             push(EscMenu.get());
         }
         else{
@@ -496,7 +505,7 @@ public class GameScreen extends Screen{
 	}
 	
 	
-	private ProceedButton proceedButton = new ProceedButton();
+	private tann.village.screens.gameScreen.panels.ProceedButton proceedButton = new ProceedButton();
 	
 	public void addProceedButton(Actor relativeTo){
 		proceedButton.setColor(Colours.green_light);

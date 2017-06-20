@@ -1,9 +1,13 @@
 package tann.village.screens.gameScreen.panels;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import tann.village.Main;
 import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.InventoryItem;
+import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.InventoryItemPanel;
+import tann.village.util.Draw;
 import tann.village.util.Lay;
 import tann.village.util.Layoo;
 

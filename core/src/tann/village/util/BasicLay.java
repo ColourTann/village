@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen;
+package tann.village.util;
 
 import tann.village.util.Lay;
 

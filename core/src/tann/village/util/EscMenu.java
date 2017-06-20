@@ -1,16 +1,15 @@
-package tann.village.screens.gameScreen;
+package tann.village.util;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 import tann.village.Main;
 import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.screens.mapScreen.MapScreen;
-import tann.village.util.*;
 
 public class EscMenu extends InfoPanel {
     private static int WIDTH = 300, HEIGHT = 200;

@@ -1,10 +1,11 @@
-package tann.village.screens.gameScreen;
+package tann.village.screens.gameScreen.panels;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import tann.village.Main;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.Button;
 import tann.village.util.Colours;
 

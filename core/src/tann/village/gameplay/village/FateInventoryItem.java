@@ -1,7 +1,7 @@
 package tann.village.gameplay.village;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import tann.village.screens.gameScreen.InventoryItemPanel;
+import tann.village.screens.gameScreen.panels.InventoryItemPanel;
 import tann.village.screens.gameScreen.panels.CrystalBall;
 
 public class FateInventoryItem extends InventoryItem {

@@ -22,7 +22,6 @@ import tann.village.gameplay.island.event.EventDebugPanel;
 import tann.village.gameplay.island.event.Outcome;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
-import tann.village.gameplay.village.InventoryItem;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;

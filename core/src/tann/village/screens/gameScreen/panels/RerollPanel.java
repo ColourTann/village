@@ -1,16 +1,11 @@
 package tann.village.screens.gameScreen.panels;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Align;
 import tann.village.Images;
 import tann.village.Main;
-import tann.village.gameplay.village.RollManager;
-import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.InventoryItemPanel;
 import tann.village.util.*;
 
 public class RerollPanel extends Lay{

@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels;
+package tann.village.screens.gameScreen.panels.bottomBar;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
@@ -15,20 +15,23 @@ import tann.village.gameplay.village.Inventory;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.util.*;
 
-public class ObjectivePanel extends Group{
+public class ObjectivePanel extends Lay{
 	
 
-	int WIDTH = 100, HEIGHT = 60, OBJHEIGHT= 140;
-	
+
 	Array<Objective> objectives = new Array<>();
 	public ObjectivePanel() {
-		setSize(WIDTH, HEIGHT);
-        refresh();
+		layout();
 	}
 
-	public void addObject(Objective obj){
+    @Override
+    public void layout() {
+        setSize(BottomTextBar.width(), BottomTextBar.height());
+        refresh();
+    }
+
+    public void addObject(Objective obj){
 	    objectives.add(obj);
-        setSize(WIDTH, HEIGHT + OBJHEIGHT *objectives.size);
 	    refresh();
     }
 
@@ -36,13 +39,13 @@ public class ObjectivePanel extends Group{
 	    clearChildren();
 		Layoo l = new Layoo(this);
 
-		TextBox title  = new TextBox("Objective", Fonts.fontSmall, WIDTH, Align.center);
+		TextBox title  = new TextBox("Objective", Fonts.fontSmall, getWidth(), Align.center);
         l.row(1);
         l.actor(title);
 
 		for(Objective obj:objectives){
-            TextBox objText = new TextBox(obj.getTitleString(), Fonts.fontSmall, WIDTH, Align.center);
-            TextBox progress = new TextBox(obj.getProgressString(), Fonts.fontSmall, WIDTH, Align.center);
+            TextBox objText = new TextBox(obj.getTitleString(), Fonts.fontSmall, getWidth(), Align.center);
+            TextBox progress = new TextBox(obj.getProgressString(), Fonts.fontSmall, getWidth(), Align.center);
             l.row(1);
             l.actor(objText);
             l.row(1);

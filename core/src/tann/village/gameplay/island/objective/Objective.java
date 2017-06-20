@@ -1,8 +1,7 @@
 package tann.village.gameplay.island.objective;
 
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.panels.ObjectivePanel;
-import tann.village.util.Sounds;
+import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
 
 public abstract class Objective {
 
@@ -15,8 +14,6 @@ public abstract class Objective {
 
     public enum ObjectiveEffect{Building, Turn, Gem};
     int current, required;
-
-    private ObjectivePanel panel;
 
     protected String getDefaultProgressString() {
         return current+"/"+required;

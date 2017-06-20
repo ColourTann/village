@@ -16,7 +16,7 @@ public class InventoryPanel extends Lay {
 
     @Override
     public void layout() {
-        setSize(InventoryItemPanel.invPanelWidth(), Main.height - GameScreen.getConstructionCircleSize()/2);
+        setSize(InventoryItemPanel.invPanelWidth(), Main.height - GameScreen.getConstructionCircleSize());
         layout(false);
     }
 

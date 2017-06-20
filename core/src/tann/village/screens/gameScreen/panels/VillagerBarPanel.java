@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import tann.village.Main;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.panels.InventoryItemPanel;
+import tann.village.screens.gameScreen.panels.VillagerIcon;
 import tann.village.util.Lay;
 import tann.village.util.Layoo;
 
@@ -11,7 +13,7 @@ public class VillagerBarPanel extends Lay{
 
     @Override
     public void layout() {
-        setSize(Main.width-InventoryItemPanel.totalWidth(), VillagerIcon.height());
+        setSize(Main.width- InventoryItemPanel.totalWidth(), VillagerIcon.height());
         clearChildren();
         Layoo l = new Layoo(this);
         l.gap(1);

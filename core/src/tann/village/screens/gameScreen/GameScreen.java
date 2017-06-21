@@ -29,6 +29,7 @@ import tann.village.screens.gameScreen.panels.*;
 import tann.village.screens.gameScreen.panels.VillagerBarPanel;
 import tann.village.screens.gameScreen.panels.bottomBar.BottomTextBar;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
+import tann.village.screens.gameScreen.panels.bottomBar.TurnStatsPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.screens.gameScreen.panels.review.StarvationPanel;
@@ -60,6 +61,7 @@ public class GameScreen extends Screen{
     CircleButton cButt2;
     BottomTextBar btb;
 	public EachTurnPanel eachTurnPanel = new EachTurnPanel();
+	TurnStatsPanel tsp;
 	public static GameScreen get(){
 		if(self==null){
 			self= new GameScreen();
@@ -104,9 +106,6 @@ public class GameScreen extends Screen{
 		refreshBulletStuff();
         Village.get().getUpkeep().addEffect(new Effect(EffectType.Food, -2, EffectSource.Upkeep));
 
-		setState(State.Event);
-		Sounds.playMusic(island.getAmbienceString());
-
         constructionCircle = new CircleButton(0, 0, 180, Colours.dark);
         constructionCircle.setClickAction(new Runnable() {
             @Override
@@ -143,10 +142,19 @@ public class GameScreen extends Screen{
         vbp = new VillagerBarPanel();
         addActor(vbp);
 
-        btb = new BottomTextBar();
-        addActor(btb);
+		btb = new BottomTextBar();
+		addActor(btb);
+		objectivePanel= new ObjectivePanel();
+		btb.addActor(objectivePanel);
+		tsp = new TurnStatsPanel();
+		btb.addActor(tsp);
 
-        layChain();
+
+		setState(State.Event);
+		Sounds.playMusic(island.getAmbienceString());
+
+
+		layChain();
 	}
 
     @Override
@@ -597,13 +605,11 @@ public class GameScreen extends Screen{
         BulletStuff.reset();
     }
 
-    public ObjectivePanel objectivePanel= new ObjectivePanel();
+    public ObjectivePanel objectivePanel;
     public void addObjectiveToPanel(Objective objective) {
         objectivePanel.addObject(objective);
-
         float buttHeight = 55;
         float y = (Main.height-buttHeight)/2 - objectivePanel.getHeight()/2 + buttHeight;
-        btb.addActor(objectivePanel);
     }
 
 }

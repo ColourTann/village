@@ -206,6 +206,13 @@ public class Draw {
 		Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());
 	}
 
+	public static void fillActor(Batch batch, Actor a, Color bg, Color border, float borderSize) {
+		batch.setColor(border);
+		Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());
+		batch.setColor(bg);
+		Draw.fillRectangle(batch, a.getX()+borderSize, a.getY()+borderSize, a.getWidth()-borderSize*2, a.getHeight()-borderSize*2);
+	}
+
 	public static void drawArrow(Batch batch, float x, float y, float x1, float y1, int width){
 	    Draw.drawLine(batch, x,y,x1,y1,width);
 	    double angle = Math.atan2(y1-y, x1-x);

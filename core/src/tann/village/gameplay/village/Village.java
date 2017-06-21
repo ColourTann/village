@@ -75,7 +75,7 @@ public class Village {
         for(BuildingEffect be:b.buildingEffects){
 		    if(be.effectType== BuildingEffect.BuildingEffectType.EveryTurn){
 		        for(Effect e:be.effects){
-                    GameScreen.get().eachTurnPanel.addEffect(e);
+//                    GameScreen.get().eachTurnPanel.addEffect(e);
                 }
             }
         }

@@ -87,6 +87,10 @@ public class Effect {
 		this(type, 0, source);
 	}
 
+	public Effect(EffectType type, int value){
+	    this(type,value,null,null,0);
+    }
+
 	public void activate(boolean addToReview){
         Effect e = this.copy();
         e.internalActivate(addToReview);

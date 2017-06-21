@@ -20,7 +20,7 @@ public class VillagerIcon extends Lay {
     }
 
     public static float height(){
-        return Main.h(17);
+        return Main.h(11);
     }
 
     @Override
@@ -32,8 +32,6 @@ public class VillagerIcon extends Lay {
         XPDisplay xpd = new XPDisplay(v);
         Layoo l = new Layoo(this);
         l.row(2);
-        l.actor(name);
-        l.row(1);
         l.actor(prof);
         l.row(1);
         l.actor(xpd);

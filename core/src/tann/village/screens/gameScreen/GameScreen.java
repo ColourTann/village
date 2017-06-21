@@ -60,7 +60,6 @@ public class GameScreen extends Screen{
     CircleButton cButt1;
     CircleButton cButt2;
     BottomTextBar btb;
-	public EachTurnPanel eachTurnPanel = new EachTurnPanel();
 	TurnStatsPanel tsp;
 	public static GameScreen get(){
 		if(self==null){
@@ -95,9 +94,6 @@ public class GameScreen extends Screen{
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
-
-		addActor(eachTurnPanel);
-
 
 		addActor(Village.getInventory().getGroup());
 		for(int i=0;i<STARTING_VILLAGERS;i++){
@@ -145,9 +141,9 @@ public class GameScreen extends Screen{
 		btb = new BottomTextBar();
 		addActor(btb);
 		objectivePanel= new ObjectivePanel();
-		btb.addActor(objectivePanel);
+		btb.setObjectivePanel(objectivePanel);
 		tsp = new TurnStatsPanel();
-		btb.addActor(tsp);
+		btb.setStatsPanel(tsp);
 
 
 		setState(State.Event);

@@ -1,6 +1,5 @@
 package tann.village.bullet;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -22,9 +21,7 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.Main;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
-import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.Colours;
-import tann.village.util.Slider;
 
 public class BulletStuff {
 	
@@ -202,7 +199,7 @@ public class BulletStuff {
 		Die d = getClickedDie((int) x, Gdx.graphics.getHeight() - (int) y);
 		if (d != null) {
 			if (button == 0) {
-				d.prepareToReroll();
+				d.click();
 			}
 			if (button == 1) {
 				d.villager.dieRightClicked();

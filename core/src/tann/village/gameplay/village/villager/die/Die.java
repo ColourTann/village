@@ -9,10 +9,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Quaternion;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
@@ -190,18 +187,32 @@ public class Die {
 	}
 	
 	public boolean rerolling;
-	public void prepareToReroll(){
-        if(!isStopped()) return;
-		rerolling = !rerolling;
-		if(rerolling){
-            Sounds.playSound(Sounds.shake,.3f,1);
-        }
-        else{
-            Sounds.playSound(Sounds.unshake,.3f,1);
-        }
-        RollManager.updateRolls();
+	public void click(){
+//        if(!isStopped()) return;
+        removeFromPhysics();
+        moveToTop();
+		Vector3 position = physical.body.getCenterOfMassPosition();
+		Vector3 target = new Vector3(0,1, 6);
+		Vector3 between = target.cpy().sub(position);
+//		physical.body.translate(between.scl(.5f));
+
+		physical.transform.translate(between.scl(.5f));
+		physical.transform.setFromEulerAngles(0,0,0);
+		physical.update();
+//		rerolling = !rerolling;
+//		if(rerolling){
+//            Sounds.playSound(Sounds.shake,.3f,1);
+//        }
+//        else{
+//            Sounds.playSound(Sounds.unshake,.3f,1);
+//        }
+//        RollManager.updateRolls();
     }
-	
+
+	private void moveToTop() {
+
+	}
+
 	float timeInAir;
 	public void roll() {
 	    if(lockedSide>=0){
@@ -325,6 +336,12 @@ public class Die {
         BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
         BulletStuff.dynamicsWorld.removeCollisionObject(physical.body);
     }
+
+    public void removeFromPhysics(){
+		BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
+		BulletStuff.dynamicsWorld.removeCollisionObject(physical.body);
+	}
+
 
     public void addToScreen() {
         lockedSide=-1;

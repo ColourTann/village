@@ -26,6 +26,7 @@ import tann.village.gameplay.village.villager.Villager.VillagerType;
 import tann.village.gameplay.village.villager.die.Side;
 import tann.village.util.Colours;
 import tann.village.util.Maths;
+import tann.village.util.Particle;
 import tann.village.util.Sounds;
 
 public class Die {
@@ -185,20 +186,39 @@ public class Die {
 	public boolean isMoving(){
 		return physical.isMoving();
 	}
-	
+
+	static final float pitchAdd = -40;
+	static final Quaternion[] d6Quats = new Quaternion[]{
+            new Quaternion().setEulerAngles(0,90+pitchAdd,0), // maybe wrong!
+            new Quaternion().setEulerAngles(0,270+pitchAdd,270),
+            new Quaternion().setEulerAngles(90,0,180+pitchAdd),
+            new Quaternion().setEulerAngles(270,0,0-pitchAdd),
+            new Quaternion().setEulerAngles(180,0-pitchAdd,270),  // maybe wrong!
+            new Quaternion().setEulerAngles(0,0+pitchAdd,90)
+    };
+
 	public boolean rerolling;
+
+	Vector3 startPos = new Vector3();
+	Vector3 targetPos;
+	Quaternion startQuat = new Quaternion();
+	Quaternion targetQuat = new Quaternion();
+    static float index = 4;
+
 	public void click(){
 //        if(!isStopped()) return;
+        startPos = physical.transform.getTranslation(startPos);
         removeFromPhysics();
         moveToTop();
-		Vector3 position = physical.body.getCenterOfMassPosition();
-		Vector3 target = new Vector3(0,1, 6);
-		Vector3 between = target.cpy().sub(position);
-//		physical.body.translate(between.scl(.5f));
+		targetPos = new Vector3(index-=1.2f,3, 3);
 
-		physical.transform.translate(between.scl(.5f));
-		physical.transform.setFromEulerAngles(0,0,0);
-		physical.update();
+
+        physical.transform.getRotation(startQuat);
+        targetQuat = d6Quats[getSide()];
+
+
+
+
 //		rerolling = !rerolling;
 //		if(rerolling){
 //            Sounds.playSound(Sounds.shake,.3f,1);
@@ -269,7 +289,18 @@ public class Die {
 	
 	int lockedSide=-1;
 	private float glow=0;
+	float dist = 0;
 	public void update(float delta){
+	    if(targetPos!=null){
+	        dist += delta;
+	        dist = Math.min(1,dist);
+            physical.transform.setToRotation(0,0,0, 0); // side 3
+            Vector3 thisFrame =startPos.cpy().lerp(targetPos, dist);
+            physical.transform.setToTranslation(thisFrame);
+            physical.transform.rotate(startQuat.cpy().slerp(targetQuat, dist));
+            physical.body.setWorldTransform(physical.transform);
+        }
+
 		if(locked){
 			glow = Math.max(0, glow-delta*1.0f);
 		}

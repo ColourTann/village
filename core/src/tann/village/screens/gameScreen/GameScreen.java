@@ -49,7 +49,7 @@ public class GameScreen extends Screen{
 
     public enum State{Story, Event, Rolling, Review, Levelling}
 	public State state;
-	private static final int STARTING_VILLAGERS = 5;
+	private static final int STARTING_VILLAGERS = 15;
 	public Array<Villager> villagers = new Array<>();
 	public CircleButton constructionCircle;
 	public Array<Villager> villagersToLevelUp = new Array<>();

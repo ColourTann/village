@@ -17,8 +17,13 @@ public class BottomTextBar extends Lay{
         return Main.h(14);
     }
 
+    public static float gap(){
+        return Main.w(2);
+    }
+
+
     public static float width(){
-        return Main.width- GameScreen.getConstructionCircleSize()*2;
+        return Main.width- GameScreen.getConstructionCircleSize()*2-gap()*2;
     }
 
     TurnStatsPanel tsp;
@@ -39,8 +44,9 @@ public class BottomTextBar extends Lay{
 
     @Override
     public void layout() {
+        clearChildren();
         setSize(width(), height());
-        setPosition(GameScreen.getConstructionCircleSize(), 0);
+        setPosition(GameScreen.getConstructionCircleSize()+gap(), 0);
         final BottomTextBarTab objTab = new BottomTextBarTab("objectives", Colours.brown_dark, new Runnable() {
             @Override
             public void run() {

@@ -26,7 +26,7 @@ import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.panels.*;
-import tann.village.screens.gameScreen.panels.VillagerBarPanel;
+import tann.village.screens.gameScreen.panels.villagerBar.VillagerBarPanel;
 import tann.village.screens.gameScreen.panels.bottomBar.BottomTextBar;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
 import tann.village.screens.gameScreen.panels.bottomBar.TurnStatsPanel;
@@ -40,7 +40,6 @@ public class GameScreen extends Screen{
 	public static final int BUTTON_BORDER=10;
 	private static GameScreen self;
     public RerollPanel rollButtonPanel;
-    public ConfirmPanel confirmPanel;
     Group rollContainer;
 
     public static void reset() {
@@ -58,7 +57,6 @@ public class GameScreen extends Screen{
 	EventPanel eventPanel;
 	public ConstructionPanel constructionPanel;
     CircleButton cButt1;
-    CircleButton cButt2;
     BottomTextBar btb;
 	TurnStatsPanel tsp;
 	public static GameScreen get(){
@@ -124,15 +122,6 @@ public class GameScreen extends Screen{
         rollContainer.addActor(cButt1);
 
 
-        cButt2= new CircleButton(Main.width, 330, 110, Colours.dark);
-
-        cButt2.setClickAction(new Runnable() {
-            @Override
-            public void run() {
-                confirmButtonClick();
-            }
-        });
-        rollContainer.addActor(cButt2);
         showRollContainer(false);
         constructionPanel= new ConstructionPanel();
         vbp = new VillagerBarPanel();
@@ -167,19 +156,15 @@ public class GameScreen extends Screen{
         float confirmSize = Main.h(18)*2;
         cButt1.setSize(getConstructionCircleSize()*2, getConstructionCircleSize()*2);
         cButt1.setCirclePosition(Main.width, 0);
-        cButt2.setSize(confirmSize, confirmSize);
-        cButt2.setCirclePosition(Main.width, Main.h(60));
         showRollContainer(lastRollContainerShow);
         rollButtonPanel = RollManager.getRollPanel();
         cButt1.setActor(rollButtonPanel, cButt1.getWidth()/4-rollButtonPanel.getWidth()/2 + 20, cButt1.getHeight()/2);
-        confirmPanel = RollManager.getConfirmPanel();
-        cButt2.setActor(confirmPanel, cButt2.getWidth()/4-confirmPanel.getWidth()/2+10, cButt2.getHeight()/2-confirmPanel.getHeight()/2);
 
         constructionCircle.setSize(getConstructionCircleSize()*2, getConstructionCircleSize()*2);
         constructionCircle.setTexture(Images.hammer, 0.7f, .7f, Main.h(13), Main.h(13));
         constructionCircle.setCirclePosition(0,0);
 
-        vbp.setPosition(InventoryItemPanel.totalWidth(), Main.height-vbp.getHeight());
+        vbp.setPosition(Main.width-vbp.getWidth(), GameScreen.getConstructionCircleSize());
 
         if(eventPanel!=null){
             center(eventPanel);

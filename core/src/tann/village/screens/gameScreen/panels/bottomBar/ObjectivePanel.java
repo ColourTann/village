@@ -70,7 +70,6 @@ public class ObjectivePanel extends Lay{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(Colours.brown_dark);
-        Draw.fillActor(batch, this);
         super.draw(batch, parentAlpha);
     }
 

@@ -1,9 +1,5 @@
 package tann.village.gameplay.village.villager;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,7 +11,7 @@ import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.gameplay.village.villager.die.Side;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.villager.die.Die;
-import tann.village.screens.gameScreen.panels.VillagerIcon;
+import tann.village.screens.gameScreen.panels.villagerBar.VillagerIcon;
 import tann.village.util.Colours;
 
 public class Villager {

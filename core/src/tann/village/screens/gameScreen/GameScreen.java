@@ -49,7 +49,7 @@ public class GameScreen extends Screen{
 
     public enum State{Story, Event, Rolling, Review, Levelling}
 	public State state;
-	private static final int STARTING_VILLAGERS = 15;
+	private static final int STARTING_VILLAGERS = 10;
 	public Array<Villager> villagers = new Array<>();
 	public CircleButton constructionCircle;
 	public Array<Villager> villagersToLevelUp = new Array<>();
@@ -242,7 +242,7 @@ public class GameScreen extends Screen{
 
     public void rollButtonClick(){
 	    if(!BulletStuff.isFinishedRolling()) return;
-        if(BulletStuff.numSelectedDice()==0) return;
+//        if(BulletStuff.numSelectedDice()==0) return;
         roll(true);
     }
 
@@ -260,10 +260,10 @@ public class GameScreen extends Screen{
 		int diceRolled = 0;
 
 		for (tann.village.gameplay.village.villager.die.Die d : BulletStuff.dice) {
-			if(d.rerolling){
+//			if(d.rerolling){
 				d.roll();
 				diceRolled++;
-			}
+//			}
 		}
 
 		if(diceRolled>0) {

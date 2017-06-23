@@ -188,33 +188,46 @@ public class Die {
 	}
 
 	static final float pitchAdd = -40;
+	static final Quaternion[] d6QuatsWithLean = new Quaternion[]{
+			new Quaternion().setEulerAngles(0,90+pitchAdd,0), // maybe wrong!
+			new Quaternion().setEulerAngles(0,270+pitchAdd,270),
+			new Quaternion().setEulerAngles(90,0,180+pitchAdd),
+			new Quaternion().setEulerAngles(270,0,0-pitchAdd),
+			new Quaternion().setEulerAngles(180,0-pitchAdd,270),  // maybe wrong!
+			new Quaternion().setEulerAngles(0,0+pitchAdd,90)
+	}; ;
 	static final Quaternion[] d6Quats = new Quaternion[]{
-            new Quaternion().setEulerAngles(0,90+pitchAdd,0), // maybe wrong!
-            new Quaternion().setEulerAngles(0,270+pitchAdd,270),
-            new Quaternion().setEulerAngles(90,0,180+pitchAdd),
-            new Quaternion().setEulerAngles(270,0,0-pitchAdd),
-            new Quaternion().setEulerAngles(180,0-pitchAdd,270),  // maybe wrong!
-            new Quaternion().setEulerAngles(0,0+pitchAdd,90)
+            new Quaternion().setEulerAngles(0,90,0), // maybe wrong!
+            new Quaternion().setEulerAngles(0,270,270),
+            new Quaternion().setEulerAngles(90,0,180),
+            new Quaternion().setEulerAngles(270,0,0),
+            new Quaternion().setEulerAngles(180,0,270),  // maybe wrong!
+            new Quaternion().setEulerAngles(0,0,90)
     };
 
 	public boolean rerolling;
 
-	Vector3 startPos = new Vector3();
-	Vector3 targetPos;
-	Quaternion startQuat = new Quaternion();
-	Quaternion targetQuat = new Quaternion();
+	private boolean moveUp;
+	private boolean moveDown;
+	private Vector3 startPos = new Vector3();
+	private Vector3 targetPos;
+	private Quaternion startQuat = new Quaternion();
+	private Quaternion targetQuat = new Quaternion();
     static float index = 4;
 
 	public void click(){
-//        if(!isStopped()) return;
-        startPos = physical.transform.getTranslation(startPos);
-        removeFromPhysics();
-        moveToTop();
-		targetPos = new Vector3(index-=1.2f,3, 3);
-
-
-        physical.transform.getRotation(startQuat);
-        targetQuat = d6Quats[getSide()];
+//		if(!isStopped()) return;
+		if(!moveUp) {
+			moveUp=true;
+			moveDown=false;
+			removeFromPhysics();
+			moveToTop();
+		}
+		else{
+			moveUp=false;
+			moveDown=true;
+			moveToBot();
+		}
 
 
 
@@ -229,8 +242,22 @@ public class Die {
 //        RollManager.updateRolls();
     }
 
-	private void moveToTop() {
+	private void moveToBot() {
+		moveTo(new Vector3(0, 1, 0), d6Quats[getSide()]);
+	}
 
+	private void moveToTop() {
+		moveTo(new Vector3(index -= 1.2f, 3, 3), d6QuatsWithLean[getSide()]);
+	}
+
+	private void moveTo(Vector3 position, Quaternion rotation){
+		dist=0;
+		startPos = physical.transform.getTranslation(startPos);
+		System.out.println(startPos);
+		targetPos = position;
+		physical.transform.getRotation(startQuat);
+		targetQuat = rotation;
+		moveUp=true;
 	}
 
 	float timeInAir;
@@ -243,6 +270,7 @@ public class Die {
 		unlock();
         physical.body.clearForces();
 		randomise(12, 0, 7, 0, .7f, .7f);
+		System.out.println("rolling");
 	}
 	
 	public void jiggle(){
@@ -291,13 +319,22 @@ public class Die {
 	private float glow=0;
 	float dist = 0;
 	public void update(float delta){
-	    if(targetPos!=null){
-	        dist += delta;
+	    if(moveUp || moveDown){
+	        dist += delta*2;
+	        if(dist >= 1){
+	        	dist = 1;
+	        	if(moveDown){
+	        		moveDown=false;
+	        		addToPhysics();
+	        		moveUp=false;
+				}
+			}
 	        dist = Math.min(1,dist);
+	        float interp = Interpolation.pow2Out.apply(dist);
             physical.transform.setToRotation(0,0,0, 0); // side 3
-            Vector3 thisFrame =startPos.cpy().lerp(targetPos, dist);
+            Vector3 thisFrame =startPos.cpy().lerp(targetPos, interp);
             physical.transform.setToTranslation(thisFrame);
-            physical.transform.rotate(startQuat.cpy().slerp(targetQuat, dist));
+            physical.transform.rotate(startQuat.cpy().slerp(targetQuat, interp));
             physical.body.setWorldTransform(physical.transform);
         }
 
@@ -314,7 +351,9 @@ public class Die {
 			}
 		}
 	}
-	
+
+
+
 	boolean locked = true;
 	public void lock(){
 		if (locked) return;
@@ -371,6 +410,11 @@ public class Die {
     public void removeFromPhysics(){
 		BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
 		BulletStuff.dynamicsWorld.removeCollisionObject(physical.body);
+	}
+
+	private void addToPhysics() {
+		BulletStuff.dynamicsWorld.addRigidBody(physical.body, BulletStuff.OBJECT_FLAG, BulletStuff.ALL_FLAG);
+		BulletStuff.dynamicsWorld.addCollisionObject(physical.body);
 	}
 
 

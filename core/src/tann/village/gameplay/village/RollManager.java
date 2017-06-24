@@ -1,7 +1,6 @@
 package tann.village.gameplay.village;
 
 import tann.village.bullet.BulletStuff;
-import tann.village.screens.gameScreen.panels.ConfirmPanel;
 import tann.village.screens.gameScreen.panels.RerollPanel;
 
 public class RollManager {
@@ -27,9 +26,8 @@ public class RollManager {
 
     public static void updateRolls(){
         getRollPanel().setRolls(RollManager.rolls, RollManager.maxRolls);
-        getRollPanel().setDiceSelected(BulletStuff.numSelectedDice());
-        getRollPanel().setAllDiceLocks(BulletStuff.isFinishedRolling());
-        getConfirmPanel().setRolling(!BulletStuff.isFinishedRolling());
+        getRollPanel().setDiceStillRolling(BulletStuff.numRollingDice());
+        getRollPanel().setAllDiceLocks(BulletStuff.allDiceLocked());
     }
 
     private static RerollPanel panel;
@@ -38,13 +36,5 @@ public class RollManager {
             panel = new RerollPanel();
         }
         return panel;
-    }
-
-    private static ConfirmPanel confirmPanel;
-    public static ConfirmPanel getConfirmPanel(){
-        if(confirmPanel==null){
-            confirmPanel = new ConfirmPanel();
-        }
-        return confirmPanel;
     }
 }

@@ -204,20 +204,18 @@ public class BulletStuff {
 			if (button == 1) {
 				d.villager.dieRightClicked();
 			}
-
 		}
-
 	}
 
-	public static int numSelectedDice(){
+	public static int numRollingDice(){
         int total=0;
-        for (Die d : BulletStuff.dice) if(d.rerolling) total++;
+        for (Die d : BulletStuff.dice) if(d.getState()==Die.DieState.Rolling) total++;
         return total;
     }
 
-	public static boolean isFinishedRolling(){
+	public static boolean allDiceLocked(){
         for (Die d : BulletStuff.dice) {
-			if (!d.isStopped()){
+			if (d.getState()!= Die.DieState.Locked){
 			    return false;
             }
 		}
@@ -230,5 +228,11 @@ public class BulletStuff {
         }
         dice.clear();
         instances.clear();
+    }
+
+    public static void clearDice() {
+        for(Die d: BulletStuff.dice){
+            d.removeFromScreen();
+        }
     }
 }

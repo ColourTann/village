@@ -25,6 +25,7 @@ import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
+import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.panels.*;
 import tann.village.screens.gameScreen.panels.villagerBar.VillagerBarPanel;
 import tann.village.screens.gameScreen.panels.bottomBar.BottomTextBar;
@@ -49,7 +50,7 @@ public class GameScreen extends Screen{
 
     public enum State{Story, Event, Rolling, Review, Levelling}
 	public State state;
-	private static final int STARTING_VILLAGERS = 10;
+	public static final int STARTING_VILLAGERS = 5;
 	public Array<Villager> villagers = new Array<>();
 	public CircleButton constructionCircle;
 	public Array<Villager> villagersToLevelUp = new Array<>();
@@ -80,6 +81,7 @@ public class GameScreen extends Screen{
 	public void init(Island island, Village village){
 		this.village=village;
 		this.island=island;
+		addActor(LockBar.get());
 		setSize(Main.width, Main.height);
 		addListener(new ClickListener(){
 			@Override
@@ -166,6 +168,12 @@ public class GameScreen extends Screen{
 
         vbp.setPosition(Main.width-vbp.getWidth(), GameScreen.getConstructionCircleSize());
 
+        LockBar.get().setPosition(getWidth()/2-LockBar.get().getWidth()/2, getHeight()+LockBar.get().getHeight());
+
+        if(state==State.Rolling){
+            LockBar.get().moveIn();
+        }
+
         if(eventPanel!=null){
             center(eventPanel);
         }
@@ -202,6 +210,7 @@ public class GameScreen extends Screen{
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
 		Draw.drawSize(batch, island.background, getX(), getY(), getWidth(), getHeight());
+        LockBar.get().render(batch);
 	}
 
 
@@ -241,29 +250,25 @@ public class GameScreen extends Screen{
     }
 
     public void rollButtonClick(){
-	    if(!BulletStuff.isFinishedRolling()) return;
-//        if(BulletStuff.numSelectedDice()==0) return;
-        roll(true);
-    }
-
-    public void confirmButtonClick(){
-        if(!BulletStuff.isFinishedRolling()) return;
-        Sounds.playSound(Sounds.accept,1,1);
+	    if(BulletStuff.allDiceLocked() || !RollManager.hasRoll()){
+            Sounds.playSound(Sounds.accept,1,1);
             proceed();
+        }
+        else{
+            roll(true);
+        }
     }
 
 	public void roll(boolean reroll){
-
-		if(state!=State.Rolling) return;
+        if(state!=State.Rolling) return;
 		if(!RollManager.hasRoll()) return;
-		if(reroll && !BulletStuff.isFinishedRolling()) return;
 		int diceRolled = 0;
-
-		for (tann.village.gameplay.village.villager.die.Die d : BulletStuff.dice) {
-//			if(d.rerolling){
-				d.roll();
-				diceRolled++;
-//			}
+        System.out.println(BulletStuff.dice.size);
+        for (Die d : BulletStuff.dice) {
+            if(d.getState() == Die.DieState.Stopped) {
+                d.roll(reroll);
+                diceRolled++;
+            }
 		}
 
 		if(diceRolled>0) {
@@ -286,7 +291,6 @@ public class GameScreen extends Screen{
 			setState(State.Rolling);
 			break;
 		case Rolling:
-			if(!BulletStuff.isFinishedRolling()) return;
 			setState(State.Review);
 			break;
 		case Review:
@@ -360,25 +364,24 @@ public class GameScreen extends Screen{
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		for(tann.village.gameplay.village.villager.die.Die d:BulletStuff.dice){
+		for(Die d:BulletStuff.dice){
 			d.update(delta);
 		}
 		RollManager.updateRolls();
 	}
 	
 	private void finishRolling() {
-		if(!BulletStuff.isFinishedRolling()) return;
+		if(!BulletStuff.allDiceLocked()) return;
 		resetWisps();
         showRollContainer(false);
 		Village.get().getUpkeep().activate();
-		for(tann.village.gameplay.village.villager.die.Die d:BulletStuff.dice){
+		for(Die d:BulletStuff.dice){
 			d.activate();
 		}
-		for(tann.village.gameplay.village.villager.die.Die d: BulletStuff.dice){
-			d.removeFromScreen();
-		}
+        LockBar.get().moveAway();
 		showWisps();
         Village.getInventory().clearDeltas();
+        BulletStuff.clearDice();
 	}
 	
 
@@ -451,12 +454,12 @@ public class GameScreen extends Screen{
 		RollManager.refreshRolls();
 		reviewPanel = new ReviewPanel(Village.get().getDayNum());
 		state=State.Rolling;
-		for(tann.village.gameplay.village.villager.die.Die d: BulletStuff.dice){
+		for(Die d: BulletStuff.dice){
 			d.addToScreen();
-			d.rerolling=true;
 		}
 		roll(false);
         Village.get().getUpkeep().activateDelta();
+        LockBar.get().moveIn();
 	}
 
 	boolean lastRollContainerShow;

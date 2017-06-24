@@ -17,7 +17,7 @@ public class MyContactListener extends ContactListener {
 	
 	public MyContactListener() {
 	}
-	List<Integer> collisions = new ArrayList<>();
+	static List<Integer> collisions = new ArrayList<>();
 	long second;
 	@Override
 	public void onContactProcessed(btManifoldPoint cp, btCollisionObject colObj0, btCollisionObject colObj1) {
@@ -34,11 +34,12 @@ public class MyContactListener extends ContactListener {
 			second=newSecond;
 			collisions.clear();
 		}
-		int code = colObj0.hashCode()*colObj1.hashCode();
-		if(collisions.contains(code))return;
-		collisions.add(code);
+		Integer code = colObj0.hashCode()*colObj1.hashCode();
+
+        if(collisions.contains(code))return;
+        collisions.add(code);
 		float magnitude = Math.abs(cp.getDistance());
-		if(magnitude>=0.02){
+        if(magnitude>=0.02){
 			if(wall){
 				Sounds.playSound(Sounds.clocks, .2f, 1.f+(float)Math.random()*.8f);
 			}

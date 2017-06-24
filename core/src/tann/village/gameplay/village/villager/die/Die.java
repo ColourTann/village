@@ -15,163 +15,266 @@ import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.utils.Array;
 
-import tann.village.Images;
 import tann.village.bullet.BulletStuff;
 import tann.village.bullet.CollisionObject;
 import tann.village.gameplay.effect.Effect;
-import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
-import tann.village.gameplay.village.villager.die.Side;
+import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.panels.LockBar;
 import tann.village.util.Colours;
 import tann.village.util.Maths;
-import tann.village.util.Particle;
 import tann.village.util.Sounds;
 
-public class Die {
-	
-	private static final float MAX_AIRTIME = 3f;
-	public Villager villager;
-	public VillagerType type;
-	public CollisionObject physical;
-	public TextureRegion lapel;
-	public Die(Villager villager) {
-		this.villager=villager;
-		setup(villager.type);
-		construct();
-	}
+import java.util.concurrent.locks.Lock;
 
-    public Die(VillagerType type){
-        setup(type);
-        this.type=type;
-        construct();
+import static tann.village.gameplay.village.villager.die.Die.DieState.*;
+
+public class Die {
+
+    public enum DieState{Rolling, Stopped, Locked, Locking, Unlocking}
+
+	public Villager villager;
+    public VillagerType type;
+    public CollisionObject physical;
+    public TextureRegion lapel;
+    public Array<Side> sides = new Array<>();
+    private static final float MAX_AIRTIME = 2.8f;
+
+    // gameplay stuff
+
+    private Vector3 startPos = new Vector3();
+    private Vector3 targetPos;
+    private Quaternion startQuat = new Quaternion();
+    private Quaternion targetQuat = new Quaternion();
+
+    private DieState state = DieState.Stopped;
+    int lockedSide=-1;
+
+    private float glow=0;
+    float dist = 0;
+    public void update(float delta){
+
+        switch(state){
+            case Stopped:
+                glow = Math.max(0, glow-delta*1.0f);
+                break;
+            case Locking:
+            case Unlocking:
+                dist += delta*2;
+                if(dist >= 1){
+                    dist = 1;
+                    if(state==Unlocking){
+                        addToPhysics();
+                        setState(Stopped);
+                    }
+                    else if(state== Locking){
+                        setState(Locked);
+                    }
+                }
+                dist = Math.min(1,dist);
+                float interp = Interpolation.pow2Out.apply(dist);
+                physical.transform.setToRotation(0,0,0, 0); // side 3
+                Vector3 thisFrame =startPos.cpy().lerp(targetPos, interp);
+                physical.transform.setToTranslation(thisFrame);
+                physical.transform.rotate(startQuat.cpy().slerp(targetQuat, interp));
+                physical.body.setWorldTransform(physical.transform);
+                break;
+            case Locked:
+                break;
+            case Rolling:
+                if(isStopped()){
+                    setState(Stopped);
+                    glow = 1;
+                    Village.getInventory().addDelta(sides.get(lockedSide).effects, false);
+                }
+                else{
+                    timeInAir+=delta;
+                    if(timeInAir > MAX_AIRTIME){
+                        jiggle();
+                    }
+                }
+                break;
+        }
     }
 
-    // special weird die
-    public Die(VillagerType type, Villager villager){
-        this.villager=villager;
-        this.type=type;
-        setup(type);
-        construct();
-        glowOverride = true;
+    public void click(){
+        switch(state){
+            case Rolling:
+                break;
+            case Stopped:
+                moveToTop();
+                setState(Locking);
+                removeFromPhysics();
+                Sounds.playSound(Sounds.shake,.3f,1);
+                break;
+            case Locked:
+                setState(Unlocking);
+                removeFromPhysics();
+                moveToBot();
+                Sounds.playSound(Sounds.unshake,.3f,1);
+                break;
+            case Locking:
+                break;
+            case Unlocking:
+                break;
+        }
+    }
+
+    public DieState getState(){
+        return state;
+    }
+
+    private void setState(DieState state) {
+        this.state=state;
+        switch(state){
+            case Rolling:
+                break;
+            case Stopped:
+                this.lockedSide=getSide();
+                damp();
+                break;
+            case Locked:
+                break;
+            case Locking:
+                break;
+            case Unlocking:
+                break;
+        }
+    }
+
+    private void damp() {
+        physical.body.setDamping(2, 50);
+    }
+
+    private void undamp(){
+        physical.body.setDamping(0, 0);
+    }
+
+    public boolean isMoving(){
+        return physical.isMoving();
+    }
+
+
+    private void moveToBot() {
+        LockBar.get().removeDie(this);
+        moveTo(new Vector3(0, 1f, 0), d6Quats[lockedSide]);
+        undamp();
+    }
+
+    private void moveToTop() {
+        int index = LockBar.get().addDie(this);
+        System.out.println(index);
+        float width = 5;
+        float x = -(width/(GameScreen.STARTING_VILLAGERS-1)*index - width/2);
+        System.out.println(x);
+        moveTo(new Vector3(x, 2, 4.5f), d6QuatsWithLean[lockedSide]);
+    }
+
+    private void moveTo(Vector3 position, Quaternion rotation){
+        dist=0;
+        startPos = physical.transform.getTranslation(startPos);
+        targetPos = position;
+        physical.transform.getRotation(startQuat);
+        targetQuat = rotation;
+    }
+
+    float timeInAir;
+    public void roll(boolean reroll) {
+        if(!reroll){
+            resetForRoll();
+        }
+        System.out.println("rolling");
+        this.lockedSide=-1;
+        setState(Rolling);
+        undamp();
+        if(lockedSide>=0){
+            Village.getInventory().addDelta(sides.get(lockedSide).effects, true);
+        }
+        timeInAir=0;
+        physical.body.clearForces();
+        randomise(12, 0, 7, 0, .7f, .7f);
+    }
+
+    private void resetForRoll() {
+        randomiseStart();
+        removeFromPhysics();
+        addToPhysics();
+        undamp();
+    }
+
+    public void jiggle(){
+        timeInAir=0;
+        randomise(5, 0, 2, 0, 1, 0);
     }
 
     boolean glowOverride;
 
-	public void setup(VillagerType type){
-	    this.type=type;
-        this.lapel = type.lapel;
-	    for(Side s:type.sides){
-	        addSide(s);
-        }
-	}
-	
-	public int getSide(){
-	    if(glowOverride) return -1;
-		if(rerolling) return 50;
-		if(lockedSide >=0) return lockedSide;
-		if(!isStopped()) return -1;
-		physical.update();
-		physical.updateBounds();
-		Quaternion rot = new Quaternion();
-		physical.transform.getRotation(rot);
-		Vector3 direction = new Vector3();
-		
-		direction.set(Vector3.Z);
-		direction.mul(rot);
-		float dot = Vector3.Y.dot(direction);
-		if(dot>.9f){
-			return 1;
-		}
-		else if (dot<-.9f){
-			return 0;
-		}
-		
-		direction.set(Vector3.X);
-		direction.mul(rot);
-		dot = Vector3.Y.dot(direction);
-		if(dot>.9f){
-			return 5;
-		}
-		else if (dot<-.9f){
-			return 4;
-		}
-		
-		direction.set(Vector3.Y);
-		direction.mul(rot);
-		dot = Vector3.Y.dot(direction);
-		if(dot>.9f){
-			return 3;
-		}
-		else if (dot<-.9f){
-			return 2;
-		}
-		
-		return -1;
-	}
-	
-	public Array<Side> sides = new Array<>();
-	
-	public void addSide(Side side){
-		Side copy = side.copy();
-		sides.add(copy);
-		for(Effect e:copy.effects) e.sourceDie=this;
-	}
-	
-	static int die = 0;
-	private static final float DIE_SIZE = 0.5f;
-	private static final int ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates|VertexAttributes.Usage.ColorPacked;
-	private static Material MATERIAL;
-	public void construct(){
-		ModelBuilder mb = new ModelBuilder();
-		mb.begin();
-		mb.node().id = "die";
-		
-		if(MATERIAL==null){
-			MATERIAL =new Material(TextureAttribute.createDiffuse(sides.get(0).tr[0].getTexture()));
-		}
-		
-		MeshPartBuilder mpb = mb.part("die", GL20.GL_TRIANGLES, ATTRIBUTES, MATERIAL);
-		float normalX = 0; // normalX stores the side number for flashing/fading
-		float normalY = 0; // currently unused
-		float[] f = new float[]{getFloat(4,5)}; // the lapels 
-		float inner = f[(int)(Math.random()*f.length)];
-		for(int i=0;i<6;i++){
-			normalX=i;
-			Side side = sides.get(i);
-			TextureRegion base = side.tr[0];
-			TextureRegion highlight = side.tr[1];
-			mpb.setColor(getFloat(base), getFloat(highlight), inner, die/5f+0.1f);
-			
-			switch(i){
-				case 0: mpb.rect(-DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, normalX, normalY, -1); break;
-				case 1: mpb.rect(-DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, normalX, normalY, 1); break;
-				case 2: mpb.rect(-DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, normalX, normalY, 0); break;
-				case 3: mpb.rect(-DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, normalX, normalY, 0); break;
-				case 4: mpb.rect(-DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, normalX, normalY, 0); break;
-				case 5: mpb.rect(DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, normalX, normalY, 0); break;
-			}
-			
-		}
-		Model model = mb.end();
+    // boring calculations
 
-		CollisionObject co = new CollisionObject(model, "die", new btBoxShape(new Vector3(0.5f, 0.5f, 0.5f)),
-				BulletStuff.mass);
-		physical = co;
-		float positionRand = 3.5f;
-		co.transform.trn(MathUtils.random(-positionRand, positionRand), 1, MathUtils.random(-positionRand, positionRand)); // starting position
-		co.body.setWorldTransform(co.transform);
-		co.body.setCollisionFlags(
-				co.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
-		physical.body.setActivationState(4);
-		co.body.setCollisionFlags(BulletStuff.OBJECT_FLAG);
-		co.body.setContactCallbackFlag(BulletStuff.OBJECT_FLAG);
-		co.body.setContactCallbackFilter(BulletStuff.OBJECT_FLAG);
-		co.body.setActivationState(Collision.DISABLE_DEACTIVATION);
-		die = die + 1;
-		co.body.userData=this;
-		physical.userData = this;
+    static final float pitchAdd = -40;
+    static final Quaternion[] d6QuatsWithLean = new Quaternion[]{
+            new Quaternion().setEulerAngles(0,90+pitchAdd,90), // maybe wrong!
+            new Quaternion().setEulerAngles(0,270+pitchAdd,270),
+            new Quaternion().setEulerAngles(90,0,180+pitchAdd),
+            new Quaternion().setEulerAngles(270,0,0-pitchAdd),
+            new Quaternion().setEulerAngles(180,0-pitchAdd,270),  // maybe wrong!
+            new Quaternion().setEulerAngles(0,0+pitchAdd,90)
+    }; ;
+    static final Quaternion[] d6Quats = new Quaternion[]{
+            new Quaternion().setEulerAngles(0,90,90), // maybe wrong!
+            new Quaternion().setEulerAngles(0,270,270),
+            new Quaternion().setEulerAngles(90,0,180),
+            new Quaternion().setEulerAngles(270,0,0),
+            new Quaternion().setEulerAngles(180,0,270),  // maybe wrong!
+            new Quaternion().setEulerAngles(0,0,90)
+    };
+
+	public int getSide(){
+	    switch(state) {
+            case Rolling:
+                return -1;
+            case Locked:
+            case Locking:
+            case Unlocking:
+                return lockedSide;
+            case Stopped:
+                if (glowOverride) return -1;
+                if (lockedSide >= 0) return lockedSide;
+                if (!isStopped()) return -1;
+                physical.update();
+                physical.updateBounds();
+                Quaternion rot = new Quaternion();
+                physical.transform.getRotation(rot);
+                Vector3 direction = new Vector3();
+                direction.set(Vector3.Z);
+                direction.mul(rot);
+                float dot = Vector3.Y.dot(direction);
+                if (dot > .9f) {
+                    return 1;
+                } else if (dot < -.9f) {
+                    return 0;
+                }
+                direction.set(Vector3.X);
+                direction.mul(rot);
+                dot = Vector3.Y.dot(direction);
+                if (dot > .9f) {
+                    return 5;
+                } else if (dot < -.9f) {
+                    return 4;
+                }
+                direction.set(Vector3.Y);
+                direction.mul(rot);
+                dot = Vector3.Y.dot(direction);
+                if (dot > .9f) {
+                    return 3;
+                } else if (dot < -.9f) {
+                    return 2;
+                }
+                return -1;
+        }
+        return -1;
 	}
 	
 	private float getFloat(TextureRegion tr){
@@ -182,110 +285,8 @@ public class Die {
 		int num = x+16*(y);
 		return num/255f+0.002f;
 	}
-	
-	public boolean isMoving(){
-		return physical.isMoving();
-	}
 
-	static final float pitchAdd = -40;
-	static final Quaternion[] d6QuatsWithLean = new Quaternion[]{
-			new Quaternion().setEulerAngles(0,90+pitchAdd,0), // maybe wrong!
-			new Quaternion().setEulerAngles(0,270+pitchAdd,270),
-			new Quaternion().setEulerAngles(90,0,180+pitchAdd),
-			new Quaternion().setEulerAngles(270,0,0-pitchAdd),
-			new Quaternion().setEulerAngles(180,0-pitchAdd,270),  // maybe wrong!
-			new Quaternion().setEulerAngles(0,0+pitchAdd,90)
-	}; ;
-	static final Quaternion[] d6Quats = new Quaternion[]{
-            new Quaternion().setEulerAngles(0,90,0), // maybe wrong!
-            new Quaternion().setEulerAngles(0,270,270),
-            new Quaternion().setEulerAngles(90,0,180),
-            new Quaternion().setEulerAngles(270,0,0),
-            new Quaternion().setEulerAngles(180,0,270),  // maybe wrong!
-            new Quaternion().setEulerAngles(0,0,90)
-    };
-
-	public boolean rerolling;
-
-	private boolean moveUp;
-	private boolean moveDown;
-	private Vector3 startPos = new Vector3();
-	private Vector3 targetPos;
-	private Quaternion startQuat = new Quaternion();
-	private Quaternion targetQuat = new Quaternion();
-    static float index = 4;
-
-	public void click(){
-//		if(!isStopped()) return;
-		if(!moveUp) {
-			moveUp=true;
-			moveDown=false;
-			removeFromPhysics();
-			moveToTop();
-		}
-		else{
-			moveUp=false;
-			moveDown=true;
-			moveToBot();
-		}
-
-
-
-
-//		rerolling = !rerolling;
-//		if(rerolling){
-//            Sounds.playSound(Sounds.shake,.3f,1);
-//        }
-//        else{
-//            Sounds.playSound(Sounds.unshake,.3f,1);
-//        }
-//        RollManager.updateRolls();
-    }
-
-	private void moveToBot() {
-		moveTo(new Vector3(0, 1, 0), d6Quats[getSide()]);
-	}
-
-	private void moveToTop() {
-		moveTo(new Vector3(index -= 1.2f, 3, 3), d6QuatsWithLean[getSide()]);
-	}
-
-	private void moveTo(Vector3 position, Quaternion rotation){
-		dist=0;
-		startPos = physical.transform.getTranslation(startPos);
-		System.out.println(startPos);
-		targetPos = position;
-		physical.transform.getRotation(startQuat);
-		targetQuat = rotation;
-		moveUp=true;
-	}
-
-	float timeInAir;
-	public void roll() {
-	    if(lockedSide>=0){
-            Village.getInventory().addDelta(sides.get(lockedSide).effects, true);
-        }
-		timeInAir=0;
-		rerolling=false;
-		unlock();
-        physical.body.clearForces();
-		randomise(12, 0, 7, 0, .7f, .7f);
-		System.out.println("rolling");
-	}
-	
-	public void jiggle(){
-		timeInAir=0;
-		randomise(5, 0, 2, 0, 1, 0);
-	}
-
-	private void unlock(){
-		locked=false;
-		lockedSide=-1;
-		physical.body.setDamping(0, 0);
-	}
-	
 	private void randomise(float up, float upRand, float side, float sideRand, float rot, float rotRand){
-
 		float x = (float)(side + Maths.factor(sideRand))*Maths.mult();
 		float y = (float)(up + Maths.factor(upRand));
 		float z = (float)(side + Maths.factor(sideRand))*Maths.mult();
@@ -301,8 +302,7 @@ public class Die {
 	}
 	
 	public void activate() {
-		rerolling=false;
-		for(Effect e:sides.get(getSide()).effects) e.activate(true);
+		for(Effect e:sides.get(lockedSide).effects) e.activate(true);
 	}
 
 	public void destroy() {
@@ -310,60 +310,11 @@ public class Die {
 	}
 	
 	Vector3 position = new Vector3();
-	public boolean isStopped(){
+	private boolean isStopped(){
 		physical.transform.getTranslation(position);
 		return !isMoving() && position.y<1.01f;
 	}
-	
-	int lockedSide=-1;
-	private float glow=0;
-	float dist = 0;
-	public void update(float delta){
-	    if(moveUp || moveDown){
-	        dist += delta*2;
-	        if(dist >= 1){
-	        	dist = 1;
-	        	if(moveDown){
-	        		moveDown=false;
-	        		addToPhysics();
-	        		moveUp=false;
-				}
-			}
-	        dist = Math.min(1,dist);
-	        float interp = Interpolation.pow2Out.apply(dist);
-            physical.transform.setToRotation(0,0,0, 0); // side 3
-            Vector3 thisFrame =startPos.cpy().lerp(targetPos, interp);
-            physical.transform.setToTranslation(thisFrame);
-            physical.transform.rotate(startQuat.cpy().slerp(targetQuat, interp));
-            physical.body.setWorldTransform(physical.transform);
-        }
 
-		if(locked){
-			glow = Math.max(0, glow-delta*1.0f);
-		}
-		else if(isStopped()){
-			lock();
-		}
-		else{
-			timeInAir+=delta;
-			if(timeInAir > MAX_AIRTIME){
-				jiggle();
-			}
-		}
-	}
-
-
-
-	boolean locked = true;
-	public void lock(){
-		if (locked) return;
-        lockedSide = getSide();
-		locked = true;
-		physical.body.setDamping(2, 50);
-		glow = 1;
-        Village.getInventory().addDelta(sides.get(lockedSide).effects, false);
-	}
-	
 	public float getGlow(){
 		return glow;
 	}
@@ -401,6 +352,7 @@ public class Die {
     }
 
     public void removeFromScreen() {
+        setState(Stopped);
         lockedSide=-1;
         BulletStuff.instances.removeValue(physical, true);
         BulletStuff.dynamicsWorld.removeRigidBody(physical.body);
@@ -413,18 +365,117 @@ public class Die {
 	}
 
 	private void addToPhysics() {
+        removeFromPhysics();
 		BulletStuff.dynamicsWorld.addRigidBody(physical.body, BulletStuff.OBJECT_FLAG, BulletStuff.ALL_FLAG);
-		BulletStuff.dynamicsWorld.addCollisionObject(physical.body);
 	}
 
 
     public void addToScreen() {
         lockedSide=-1;
         BulletStuff.instances.add(physical);
-        physical.body.setLinearVelocity(new Vector3());
-        physical.body.setAngularVelocity(new Vector3());
-        BulletStuff.dynamicsWorld.addRigidBody(physical.body, BulletStuff.OBJECT_FLAG, BulletStuff.ALL_FLAG);
+        resetSpeeed();
+        addToPhysics();
         physical.body.setContactCallbackFlag(BulletStuff.OBJECT_FLAG);
         physical.body.setContactCallbackFilter(0);
     }
+
+    private void resetSpeeed() {
+        physical.body.setLinearVelocity(new Vector3());
+        physical.body.setAngularVelocity(new Vector3());
+    }
+
+    // setup stuff
+
+    public Die(Villager villager) {
+        this.villager=villager;
+        setup(villager.type);
+        construct();
+    }
+
+    public Die(VillagerType type){
+        setup(type);
+        this.type=type;
+        construct();
+    }
+
+    public Die(VillagerType type, Villager villager){
+        this.villager=villager;
+        this.type=type;
+        setup(type);
+        construct();
+        glowOverride = true;
+    }
+
+    public void setup(VillagerType type){
+        this.type=type;
+        this.lapel = type.lapel;
+        for(Side s:type.sides){
+            addSide(s);
+        }
+    }
+
+    public void addSide(Side side){
+        Side copy = side.copy();
+        sides.add(copy);
+        for(Effect e:copy.effects) e.sourceDie=this;
+    }
+
+    static int dieIndex = 0;
+    private static final float DIE_SIZE = 0.5f;
+    private static final int ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates|VertexAttributes.Usage.ColorPacked;
+    private static Material MATERIAL;
+    public void construct(){
+        ModelBuilder mb = new ModelBuilder();
+        mb.begin();
+        mb.node().id = "dieIndex";
+
+        if(MATERIAL==null){
+            MATERIAL =new Material(TextureAttribute.createDiffuse(sides.get(0).tr[0].getTexture()));
+        }
+
+        MeshPartBuilder mpb = mb.part("dieIndex", GL20.GL_TRIANGLES, ATTRIBUTES, MATERIAL);
+        float normalX = 0; // normalX stores the side number for flashing/fading
+        float normalY = 0; // currently unused
+        float[] f = new float[]{getFloat(4,5)}; // the lapels
+        float inner = f[(int)(Math.random()*f.length)];
+        for(int i=0;i<6;i++){
+            normalX=i;
+            Side side = sides.get(i);
+            TextureRegion base = side.tr[0];
+            TextureRegion highlight = side.tr[1];
+            mpb.setColor(getFloat(base), getFloat(highlight), inner, dieIndex /5f+0.1f);
+            switch(i){
+                case 0: mpb.rect(-DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, normalX, normalY, -1); break;
+                case 1: mpb.rect(-DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, normalX, normalY, 1); break;
+                case 2: mpb.rect(-DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, normalX, normalY, 0); break;
+                case 3: mpb.rect(-DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, normalX, normalY, 0); break;
+                case 4: mpb.rect(-DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, -DIE_SIZE, normalX, normalY, 0); break;
+                case 5: mpb.rect(DIE_SIZE, -DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, DIE_SIZE, -DIE_SIZE, DIE_SIZE, normalX, normalY, 0); break;
+            }
+        }
+        Model model = mb.end();
+
+        CollisionObject co = new CollisionObject(model, "dieIndex", new btBoxShape(new Vector3(0.5f, 0.5f, 0.5f)),
+                BulletStuff.mass);
+        physical = co;
+        randomiseStart();
+        co.body.setCollisionFlags(
+                co.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
+        physical.body.setActivationState(4);
+        co.body.setCollisionFlags(BulletStuff.OBJECT_FLAG);
+        co.body.setContactCallbackFlag(BulletStuff.OBJECT_FLAG);
+        co.body.setContactCallbackFilter(BulletStuff.OBJECT_FLAG);
+        co.body.setActivationState(Collision.DISABLE_DEACTIVATION);
+        dieIndex = dieIndex + 1;
+        co.body.userData=this;
+        physical.userData = this;
+    }
+
+    private void randomiseStart() {
+        float positionRand = 3.5f;
+        physical.transform.setToTranslation(MathUtils.random(-positionRand, positionRand), 1, MathUtils.random(-positionRand, positionRand)); // starting position
+        physical.body.setWorldTransform(physical.transform);
+        physical.body.setActivationState(4);
+    }
+
 }

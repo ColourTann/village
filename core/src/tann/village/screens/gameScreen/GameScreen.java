@@ -262,10 +262,12 @@ public class GameScreen extends Screen{
 	public void roll(boolean reroll){
         if(state!=State.Rolling) return;
 		if(!RollManager.hasRoll()) return;
+		if(!reroll){
+
+		}
 		int diceRolled = 0;
-        System.out.println(BulletStuff.dice.size);
         for (Die d : BulletStuff.dice) {
-            if(d.getState() == Die.DieState.Stopped) {
+            if(d.getState() == Die.DieState.Stopped || !reroll) {
                 d.roll(reroll);
                 diceRolled++;
             }
@@ -450,6 +452,7 @@ public class GameScreen extends Screen{
         levelledUpAlready=false;
 	    showRollContainer(true);
 		BulletStuff.refresh(villagers);
+
 		RollManager.setMaximumRolls(Village.get().getRerolls());
 		RollManager.refreshRolls();
 		reviewPanel = new ReviewPanel(Village.get().getDayNum());
@@ -460,6 +463,7 @@ public class GameScreen extends Screen{
 		roll(false);
         Village.get().getUpkeep().activateDelta();
         LockBar.get().moveIn();
+        LockBar.get().reset();
 	}
 
 	boolean lastRollContainerShow;

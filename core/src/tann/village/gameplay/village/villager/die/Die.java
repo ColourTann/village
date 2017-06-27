@@ -41,6 +41,7 @@ public class Die {
     public TextureRegion lapel;
     public Array<Side> sides = new Array<>();
     private static final float MAX_AIRTIME = 2.8f;
+    private static final float INTERP_SPEED = .4f;
 
     // gameplay stuff
 
@@ -62,7 +63,8 @@ public class Die {
                 break;
             case Locking:
             case Unlocking:
-                dist += delta*2;
+                System.out.println(dist);
+                dist += delta/INTERP_SPEED;
                 if(dist >= 1){
                     dist = 1;
                     if(state==Unlocking){
@@ -189,10 +191,8 @@ public class Die {
 
     private void moveToTop() {
         int index = LockBar.get().addDie(this);
-        System.out.println(index);
         float width = 5;
         float x = -(width/(GameScreen.STARTING_VILLAGERS-1)*index - width/2);
-        System.out.println(x);
         moveTo(new Vector3(x, 2, 4.5f), d6QuatsWithLean[lockedSide]);
     }
 
@@ -209,7 +209,6 @@ public class Die {
         if(!reroll){
             resetForRoll();
         }
-        System.out.println("rolling");
         this.lockedSide=-1;
         setState(Rolling);
         undamp();

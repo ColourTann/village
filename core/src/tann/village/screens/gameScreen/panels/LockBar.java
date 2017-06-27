@@ -52,7 +52,7 @@ public class LockBar extends Lay{
 
     @Override
     public void layout() {
-        setSize(Main.h(50), Main.h(13.5f));
+        setSize(Main.h(45), Main.h(11.0f));
     }
 
     public void moveIn() {

@@ -32,7 +32,6 @@ import tann.village.screens.gameScreen.panels.bottomBar.BottomTextBar;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
 import tann.village.screens.gameScreen.panels.bottomBar.TurnStatsPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel;
-import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.screens.gameScreen.panels.review.StarvationPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel.LossReason;
 import tann.village.util.*;
@@ -48,13 +47,12 @@ public class GameScreen extends Screen{
     }
 
 
-    public enum State{Story, Event, Rolling, Review, Levelling}
+    public enum State{Story, Event, Rolling, Upkeep, Levelling}
 	public State state;
 	public static final int STARTING_VILLAGERS = 5;
 	public Array<Villager> villagers = new Array<>();
 	public CircleButton constructionCircle;
 	public Array<Villager> villagersToLevelUp = new Array<>();
-	ReviewPanel reviewPanel = new ReviewPanel(Village.get().getDayNum());
 	EventPanel eventPanel;
 	public ConstructionPanel constructionPanel;
     CircleButton cButt1;
@@ -177,9 +175,6 @@ public class GameScreen extends Screen{
         if(eventPanel!=null){
             center(eventPanel);
         }
-        if(reviewPanel!=null){
-            center(reviewPanel);
-        }
         if(proceedButton!=null){
             proceedButton.refreshPosition();
         }
@@ -293,20 +288,23 @@ public class GameScreen extends Screen{
 			setState(State.Rolling);
 			break;
 		case Rolling:
-			setState(State.Review);
+            finishRolling();
+            Village.get().upkeep();
+            Village.getInventory().imposeLimits();
+			setState(State.Upkeep);
 			break;
-		case Review:
-			if(Village.getInventory().getResourceAmount(EffectType.Food)<0 || Village.getInventory().getResourceAmount(EffectType.Wood)<0){
-				showStarvation();
-				break;
-			}
-			if(villagersToLevelUp.size>0){
-				levelup(villagersToLevelUp.removeIndex(0));
-				break;
-			}
-			else{
-				setState(State.Event);
-			}
+		case Upkeep:
+            if(Village.getInventory().getResourceAmount(EffectType.Food)<0 || Village.getInventory().getResourceAmount(EffectType.Wood)<0){
+                showStarvation();
+                break;
+            }
+            if(villagersToLevelUp.size>0){
+                levelup(villagersToLevelUp.removeIndex(0));
+                break;
+            }
+            else{
+                setState(State.Event);
+            }
 			break;
 		}
 	}
@@ -349,9 +347,8 @@ public class GameScreen extends Screen{
 		case Rolling:
 			startRolling();
 			break;
-		case Review:
-			finishRolling();
-			showReview();
+		case Upkeep:
+            proceed();
 			break;
 		case Event:
 			showEvent();
@@ -455,7 +452,6 @@ public class GameScreen extends Screen{
 
 		RollManager.setMaximumRolls(Village.get().getRerolls());
 		RollManager.refreshRolls();
-		reviewPanel = new ReviewPanel(Village.get().getDayNum());
 		state=State.Rolling;
 		for(Die d: BulletStuff.dice){
 			d.addToScreen();
@@ -472,16 +468,6 @@ public class GameScreen extends Screen{
 	    rollContainer.addAction(Actions.moveTo(show?0:Main.h(50), 0, .5f, Interpolation.pow2Out));
     }
 	
-	private void showReview() {
-		state=State.Review;
-		Village.get().upkeep();
-		reviewPanel.build();
-		center(reviewPanel);
-		addActor(reviewPanel);
-		addProceedButton(reviewPanel);
-		Village.getInventory().imposeLimits();
-	}
-	
 	public void increaseUpkeepEffect(Effect effect){
         Village.get().getUpkeep().addEffect(effect);
 	}
@@ -490,9 +476,6 @@ public class GameScreen extends Screen{
 	    Village.get().process(effect);
 	    if(effect.type.objective){
                 island.addObjective(effect);
-        }
-        if(addToReview) {
-            reviewPanel.addItem(effect);
         }
 		Village.getInventory().activate(effect);
 	}

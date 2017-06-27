@@ -173,7 +173,7 @@ public class Die {
         int index = LockBar.get().addDie(this);
         float width = 5;
         float x = -(width/(GameScreen.STARTING_VILLAGERS-1)*index - width/2);
-        moveTo(new Vector3(x, 2, 4.5f), d6QuatsWithLean[lockedSide]);
+        moveTo(new Vector3(x, 0f, 6.55f), d6QuatsWithLean[lockedSide]);
     }
 
     private void moveTo(Vector3 position, Quaternion rotation){

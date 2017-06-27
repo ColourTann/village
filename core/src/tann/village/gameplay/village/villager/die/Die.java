@@ -159,8 +159,32 @@ public class Die {
 
     private void moveToBot() {
         LockBar.get().removeDie(this);
-        moveTo(new Vector3(0, 1f, 0), d6Quats[lockedSide]);
+        Vector3 best = getBestSpot();
+        moveTo(best, d6Quats[lockedSide]);
         undamp();
+    }
+
+    private Vector3 getBestSpot() {
+        float dist =0;
+        float angle = 0;
+        while(true){
+            Vector3 test = new Vector3((float)Math.sin(angle)*dist,1,(float)Math.cos(angle)*dist);
+            boolean good = true;
+            for(Die d:BulletStuff.dice){
+                Vector3 diePosition = new Vector3();
+                d.physical.transform.getTranslation(diePosition);
+                float xDiff = diePosition.x-test.x;
+                float zDiff = diePosition.z-test.z;
+                float dieDist = (float) Math.sqrt(xDiff*xDiff+zDiff*zDiff);
+                if(dieDist < DIE_SIZE*2.8f){
+                    good=false;
+                    break;
+                }
+            }
+            if(good) return test;
+            dist+=.05f;
+            angle += 5;
+        }
     }
 
     private void moveToTop() {

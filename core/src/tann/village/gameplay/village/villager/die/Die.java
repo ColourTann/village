@@ -63,7 +63,6 @@ public class Die {
                 break;
             case Locking:
             case Unlocking:
-                System.out.println(dist);
                 dist += delta/INTERP_SPEED;
                 if(dist >= 1){
                     dist = 1;
@@ -158,38 +157,19 @@ public class Die {
         return physical.isMoving();
     }
 
+    Vector3 temp = new Vector3();
+    Vector3 temp2 = new Vector3();
+    Quaternion originalRotation = new Quaternion();
 
     private void moveToBot() {
         LockBar.get().removeDie(this);
         Vector3 best = getBestSpot();
-        moveTo(best, d6Quats[lockedSide]);
+        moveTo(best, originalRotation);
         undamp();
     }
 
-    private Vector3 getBestSpot() {
-        float dist =0;
-        float angle = 0;
-        while(true){
-            Vector3 test = new Vector3((float)Math.sin(angle)*dist,1,(float)Math.cos(angle)*dist);
-            boolean good = true;
-            for(Die d:BulletStuff.dice){
-                Vector3 diePosition = new Vector3();
-                d.physical.transform.getTranslation(diePosition);
-                float xDiff = diePosition.x-test.x;
-                float zDiff = diePosition.z-test.z;
-                float dieDist = (float) Math.sqrt(xDiff*xDiff+zDiff*zDiff);
-                if(dieDist < DIE_SIZE*2.8f){
-                    good=false;
-                    break;
-                }
-            }
-            if(good) return test;
-            dist+=.05f;
-            angle += 5;
-        }
-    }
-
     private void moveToTop() {
+        physical.transform.getRotation(originalRotation);
         int index = LockBar.get().addDie(this);
         float width = 5;
         float x = -(width/(GameScreen.STARTING_VILLAGERS-1)*index - width/2);
@@ -204,17 +184,41 @@ public class Die {
         targetQuat = rotation;
     }
 
+    private Vector3 getBestSpot() {
+        float dist =0;
+        float angle = 0;
+        while(true){
+            temp2.set((float)Math.sin(angle)*dist,1,(float)Math.cos(angle)*dist);
+            boolean good = true;
+            for(Die d:BulletStuff.dice){
+                d.getPosition(temp);
+                float xDiff = temp.x-temp2.x;
+                float zDiff = temp.z-temp2.z;
+                float dieDist = (float) Math.sqrt(xDiff*xDiff+zDiff*zDiff);
+                if(dieDist < DIE_SIZE*2.8f){
+                    good=false;
+                    break;
+                }
+            }
+            if(good) return temp2;
+            dist+=.05f;
+            angle += 5;
+        }
+    }
+
+
     float timeInAir;
     public void roll(boolean reroll) {
         if(!reroll){
             resetForRoll();
         }
+        if(reroll && lockedSide>=0){
+            Village.getInventory().addDelta(sides.get(lockedSide).effects, true);
+        }
         this.lockedSide=-1;
         setState(Rolling);
         undamp();
-        if(lockedSide>=0){
-            Village.getInventory().addDelta(sides.get(lockedSide).effects, true);
-        }
+
         timeInAir=0;
         physical.body.clearForces();
         randomise(12, 0, 7, 0, .7f, .7f);
@@ -323,7 +327,16 @@ public class Die {
 		physical.body.applyCentralImpulse(new Vector3(x, y, z));
 		physical.body.applyTorqueImpulse(new Vector3(r1, r2, r3));
 	}
-	
+
+	private void getPosition(Vector3 out){
+	    if(getState()==Locking || getState() == Unlocking){
+	        out.set(targetPos);
+        }
+        else{
+	        physical.transform.getTranslation(out);
+        }
+    }
+
 	public void activate() {
 		for(Effect e:sides.get(lockedSide).effects) e.activate(true);
 	}
@@ -332,10 +345,9 @@ public class Die {
 		removeFromScreen();
 	}
 	
-	Vector3 position = new Vector3();
 	private boolean isStopped(){
-		physical.transform.getTranslation(position);
-		return !isMoving() && position.y<1.01f;
+		physical.transform.getTranslation(temp);
+		return !isMoving() && temp.y<1.01f;
 	}
 
 	public float getGlow(){
@@ -346,7 +358,6 @@ public class Die {
 	    if(villager==null) return Colours.dark;
 		return villager.getColour(); 
 	}
-	
 
 	private float[] texLocs = null;
 	public float[] getTexLocs() {
@@ -391,7 +402,6 @@ public class Die {
         removeFromPhysics();
 		BulletStuff.dynamicsWorld.addRigidBody(physical.body, BulletStuff.OBJECT_FLAG, BulletStuff.ALL_FLAG);
 	}
-
 
     public void addToScreen() {
         lockedSide=-1;

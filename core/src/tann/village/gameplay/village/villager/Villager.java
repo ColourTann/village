@@ -119,8 +119,8 @@ public class Villager {
 
 
     public enum VillagerType{
-		Villager(0,"no description maybe?",                     Images.lapel,    Side.food2, Side.food1, Side.wood1, Side.wood1, Side.brain, Side.skull),
-//        Villager(0,"no description maybe?",                     Images.lapel,    Side.skull, Side.food1, Side.food2, Side.wood1, Side.wood2, Side.brain),
+//		Villager(0,"no description maybe?",                     Images.lapel,    Side.food2, Side.food1, Side.wood1, Side.wood1, Side.brain, Side.skull),
+        Villager(0,"no description maybe?",                     Images.lapel,    Side.skull, Side.food1, Side.food1, Side.wood1, Side.wood1, Side.brain),
         // 1
 		Fisher(1, "Catch lots of fish!.. on a good day",        Images.lapel1,   Side.food3, Side.food2, Side.food1, Side.brain, Side.skull, Side.skull),
         SongKeeper(1, "Remember the ancients",                  Images.lapel1,   Side.morale1, Side.morale1, Side.food1, Side.food1, Side.wood1, Side.brain),

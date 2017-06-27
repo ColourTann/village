@@ -1,10 +1,9 @@
 package tann.village.screens.gameScreen.panels;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.Array;
+import tann.village.Images;
 import tann.village.Main;
 import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.GameScreen;
@@ -53,7 +52,7 @@ public class LockBar extends Lay{
 
     @Override
     public void layout() {
-        setSize(Main.h(50), Main.h(15));
+        setSize(Main.h(50), Main.h(13.5f));
     }
 
     public void moveIn() {
@@ -65,9 +64,16 @@ public class LockBar extends Lay{
     }
 
     public void render(Batch batch) {
-        batch.setColor(Colours.grey);
+        batch.setColor(Colours.brown_dark);
         Draw.fillActor(batch,this);
         Draw.fillEllipse(batch, getX()-getHeight(), getY(), getHeight()*2, getHeight()*2);
         Draw.fillEllipse(batch, getX()+getWidth()-getHeight(), getY(), getHeight()*2, getHeight()*2);
+        batch.setColor(Colours.brown_light);
+        int numLocks = 5;
+        for(int x=0;x<numLocks;x++){
+            float gap = getWidth()/numLocks;
+            float size = getHeight()*.4f;
+            Draw.drawSizeCentered(batch, Images.lock, getX()+gap*x+gap/2, getY()+getHeight()/2, size, size);
+        }
     }
 }

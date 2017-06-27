@@ -24,6 +24,7 @@ public class Images {
     public static final TextureRegion hammer = Main.atlas.findRegion("hammer");
     public static final TextureRegion gem = Main.atlas.findRegion("resource/emerald");
     public static final TextureRegion dotdotdot = Main.atlas.findRegion("resource/special");
+    public static final TextureRegion lock = Main.atlas.findRegion("lock");
     public static final Texture ball = new Texture(Gdx.files.internal("ball.png"));
 
     {

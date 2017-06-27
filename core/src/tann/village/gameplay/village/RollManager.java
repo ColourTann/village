@@ -1,7 +1,7 @@
 package tann.village.gameplay.village;
 
 import tann.village.bullet.BulletStuff;
-import tann.village.screens.gameScreen.panels.RerollPanel;
+import tann.village.screens.gameScreen.panels.rollStuff.RerollPanel;
 
 public class RollManager {
    private static int maxRolls, rolls;

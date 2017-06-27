@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels;
+package tann.village.screens.gameScreen.panels.buildingStuff;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -6,10 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
-import tann.village.gameplay.island.BuildingGenerator;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.building.Building;
-import tann.village.gameplay.village.Inventory;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.util.*;

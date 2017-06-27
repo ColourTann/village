@@ -5,7 +5,7 @@ import tann.village.Images;
 import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectType;
-import tann.village.screens.gameScreen.panels.InventoryPanel;
+import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
 
 
 public class Inventory{

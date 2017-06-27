@@ -22,12 +22,10 @@ import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.panels.LockBar;
+import tann.village.screens.gameScreen.panels.rollStuff.LockBar;
 import tann.village.util.Colours;
 import tann.village.util.Maths;
 import tann.village.util.Sounds;
-
-import java.util.concurrent.locks.Lock;
 
 import static tann.village.gameplay.village.villager.die.Die.DieState.*;
 

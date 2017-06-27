@@ -3,10 +3,7 @@ package tann.village.gameplay.island.event;
 import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.village.Village;
-import tann.village.screens.gameScreen.panels.OutcomePanel;
-
-import java.util.ArrayList;
-import java.util.List;
+import tann.village.screens.gameScreen.panels.eventStuff.OutcomePanel;
 
 public class Outcome {
     public Array<Effect> effects = new Array<>();

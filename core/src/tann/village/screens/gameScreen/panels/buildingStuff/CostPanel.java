@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels;
+package tann.village.screens.gameScreen.panels.buildingStuff;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,7 +17,7 @@ import tann.village.util.TextBox;
 public class CostPanel extends Group{
 	
 	public Cost cost;
-	private static final int HEIGHT=(int) BuildingPanel.IMAGE_SIZE+0;
+	private static final int HEIGHT=(int) tann.village.screens.gameScreen.panels.buildingStuff.BuildingPanel.IMAGE_SIZE+0;
 	private static final float IMAGE_SIZE=HEIGHT/3;	
 	
 	static final float WIDTH=IMAGE_SIZE*2.5f;

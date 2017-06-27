@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels;
+package tann.village.screens.gameScreen.panels.eventStuff;
 
 import java.util.HashMap;
 

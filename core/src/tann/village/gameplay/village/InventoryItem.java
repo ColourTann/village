@@ -1,7 +1,7 @@
 package tann.village.gameplay.village;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import tann.village.screens.gameScreen.panels.InventoryItemPanel;
+import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
 
 public class InventoryItem {
 

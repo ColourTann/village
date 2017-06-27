@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels;
+package tann.village.screens.gameScreen.panels.inventoryStuff;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import tann.village.Main;
 import tann.village.gameplay.village.Inventory;

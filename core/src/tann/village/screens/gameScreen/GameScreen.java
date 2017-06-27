@@ -26,8 +26,7 @@ import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
-import tann.village.screens.gameScreen.panels.*;
-import tann.village.screens.gameScreen.panels.villagerBar.VillagerBarPanel;
+import tann.village.screens.gameScreen.panels.villagerStuff.*;
 import tann.village.screens.gameScreen.panels.bottomBar.BottomTextBar;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
 import tann.village.screens.gameScreen.panels.bottomBar.TurnStatsPanel;
@@ -39,7 +38,7 @@ import tann.village.util.*;
 public class GameScreen extends Screen{
 	public static final int BUTTON_BORDER=10;
 	private static GameScreen self;
-    public RerollPanel rollButtonPanel;
+    public tann.village.screens.gameScreen.panels.rollStuff.RerollPanel rollButtonPanel;
     Group rollContainer;
 
     public static void reset() {
@@ -53,8 +52,8 @@ public class GameScreen extends Screen{
 	public Array<Villager> villagers = new Array<>();
 	public CircleButton constructionCircle;
 	public Array<Villager> villagersToLevelUp = new Array<>();
-	EventPanel eventPanel;
-	public ConstructionPanel constructionPanel;
+	tann.village.screens.gameScreen.panels.eventStuff.EventPanel eventPanel;
+	public tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel constructionPanel;
     CircleButton cButt1;
     BottomTextBar btb;
 	TurnStatsPanel tsp;
@@ -79,7 +78,7 @@ public class GameScreen extends Screen{
 	public void init(Island island, Village village){
 		this.village=village;
 		this.island=island;
-		addActor(LockBar.get());
+		addActor(tann.village.screens.gameScreen.panels.rollStuff.LockBar.get());
 		setSize(Main.width, Main.height);
 		addListener(new ClickListener(){
 			@Override
@@ -123,7 +122,7 @@ public class GameScreen extends Screen{
 
 
         showRollContainer(false);
-        constructionPanel= new ConstructionPanel();
+        constructionPanel= new tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel();
         vbp = new VillagerBarPanel();
         addActor(vbp);
 
@@ -148,7 +147,7 @@ public class GameScreen extends Screen{
 
         // inventory stuff
 
-        InventoryPanel inventoryGroup = Village.getInventory().getGroup();
+        tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel inventoryGroup = Village.getInventory().getGroup();
         inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight()));
 
         //reroll stuff
@@ -166,10 +165,10 @@ public class GameScreen extends Screen{
 
         vbp.setPosition(Main.width-vbp.getWidth(), GameScreen.getConstructionCircleSize());
 
-        LockBar.get().setPosition(getWidth()/2-LockBar.get().getWidth()/2, getHeight()+LockBar.get().getHeight());
+        tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().setPosition(getWidth()/2- tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().getWidth()/2, getHeight()+ tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().getHeight());
 
         if(state==State.Rolling){
-            LockBar.get().moveIn();
+            tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().moveIn();
         }
 
         if(eventPanel!=null){
@@ -205,7 +204,7 @@ public class GameScreen extends Screen{
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
 		Draw.drawSize(batch, island.background, getX(), getY(), getWidth(), getHeight());
-        LockBar.get().render(batch);
+        tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().render(batch);
 	}
 
 
@@ -332,7 +331,7 @@ public class GameScreen extends Screen{
 
 	boolean levelledUpAlready=false;
 	private void levelup(Villager v){
-		LevelupPanel lup = new LevelupPanel(v, island.getRandomVillagerTypes(Math.min(Villager.MAX_LEVEL, v.type.level+1), 3));
+		tann.village.screens.gameScreen.panels.villagerStuff.LevelupPanel lup = new tann.village.screens.gameScreen.panels.villagerStuff.LevelupPanel(v, island.getRandomVillagerTypes(Math.min(Villager.MAX_LEVEL, v.type.level+1), 3));
 		addActor(lup);
 		center(lup);
 		if(!levelledUpAlready) {
@@ -377,7 +376,7 @@ public class GameScreen extends Screen{
 		for(Die d:BulletStuff.dice){
 			d.activate();
 		}
-        LockBar.get().moveAway();
+        tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().moveAway();
 		showWisps();
         Village.getInventory().clearDeltas();
         BulletStuff.clearDice();
@@ -414,7 +413,7 @@ public class GameScreen extends Screen{
             Sounds.playSound(sound, 1, 1);
         }
 
-		eventPanel= new EventPanel(event, dayNum);
+		eventPanel= new tann.village.screens.gameScreen.panels.eventStuff.EventPanel(event, dayNum);
 		event.action();
 		center(eventPanel);
 		addActor(eventPanel);
@@ -458,8 +457,8 @@ public class GameScreen extends Screen{
 		}
 		roll(false);
         Village.get().getUpkeep().activateDelta();
-        LockBar.get().moveIn();
-        LockBar.get().reset();
+        tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().moveIn();
+        tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().reset();
 	}
 
 	boolean lastRollContainerShow;
@@ -481,7 +480,7 @@ public class GameScreen extends Screen{
 	}
 	
 	
-	private ProceedButton proceedButton = new ProceedButton();
+	private tann.village.screens.gameScreen.panels.miscStuff.ProceedButton proceedButton = new tann.village.screens.gameScreen.panels.miscStuff.ProceedButton();
 	
 	public void addProceedButton(Actor relativeTo){
 		proceedButton.setColor(Colours.green_light);
@@ -490,7 +489,7 @@ public class GameScreen extends Screen{
 	}
 	
 	public void addVillagerPanel(Villager villager) {
-		VillagerPanel panel = new VillagerPanel(villager);
+		tann.village.screens.gameScreen.panels.villagerStuff.VillagerPanel panel = new tann.village.screens.gameScreen.panels.villagerStuff.VillagerPanel(villager);
 		push(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 	}
@@ -547,7 +546,7 @@ public class GameScreen extends Screen{
 	    addActor(inputBlocker);
         Sounds.playSound(Sounds.marimba_too_happy,1,1);
 	    String vicText = island.getVictoryText();
-	    VictoryPanel vp = new VictoryPanel(vicText);
+	    tann.village.screens.gameScreen.panels.miscStuff.VictoryPanel vp = new tann.village.screens.gameScreen.panels.miscStuff.VictoryPanel(vicText);
 	    vp.setPosition(getWidth()/2-vp.getWidth()/2, getHeight()/2 - vp.getHeight()/2);
 	    addActor(vp);
 	}

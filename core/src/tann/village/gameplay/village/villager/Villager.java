@@ -11,7 +11,7 @@ import tann.village.gameplay.effect.Effect.EffectType;
 import tann.village.gameplay.village.villager.die.Side;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.villager.die.Die;
-import tann.village.screens.gameScreen.panels.villagerBar.VillagerIcon;
+import tann.village.screens.gameScreen.panels.villagerStuff.VillagerIcon;
 import tann.village.util.Colours;
 
 public class Villager {

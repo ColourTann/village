@@ -1,8 +1,7 @@
-package tann.village.screens.gameScreen.panels;
+package tann.village.screens.gameScreen.panels.eventStuff;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
 import com.badlogic.gdx.utils.Array;
@@ -12,10 +11,8 @@ import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.effect.Effect.EffectSource;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.Outcome;
+import tann.village.screens.gameScreen.panels.UpkeepPanel;
 import tann.village.util.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EventPanel extends Lay{
 

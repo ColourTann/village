@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels;
+package tann.village.screens.gameScreen.panels.buildingStuff;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Align;
 
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.village.building.BuildingEffect;
+import tann.village.screens.gameScreen.panels.eventStuff.EffectPanel;
 import tann.village.util.Fonts;
 import tann.village.util.Layoo;
 import tann.village.util.TextBox;

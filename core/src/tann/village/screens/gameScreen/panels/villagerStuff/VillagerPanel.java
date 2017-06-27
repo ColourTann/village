@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels;
+package tann.village.screens.gameScreen.panels.villagerStuff;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.Align;
 
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
-import tann.village.gameplay.village.villager.die.DiePanel;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.util.Colours;

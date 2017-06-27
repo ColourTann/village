@@ -1,4 +1,4 @@
-package tann.village.screens.gameScreen.panels.villagerBar;
+package tann.village.screens.gameScreen.panels.villagerStuff;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

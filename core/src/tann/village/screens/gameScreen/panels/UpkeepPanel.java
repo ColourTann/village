@@ -6,16 +6,10 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
 import tann.village.gameplay.effect.Effect;
-import tann.village.gameplay.village.Inventory;
-import tann.village.gameplay.village.Village;
-import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.panels.EffectPanel;
+import tann.village.screens.gameScreen.panels.eventStuff.EffectPanel;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.util.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UpkeepPanel extends Lay{
 

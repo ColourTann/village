@@ -156,7 +156,7 @@ public class EventCreator {
         e1 = new Effect(EffectType.Wood, 3, EffectSource.Event);
         makeStory();
 
-        turn=3;
+        turn=1;
         title="Build a village";
         description="In order to survive you're going to need to make this a home.";
         e = new Effect(EffectType.BuildTown, 7, ev);

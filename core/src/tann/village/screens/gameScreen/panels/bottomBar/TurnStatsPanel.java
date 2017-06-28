@@ -1,29 +1,27 @@
 package tann.village.screens.gameScreen.panels.bottomBar;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.village.TurnEffect;
 import tann.village.util.Colours;
-import tann.village.util.Draw;
-import tann.village.util.Lay;
 import tann.village.util.Layoo;
 
-public class TurnStatsPanel extends Lay{
+public class TurnStatsPanel extends BottomBarPanel{
 
     public TurnStatsPanel() {
+        setColor(Colours.blue_dark);
         layout();
     }
 
     Array<TurnEffect> turnEffects = new Array<>();
-
-    public void setTurnEffects(Array<TurnEffect> turnEffects){
-        this.turnEffects= turnEffects;
+    public void addTurnEffects(TurnEffect te){
+        turnEffects.add(te);
         layout();
+        somethingAdded();
     }
 
     @Override
     public void layout() {
-        setSize(BottomTextBar.width(), BottomTextBar.height());
+        setSize(BottomBar.width(), BottomBar.height());
         Layoo l = new Layoo(this);
         for(TurnEffect te:turnEffects){
 
@@ -32,9 +30,7 @@ public class TurnStatsPanel extends Lay{
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(Colours.blue_dark);
-        Draw.fillActor(batch,this);
-        super.draw(batch, parentAlpha);
+    public String getName() {
+        return "stats";
     }
 }

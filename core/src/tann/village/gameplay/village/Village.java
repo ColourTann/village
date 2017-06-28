@@ -72,7 +72,7 @@ public class Village {
 	public void addBuilding(Building b) {
         Sounds.playSound(Sounds.build,1,1);
         buildings.add(b);
-            GameScreen.get().island.objectiveProgress(Objective.ObjectiveEffect.Building, 1);
+        GameScreen.get().island.objectiveProgress(Objective.ObjectiveEffect.Building, 1);
         for(BuildingEffect be:b.buildingEffects){
 		    if(be.effectType== BuildingEffect.BuildingEffectType.EveryTurn){
 		        for(Effect e:be.effects){
@@ -80,14 +80,8 @@ public class Village {
                 }
             }
         }
-        GameScreen.get().tsp.setTurnEffects(getTurnEffects());
+        GameScreen.get().tsp.addTurnEffects();
 	}
-
-    public Array<TurnEffect> getTurnEffects() {
-	    //TODO this
-        return null;
-//        return turnEffects;
-    }
 
     public void addBuff(Effect effect) {
         buffs.add(new Buff(effect));

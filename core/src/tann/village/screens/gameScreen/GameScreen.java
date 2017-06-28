@@ -27,7 +27,7 @@ import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.panels.villagerStuff.*;
-import tann.village.screens.gameScreen.panels.bottomBar.BottomTextBar;
+import tann.village.screens.gameScreen.panels.bottomBar.BottomBar;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
 import tann.village.screens.gameScreen.panels.bottomBar.TurnStatsPanel;
 import tann.village.screens.gameScreen.panels.review.LossPanel;
@@ -55,7 +55,7 @@ public class GameScreen extends Screen{
 	tann.village.screens.gameScreen.panels.eventStuff.EventPanel eventPanel;
 	public tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel constructionPanel;
     CircleButton cButt1;
-    BottomTextBar btb;
+    public BottomBar btb;
 	public TurnStatsPanel tsp;
 	public static GameScreen get(){
 		if(self==null){
@@ -126,13 +126,10 @@ public class GameScreen extends Screen{
         vbp = new VillagerBarPanel();
         addActor(vbp);
 
-		btb = new BottomTextBar();
+		btb = new BottomBar();
 		addActor(btb);
 		objectivePanel= new ObjectivePanel();
-		btb.setObjectivePanel(objectivePanel);
 		tsp = new TurnStatsPanel();
-		btb.setStatsPanel(tsp);
-
 
 		setState(State.Event);
 		Sounds.playMusic(island.getAmbienceString());

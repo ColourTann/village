@@ -1,43 +1,35 @@
 package tann.village.screens.gameScreen.panels.bottomBar;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectIntMap;
-import tann.village.Images;
 import tann.village.Main;
-import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.island.objective.Objective;
-import tann.village.screens.gameScreen.GameScreen;
-import tann.village.gameplay.village.Inventory;
-import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.util.*;
 
-public class ObjectivePanel extends Lay{
-	
-
+public class ObjectivePanel extends BottomBarPanel{
 
 	Array<Objective> objectives = new Array<>();
 	public ObjectivePanel() {
-		layout();
+        setColor(Colours.brown_dark);
+        layout();
 	}
 
     @Override
     public void layout() {
-        setSize(BottomTextBar.width(), BottomTextBar.height());
+        setSize(BottomBar.width(), BottomBar.height());
         refresh();
     }
+
 
     public void addObject(Objective obj){
 	    objectives.add(obj);
 	    refresh();
+	    somethingAdded();
     }
 
-	public void refresh(){
+    public void refresh(){
 	    clearChildren();
 	    Layoo parentLay = new Layoo(this);
 	    parentLay.gap(1);
@@ -50,7 +42,7 @@ public class ObjectivePanel extends Lay{
                     super.draw(batch, parentAlpha);
                 }
             };
-            bl.setSize(BottomTextBar.width()/3, BottomTextBar.height()*.8f);
+            bl.setSize(BottomBar.width()/3, BottomBar.height()*.8f);
             Layoo l = new Layoo(bl);
             TextBox objText = new TextBox(o.getTitleString(), Fonts.fontSmall, getWidth(), Align.center);
             TextBox progress = new TextBox(o.getProgressString(), Fonts.fontSmall, getWidth(), Align.center);
@@ -69,10 +61,7 @@ public class ObjectivePanel extends Lay{
 	}
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(Colours.brown_dark);
-        Draw.fillActor(batch,this);
-        super.draw(batch, parentAlpha);
+    public String getName() {
+        return "objective";
     }
-
 }

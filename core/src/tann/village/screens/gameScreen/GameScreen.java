@@ -56,7 +56,7 @@ public class GameScreen extends Screen{
 	public tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel constructionPanel;
     CircleButton cButt1;
     BottomTextBar btb;
-	TurnStatsPanel tsp;
+	public TurnStatsPanel tsp;
 	public static GameScreen get(){
 		if(self==null){
 			self= new GameScreen();
@@ -244,11 +244,11 @@ public class GameScreen extends Screen{
     }
 
     public void rollButtonClick(){
-	    if(BulletStuff.allDiceLocked() || !RollManager.hasRoll()){
+	    if(BulletStuff.allDiceLocked() || (!RollManager.hasRoll()&&BulletStuff.noDiceMoving())){
             Sounds.playSound(Sounds.accept,1,1);
             proceed();
         }
-        else{
+        else if(BulletStuff.noDiceMoving()){
             roll(true);
         }
     }
@@ -369,7 +369,6 @@ public class GameScreen extends Screen{
 	}
 	
 	private void finishRolling() {
-		if(!BulletStuff.allDiceLocked()) return;
 		resetWisps();
         showRollContainer(false);
 		Village.get().getUpkeep().activate();

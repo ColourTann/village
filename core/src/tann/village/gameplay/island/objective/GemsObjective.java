@@ -20,10 +20,12 @@ public class GemsObjective extends  Objective{
     }
 
     @Override
-    protected void internalObjectiveProgress(ObjectiveEffect type, int amount) {
+    protected boolean internalObjectiveProgress(ObjectiveEffect type, int amount) {
         if(type==ObjectiveEffect.Gem){
             current+=amount;
+            return true;
         }
+        return false;
     }
 
     @Override

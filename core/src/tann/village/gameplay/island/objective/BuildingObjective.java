@@ -21,10 +21,12 @@ public class BuildingObjective extends Objective{
     }
 
     @Override
-    public void internalObjectiveProgress(ObjectiveEffect type, int amount) {
+    public boolean internalObjectiveProgress(ObjectiveEffect type, int amount) {
         if(type==ObjectiveEffect.Building){
             this.current += amount;
+            return true;
         }
+        return false;
     }
 
     @Override

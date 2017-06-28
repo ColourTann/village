@@ -21,10 +21,12 @@ public class TimeLimitObjective extends Objective {
     }
 
     @Override
-    protected void internalObjectiveProgress(ObjectiveEffect type, int amount) {
+    protected boolean internalObjectiveProgress(ObjectiveEffect type, int amount) {
         if(type==ObjectiveEffect.Turn){
             current+=amount;
+            return true;
         }
+        return false;
     }
 
     @Override

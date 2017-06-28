@@ -214,10 +214,19 @@ public class BulletStuff {
     }
 
 	public static boolean allDiceLocked(){
-        for (Die d : BulletStuff.dice) {
+		for (Die d : BulletStuff.dice) {
 			if (d.getState()!= Die.DieState.Locked){
-			    return false;
-            }
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean noDiceMoving() {
+		for (Die d : BulletStuff.dice) {
+			if (d.getState()==Die.DieState.Rolling || d.getState()==Die.DieState.Locking || d.getState()==Die.DieState.Unlocking){
+				return false;
+			}
 		}
 		return true;
 	}
@@ -235,4 +244,5 @@ public class BulletStuff {
             d.removeFromScreen();
         }
     }
+
 }

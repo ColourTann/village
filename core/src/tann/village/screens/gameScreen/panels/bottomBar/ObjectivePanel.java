@@ -50,7 +50,7 @@ public class ObjectivePanel extends Lay{
                     super.draw(batch, parentAlpha);
                 }
             };
-            bl.setSize(BottomTextBar.width()/3, BottomTextBar.height());
+            bl.setSize(BottomTextBar.width()/3, BottomTextBar.height()*.8f);
             Layoo l = new Layoo(bl);
             TextBox objText = new TextBox(o.getTitleString(), Fonts.fontSmall, getWidth(), Align.center);
             TextBox progress = new TextBox(o.getProgressString(), Fonts.fontSmall, getWidth(), Align.center);
@@ -65,11 +65,13 @@ public class ObjectivePanel extends Lay{
 
         }
 		parentLay.layoo();
+        toFront();
 	}
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(Colours.brown_dark);
+        Draw.fillActor(batch,this);
         super.draw(batch, parentAlpha);
     }
 

@@ -3,6 +3,7 @@ package tann.village.gameplay.village;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Effect;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.building.Building;
@@ -75,11 +76,18 @@ public class Village {
         for(BuildingEffect be:b.buildingEffects){
 		    if(be.effectType== BuildingEffect.BuildingEffectType.EveryTurn){
 		        for(Effect e:be.effects){
-//                    GameScreen.get().eachTurnPanel.addEffect(e);
+
                 }
             }
         }
+        GameScreen.get().tsp.setTurnEffects(getTurnEffects());
 	}
+
+    public Array<TurnEffect> getTurnEffects() {
+	    //TODO this
+        return null;
+//        return turnEffects;
+    }
 
     public void addBuff(Effect effect) {
         buffs.add(new Buff(effect));
@@ -108,4 +116,5 @@ public class Village {
             b.process(effect);
         }
     }
+
 }

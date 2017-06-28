@@ -21,11 +21,12 @@ public abstract class Objective {
 
     public abstract void init();
     public void objectiveProgress(ObjectiveEffect type, int amount){
-        internalObjectiveProgress(type, amount);
-        GameScreen.get().objectivePanel.refresh();
+        if(internalObjectiveProgress(type, amount)){
+            GameScreen.get().objectivePanel.refresh();
+        }
     }
 
-    protected abstract void internalObjectiveProgress(ObjectiveEffect type, int amount);
+    protected abstract boolean internalObjectiveProgress(ObjectiveEffect type, int amount);
     public abstract String getTitleString();
     public abstract String getProgressString();
     public boolean isComplete(){

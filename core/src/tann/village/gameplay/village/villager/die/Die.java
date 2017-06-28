@@ -74,7 +74,7 @@ public class Die {
                 }
                 dist = Math.min(1,dist);
                 float interp = Interpolation.pow2Out.apply(dist);
-                physical.transform.setToRotation(0,0,0, 0); // side 3
+                physical.transform.setToRotation(0,0,0,0);
                 Vector3 thisFrame =startPos.cpy().lerp(targetPos, interp);
                 physical.transform.setToTranslation(thisFrame);
                 physical.transform.rotate(startQuat.cpy().slerp(targetQuat, interp));
@@ -109,6 +109,9 @@ public class Die {
                 Sounds.playSound(Sounds.shake,.3f,1);
                 break;
             case Locked:
+                for(Die d:BulletStuff.dice){
+                    if(d.getState()==Rolling) return;
+                }
                 setState(Unlocking);
                 removeFromPhysics();
                 moveToBot();

@@ -66,9 +66,14 @@ public class BottomTextBar extends Lay{
             }
         }
         );
-
-        addActor(objTab);
-        addActor(statsTab);
+        if(tsp!=null){
+            addActor(statsTab);
+            addActor(tsp);
+        }
+        if(op!=null) {
+            addActor(objTab);
+            addActor(op);
+        }
         objTab.setPosition(getWidth()/3-objTab.getWidth()/2, getHeight());
         statsTab.setPosition(getWidth()/3*2-statsTab.getWidth()/2, getHeight());
 

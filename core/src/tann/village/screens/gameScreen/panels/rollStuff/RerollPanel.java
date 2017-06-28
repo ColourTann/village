@@ -40,7 +40,11 @@ public class RerollPanel extends Lay{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 	    float rollSize = Main.h(15);
-        if(rollsLeft==0 || locked){
+        if(diceRolling>0){
+            batch.setColor(Colours.grey);
+            Draw.drawLoadingAnimation(batch, getX()+getWidth()/2, getY()+getHeight()/3*2+Main.h(3), Main.h(3), Main.h(2), 2, 3);
+        }
+        else if(rollsLeft==0 || locked){
             batch.setColor(Colours.green_light);
             Draw.drawSize(batch, Images.tick, getX()+getWidth()/2- TICK_SIZE/2, getY() + getHeight()/2 - TICK_SIZE/2, TICK_SIZE, TICK_SIZE);
         }
@@ -48,10 +52,6 @@ public class RerollPanel extends Lay{
 	        if(diceRolling==0) {
                 batch.setColor(Colours.light);
                 Draw.drawSize(batch, Images.roll, getX()+getWidth()/2-rollSize/2, getY()+Main.h(7), rollSize, rollSize);
-            }
-            if(diceRolling>0){
-                batch.setColor(Colours.grey);
-                Draw.drawLoadingAnimation(batch, getX()+getWidth()/2, getY()+getHeight()/3*2+Main.h(3), Main.h(3), Main.h(2), 2, 3);
             }
             if(rollsLeft > 0 ){
                 Fonts.font.setColor(Colours.light);

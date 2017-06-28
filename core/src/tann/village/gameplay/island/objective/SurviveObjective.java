@@ -19,10 +19,12 @@ public class SurviveObjective extends Objective {
     }
 
     @Override
-    public void internalObjectiveProgress(ObjectiveEffect type, int amount) {
+    public boolean internalObjectiveProgress(ObjectiveEffect type, int amount) {
         if(type == ObjectiveEffect.Turn){
             this.current += amount;
+            return true;
         }
+        return false;
     }
 
     @Override

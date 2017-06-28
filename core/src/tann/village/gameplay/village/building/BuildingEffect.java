@@ -1,7 +1,5 @@
 package tann.village.gameplay.village.building;
 
-import com.badlogic.gdx.utils.Array;
-
 import tann.village.gameplay.effect.Effect;
 
 public class BuildingEffect {

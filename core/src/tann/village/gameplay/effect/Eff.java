@@ -3,7 +3,6 @@ package tann.village.gameplay.effect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
-import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.villager.die.Die;
@@ -11,14 +10,13 @@ import tann.village.gameplay.village.villager.die.Die;
 public class Eff {
 
     public Eff getInverse() {
-        return new Eff(type, -value, sourceDie, effectActivation);
+        return new Eff(type, -value, sourceDie, effAct);
     }
 
     public enum EffectType{
         Food(Images.food),
         Wood(Images.wood),
 		Skull(Images.side_skull),
-        LevelUp(Images.level_up),
         Morale(Images.morale),
         FoodStorage(Images.food_storage),
         Fate(Images.fate),
@@ -53,10 +51,10 @@ public class Eff {
 	public final EffectType type;
 	public int value;
 	public Die sourceDie;
-    public final EffAct effectActivation;
+    public final EffAct effAct;
 
 	public Eff(EffectType type, int value, Die sourceDie, EffAct effectActivation){
-        this.type=type; this.value=value;  this.sourceDie=sourceDie; this.effectActivation = effectActivation;
+        this.type=type; this.value=value;  this.sourceDie=sourceDie; this.effAct = effectActivation;
     }
     public Eff(EffectType type, int value, Die sourceDie){this(type, value, sourceDie, EffAct.now);}
     public Eff(EffectType type, int value, EffAct effectActivation){
@@ -73,23 +71,7 @@ public class Eff {
 	}
 
 	private void internalActivate(){
-        switch(type){
-            case FoodStorage:
-                Village.getInventory().get(EffectType.Food).addMax(value);
-                return;
-            case Brain:
-                sourceDie.villager.gainXP(value);
-                break;
-            case Reroll:
-            case FoodBonus:
-                Village.get().addBuff(this);
-                break;
-            case Gem:
-                GameScreen.get().island.objectiveProgress(Objective.ObjectiveEffect.Gem, this.value);
-                break;
-        }
-
-        GameScreen.get().addEffect(this);
+	    Village.get().activateEffect(this);
     }
 
 	public String toString(){

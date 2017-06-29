@@ -1,7 +1,7 @@
 package tann.village.screens.gameScreen.panels.bottomBar;
 
 import com.badlogic.gdx.utils.Array;
-import tann.village.gameplay.village.TurnEffect;
+import tann.village.gameplay.effect.Eff;
 import tann.village.util.Colours;
 import tann.village.util.Layoo;
 
@@ -12,21 +12,20 @@ public class TurnStatsPanel extends BottomBarPanel{
         layout();
     }
 
-    Array<TurnEffect> turnEffects = new Array<>();
-    public void addTurnEffects(TurnEffect te){
+    Array<Eff> turnEffects = new Array<>();
+    public void addTurnEffects(Eff te){
         turnEffects.add(te);
-        layout();
-        somethingAdded();
+
     }
 
     @Override
     public void layout() {
         setSize(BottomBar.width(), BottomBar.height());
         Layoo l = new Layoo(this);
-        for(TurnEffect te:turnEffects){
+        for(Eff te:turnEffects){
 
         }
-        l.layoo();
+        l.layoo(true);
     }
 
     @Override

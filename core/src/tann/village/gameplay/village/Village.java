@@ -3,6 +3,7 @@ package tann.village.gameplay.village;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.building.Building;
@@ -16,7 +17,6 @@ public class Village {
 	private List<Building> buildings  = new ArrayList<>();
 	private static Village self;
 	private RerollPanel panel;
-    private List<Buff> buffs = new ArrayList<>();
     private Inventory inventory;
     public Upkeep getUpkeep() {
         return upkeep;
@@ -49,7 +49,6 @@ public class Village {
 	public void setup(){
 	    dayNum=0;
         buildings.clear();
-        buffs.clear();
         inventory = new Inventory();
         upkeep= new Upkeep();
     }
@@ -58,14 +57,6 @@ public class Village {
 		for(Building b:buildings){
 			b.upkeep();
 		}
-        for(int i=buffs.size()-1;i>=0;i--){
-            Buff b = buffs.get(i);
-            b.upkeep();
-            if(b.expired()){
-                buffs.remove(b);
-            }
-
-        }
 	}
 
 	public void addBuilding(Building b) {
@@ -83,21 +74,18 @@ public class Village {
 //        GameScreen.get().tsp.addTurnEffects();
 	}
 
-    public void addBuff(Eff effect) {
-        buffs.add(new Buff(effect));
-    }
-
     public int getRerolls() {
         return 2 + getBonusRerolls();
     }
 
     private int getBonusRerolls(){
 	    int total = inventory.getResourceAmount(Eff.EffectType.Morale)/3;
-	    for(Buff b : buffs){
-	        if(b.buffType == Eff.EffectType.Reroll){
-	            total += b.value;
-            }
-        }
+//	    for(Buff b : buffs){
+//	        if(b.buffType == Eff.EffectType.Reroll){
+//	            total += b.value;
+//            }
+//        }
+        //todo rerolls
         return total;
     }
 
@@ -106,9 +94,43 @@ public class Village {
     }
 
     public void process(Eff effect) {
-        for(Buff b:buffs){
-            b.process(effect);
+//        for(Buff b:buffs){
+//            b.process(effect);
+//        }
+        //todo process
+    }
+
+    public void activateEffect(Eff eff) {
+        switch(eff.effAct.type){
+            case NOW:
+                internalActuallyActivate(eff);
+                break;
+            case UPKEEP:
+                addToUpkeepp(eff);
+                break;
+            case IN_TURNS:
+            case FOR_TURNS:
+            case PASSIVE:
+                addTurnEff(eff);
+                break;
         }
     }
 
+    private void addTurnEff(Eff eff){
+        GameScreen.get().tsp.addTurnEffects(eff);
+    }
+
+    private void addToUpkeepp(Eff eff){
+        upkeep.addEffect(eff);
+    }
+
+    private void internalActuallyActivate(Eff eff){
+        getInventory().activate(eff);
+        int value = eff.value;
+        switch(eff.type){
+            case Brain:
+                eff.sourceDie.villager.gainXP(value);
+                break;
+        }
+    }
 }

@@ -467,15 +467,6 @@ public class GameScreen extends Screen{
         Village.get().getUpkeep().addEffect(effect);
 	}
 
-	public void addEffect(Eff effect){
-	    Village.get().process(effect);
-	    if(effect.type.objective){
-                island.addObjective(effect);
-        }
-		Village.getInventory().activate(effect);
-	}
-	
-	
 	private tann.village.screens.gameScreen.panels.miscStuff.ProceedButton proceedButton = new tann.village.screens.gameScreen.panels.miscStuff.ProceedButton();
 	
 	public void addProceedButton(Actor relativeTo){

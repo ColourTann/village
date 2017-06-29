@@ -71,7 +71,6 @@ public class Villager {
 		this.xp+=amount;
 		while(xp>=xpToLevelUp){
 			xp-=xpToLevelUp;
-			GameScreen.get().addEffect(new Eff(EffectType.LevelUp, 1, die));
 			GameScreen.get().villagersToLevelUp.add(this);
 		}
         this.potentialXp=0;

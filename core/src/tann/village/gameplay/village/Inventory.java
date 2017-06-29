@@ -5,6 +5,8 @@ import tann.village.Images;
 import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
+import tann.village.gameplay.island.objective.Objective;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
 
 
@@ -65,10 +67,17 @@ public class Inventory{
 	            items.insert(0,gems);
 	            getGroup().layout(true);
             }
+            GameScreen.get().island.objectiveProgress(Objective.ObjectiveEffect.Gem, effect.value);
         }
 		int value = effect.value*(inverse?-1:1);
 		InventoryItem item = get(effect.type);
         if(item!=null) item.changeValue(value);
+        switch(effect.type){
+            case FoodStorage:
+                get(Eff.EffectType.Food).addMax(value);
+                break;
+        }
+
 	}
 
     public void addDelta(Eff e, boolean invert){

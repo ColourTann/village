@@ -47,7 +47,7 @@ public class Upkeep {
 
     public void activate() {
         for(Eff e:effects){
-            GameScreen.get().addEffect(e);
+            Village.get().activateEffect(e);
         }
     }
 

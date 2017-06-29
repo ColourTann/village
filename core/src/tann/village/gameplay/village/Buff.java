@@ -1,7 +1,7 @@
 package tann.village.gameplay.village;
 
-import tann.village.gameplay.effect.Effect;
-import tann.village.gameplay.effect.Effect.EffectType;
+import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.effect.Eff.EffectType;
 
 public class Buff {
 
@@ -10,8 +10,8 @@ public class Buff {
     int duration;
     private int turnsLeft;
 
-    public Buff(Effect effect){
-        this(effect.type, effect.value, effect.duration);
+    public Buff(Eff effect){
+        this(effect.type, effect.value, 1); //todo duration
     }
 
 
@@ -30,13 +30,14 @@ public class Buff {
         if (turnsLeft > 0) turnsLeft--;
     }
 
-    public void process(Effect effect) {
-        switch(buffType){
-            case FoodBonus:
-                if(effect.source == Effect.EffectSource.Dice){
-                    effect.value = Math.max(0, effect.value + value);
-                }
-                break;
-        }
+    public void process(Eff effect) {
+//        switch(buffType){
+//            case FoodBonus:
+//                if(effect.source == Eff.EffectSource.Dice){
+//                    effect.value = Math.max(0, effect.value + value);
+//                }
+//                break;
+//        }
+        //todo what's this
     }
 }

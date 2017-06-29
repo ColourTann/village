@@ -2,12 +2,10 @@ package tann.village.gameplay.island.event;
 
 import com.badlogic.gdx.utils.Array;
 
-import tann.village.gameplay.effect.Effect;
-import tann.village.gameplay.effect.Effect.EffectSource;
-import tann.village.gameplay.effect.Effect.EffectType;
+import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.gameplay.village.Inventory;
 
 public class Event {
 
@@ -15,15 +13,15 @@ public class Event {
     final public String title;
     final public String description;
     final public Array<Outcome> outcomes;
-    final public Array<Effect> effects;
-    final public Array<Effect> requirements;
+    final public Array<Eff> effects;
+    final public Array<Eff> requirements;
     final public int fateDelta;
     final public float chance;
 	final int fateLeft, fateRight;
 	final boolean story;
 	public final int turn;
 	public int uses;
-	public Event (String title, String description, Array<Effect> effects, Array<Outcome> outcomes, Array<Effect> requirements, float chance, int fate, int variance, int fateDelta, boolean story, int turn, int uses){
+	public Event (String title, String description, Array<Eff> effects, Array<Outcome> outcomes, Array<Eff> requirements, float chance, int fate, int variance, int fateDelta, boolean story, int turn, int uses){
 	    this.uses=uses;
 	    this.turn=turn;
 	    this.requirements=requirements;
@@ -41,7 +39,7 @@ public class Event {
 	public boolean isPotential() {
 		int currentFate = Village.getInventory().getResourceAmount(EffectType.Fate);
 		if(currentFate<fateLeft || currentFate > fateRight || uses<=0) return false;
-        for(Effect e: requirements){
+        for(Eff e: requirements){
             if(!Village.getInventory().isEffectValid(e)) return false;
         }
 		return true;
@@ -53,10 +51,11 @@ public class Event {
 
 	public void action() {
 		GameScreen.get().resetWisps();
-		new Effect(EffectType.Fate, fateDelta, EffectSource.Event).activate(false);
-		for(Effect e:effects){
-			if(e.source==EffectSource.Upkeep) GameScreen.get().increaseUpkeepEffect(e);
-			else e.activate(false);
+		new Eff(EffectType.Fate, fateDelta).activate();
+		for(Eff e:effects){
+		    //TODO THIS!!!
+//			GameScreen.get().increaseUpkeepEffect(e);
+			e.activate();
 		}
 		GameScreen.get().showWisps();
 	}

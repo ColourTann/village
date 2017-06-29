@@ -5,12 +5,10 @@ import java.util.HashMap;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Align;
 
 import tann.village.Main;
-import tann.village.gameplay.effect.Effect;
-import tann.village.gameplay.effect.Effect.EffectType;
+import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
@@ -21,10 +19,10 @@ public class EffectPanel extends Lay {
 	final static float imageSize = .7f;
 	public static final float heightMult = .6666667f;
 	HashMap<EffectType, Integer> effectAmounts = new HashMap<>();
-	public Effect effect;
+	public Eff effect;
 	public int value;
 
-	public EffectPanel(Effect effect) {
+	public EffectPanel(Eff effect) {
 		this.effect = effect;
 		layout();
 		this.value = effect.value;
@@ -63,17 +61,6 @@ public class EffectPanel extends Lay {
 		batch.setColor(Colours.light);
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 
-		switch (effect.source) {
-		case Building:
-		case Dice:
-		case Event:
-		case Upkeep:
-			batch.setColor(Colours.dark);
-			break;
-		default:
-			break;
-
-		}
 
 		Draw.fillRectangle(batch, getX() + border, getY() + border, getWidth() - border * 2, getHeight() - border * 2);
 

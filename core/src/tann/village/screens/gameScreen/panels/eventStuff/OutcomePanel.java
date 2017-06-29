@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
-import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.event.Outcome;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.*;
@@ -25,7 +25,7 @@ public class OutcomePanel extends Group {
         l.row(1);
         l.gap(1);
         for(int i=0;i<o.effects.size;i++){
-            Effect e=o.effects.get(i);
+            Eff e=o.effects.get(i);
             l.actor(new EffectPanel(e));
             l.gap(1);
             if(i%2 == 1 && i < o.effects.size-1) {

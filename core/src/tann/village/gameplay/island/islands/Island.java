@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
-import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.objective.*;
 import tann.village.gameplay.village.building.Building;
@@ -119,7 +119,7 @@ public abstract class Island {
 	
 
     public Array<Objective> objectives = new Array<Objective>();
-    public void addObjective(Effect effect){
+    public void addObjective(Eff effect){
         Objective objective = null;
 	    switch (effect.type){
             case BuildTown:

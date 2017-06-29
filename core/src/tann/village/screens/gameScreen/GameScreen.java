@@ -14,9 +14,8 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.Main;
 import tann.village.bullet.BulletStuff;
-import tann.village.gameplay.effect.Effect;
-import tann.village.gameplay.effect.Effect.EffectSource;
-import tann.village.gameplay.effect.Effect.EffectType;
+import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventDebugPanel;
 import tann.village.gameplay.island.event.Outcome;
@@ -97,7 +96,8 @@ public class GameScreen extends Screen{
 			villagers.add(new Villager(i));
 		}
 		refreshBulletStuff();
-        Village.get().getUpkeep().addEffect(new Effect(EffectType.Food, -2, EffectSource.Upkeep));
+        //todo upkeep
+        Village.get().getUpkeep().addEffect(new Eff(EffectType.Food, -2));
 
         constructionCircle = new CircleButton(0, 0, 180, Colours.dark);
         constructionCircle.setClickAction(new Runnable() {
@@ -463,11 +463,11 @@ public class GameScreen extends Screen{
 	    rollContainer.addAction(Actions.moveTo(show?0:Main.h(50), 0, .5f, Interpolation.pow2Out));
     }
 	
-	public void increaseUpkeepEffect(Effect effect){
+	public void increaseUpkeepEffect(Eff effect){
         Village.get().getUpkeep().addEffect(effect);
 	}
 
-	public void addEffect(Effect effect, boolean addToReview){
+	public void addEffect(Eff effect){
 	    Village.get().process(effect);
 	    if(effect.type.objective){
                 island.addObjective(effect);

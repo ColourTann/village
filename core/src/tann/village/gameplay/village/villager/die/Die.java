@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.bullet.BulletStuff;
 import tann.village.bullet.CollisionObject;
-import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
@@ -339,7 +339,7 @@ public class Die {
     }
 
 	public void activate() {
-		for(Effect e:sides.get(lockedSide).effects) e.activate(true);
+		for(Eff e:sides.get(lockedSide).effects) e.activate();
 	}
 
 	public void destroy() {
@@ -451,7 +451,7 @@ public class Die {
     public void addSide(Side side){
         Side copy = side.copy();
         sides.add(copy);
-        for(Effect e:copy.effects) e.sourceDie=this;
+        for(Eff e:copy.effects) e.sourceDie=this;
     }
 
     static int dieIndex = 0;

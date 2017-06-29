@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
-import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.building.BuildingEffect;
 import tann.village.screens.gameScreen.panels.eventStuff.EffectPanel;
 import tann.village.util.Fonts;
@@ -36,7 +36,7 @@ public class BuildingEffectPanel extends Group{
 		int totalThisRow = buildingEffect.effects.length;
 		for(int i=0;i<totalThisRow;i++){
 			l.row(1);
-			Effect e =buildingEffect.effects[i];
+			Eff e =buildingEffect.effects[i];
 			EffectPanel item = new EffectPanel(e);
 			l.actor(item);
 		}

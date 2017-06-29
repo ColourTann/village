@@ -5,22 +5,20 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
-import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Eff;
 import tann.village.screens.gameScreen.panels.eventStuff.EffectPanel;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
-import tann.village.screens.gameScreen.panels.review.ReviewPanel;
 import tann.village.util.*;
 
 public class UpkeepPanel extends Lay{
 
 	static float EXTRA= 10;
-    Array<Effect> effects = new Array<>();
-
+    Array<Eff> effects = new Array<>();
 	public UpkeepPanel() {
 	    layout();
 	}
 
-	public void setEffects(Array<Effect> effects){
+	public void setEffects(Array<Eff> effects){
 	    this.effects=effects;
 	    layout();
     }
@@ -37,14 +35,14 @@ public class UpkeepPanel extends Lay{
         l.row(1);
         l.actor(title);
         l.row(2);
-        l.abs(ReviewPanel.SMALL_GAP);
+        l.abs(Main.h(1));
         for(int i=0; i<effects.size;i++){
             if(i%2==0 && i != 0){
                 l.row(1);
             }
-            Effect e=effects.get(i);
+            Eff e=effects.get(i);
             l.actor(new EffectPanel(e));
-            l.abs(ReviewPanel.SMALL_GAP);
+            l.abs(Main.h(1));
 
         }
         l.row(1);

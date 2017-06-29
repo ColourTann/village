@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
 import tann.village.Images;
-import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
 import tann.village.gameplay.village.villager.die.*;
@@ -55,9 +55,9 @@ public class ClassPanel extends Group{
 
         List<TextureRegion> fx = new ArrayList<>();
         for(Side s:d.sides){
-            for(Effect e:s.effects){
+            for(Eff e:s.effects){
                 for(int i=0;i<e.value;i++){
-                    if(e.type== Effect.EffectType.Skull) continue;
+                    if(e.type== Eff.EffectType.Skull) continue;
                     fx.add(e.type.region);
                 }
             }
@@ -67,7 +67,7 @@ public class ClassPanel extends Group{
             @Override
             public int compare(TextureRegion o1, TextureRegion o2) {
                 if(o1==o2) return 0;
-                Effect.EffectType[] values = Effect.EffectType.values();
+                Eff.EffectType[] values = Eff.EffectType.values();
                 for(int i=0;i<values.length;i++){
                     if(o1==values[i].region){
                         return -1;
@@ -141,10 +141,10 @@ public class ClassPanel extends Group{
 	}
 
 	static class DieSidesPanel extends Actor{
-	    List<Effect> effects = new ArrayList<>();
+	    List<Eff> effects = new ArrayList<>();
         public DieSidesPanel(Die d) {
             for(Side s:d.sides){
-                for(Effect e:s.effects){
+                for(Eff e:s.effects){
                     effects.add(e);
                 }
             }

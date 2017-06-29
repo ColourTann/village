@@ -2,9 +2,8 @@ package tann.village.screens.gameScreen.panels.review;
 
 import com.badlogic.gdx.utils.Align;
 
-import tann.village.gameplay.effect.Effect;
-import tann.village.gameplay.effect.Effect.EffectSource;
-import tann.village.gameplay.effect.Effect.EffectType;
+import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.eventStuff.EffectPanel;
@@ -24,7 +23,7 @@ public class StarvationPanel extends InfoPanel{
 
 		TextBox missing = new TextBox("Missing "+amountMissing+" resource"+(amountMissing==1?"":"s"), Fonts.fontSmall, -1, Align.center);
 		int moraleLoss = 1 + Math.abs(amountMissing/2);
-		Effect moraleLossEffect =new Effect(EffectType.Morale, -moraleLoss, EffectSource.Upkeep);
+		Eff moraleLossEffect =new Eff(EffectType.Morale, -moraleLoss);
 		EffectPanel moralePanel=new EffectPanel(moraleLossEffect);
 		Village.getInventory().activate(moraleLossEffect);
 		int gap = 20;

@@ -1,17 +1,11 @@
 package tann.village.gameplay.village.building;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
 import tann.village.gameplay.effect.Cost;
-import tann.village.gameplay.effect.Effect;
-import tann.village.gameplay.effect.Effect.EffectSource;
-import tann.village.gameplay.effect.Effect.EffectType;
-import tann.village.gameplay.village.Inventory;
+import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.building.BuildingEffect.BuildingEffectType;
 
@@ -36,8 +30,8 @@ public class Building {
         Village.getInventory().resetWisps();
 		for(BuildingEffect bEff:buildingEffects){
 			if(bEff.effectType==BuildingEffectType.Now){
-				for(Effect e:bEff.effects){
-					e.activate(false);
+				for(Eff e:bEff.effects){
+					e.activate();
 				}
 			}
 		}
@@ -47,8 +41,8 @@ public class Building {
 	public void upkeep() {
 		for(BuildingEffect bEff:buildingEffects){
 			if(bEff.effectType==BuildingEffectType.EveryTurn){
-				for(Effect e:bEff.effects){
-					e.activate(true);
+				for(Eff e:bEff.effects){
+					e.activate();
 				}
 			}
 		}

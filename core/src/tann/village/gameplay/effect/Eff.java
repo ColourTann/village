@@ -3,17 +3,15 @@ package tann.village.gameplay.effect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
-import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.villager.die.Die;
-import tann.village.gameplay.village.Inventory;
 
-public class Effect {
+public class Eff {
 
-    public Effect getInverse() {
-        return new Effect(type, -value, source, sourceDie, duration);
+    public Eff getInverse() {
+        return new Eff(type, -value, sourceDie, effectActivation);
     }
 
     public enum EffectType{
@@ -51,52 +49,30 @@ public class Effect {
 		}
 	}
 	
-	public enum EffectSource{
-		Dice, Upkeep, Event, Building
-	}
-	
-	
+
 	public final EffectType type;
-	public final EffectSource source;
 	public int value;
-	public int duration;
 	public Die sourceDie;
+    public final EffAct effectActivation;
 
-    public Effect(EffectType type, int value, EffectSource source, Die sourceDie, int duration){
-        this.type=type; this.value=value; this.source=source; this.sourceDie=sourceDie; this.duration = duration;
+	public Eff(EffectType type, int value, Die sourceDie, EffAct effectActivation){
+        this.type=type; this.value=value;  this.sourceDie=sourceDie; this.effectActivation = effectActivation;
     }
-
-    public Effect(EffectType type, int value, EffectSource source, int duration){
-       this(type, value, source, null, duration);
+    public Eff(EffectType type, int value, Die sourceDie){this(type, value, sourceDie, EffAct.now);}
+    public Eff(EffectType type, int value, EffAct effectActivation){
+        this(type,value,null, effectActivation);
     }
-
-    public Effect(EffectType type, int value, EffectSource source, Die sourceDie){
-        this(type,value,source,sourceDie, -1);
+	public Eff(EffectType type, int value){
+	    this(type,value, null, null);
     }
+    public Eff(EffectType type){this(type, 0);}
 
-
-    public Effect(EffectType type, int value,  Die sourceDie){
-        this(type,value,EffectSource.Dice, sourceDie);
-    }
-
-	public Effect(EffectType type, int value, EffectSource source){
-		this(type,value,source,null);
+	public void activate(){
+        Eff e = this.copy();
+        e.internalActivate();
 	}
 
-	public Effect(EffectType type, EffectSource source){
-		this(type, 0, source);
-	}
-
-	public Effect(EffectType type, int value){
-	    this(type,value,null,null,0);
-    }
-
-	public void activate(boolean addToReview){
-        Effect e = this.copy();
-        e.internalActivate(addToReview);
-	}
-
-	private void internalActivate(boolean addToReview){
+	private void internalActivate(){
         switch(type){
             case FoodStorage:
                 Village.getInventory().get(EffectType.Food).addMax(value);
@@ -113,15 +89,15 @@ public class Effect {
                 break;
         }
 
-        GameScreen.get().addEffect(this, addToReview);
+        GameScreen.get().addEffect(this);
     }
 
 	public String toString(){
-		return type +": "+value+" from "+source; 
+		return type +": "+value;
 	}
 	
-	public Effect copy(){
-		Effect result = new Effect(type, value, source, sourceDie, duration);
+	public Eff copy(){
+		Eff result = new Eff(type, value, sourceDie);
 		return result;
 	}
 

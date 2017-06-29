@@ -3,8 +3,8 @@ package tann.village.gameplay.village;
 import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.gameplay.effect.Cost;
-import tann.village.gameplay.effect.Effect;
-import tann.village.gameplay.effect.Effect.EffectType;
+import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
 
 
@@ -50,15 +50,15 @@ public class Inventory{
 	}
 	
 
-	public void activate(Effect effect) {
+	public void activate(Eff effect) {
 		internalActivate(effect, false);
 	}
 
-	public void activateNegative(Effect effect) {
+	public void activateNegative(Eff effect) {
 		internalActivate(effect, true);
 	}
 	
-	private void internalActivate(Effect effect, boolean inverse){
+	private void internalActivate(Eff effect, boolean inverse){
 	    if(effect.type == EffectType.Gem){
 	        if(gems == null){
 	            gems = new InventoryItem(Images.gem);
@@ -71,7 +71,7 @@ public class Inventory{
         if(item!=null) item.changeValue(value);
 	}
 
-    public void addDelta(Effect e, boolean invert){
+    public void addDelta(Eff e, boolean invert){
         InventoryItem item = get(e);
         if(item!=null){
             item.addDelta(e.value, invert);
@@ -81,14 +81,14 @@ public class Inventory{
         }
     }
 
-    public void addDelta(Array<Effect> effects, boolean invert) {
-        for (Effect e : effects) {
+    public void addDelta(Array<Eff> effects, boolean invert) {
+        for (Eff e : effects) {
             addDelta(e, invert);
         }
     }
 
-    public void addDelta(Effect[] effects, boolean invert) {
-        for (Effect e : effects) {
+    public void addDelta(Eff[] effects, boolean invert) {
+        for (Eff e : effects) {
             addDelta(e, invert);
         }
     }
@@ -99,7 +99,7 @@ public class Inventory{
         }
     }
 
-	public InventoryItem get(Effect e){
+	public InventoryItem get(Eff e){
 		return get(e.type);
 	}
 	
@@ -120,20 +120,20 @@ public class Inventory{
 		return null;
 	}
 	
-	private boolean checkCostEffect(Effect e){
+	private boolean checkCostEffect(Eff e){
 		 return get(e).getValue()>=e.value;
 
 	}
 
 	public boolean checkCost(Cost c){
-		for(Effect e:c.effects){
+		for(Eff e:c.effects){
 			if(!checkCostEffect(e)) return false;
 		}
 		return true;
 	}
 
 	public void spendCost(Cost c){
-		for(Effect e:c.effects){
+		for(Eff e:c.effects){
 			activateNegative(e);
 		}
 	}
@@ -156,12 +156,12 @@ public class Inventory{
 	    wood.imposeMinimum();
     }
 
-    public boolean isEffectValidAllowOvershoot(Effect e){
+    public boolean isEffectValidAllowOvershoot(Eff e){
 	    if(e.value>0) return true;
 	    return isEffectValid(e);
     }
 	
-	public boolean isEffectValid(Effect e){
+	public boolean isEffectValid(Eff e){
 		if(get(e) == null) return true;
 		return get(e).canChangeBy(e.value);
 	}

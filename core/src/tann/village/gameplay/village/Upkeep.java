@@ -1,12 +1,9 @@
 package tann.village.gameplay.village;
 
 import com.badlogic.gdx.utils.Array;
-import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Eff;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.UpkeepPanel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Upkeep {
 
@@ -16,11 +13,11 @@ public class Upkeep {
         return panel;
     }
 
-    Array<Effect> effects = new Array<>();
+    Array<Eff> effects = new Array<>();
 
-    public void addEffect(Effect effect){
+    public void addEffect(Eff effect){
         boolean added = false;
-        for(Effect existing:effects){
+        for(Eff existing:effects){
             if(existing.type == effect.type){
                 existing.value+=effect.value;
                 added=true;
@@ -43,14 +40,14 @@ public class Upkeep {
     }
 
     public void activateDelta(){
-        for(Effect e:effects){
+        for(Eff e:effects){
             Village.getInventory().addDelta(e, false);
         }
     }
 
     public void activate() {
-        for(Effect e:effects){
-            GameScreen.get().addEffect(e, true);
+        for(Eff e:effects){
+            GameScreen.get().addEffect(e);
         }
     }
 

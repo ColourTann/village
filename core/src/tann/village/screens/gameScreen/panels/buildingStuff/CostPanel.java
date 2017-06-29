@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
 import tann.village.gameplay.effect.Cost;
-import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Eff;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
@@ -29,7 +29,7 @@ public class CostPanel extends Group{
 		Layoo l = new Layoo(this);
 		for(int i=0;i<cost.effects.size;i++){
 			
-			Effect e = cost.effects.get(i);
+			Eff e = cost.effects.get(i);
 			TextBox tb = new TextBox(e.value+"", font,  WIDTH, Align.center);
 			
 			tb.setTextColour(Colours.brown_light);

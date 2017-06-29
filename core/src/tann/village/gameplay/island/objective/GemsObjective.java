@@ -1,6 +1,6 @@
 package tann.village.gameplay.island.objective;
 
-import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.Village;
 
 public class GemsObjective extends  Objective{
@@ -16,7 +16,7 @@ public class GemsObjective extends  Objective{
 
     @Override
     public void init() {
-        current = Village.get().getInventory().getResourceAmount(Effect.EffectType.Gem);
+        current = Village.get().getInventory().getResourceAmount(Eff.EffectType.Gem);
     }
 
     @Override

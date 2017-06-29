@@ -3,8 +3,7 @@ package tann.village.gameplay.village;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.utils.Array;
-import tann.village.gameplay.effect.Effect;
+import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.building.Building;
 import tann.village.gameplay.village.building.BuildingEffect;
@@ -75,15 +74,16 @@ public class Village {
         GameScreen.get().island.objectiveProgress(Objective.ObjectiveEffect.Building, 1);
         for(BuildingEffect be:b.buildingEffects){
 		    if(be.effectType== BuildingEffect.BuildingEffectType.EveryTurn){
-		        for(Effect e:be.effects){
+		        for(Eff e:be.effects){
 
                 }
             }
         }
-        GameScreen.get().tsp.addTurnEffects();
+        //todo this??
+//        GameScreen.get().tsp.addTurnEffects();
 	}
 
-    public void addBuff(Effect effect) {
+    public void addBuff(Eff effect) {
         buffs.add(new Buff(effect));
     }
 
@@ -92,9 +92,9 @@ public class Village {
     }
 
     private int getBonusRerolls(){
-	    int total = inventory.getResourceAmount(Effect.EffectType.Morale)/3;
+	    int total = inventory.getResourceAmount(Eff.EffectType.Morale)/3;
 	    for(Buff b : buffs){
-	        if(b.buffType == Effect.EffectType.Reroll){
+	        if(b.buffType == Eff.EffectType.Reroll){
 	            total += b.value;
             }
         }
@@ -105,7 +105,7 @@ public class Village {
         return buildings.size();
     }
 
-    public void process(Effect effect) {
+    public void process(Eff effect) {
         for(Buff b:buffs){
             b.process(effect);
         }

@@ -12,20 +12,25 @@ public class TurnStatsPanel extends BottomBarPanel{
         layout();
     }
 
-    Array<Eff> turnEffects = new Array<>();
+    private Array<Eff> turnEffects = new Array<>();
     public void addTurnEffects(Eff te){
         turnEffects.add(te);
-
+        layout();
+        somethingAdded();
+        System.out.println("added");
     }
 
     @Override
     public void layout() {
         setSize(BottomBar.width(), BottomBar.height());
         Layoo l = new Layoo(this);
+        l.gap(1);
         for(Eff te:turnEffects){
-
+            l.actor(new TurnEffectPanel(te));
+            l.gap(1);
         }
-        l.layoo(true);
+        l.layoo();
+        System.out.println(getChildren().size);
     }
 
     @Override

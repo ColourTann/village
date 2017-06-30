@@ -61,7 +61,7 @@ public class Eff {
         this(type,value,null, effectActivation);
     }
 	public Eff(EffectType type, int value){
-	    this(type,value, null, null);
+	    this(type,value, null, EffAct.now);
     }
     public Eff(EffectType type){this(type, 0);}
 
@@ -74,8 +74,34 @@ public class Eff {
 	    Village.get().activateEffect(this);
     }
 
-	public String toString(){
-		return type +": "+value;
+    public String toString(){
+
+	    return (value>=0?"+":"-")+Math.abs(value)+" "+typeString()+" "+effAct.toString();
+
+    }
+
+	public String typeString(){
+		switch(type){
+            case Food:
+                return "food";
+            case Wood:
+                return "wood";
+            case Skull:
+                return "ohdear skull";
+            case Morale:
+                return "morale";
+            case FoodStorage:
+                return "food storage";
+            case Fate:
+                return "fate";
+            case Brain:
+                return "exp";
+            case Reroll:
+                return "reroll";
+            case Gem:
+                return "gem";
+        }
+	    return "ohdear"+type;
 	}
 	
 	public Eff copy(){
@@ -86,5 +112,5 @@ public class Eff {
 	public String getValueString() {
 		return (value>0?"+":"")+value;
 	}
-	
+
 }

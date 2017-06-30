@@ -170,6 +170,7 @@ public class Die {
     }
 
     private void moveToTop() {
+        glow=0;
         physical.transform.getRotation(originalRotation);
         int index = LockBar.get().addDie(this);
         float width = 5;

@@ -66,7 +66,7 @@ public class Village {
         for(BuildingEffect be:b.buildingEffects){
 		    if(be.effectType== BuildingEffect.BuildingEffectType.EveryTurn){
 		        for(Eff e:be.effects){
-
+                    activateEffect(e);
                 }
             }
         }
@@ -101,6 +101,7 @@ public class Village {
     }
 
     public void activateEffect(Eff eff) {
+        System.out.println(eff);
         switch(eff.effAct.type){
             case NOW:
                 internalActuallyActivate(eff);
@@ -117,6 +118,7 @@ public class Village {
     }
 
     private void addTurnEff(Eff eff){
+        System.out.println("adding"+eff);
         GameScreen.get().tsp.addTurnEffects(eff);
     }
 

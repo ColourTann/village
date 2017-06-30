@@ -15,4 +15,20 @@ public class EffAct {
         this.type=type;
         this.value=value;
     }
+
+    public String toString(){
+        switch(type){
+            case NOW:
+                return "";
+            case IN_TURNS:
+                return "in "+value+" turns";
+            case FOR_TURNS:
+                return "each turn for "+value+" turns";
+            case UPKEEP:
+                break;
+            case PASSIVE:
+                break;
+        }
+        return "";
+    }
 }

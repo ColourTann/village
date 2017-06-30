@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
+import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.village.building.Building;
 import tann.village.gameplay.village.building.BuildingEffect;
 import tann.village.gameplay.village.building.BuildingEffect.BuildingEffectType;
@@ -22,8 +23,55 @@ public class BuildingGenerator {
         title="Dock";
         description="A short pier leading into the ocean";
         w=8;
-        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1)});
+        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
         make();
+
+
+        l=0; // *********************level 0********************* //
+        title="Dock";
+        description="A short pier leading into the ocean";
+        w=0;
+        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
+        make();
+        l=0; // *********************level 0********************* //
+        title="Dock";
+        description="A short pier leading into the ocean";
+        w=0;
+        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
+        make();l=0; // *********************level 0********************* //
+        title="Dock";
+        description="A short pier leading into the ocean";
+        w=0;
+        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
+        make();l=0; // *********************level 0********************* //
+        title="Dock";
+        description="A short pier leading into the ocean";
+        w=0;
+        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
+        make();l=0; // *********************level 0********************* //
+        title="Dock";
+        description="A short pier leading into the ocean";
+        w=0;
+        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
+        make();l=0; // *********************level 0********************* //
+        title="Dock";
+        description="A short pier leading into the ocean";
+        w=0;
+        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
+        make();l=0; // *********************level 0********************* //
+        title="Dock";
+        description="A short pier leading into the ocean";
+        w=0;
+        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
+        make();
+
+
+
+
+
+
+
+
 
         title="Bonfire";
         description="A big bonfire can really bring the community together";

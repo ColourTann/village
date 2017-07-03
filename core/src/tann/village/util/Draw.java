@@ -91,9 +91,9 @@ public class Draw {
 
 	public static void drawRotatedScaled(Batch batch, TextureRegion t, float x,
 			float y, float scaleX, float scaleY, float radianRotation) {
-		batch.draw(t, (int)x, (int)y, 0f, 0f, 
-				(int)(t.getRegionWidth()), 
-				(int)(t.getRegionHeight()),
+		batch.draw(t, x, y, 0f, 0f,
+				(t.getRegionWidth()),
+				(t.getRegionHeight()),
 				scaleX, scaleY, rad2deg(radianRotation));
 	}
 

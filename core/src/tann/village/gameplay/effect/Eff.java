@@ -23,11 +23,15 @@ public class Eff {
         Brain(Images.brain),
         Reroll(Images.roll),
         Gem(Images.gem),
-        Survive(Images.village, true),
-        BuildTown(Images.village, true),
-        FoodBonus(),
-        CollectGems(Images.village, true),
-        TimeLimit(Images.village, true);
+        FoodBonus(Images.sunflower),
+
+
+        //objectives
+
+        Survive(Images.obj_pocketwatch, true),
+        BuildTown(Images.obj_village, true),
+        CollectGems(Images.obj_gems, true),
+        TimeLimit(Images.obj_hourglass, true);
 
         public boolean objective;
         public TextureRegion region;
@@ -52,6 +56,8 @@ public class Eff {
 	public int value;
 	public Die sourceDie;
     public EffAct effAct;
+
+
 
 	public Eff(EffectType type, int value, Die sourceDie, EffAct effectActivation){
         this.type=type; this.value=value;  this.sourceDie=sourceDie; this.effAct = effectActivation;

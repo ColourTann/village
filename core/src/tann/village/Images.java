@@ -17,7 +17,7 @@ public class Images {
 	public static final TextureRegion morale = Main.atlas.findRegion("resource/morale");
 	public static final TextureRegion fate = Main.atlas.findRegion("resource/fate");
 	public static final TextureRegion level_up = Main.atlas.findRegion("resource/levelup");
-	public static final TextureRegion village = Main.atlas.findRegion("special/village");
+
 	
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
     public static final TextureRegion tick = Main.atlas.findRegion("tick");
@@ -25,7 +25,15 @@ public class Images {
     public static final TextureRegion gem = Main.atlas.findRegion("resource/emerald");
     public static final TextureRegion dotdotdot = Main.atlas.findRegion("resource/special");
     public static final TextureRegion lock = Main.atlas.findRegion("lock");
+    public static final TextureRegion sunflower = Main.atlas.findRegion("resource/sunflower");
     public static final Texture ball = new Texture(Gdx.files.internal("ball.png"));
+
+    //objective
+    public static final TextureRegion obj_village = Main.atlas.findRegion("objective/village");
+    public static final TextureRegion obj_wheel = Main.atlas.findRegion("objective/ship_wheel");
+    public static final TextureRegion obj_pocketwatch = Main.atlas.findRegion("objective/pocketwatch");
+    public static final TextureRegion obj_hourglass = Main.atlas.findRegion("objective/hourglass");
+    public static final TextureRegion obj_gems = Main.atlas.findRegion("objective/gems");
 
     {
         ball.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);

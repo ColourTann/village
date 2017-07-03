@@ -26,6 +26,7 @@ public class Colours {
 	public static final Color brown_dark;
 	public static final Color red;
     public static final Color double_dark;
+    public static final Color sun;
 
 
     public static final Color z_white = new Color(1,1,1,1);
@@ -51,6 +52,7 @@ public class Colours {
 		brown_dark = palette(12,0);
 		red = palette(13,0);
 		double_dark = palette(14,0);
+		sun = palette(15,0);
 	}
 	
 	

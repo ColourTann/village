@@ -51,7 +51,7 @@ public class Eff {
 	public final EffectType type;
 	public int value;
 	public Die sourceDie;
-    public final EffAct effAct;
+    public EffAct effAct;
 
 	public Eff(EffectType type, int value, Die sourceDie, EffAct effectActivation){
         this.type=type; this.value=value;  this.sourceDie=sourceDie; this.effAct = effectActivation;
@@ -105,9 +105,13 @@ public class Eff {
 	}
 	
 	public Eff copy(){
-		Eff result = new Eff(type, value, sourceDie);
+		Eff result = new Eff(type, value, sourceDie, effAct);
 		return result;
 	}
+
+    public void clearActivation() {
+        this.effAct=new EffAct(EffAct.ActivationType.NOW,0);
+    }
 
 	public String getValueString() {
 		return (value>0?"+":"")+value;

@@ -55,13 +55,10 @@ public class EffectPanel extends Lay {
 		float imageGap = getHeight() * (1 - imageSize) / 2f;
 		int border = Math.max(1,(int)(Main.h(.3f)));
 
-		// batch.setColor(new Color(1,0,1,.3f));
-		// Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
-
 		batch.setColor(Colours.light);
 		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
 
-
+		batch.setColor(Colours.dark);
 		Draw.fillRectangle(batch, getX() + border, getY() + border, getWidth() - border * 2, getHeight() - border * 2);
 
 		batch.setColor(Colours.z_white);

@@ -16,6 +16,7 @@ public class Upkeep {
     Array<Eff> effects = new Array<>();
 
     public void addEffect(Eff effect){
+        effect.clearActivation();
         boolean added = false;
         for(Eff existing:effects){
             if(existing.type == effect.type){

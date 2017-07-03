@@ -69,11 +69,11 @@ public class EventPanel extends Lay{
 //                l.actor(upkeepShow);
 //            }
             //todo upkeep??
-            else{
-                EffectPanel item = new EffectPanel(effect);
-                if(count%items_per_row==0) height += item.getHeight();
-                l.actor(item);
-            }
+            // else{
+            EffectPanel item = new EffectPanel(effect);
+            if(count%items_per_row==0) height += item.getHeight();
+            l.actor(item);
+
             if(count%items_per_row!=2){
                 l.abs(10);
             }

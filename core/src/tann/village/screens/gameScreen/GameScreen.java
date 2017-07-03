@@ -279,8 +279,6 @@ public class GameScreen extends Screen{
         }
 		switch(state){
         case Story:
-            setState(State.Event);
-            break;
 		case Event:
 			setState(State.Rolling);
 			break;
@@ -384,9 +382,7 @@ public class GameScreen extends Screen{
 	private void showEvent() {
 
 	    int dayNum = Village.get().getDayNum();
-
-        Village.get().nextDay();
-
+		Village.get().nextDay();
         if(checkEnd()){
             return;
         }
@@ -395,12 +391,12 @@ public class GameScreen extends Screen{
 		
 		Event event = island.getEventForTurn(dayNum);
 
-
 		if(event.isStory() && dayNum != 0){
 		    state=State.Story;
         }
 
         else {
+
             int goodness = event.getGoodness();
             String[] sound = null;
             if (goodness == -1) sound = Sounds.eventNegBird;

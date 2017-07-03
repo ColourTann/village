@@ -25,6 +25,7 @@ import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
+import tann.village.screens.gameScreen.panels.rollStuff.LockBar;
 import tann.village.screens.gameScreen.panels.villagerStuff.*;
 import tann.village.screens.gameScreen.panels.bottomBar.BottomBar;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
@@ -443,6 +444,7 @@ public class GameScreen extends Screen{
 
         levelledUpAlready=false;
 	    showRollContainer(true);
+		Village.get().startOfRoll();
 		BulletStuff.refresh(villagers);
 
 		RollManager.setMaximumRolls(Village.get().getRerolls());
@@ -453,8 +455,9 @@ public class GameScreen extends Screen{
 		}
 		roll(false);
         Village.get().getUpkeep().activateDelta();
-        tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().moveIn();
-        tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().reset();
+        LockBar.get().moveIn();
+        LockBar.get().reset();
+
 	}
 
 	boolean lastRollContainerShow;

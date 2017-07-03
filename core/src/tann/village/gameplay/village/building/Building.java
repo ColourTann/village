@@ -28,13 +28,6 @@ public class Building {
 	
 	public void onBuild() {
         Village.getInventory().resetWisps();
-		for(BuildingEffect bEff:buildingEffects){
-			if(bEff.effectType==BuildingEffectType.Now){
-				for(Eff e:bEff.effects){
-					e.activate();
-				}
-			}
-		}
         Village.getInventory().showWisps();
 	}
 

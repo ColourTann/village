@@ -53,10 +53,15 @@ public class Village {
         upkeep= new Upkeep();
     }
 
+    public void startOfRoll(){
+	    GameScreen.get().tsp.startOfRolling();
+    }
+
 	public void upkeep(){
-		for(Building b:buildings){
-			b.upkeep();
-		}
+        GameScreen.get().tsp.endOfRolling();
+//		for(Building b:buildings){
+//			b.upkeep();
+//		}
 	}
 
 	public void addBuilding(Building b) {
@@ -64,10 +69,8 @@ public class Village {
         buildings.add(b);
         GameScreen.get().island.objectiveProgress(Objective.ObjectiveEffect.Building, 1);
         for(BuildingEffect be:b.buildingEffects){
-		    if(be.effectType== BuildingEffect.BuildingEffectType.EveryTurn){
-		        for(Eff e:be.effects){
-                    activateEffect(e);
-                }
+            for(Eff e:be.effects){
+                activateEffect(e);
             }
         }
         //todo this??
@@ -101,7 +104,6 @@ public class Village {
     }
 
     public void activateEffect(Eff eff) {
-        System.out.println(eff);
         switch(eff.effAct.type){
             case NOW:
                 internalActuallyActivate(eff);
@@ -109,8 +111,9 @@ public class Village {
             case UPKEEP:
                 addToUpkeepp(eff);
                 break;
-            case IN_TURNS:
             case FOR_TURNS:
+                getInventory().addDelta(eff, false);
+            case IN_TURNS:
             case PASSIVE:
                 addTurnEff(eff);
                 break;
@@ -118,7 +121,6 @@ public class Village {
     }
 
     private void addTurnEff(Eff eff){
-        System.out.println("adding"+eff);
         GameScreen.get().tsp.addTurnEffects(eff);
     }
 

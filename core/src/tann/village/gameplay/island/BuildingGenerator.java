@@ -26,53 +26,6 @@ public class BuildingGenerator {
         b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
         make();
 
-
-        l=0; // *********************level 0********************* //
-        title="Dock";
-        description="A short pier leading into the ocean";
-        w=0;
-        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
-        make();
-        l=0; // *********************level 0********************* //
-        title="Dock";
-        description="A short pier leading into the ocean";
-        w=0;
-        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
-        make();l=0; // *********************level 0********************* //
-        title="Dock";
-        description="A short pier leading into the ocean";
-        w=0;
-        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
-        make();l=0; // *********************level 0********************* //
-        title="Dock";
-        description="A short pier leading into the ocean";
-        w=0;
-        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
-        make();l=0; // *********************level 0********************* //
-        title="Dock";
-        description="A short pier leading into the ocean";
-        w=0;
-        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
-        make();l=0; // *********************level 0********************* //
-        title="Dock";
-        description="A short pier leading into the ocean";
-        w=0;
-        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
-        make();l=0; // *********************level 0********************* //
-        title="Dock";
-        description="A short pier leading into the ocean";
-        w=0;
-        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff[]{new Eff(EffectType.Food, 1, new EffAct(EffAct.ActivationType.FOR_TURNS, 10))});
-        make();
-
-
-
-
-
-
-
-
-
         title="Bonfire";
         description="A big bonfire can really bring the community together";
         w=4;

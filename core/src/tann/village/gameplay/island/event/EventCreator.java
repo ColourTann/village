@@ -151,7 +151,7 @@ public class EventCreator {
         e1 = new Eff(EffectType.Wood, 3);
         makeStory();
 
-        turn=1;
+        turn=3;
         title="Build a village";
         description="In order to survive you're going to need to make this a home.";
         e = new Eff(EffectType.BuildTown, 7);
@@ -192,8 +192,7 @@ public class EventCreator {
         e = new Eff(EffectType.Survive, 25);
         makeStory();
 
-//        turn=8;
-        turn=1;
+        turn=8;
         title="Dark skies";
         description="The weather takes a turn, you must be ready soon!";
         e = new Eff(EffectType.Food, -1);

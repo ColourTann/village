@@ -3,12 +3,11 @@ package tann.village.gameplay.village;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.building.Building;
-import tann.village.gameplay.village.building.BuildingEffect;
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
 import tann.village.screens.gameScreen.panels.rollStuff.RerollPanel;
 import tann.village.util.Sounds;
 
@@ -68,10 +67,8 @@ public class Village {
         Sounds.playSound(Sounds.build,1,1);
         buildings.add(b);
         GameScreen.get().island.objectiveProgress(Objective.ObjectiveEffect.Building, 1);
-        for(BuildingEffect be:b.buildingEffects){
-            for(Eff e:be.effects){
+        for(Eff e:b.effects){
                 activateEffect(e);
-            }
         }
         //todo this??
 //        GameScreen.get().tsp.addTurnEffects();
@@ -103,7 +100,15 @@ public class Village {
         //todo process
     }
 
-    public void activateEffect(Eff eff) {
+    public void activateEffect(Eff eff){
+        activateEffect(eff, false);
+    }
+
+    public void activateEffect(Eff eff, boolean asNow) {
+        if(asNow){
+            internalActuallyActivate(eff);
+            return;
+        }
         switch(eff.effAct.type){
             case NOW:
                 internalActuallyActivate(eff);
@@ -130,11 +135,16 @@ public class Village {
 
     private void internalActuallyActivate(Eff eff){
         getInventory().activate(eff);
+        getObjectivePanel().activate(eff);
         int value = eff.value;
         switch(eff.type){
             case Brain:
                 eff.sourceDie.villager.gainXP(value);
                 break;
         }
+    }
+
+    public ObjectivePanel getObjectivePanel() {
+        return GameScreen.get().objectivePanel;
     }
 }

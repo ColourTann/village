@@ -7,7 +7,6 @@ import tann.village.Main;
 import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.Village;
-import tann.village.gameplay.village.building.BuildingEffect.BuildingEffectType;
 
 public class Building {
 
@@ -15,15 +14,15 @@ public class Building {
 	String description;
 	public int level;
 	public Cost cost;
-	public Array<BuildingEffect> buildingEffects;
+	public Array<Eff> effects;
 	public TextureRegion image = Main.atlas.findRegion("building/hut");
 
-	public Building(String name, String description, int level, Cost cost, Array<BuildingEffect> buildingEffects) {
+	public Building(String name, String description, int level, Cost cost, Array<Eff> effects) {
 		this.name=name;
 		this.description=description;
 		this.level=level;
 		this.cost=cost;
-		this.buildingEffects = buildingEffects;
+		this.effects = effects;
 	}
 	
 	public void onBuild() {
@@ -32,12 +31,21 @@ public class Building {
 	}
 
 	public void upkeep() {
-		for(BuildingEffect bEff:buildingEffects){
-			if(bEff.effectType==BuildingEffectType.EveryTurn){
-				for(Eff e:bEff.effects){
-					e.activate();
-				}
-			}
+		for(Eff e:effects){
+		    switch(e.effAct.type){
+
+                case NOW:
+                    break;
+                case IN_TURNS:
+                    break;
+                case FOR_TURNS:
+                    e.activateAsNow();
+                    break;
+                case UPKEEP:
+                    break;
+                case PASSIVE:
+                    break;
+            }
 		}
 	}
 }

@@ -25,9 +25,7 @@ public class Eff {
         Gem(Images.gem),
         FoodBonus(Images.sunflower),
 
-
         //objectives
-
         Survive(Images.obj_pocketwatch, true),
         BuildTown(Images.obj_village, true),
         CollectGems(Images.obj_gems, true),
@@ -52,7 +50,7 @@ public class Eff {
 	}
 	
 
-	public final EffectType type;
+	public EffectType type;
 	public int value;
 	public Die sourceDie;
     public EffAct effAct;
@@ -70,14 +68,20 @@ public class Eff {
 	    this(type,value, null, EffAct.now);
     }
     public Eff(EffectType type){this(type, 0);}
+    public Eff(){this(null);};
 
 	public void activate(){
         Eff e = this.copy();
-        e.internalActivate();
+        e.internalActivate(false);
 	}
 
-	private void internalActivate(){
-	    Village.get().activateEffect(this);
+    public void activateAsNow() {
+        Eff e = this.copy();
+        e.internalActivate(true);
+    }
+
+	private void internalActivate(boolean asNow){
+	    Village.get().activateEffect(this, asNow);
     }
 
     public String toString(){
@@ -122,5 +126,25 @@ public class Eff {
 	public String getValueString() {
 		return (value>0?"+":"")+value;
 	}
+
+    public Eff eachTurn(int numTurns){
+	    effAct = new EffAct(EffAct.ActivationType.FOR_TURNS, numTurns);
+	    return this;
+    }
+
+    public Eff food(int amount){
+        return type(EffectType.Food, amount);
+    }
+
+    public Eff Wood(int amount){
+        return type(EffectType.Wood, amount);
+    }
+
+    private Eff type(EffectType type, int amount){
+        this.type=type;
+        this.value=amount;
+        return this;
+    }
+
 
 }

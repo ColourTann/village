@@ -5,7 +5,8 @@ import com.badlogic.gdx.utils.Align;
 
 import com.badlogic.gdx.utils.Array;
 import tann.village.Main;
-import tann.village.gameplay.island.objective.Objective;
+import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.island.objective.*;
 import tann.village.util.*;
 
 public class ObjectivePanel extends BottomBarPanel{
@@ -63,5 +64,27 @@ public class ObjectivePanel extends BottomBarPanel{
     @Override
     public String getName() {
         return "objective";
+    }
+
+    Objective temp;
+    public void activate(Eff eff) {
+        temp=null;
+        switch(eff.type){
+            case Survive:
+                temp = new SurviveObjective(eff.value);
+                break;
+            case BuildTown:
+                temp = new BuildingObjective(eff.value);
+                break;
+            case CollectGems:
+                temp = new GemsObjective(eff.value);
+                break;
+            case TimeLimit:
+                temp = new TimeLimitObjective(eff.value);
+                break;
+        }
+        if(temp!=null){
+            addObject(temp);
+        }
     }
 }

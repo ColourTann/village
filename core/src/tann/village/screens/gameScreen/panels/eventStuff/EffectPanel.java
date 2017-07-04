@@ -33,7 +33,7 @@ public class EffectPanel extends Lay {
     }
 
     public static float staticHeight(){
-        return Main.h(7);
+        return Main.h(6);
     }
 
     @Override

@@ -47,11 +47,9 @@ public class BuildingPanel extends Group{
 		l.gap(1);
 		l.actor(new CostPanel(building.cost));
 		l.gap(1);
-		for(int i=0;i<building.buildingEffects.size;i++){
 			l.row(1);
-			BuildingEffectPanel bep =new BuildingEffectPanel(building.buildingEffects.get(building.buildingEffects.size-i-1));
+			BuildingEffectPanel bep =new BuildingEffectPanel(building.effects);
 			l.actor(bep);
-		}
 		l.row(1);
 		l.layoo();
 	}

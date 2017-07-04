@@ -2,7 +2,6 @@ package tann.village.gameplay.village;
 
 import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
-import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.UpkeepPanel;
 
 public class Upkeep {

@@ -20,7 +20,6 @@ public class SurviveObjective extends Objective {
 
     @Override
     public boolean internalObjectiveProgress(ObjectiveEffect type, int amount) {
-        System.out.println(getProgressString());
         if(type == ObjectiveEffect.Turn){
             this.current += amount;
             return true;

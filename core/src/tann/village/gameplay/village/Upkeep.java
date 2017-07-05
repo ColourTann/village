@@ -15,6 +15,7 @@ public class Upkeep {
     Array<Eff> effects = new Array<>();
 
     public void addEffect(Eff effect){
+        //todo fix upkeep
         effect.clearActivation();
         boolean added = false;
         for(Eff existing:effects){

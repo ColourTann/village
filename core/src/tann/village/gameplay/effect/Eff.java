@@ -135,10 +135,12 @@ public class Eff {
     public Eff food(int amount){
         return type(EffectType.Food, amount);
     }
-
-    public Eff Wood(int amount){
+    public Eff wood(int amount){
         return type(EffectType.Wood, amount);
     }
+    public Eff morale(int amount) {return type(EffectType.Morale, amount);}
+    public Eff fate(int amount) {return type(EffectType.Fate, amount);}
+    public Eff storage(int amount) {return type(EffectType.FoodStorage, amount);}
 
     private Eff type(EffectType type, int amount){
         this.type=type;

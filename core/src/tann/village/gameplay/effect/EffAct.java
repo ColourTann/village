@@ -19,11 +19,11 @@ public class EffAct {
     public String toString(){
         switch(type){
             case NOW:
-                return "";
+                return "now";
             case IN_TURNS:
                 return "in "+value+" turns";
             case FOR_TURNS:
-                return "each turn for "+value+" turns";
+                return "for "+value+" turns";
             case UPKEEP:
                 break;
             case PASSIVE:

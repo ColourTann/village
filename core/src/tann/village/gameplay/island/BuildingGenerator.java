@@ -6,120 +6,114 @@ import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.village.building.Building;
-import tann.village.gameplay.village.building.BuildingEffect.BuildingEffectType;
 
 public class BuildingGenerator {
 
 	private static Array<Building> buildings = new Array<>();
-	private static String title, description;
-	private static BuildingEffect b1;
-	private static BuildingEffect b2;
-	private static int w,f,l;
+	private static Building b = new Building();
 	public static void makeBasicBuildings(){
+	    b=new Building();
+        b.name="Dock";
+        b.description="A short pier leading into the ocean";
+        b.cost= new Cost(8,0);
+        b.effects.add(new Eff().eachTurn(10).food(1));
+        make(b);
 
-        l=0; // *********************level 0********************* //
-        title="Dock";
-        description="A short pier leading into the ocean";
-        w=8;
-        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff().eachTurn(10).food(1));
-        make();
+        b=new Building();
+        b.name="Bonfire";
+        b.description="A big bonfire can really bring the community together";
+        b.cost = new Cost(4,0);
+        b.effects.add(new Eff().morale(2));
+        make(b);
 
-        title="Bonfire";
-        description="A big bonfire can really bring the community together";
-        w=4;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.Morale, 2));
-        make();
+        b=new Building();
+        b.name="Offering";
+        b.description="If the gods exist, it's a good idea to get on their good side";
+        b.cost=new Cost(4,2);
+        b.effects.add(new Eff().morale(1));
+        b.effects.add(new Eff().fate(2));
+        make(b);
 
-        title="Offering";
-        description="If the gods exist, it's a good idea to get on their good side";
-        w=4;
-        f=2;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.Morale, 1));
-        b2 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.Fate, 2));
-        make();
+        b = new Building();
+        b.name="Crate";
+        b.description="A little extra storage for food can help out when times are hard";
+        b.cost=new Cost(3,0);
+        b.effects.add(new Eff().storage(2));
+        make(b);
 
-        title="Crate";
-        description="A little extra storage for food can help out when times are hard";
-        w=3;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.FoodStorage, 2));
-        make();
-
-        title="Salvage Hut";
-        description="A place to sort through useful materials";
-        w=7;
-        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff(EffectType.Wood, 1));
-        make();
+        b = new Building();
+        b.name="Salvage Hut";
+        b.description="A place to sort through useful materials";
+        b.cost=new Cost(7,0);
+        b.effects.add(new Eff().eachTurn(10).food(1));
+        make(b);
 
         // *********************level 1********************* //
 
-        l=1;
-        title="Palm Grove";
-        description="A small grove for harvesting fast-growing trees";
-        w=11; f=3;
-        b1 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff(EffectType.Food, 1));
-        b2 = new BuildingEffect(BuildingEffectType.EveryTurn, new Eff(EffectType.Wood, 1));
-        make();
+//        l=1;
+        b = new Building();
+        b.name="Palm Grove";
+        b.description="A small grove for harvesting fast-growing trees";
+        b.cost = new Cost(11,3);
+        b.effects.add(new Eff().eachTurn(10).food(1));
+        b.effects.add(new Eff().eachTurn(10).wood(1));
+        make(b);
 
-        title="Larder";
-        description="Large storage area for food";
-        w=5;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.FoodStorage, 6));
-        make();
+        b = new Building();
+        b.name="Larder";
+        b.description="Large storage area for food";
+        b.cost=new Cost(5,0);
+        b.effects.add(new Eff(EffectType.FoodStorage, 6));
+        make(b);
 
-        title="Shrine";
-        description="An offering to the gods";
-        w=10;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.Fate, 4));
-        b2 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.Morale, 1));
-        make();
+        b = new Building();
+        b.name="Shrine";
+        b.description="An offering to the gods";
+        b.cost=new Cost(10,0);
+        b.effects.add(new Eff(EffectType.Fate, 4));
+        b.effects.add(new Eff(EffectType.Morale, 1));
+        make(b);
     }
 
     public static void makeGemBuildings(){
-        title = "Mining";
-        w = 5;
-        f = 3;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.Gem, 3));
-        b2 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.Morale, -1));
-        make();
+        b = new Building();
+        b.name= "Mining";
+        b.cost = new Cost(5,3);
+        b.effects.add(new Eff(EffectType.Gem, 3));
+        b.effects.add(new Eff(EffectType.Morale, -1));
+        make(b);
 
-        title = "Fountain";
-        w = 15;
-        f = 5;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.Gem, 5));
-        make();
+        b = new Building();
+        b.name= "Fountain";
+        b.cost=new Cost(15,5);
+        b.effects.add(new Eff(EffectType.Gem, 5));
+        make(b);
 
-        title = "Expedition";
-        w = 10;
-        f = 2;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.Gem, 2));
-        b2 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.Morale, 1));
-        make();
+        b = new Building();
+        b.name= "Expedition";
+        b.cost=new Cost(10,2);
+        b.effects.add(new Eff(EffectType.Gem, 2));
+        b.effects.add(new Eff(EffectType.Morale, 1));
+        make(b);
 
-        title = "Ocean sifting";
-        w = 4;
-        f = 1;
-        b1 = new BuildingEffect(BuildingEffectType.Now, new Eff(EffectType.Gem, 1));
-        make();
+        b = new Building();
+        b.name= "Ocean sifting";
+        b.cost=new Cost(4,1);
+        b.effects.add(new Eff(EffectType.Gem, 1));
+        make(b);
     }
 
-    private static void make(){
-		if(title==null||b1==null){
-			System.err.println("Something went wrong making "+title+":"+description);
+    private static void make(Building b){
+		if(b.name==null||b.effects.size==0||buildings.contains(b, true)){
+			System.err.println("Something went wrong making "+b.name+":"+b.description);
 			return;
 		}
-		Array<BuildingEffect> effects = new Array<>();
-		if(b1!=null)effects.add(b1);
-		if(b2!=null)effects.add(b2);
-		buildings.add(new Building(title, description, l, new Cost(w, f), effects));
-		w=0; f=0;
-		title=null; description=null;
-		b1=null;
-		b2=null;
+		buildings.add(b);
 	}
 
 	public static Array<Building> getBuildings(){
         Array<Building> result = buildings;
-        buildings = new Array<Building>();
+        buildings = new Array<>();
         return result;
     }
 }

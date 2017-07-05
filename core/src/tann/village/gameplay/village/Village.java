@@ -38,7 +38,7 @@ public class Village {
 
     public void nextDay(){
 	    dayNum++;
-            GameScreen.get().island.objectiveProgress(Objective.ObjectiveEffect.Turn, 1);
+	    getObjectivePanel().objectiveProgress(Objective.ObjectiveEffect.Turn, 1);
     }
 
 	public static Inventory getInventory(){
@@ -66,9 +66,9 @@ public class Village {
 	public void addBuilding(Building b) {
         Sounds.playSound(Sounds.build,1,1);
         buildings.add(b);
-        GameScreen.get().island.objectiveProgress(Objective.ObjectiveEffect.Building, 1);
+        getObjectivePanel().objectiveProgress(Objective.ObjectiveEffect.Building, 1);
         for(Eff e:b.effects){
-                activateEffect(e);
+            activateEffect(e);
         }
         //todo this??
 //        GameScreen.get().tsp.addTurnEffects();
@@ -146,5 +146,9 @@ public class Village {
 
     public ObjectivePanel getObjectivePanel() {
         return GameScreen.get().objectivePanel;
+    }
+
+    public void objectiveProgress(Objective.ObjectiveEffect obj, int value) {
+        getObjectivePanel().objectiveProgress(obj, value);
     }
 }

@@ -9,13 +9,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
-import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.event.Event;
-import tann.village.gameplay.island.objective.*;
 import tann.village.gameplay.village.building.Building;
 import tann.village.gameplay.village.villager.Villager;
-import tann.village.screens.gameScreen.GameScreen;
-import tann.village.gameplay.island.objective.Objective.ObjectiveEffect;
 
 public abstract class Island {
 
@@ -116,35 +112,6 @@ public abstract class Island {
             randomEventsPool.addAll(events);
         }
 	}
-	
-
-    public Array<Objective> objectives = new Array<Objective>();
-    public void addObjective(Eff effect){
-        Objective objective = null;
-	    switch (effect.type){
-            case BuildTown:
-                objective = new BuildingObjective(effect.value);
-                break;
-            case CollectGems:
-                objective = new GemsObjective(effect.value);
-                break;
-            case TimeLimit:
-                objective = new TimeLimitObjective(effect.value);
-                break;
-            case Survive:
-                objective = new SurviveObjective(effect.value);
-                break;
-        }
-        objective.init();
-        GameScreen.get().addObjectiveToPanel(objective);
-        objectives.add(objective);
-    }
-
-    public void objectiveProgress(ObjectiveEffect type, int i) {
-        for(Objective o:objectives){
-            o.objectiveProgress(type, i);
-        }
-    }
 
     public abstract String getVictoryText();
 
@@ -166,22 +133,5 @@ public abstract class Island {
             results[i]=availables.remove(0);
         }
         return results;
-    }
-
-    public enum ObjectiveOutcome{Success, Fail, Nothing}
-    public ObjectiveOutcome objectivesCompletes() {
-        if(objectives.size==0){
-            return ObjectiveOutcome.Nothing;
-        }
-        boolean complete = true;
-        for(Objective o:objectives){
-            if(o.isComplete() && o.isDeath()){
-               return ObjectiveOutcome.Fail;
-            }
-            if(!o.isComplete() && !o.isDeath()){
-                complete = false;
-            }
-        }
-        return complete?ObjectiveOutcome.Success:ObjectiveOutcome.Nothing;
     }
 }

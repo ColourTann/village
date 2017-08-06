@@ -118,7 +118,7 @@ public class BuildingGenerator {
 
 	public static Array<Building> getBuildings(){
         Array<Building> result = buildings;
-        buildings = new Array<Building>();
+        buildings = new Array<>();
         return result;
     }
 }

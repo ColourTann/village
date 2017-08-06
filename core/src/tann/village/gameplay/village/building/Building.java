@@ -11,11 +11,13 @@ import tann.village.gameplay.village.Village;
 public class Building {
 
 	public String name;
-	String description;
+	public String description;
 	public int level;
 	public Cost cost;
 	public Array<Eff> effects;
 	public TextureRegion image = Main.atlas.findRegion("building/hut");
+
+	public Building(){this.effects = new Array<>();}
 
 	public Building(String name, String description, int level, Cost cost, Array<Eff> effects) {
 		this.name=name;

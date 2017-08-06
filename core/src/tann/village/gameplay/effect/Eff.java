@@ -133,9 +133,7 @@ public class Eff {
     }
 
     public Eff food(int amount){return type(EffectType.Food, amount);}
-    public Eff wood(int amount){
-        return type(EffectType.Wood, amount);
-    }
+    public Eff wood(int amount){return type(EffectType.Wood, amount);}
     public Eff fate(int amount) {return type(EffectType.Fate, amount);}
     public Eff morale(int amount) {return type(EffectType.Morale, amount);}
     public Eff gem(int amount) {return type(EffectType.Gem, amount);}

@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import tann.village.Main;
 import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.*;
 import tann.village.util.*;
 
@@ -84,7 +85,30 @@ public class ObjectivePanel extends BottomBarPanel{
                 break;
         }
         if(temp!=null){
+            temp.init();
             addObject(temp);
         }
+    }
+
+    public void objectiveProgress(Objective.ObjectiveEffect type, int i) {
+        for(Objective o:objectives){
+            o.objectiveProgress(type, i);
+        }
+    }
+    public enum ObjectiveOutcome{Success, Fail, Nothing}
+    public ObjectiveOutcome objectivesCompletes() {
+        if(objectives.size==0){
+            return ObjectiveOutcome.Nothing;
+        }
+        boolean complete = true;
+        for(Objective o:objectives){
+            if(o.isComplete() && o.isDeath()){
+                return ObjectiveOutcome.Fail;
+            }
+            if(!o.isComplete() && !o.isDeath()){
+                complete = false;
+            }
+        }
+        return complete? ObjectiveOutcome.Success: ObjectiveOutcome.Nothing;
     }
 }

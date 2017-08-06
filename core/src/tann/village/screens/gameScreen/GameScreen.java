@@ -420,12 +420,12 @@ public class GameScreen extends Screen{
         if(lost){
             return true;
         }
-        Island.ObjectiveOutcome outcome = island.objectivesCompletes();
-        if(outcome== Island.ObjectiveOutcome.Fail){
+        ObjectivePanel.ObjectiveOutcome outcome = Village.get().getObjectivePanel().objectivesCompletes();
+        if(outcome== ObjectivePanel.ObjectiveOutcome.Fail){
             showLoss();
             return true;
         }
-        if(outcome == Island.ObjectiveOutcome.Success){
+        if(outcome == ObjectivePanel.ObjectiveOutcome.Success){
             win();
             return true;
         }

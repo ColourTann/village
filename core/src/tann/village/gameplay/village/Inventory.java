@@ -67,7 +67,7 @@ public class Inventory{
 	            items.insert(0,gems);
 	            getGroup().layout(true);
             }
-            GameScreen.get().island.objectiveProgress(Objective.ObjectiveEffect.Gem, effect.value);
+            Village.get().objectiveProgress(Objective.ObjectiveEffect.Gem, effect.value);
         }
 		int value = effect.value*(inverse?-1:1);
 		InventoryItem item = get(effect.type);

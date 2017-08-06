@@ -10,7 +10,6 @@ public class EffAct {
     public static EffAct now = new EffAct(NOW, 0);
     public ActivationType type;
     public int value;
-    int value2;
     public EffAct(ActivationType type, int value){
         this.type=type;
         this.value=value;
@@ -19,16 +18,20 @@ public class EffAct {
     public String toString(){
         switch(type){
             case NOW:
-                return "";
+                return "now";
             case IN_TURNS:
                 return "in "+value+" turns";
             case FOR_TURNS:
-                return "each turn for "+value+" turns";
+                return "for "+value+" turns";
             case UPKEEP:
                 break;
             case PASSIVE:
                 break;
         }
         return "";
+    }
+
+    public boolean equiv(EffAct other){
+        return this.type==other.type && this.value==other.value;
     }
 }

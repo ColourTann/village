@@ -7,16 +7,13 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
 import tann.village.screens.gameScreen.panels.eventStuff.EffectPanel;
-import tann.village.util.Fonts;
-import tann.village.util.Layoo;
-import tann.village.util.TextBox;
+import tann.village.util.*;
 
 public class BuildingEffectPanel extends Group{
 
-	public static final float WIDTH = (EffectPanel.staticWidth())*2;
-	public static final float HEIGHT = 63;
+	public static final float WIDTH = (EffectPanel.staticWidth());
+	public static final float HEIGHT = 120;
 	
-	TextBox bonusType;
 	Array<Eff> effects;
 	Layoo l;
 	public BuildingEffectPanel(Array<Eff> effects) {
@@ -25,26 +22,31 @@ public class BuildingEffectPanel extends Group{
 		this.effects=effects;
 		setSize(WIDTH, HEIGHT);
 		l = new Layoo(this);
-		bonusType = new TextBox(effects.get(0).effAct.type.toString(), Fonts.fontSmall, WIDTH, Align.center);
-		l.actor(bonusType);
-        addEffectPanels();
+		addEffectPanels();
         l.layoo();
 		
 	}
 	
 	private void addEffectPanels() {
-		int totalThisRow = effects.size;
-		for(int i=0;i<totalThisRow;i++){
+	    Eff previous=null;
+		for(int i=0;i<effects.size;i++){
 			l.row(1);
 			Eff e =effects.get(i);
+			if(previous==null || !e.effAct.equiv(previous.effAct)){
+			 TextBox typeBox = new TextBox(e.effAct.toString(), Fonts.fontSmall, -1, Align.center);
+			 l.actor(typeBox);
+			 l.absRow(8);
+            }
 			EffectPanel item = new EffectPanel(e);
 			l.actor(item);
+			previous = e;
 		}
+		l.row(1);
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		super.draw(batch, parentAlpha);
+        super.draw(batch, parentAlpha);
 	}
 	
 	

@@ -132,15 +132,20 @@ public class Eff {
 	    return this;
     }
 
-    public Eff food(int amount){
-        return type(EffectType.Food, amount);
-    }
-
-    public Eff Wood(int amount){
+    public Eff food(int amount){return type(EffectType.Food, amount);}
+    public Eff wood(int amount){
         return type(EffectType.Wood, amount);
     }
+    public Eff fate(int amount) {return type(EffectType.Fate, amount);}
+    public Eff morale(int amount) {return type(EffectType.Morale, amount);}
+    public Eff gem(int amount) {return type(EffectType.Gem, amount);}
+    public Eff storage(int amount) {return type(EffectType.FoodStorage, amount);}
+    public Eff brain(int amount) {return type(EffectType.Brain, amount);}
 
     private Eff type(EffectType type, int amount){
+        if(this.type!=null){
+            System.err.println("trying to overwrite type: "+this.type+" to "+type);
+        }
         this.type=type;
         this.value=amount;
         return this;

@@ -7,15 +7,13 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 
+import com.badlogic.gdx.utils.Align;
 import tann.village.Images;
 import tann.village.Main;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.event.EventDebugPanel;
 import tann.village.gameplay.island.islands.Island;
-import tann.village.util.Colours;
-import tann.village.util.Draw;
-import tann.village.util.Layoo;
-import tann.village.util.Screen;
+import tann.village.util.*;
 
 public class MapScreen extends Screen{
 
@@ -33,6 +31,9 @@ public class MapScreen extends Screen{
 		for(Island i:map.islands){
 			addActor(i.getActor());
 		}
+		TextWriter tw = new TextWriter("You need a lot of [wood][wood] and [food] to build a [hut]", Fonts.font);
+		tw.setPosition(getWidth()/2, getHeight()/10, Align.center);
+		addActor(tw);
 	}
 	
 	@Override

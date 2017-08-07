@@ -23,11 +23,7 @@ import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.mapScreen.MapScreen;
-import tann.village.util.Colours;
-import tann.village.util.Draw;
-import tann.village.util.Fonts;
-import tann.village.util.Screen;
-import tann.village.util.Sounds;
+import tann.village.util.*;
 
 public class Main extends ApplicationAdapter {
 	public static int width = 1000, height = 700;
@@ -99,7 +95,7 @@ public class Main extends ApplicationAdapter {
 		self = this;
 		Draw.setup();
 		Fonts.setup();
-
+		TextWriter.setup();
 		logTime("setup");
 //        stage = new Stage(new ScalingViewport(Scaling.none, Main.width, Main.height));
         stage = new Stage(new FitViewport(500, 500));

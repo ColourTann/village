@@ -52,7 +52,6 @@ public class UpkeepPanel extends Lay{
     @Override
     public void act(float delta) {
         super.act(delta);
-            setY(getParent().getHeight()-getHeight());
     }
 
     @Override

@@ -15,6 +15,10 @@ public class EffAct {
         this.value=value;
     }
 
+    public EffAct(ActivationType type){
+        this(type, 0);
+    }
+
     public String toString(){
         switch(type){
             case NOW:

@@ -1,6 +1,7 @@
 package tann.village.util;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
@@ -35,35 +36,45 @@ public class Slider extends Actor{
 	private Color backGround, foreGround;
 	private boolean dragging;
 	private String title;
-	public Slider(String title, float base, Color bg, Color fg) {
+	public Slider(final String title, float base, Color bg, Color fg) {
 		this.title=title;
-		value=base;
 		backGround=bg; foreGround=fg;
 		setSize(defaultWidth, defaultHeight);
-		
+		setValue(Prefs.getFloat(title, base));
 		addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				dragging=true;
-				return true;
+                return true;
 			}
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				dragging=false;
-			}
+			    dragging=false;
+			    Prefs.setFloat(title, getValueFromPosition(Gdx.input.getX()));
+            }
 		});
 	}
+
+	private void setValue(float value){
+	    this.value=value;
+    }
 	
 	@Override
 	public void act(float delta) {
 		super.act(delta);
 		if(dragging){
-			value=((Gdx.input.getX())-getX()-getParent().getX()-gap)/(getWidth()-gap*2);
-			value=Math.max(0, Math.min(1, value));
+            setValue(getValueFromPosition(Gdx.input.getX()));
 			if(slideAction!=null)slideAction.run();
+
 		}
 	}
+
+	private float getValueFromPosition(float x){
+        float retn = (x-getX()-getParent().getX()-gap)/(getWidth()-gap*2);
+        retn=Math.max(0, Math.min(1, retn));
+        return retn;
+    }
 	
 	Runnable slideAction;
 	public void addSlideAction(Runnable r){

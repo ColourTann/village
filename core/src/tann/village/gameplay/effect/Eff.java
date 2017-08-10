@@ -127,9 +127,16 @@ public class Eff {
 		return (value>0?"+":"")+value;
 	}
 
-    public Eff eachTurn(int numTurns){
-	    effAct = new EffAct(EffAct.ActivationType.FOR_TURNS, numTurns);
-	    return this;
+    public Eff eachTurn(int numTurns){return setActivation(new EffAct(EffAct.ActivationType.FOR_TURNS, numTurns));}
+
+    public Eff upkeep(){return setActivation(new EffAct(EffAct.ActivationType.UPKEEP, -1));}
+
+    private Eff setActivation(EffAct activation){
+        if(this.effAct==null){
+            System.err.println(this+": trying to overwrite type: "+this.effAct+" to "+activation);
+        }
+        this.effAct = activation;
+        return this;
     }
 
     public Eff food(int amount){return type(EffectType.Food, amount);}
@@ -142,7 +149,7 @@ public class Eff {
 
     private Eff type(EffectType type, int amount){
         if(this.type!=null){
-            System.err.println("trying to overwrite type: "+this.type+" to "+type);
+            System.err.println(this+": trying to overwrite type: "+this.type+" to "+type);
         }
         this.type=type;
         this.value=amount;

@@ -160,13 +160,13 @@ public class EventCreator {
         turn=8;
         title="Hunger";
         description="The village grows hungry. Upkeep increased by one.";
-        e = new Eff(EffectType.Food, -1);
+        e = new Eff().upkeep().food(-1);
         makeStory();
 
         turn=16;
         title="Cold";
         description="The nights are getting colder, you need fuel to keep warm.";
-        e = new Eff(EffectType.Wood, -1);
+        e = new Eff().upkeep().wood(-1);
         makeStory();
     }
 
@@ -195,34 +195,34 @@ public class EventCreator {
         turn=8;
         title="Dark skies";
         description="The weather takes a turn, you must be ready soon!";
-        e = new Eff(EffectType.Food, -1);
+        e = new Eff().upkeep().food(-1);
         makeStory();
 
         turn=10;
         title="Storm";
         description="The storm has hit you, it will be tough to survive this.";
-        e = new Eff(EffectType.Food, -2);
-        e1 = new Eff(EffectType.Wood, -1);
+        e = new Eff().upkeep().food(-2);
+        e1 = new Eff().upkeep().wood(-1);
 //        e2 = new Eff(EffectType.FoodBonus, -1, -1);
         makeStory();
 
         turn=14;
         title="Thunderstorm";
         description="And then the rain started";
-        e1 = new Eff(EffectType.Wood, -2);
+        e1 = new Eff().upkeep().wood(-2);
         makeStory();
 
         turn=18;
         title="Gap";
         description="A gap in the clouds";
-        e1 = new Eff(EffectType.Wood, +1);
+        e1 = new Eff().upkeep().wood(1);
 //        e2 = new Eff(EffectType.FoodBonus, +1);
 
         turn=22;
         title="Light";
         description="The storm is clearing, finally";
-        e = new Eff(EffectType.Food, +1);
-        e1 = new Eff(EffectType.Wood, +1);
+        e = new Eff().upkeep().food(1);
+        e1 = new Eff().upkeep().wood(1);
         makeStory();
     } 
 
@@ -298,21 +298,21 @@ public class EventCreator {
         turn=8;
         title="Blood Skies";
         description="The sky has turned deep red, the heat makes it hard to work";
-        e = new Eff(EffectType.Food, -1);
+        e = new Eff().upkeep().food(-1);
         makeStory();
 
         turn=16;
         title="Burning ground";
         description="The ground shifts beneath your feet";
-        e = new Eff(EffectType.Food, -1);
-        e1 = new Eff(EffectType.Wood, -1);
+        e = new Eff().upkeep().food(-1);
+        e1 = new Eff().upkeep().wood(-1);
         makeStory();
 
         turn=24;
         title="Dire omen";
         description="The sky turns black, the gods grow tired of your sloth.";
-        e = new Eff(EffectType.Food, -2);
-        e1 = new Eff(EffectType.Wood, -2);
+        e = new Eff().upkeep().food(-2);
+        e1 = new Eff().upkeep().wood(-2);
         makeStory();
     }
 

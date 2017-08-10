@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import tann.village.Main;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
+import tann.village.gameplay.effect.EffAct;
+import tann.village.gameplay.village.Upkeep;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 import tann.village.util.Fonts;
@@ -65,6 +67,7 @@ public class EffectPanel extends Lay {
 		if(effect.type==EffectType.Fate){
             batch.setColor(effect.value>0?Colours.blue_light:Colours.red);
         }
+
 		Draw.drawSize(batch, effect.type.region, getX() + imageGap, getY() + imageGap, (getHeight() - imageGap * 2),
 				(getHeight() - imageGap * 2));
 		BitmapFont font = Fonts.font;

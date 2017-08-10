@@ -4,11 +4,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
 
+import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.Main;
 import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.Outcome;
+import tann.village.screens.gameScreen.panels.UpkeepPanel;
 import tann.village.util.*;
 
 public class EventPanel extends Lay{
@@ -60,19 +63,21 @@ public class EventPanel extends Lay{
                 l.row(1);
 
             }
-//            if(effect.source==EffectSource.Upkeep){
-//                UpkeepPanel upkeepShow = new UpkeepPanel();
-//                Array<Eff> effects = new Array<>();
-//                effects.add(effect);
-//                upkeepShow.setEffects(effects);
-//                if(count%items_per_row==0) height += upkeepShow.getHeight();
-//                l.actor(upkeepShow);
-//            }
-            //todo upkeep??
-            // else{
-            EffectPanel item = new EffectPanel(effect);
-            if(count%items_per_row==0) height += item.getHeight();
-            l.actor(item);
+            Lay pann = null;
+            if(effect.effAct.type== EffAct.ActivationType.UPKEEP){
+                UpkeepPanel upkeepShow = new UpkeepPanel();
+                Array<Eff> effects = new Array<>();
+                effects.add(effect);
+                upkeepShow.setEffects(effects);
+                pann = upkeepShow;
+
+            }
+             else {
+                pann = new EffectPanel(effect);
+
+            }
+            if(count%items_per_row==0) height += pann.getHeight();
+            l.actor(pann);
 
             if(count%items_per_row!=2){
                 l.abs(10);

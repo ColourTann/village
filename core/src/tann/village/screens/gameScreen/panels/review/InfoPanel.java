@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 import tann.village.Main;
-import tann.village.screens.gameScreen.panels.UpkeepPanel;
 import tann.village.util.Colours;
 import tann.village.util.Draw;
 
@@ -30,7 +29,7 @@ public class InfoPanel extends Group{
 	}
 
     public static void drawBorder(Batch batch, Actor a) {
-        int BORDER = (int)(Main.h(.3f));
+        int BORDER = (int)(Main.h(.4f));
         batch.setColor(Colours.brown_dark);
         Draw.fillRectangle(batch, a.getX()-BORDER, a.getY()-BORDER, a.getWidth()+BORDER*2, a.getHeight()+BORDER*2);
         batch.setColor(Colours.dark);

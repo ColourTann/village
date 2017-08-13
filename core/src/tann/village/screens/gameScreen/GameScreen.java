@@ -462,10 +462,6 @@ public class GameScreen extends Screen{
 	    rollContainer.addAction(Actions.moveTo(show?0:Main.h(50), 0, .5f, Interpolation.pow2Out));
     }
 	
-	public void increaseUpkeepEffect(Eff effect){
-        Village.get().getUpkeep().addEffect(effect);
-	}
-
 	private tann.village.screens.gameScreen.panels.miscStuff.ProceedButton proceedButton = new tann.village.screens.gameScreen.panels.miscStuff.ProceedButton();
 	
 	public void addProceedButton(Actor relativeTo){

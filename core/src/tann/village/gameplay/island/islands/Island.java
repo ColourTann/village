@@ -101,17 +101,21 @@ public abstract class Island {
 		setupClasses();
 		background = Main.atlas.findRegion(getBackgroundString());
     }
-	
-	public void addEvents(Array<Event> events, boolean story){
-		if(story){
-		    for(Event e:events){
-		        storyEvents.put(e.turn, e);
-            }
+
+    public void addEvent(Event event){
+        if(event.isStory()){
+            storyEvents.put(event.turn, event);
         }
         else{
-            randomEventsPool.addAll(events);
+            randomEventsPool.add(event);
         }
-	}
+    }
+
+    public void addEvents(Array<Event> events){
+        for(Event e:events){
+            addEvent(e);
+        }
+    }
 
     public abstract String getVictoryText();
 

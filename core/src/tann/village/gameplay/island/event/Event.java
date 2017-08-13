@@ -10,17 +10,28 @@ import tann.village.screens.gameScreen.GameScreen;
 public class Event {
 
 
-    final public String title;
-    final public String description;
-    final public Array<Outcome> outcomes;
-    final public Array<Eff> effects;
-    final public Array<Eff> requirements;
-    final public int fateDelta;
-    final public float chance;
-	final int fateLeft, fateRight;
-	final boolean story;
-	public final int turn;
-	public int uses;
+    public String title;
+    public String description;
+    public Array<Outcome> outcomes;
+    public Array<Eff> effects;
+    public Array<Eff> requirements;
+    public int fateDelta = 0;
+    public float chance = 1;
+	int fateLeft, fateRight;
+	boolean story;
+	public int turn;
+	public int uses = -1;
+	public int minTurn = -1, maxTurn = -1;
+
+
+    public Event(String title) {
+        this(title, null);
+    }
+
+	public Event(String title, String description){
+	    this.title=title;
+	    this.description=description;
+    }
 	public Event (String title, String description, Array<Eff> effects, Array<Outcome> outcomes, Array<Eff> requirements, float chance, int fate, int variance, int fateDelta, boolean story, int turn, int uses){
 	    this.uses=uses;
 	    this.turn=turn;
@@ -35,8 +46,10 @@ public class Event {
 		this.fateRight =variance;
 		this.story = story;
 	}
-	
-	public boolean isPotential() {
+
+
+
+    public boolean isPotential() {
 		int currentFate = Village.getInventory().getResourceAmount(EffectType.Fate);
 		if(currentFate<fateLeft || currentFate > fateRight || uses<=0) return false;
         for(Eff e: requirements){
@@ -53,8 +66,6 @@ public class Event {
 		GameScreen.get().resetWisps();
 		new Eff(EffectType.Fate, fateDelta).activate();
 		for(Eff e:effects){
-		    //TODO THIS!!!
-//			GameScreen.get().increaseUpkeepEffect(e);
 			e.activate();
 		}
 		GameScreen.get().showWisps();
@@ -67,5 +78,39 @@ public class Event {
 
     public boolean isStory() {
 	    return story;
+    }
+
+    public void eff(Eff eff) {
+	    effects.add(eff);
+    }
+
+    public void effR(Eff eff) {
+	    effects.add(eff);
+	    requirements.add(eff);
+    }
+
+    public void fate(int fateLeft, int fateRight, int fateDelta) {
+	    this.fateLeft=fateLeft; this.fateRight=fateRight; this.fateDelta = fateDelta;
+    }
+
+    public void chance(float chance){
+	    chance(chance,-1);
+    }
+
+    public void chance(float change, int amount){
+        this.chance=chance; this.uses=amount;
+    }
+
+    public void turn(int min, int max){
+        this.minTurn = min; this.maxTurn = max;
+    }
+
+    public void storyTurn(int turn) {
+        this.turn=turn;
+    }
+
+    public void addOutcome(String description) {
+        Outcome o = new Outcome(description, effects);
+        effects = new Array<>();
     }
 }

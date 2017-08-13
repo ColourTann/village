@@ -11,9 +11,38 @@ import tann.village.Images;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TextWriter extends Group {
+public class TextWriter extends Lay {
+    String[] split;
+    String text;
+    BitmapFont font;
     public TextWriter(String text, BitmapFont font) {
-        String[] split = text.split("[\\[\\]]");
+        this.text=text;
+        split = text.split("[\\[\\]]");
+        this.font=font;
+        layout();
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        batch.setColor(0,0,0,.5f);
+        Draw.fillActor(batch,this);
+        super.draw(batch, parentAlpha);
+    }
+
+    private static Map<String, TextureRegion> textureMap = new HashMap<>();
+
+    public static void setup(){
+        textureMap.put("food", Images.food);
+        textureMap.put("food_storage", Images.food_storage);
+        textureMap.put("brain", Images.brain);
+        textureMap.put("wood", Images.wood);
+        textureMap.put("morale", Images.morale);
+        textureMap.put("fate", Images.fate);
+        textureMap.put("hut", Images.obj_village);
+    }
+
+    @Override
+    public void layout() {
         int index = (text.charAt(0)=='[')?1:0;
         float x = 0;
         for(String s:split){
@@ -39,24 +68,5 @@ public class TextWriter extends Group {
             index++;
         }
         setSize(x, font.getCapHeight());
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(0,0,0,.5f);
-        Draw.fillActor(batch,this);
-        super.draw(batch, parentAlpha);
-    }
-
-    private static Map<String, TextureRegion> textureMap = new HashMap<>();
-
-    public static void setup(){
-        textureMap.put("food", Images.food);
-        textureMap.put("food_storage", Images.food_storage);
-        textureMap.put("brain", Images.brain);
-        textureMap.put("wood", Images.wood);
-        textureMap.put("morale", Images.morale);
-        textureMap.put("fate", Images.fate);
-        textureMap.put("hut", Images.obj_village);
     }
 }

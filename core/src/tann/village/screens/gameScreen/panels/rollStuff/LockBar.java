@@ -2,9 +2,12 @@ package tann.village.screens.gameScreen.panels.rollStuff;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import tann.village.Images;
 import tann.village.Main;
+import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.Colours;
@@ -21,6 +24,18 @@ public class LockBar extends Lay{
 
     private LockBar() {
         layout();
+        addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("touching");
+                addAllDice();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
+    }
+
+    private void addAllDice() {
+        BulletStuff.moveAllToTop();
     }
 
     Die[] dice = new Die[GameScreen.STARTING_VILLAGERS];
@@ -52,7 +67,7 @@ public class LockBar extends Lay{
 
     @Override
     public void layout() {
-        setSize(Main.h(45), Main.h(11.0f));
+        setSize(Main.h(66), Main.h(11.0f));
     }
 
     public void moveIn() {
@@ -65,15 +80,15 @@ public class LockBar extends Lay{
 
     public void render(Batch batch) {
         batch.setColor(Colours.brown_dark);
-        Draw.fillActor(batch,this);
-        Draw.fillEllipse(batch, getX()-getHeight(), getY(), getHeight()*2, getHeight()*2);
-        Draw.fillEllipse(batch, getX()+getWidth()-getHeight(), getY(), getHeight()*2, getHeight()*2);
+        Draw.fillRectangle(batch, getX()+getHeight(), getY(), getWidth()-getHeight()*2,getHeight());
+        Draw.fillEllipse(batch, getX()+getHeight(), getY()+getHeight(), getHeight()*2, getHeight()*2);
+        Draw.fillEllipse(batch, getX()+getWidth()-getHeight(), getY()+getHeight(), getHeight()*2, getHeight()*2);
         batch.setColor(Colours.brown_light);
         int numLocks = 5;
         for(int x=0;x<numLocks;x++){
-            float gap = getWidth()/numLocks;
+            float gap = (getWidth()-getHeight()*2)/numLocks;
             float size = getHeight()*.4f;
-            Draw.drawSizeCentered(batch, Images.lock, getX()+gap*x+gap/2, getY()+getHeight()/2, size, size);
+            Draw.drawSizeCentered(batch, Images.lock, getX()+getHeight()+gap*x+gap/2, getY()+getHeight()/2, size, size);
         }
     }
 }

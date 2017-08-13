@@ -150,7 +150,7 @@ public class Draw {
     public static TextureRegion circle150;
     public static TextureRegion circle300;
 	public static void fillEllipse(Batch batch, float x, float y, float width, float height){
-		Draw.drawScaled(batch, circle300, x, y, width/300f, height/300f);
+		Draw.drawScaled(batch, circle300, x-width/2, y-width/2, width/300f, height/300f);
 	}
 	
 	public static void drawLine(Batch batch, float x, float y, float tX,

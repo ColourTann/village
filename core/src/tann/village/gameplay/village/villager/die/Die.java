@@ -103,10 +103,8 @@ public class Die {
             case Rolling:
                 break;
             case Stopped:
-                moveToTop();
-                setState(Locking);
-                removeFromPhysics();
                 Sounds.playSound(Sounds.shake,.3f,1);
+                moveToTop();
                 break;
             case Locked:
                 for(Die d:BulletStuff.dice){
@@ -169,13 +167,15 @@ public class Die {
         undamp();
     }
 
-    private void moveToTop() {
+    public void moveToTop() {
         glow=0;
         physical.transform.getRotation(originalRotation);
         int index = LockBar.get().addDie(this);
         float width = 5;
         float x = -(width/(GameScreen.STARTING_VILLAGERS-1)*index - width/2);
         moveTo(new Vector3(x, 0f, 6.55f), d6QuatsWithLean[lockedSide]);
+        setState(Locking);
+        removeFromPhysics();
     }
 
     private void moveTo(Vector3 position, Quaternion rotation){

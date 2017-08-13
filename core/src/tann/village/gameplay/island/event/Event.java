@@ -12,15 +12,15 @@ public class Event {
 
     public String title;
     public String description;
-    public Array<Outcome> outcomes;
-    public Array<Eff> effects;
-    public Array<Eff> requirements;
+    public Array<Outcome> outcomes = new Array<>();
+    public Array<Eff> effects = new Array<>();
+    public Array<Eff> requirements = new Array<>();
     public int fateDelta = 0;
     public float chance = 1;
 	int fateLeft, fateRight;
 	boolean story;
-	public int turn;
-	public int uses = -1;
+	public int turn = -1;
+	public int uses = 999;
 	public int minTurn = -1, maxTurn = -1;
 
 
@@ -47,8 +47,6 @@ public class Event {
 		this.story = story;
 	}
 
-
-
     public boolean isPotential() {
 		int currentFate = Village.getInventory().getResourceAmount(EffectType.Fate);
 		if(currentFate<fateLeft || currentFate > fateRight || uses<=0) return false;
@@ -74,7 +72,6 @@ public class Event {
 	public String toString(){
 	    return title+":"+fateDelta;
     }
-
 
     public boolean isStory() {
 	    return story;
@@ -107,10 +104,19 @@ public class Event {
 
     public void storyTurn(int turn) {
         this.turn=turn;
+        this.story=true;
     }
 
     public void addOutcome(String description) {
         Outcome o = new Outcome(description, effects);
         effects = new Array<>();
+    }
+
+    public void validate(){
+        if(fateLeft>fateRight) System.err.println("fate left > fate right for "+this);
+        if(turn==-1 && isStory()) System.err.println("story with no turn for "+this);
+        if(title==null || description==null) System.err.println("no title or desc for "+this);
+        if(chance<=0 && !isStory()) System.err.println("no chance for "+this);
+        if(uses<=0 && !isStory()) System.err.println("no uses for "+this);
     }
 }

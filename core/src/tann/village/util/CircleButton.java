@@ -50,7 +50,7 @@ public class CircleButton extends Lay{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(getColor());
-        Draw.fillEllipse(batch, getX(), getY(), getWidth(), getHeight());
+        Draw.fillEllipse(batch, getX()+getWidth()/2, getY()+getHeight()/2, getWidth(), getHeight());
         if(tr!=null){
             batch.setColor(Colours.z_white);
             Draw.drawSizeCentered(batch, tr, getX()+textureX*getWidth(), getY()+textureY*getHeight(), textureWidth, textureHeight);

@@ -54,7 +54,6 @@ public class TurnStatsPanel extends BottomBarPanel{
         turnEffects.add(te);
         layout();
         somethingAdded();
-        System.out.println("added");
     }
 
     @Override
@@ -67,7 +66,6 @@ public class TurnStatsPanel extends BottomBarPanel{
             l.gap(1);
         }
         l.layoo();
-        System.out.println(getChildren().size);
     }
 
     @Override

@@ -78,7 +78,6 @@ public class GemIsland extends Island{
         ev.eff(new Eff().gem(1));
         addEvent(ev);
 
-
         ev = new Event("Blood Skies", "The sky has turned deep red, the heat makes it hard to work");
         ev.storyTurn(8);
         ev.eff(new Eff().upkeep().food(-1));

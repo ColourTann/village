@@ -35,6 +35,10 @@ public class EffAct {
         return "";
     }
 
+    public String toWriterString(){
+        return "";
+    }
+
     public boolean equiv(EffAct other){
         return this.type==other.type && this.value==other.value;
     }

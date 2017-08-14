@@ -18,8 +18,9 @@ public class Images {
 	public static final TextureRegion fate = Main.atlas.findRegion("resource/fate");
 	public static final TextureRegion level_up = Main.atlas.findRegion("resource/levelup");
 
-	
-	public static final TextureRegion roll = Main.atlas.findRegion("roll");
+
+    public static final TextureRegion roll = Main.atlas.findRegion("roll");
+    public static final TextureRegion turn = Main.atlas.findRegion("generalIcons/hourglass");
     public static final TextureRegion tick = Main.atlas.findRegion("tick");
     public static final TextureRegion hammer = Main.atlas.findRegion("hammer");
     public static final TextureRegion gem = Main.atlas.findRegion("resource/emerald");

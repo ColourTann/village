@@ -1,5 +1,6 @@
 package tann.village.util;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -30,6 +31,7 @@ public class TextWriter extends Lay {
     }
 
     private static Map<String, TextureRegion> textureMap = new HashMap<>();
+    private static Map<String, Color> colorMap = new HashMap<>();
 
     public static void setup(){
         textureMap.put("food", Images.food);
@@ -39,6 +41,8 @@ public class TextWriter extends Lay {
         textureMap.put("morale", Images.morale);
         textureMap.put("fate", Images.fate);
         textureMap.put("hut", Images.obj_village);
+        textureMap.put("turn", Images.turn);
+        colorMap.put("turn", Colours.light);
     }
 
     @Override
@@ -61,6 +65,8 @@ public class TextWriter extends Lay {
                 }
                 float scale = font.getCapHeight()/tr.getRegionHeight();
                 ImageActor ia = new ImageActor(tr, tr.getRegionWidth()*scale, tr.getRegionHeight()*scale);
+                Color col = colorMap.get(s);
+                if(col!=null) ia.setColor(col);
                 addActor(ia);
                 ia.setX(x);
                 x+=ia.getWidth();

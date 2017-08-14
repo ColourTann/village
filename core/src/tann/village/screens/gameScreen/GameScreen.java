@@ -25,6 +25,7 @@ import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
+import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
 import tann.village.screens.gameScreen.panels.rollStuff.LockBar;
 import tann.village.screens.gameScreen.panels.villagerStuff.*;
 import tann.village.screens.gameScreen.panels.bottomBar.BottomBar;
@@ -142,7 +143,7 @@ public class GameScreen extends Screen{
 
         // inventory stuff
 
-        tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel inventoryGroup = Village.getInventory().getGroup();
+        InventoryPanel inventoryGroup = Village.getInventory().getGroup();
         inventoryGroup.setPosition(0, (getHeight()-inventoryGroup.getHeight()));
 
         //reroll stuff

@@ -13,7 +13,7 @@ public class BuildingGenerator {
 	private static String title, description;
 	private static int w,f,l;
 	private static Eff e1;
-    private static Eff e2;
+    	private static Eff e2;
 	public static void makeBasicBuildings(){
 
         l=0; // *********************level 0********************* //

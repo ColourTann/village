@@ -195,7 +195,7 @@ public class BulletStuff {
 		return result;
 	}
 
-	public static void click(float x, float y, int button) {
+	public static boolean click(float x, float y, int button) {
 		Die d = getClickedDie((int) x, Gdx.graphics.getHeight() - (int) y);
 		if (d != null) {
 			if (button == 0) {
@@ -204,7 +204,9 @@ public class BulletStuff {
 			if (button == 1) {
 				d.villager.dieRightClicked();
 			}
+			return true;
 		}
+		return false;
 	}
 
 	public static int numRollingDice(){

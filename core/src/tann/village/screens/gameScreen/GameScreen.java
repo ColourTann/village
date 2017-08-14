@@ -85,9 +85,6 @@ public class GameScreen extends Screen{
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				if(event.isHandled())return true;
 				if(stack.size>0) return true;
-				if(state==State.Rolling){
-					BulletStuff.click(x, y, button);
-				}
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		});

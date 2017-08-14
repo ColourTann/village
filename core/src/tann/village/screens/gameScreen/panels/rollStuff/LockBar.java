@@ -27,7 +27,6 @@ public class LockBar extends Lay{
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("touching");
                 addAllDice();
                 return super.touchDown(event, x, y, pointer, button);
             }

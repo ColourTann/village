@@ -1,8 +1,6 @@
 package tann.village;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,6 +22,7 @@ import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.mapScreen.MapScreen;
 import tann.village.util.*;
+import tann.village.util.Screen;
 
 public class Main extends ApplicationAdapter {
 	public static int width = 1000, height = 700;
@@ -104,7 +103,27 @@ public class Main extends ApplicationAdapter {
         stage = new Stage(new ScreenViewport());
 		orthoCam = (OrthographicCamera) stage.getCamera();
 		batch = (SpriteBatch) stage.getBatch();
-		Gdx.input.setInputProcessor(stage);
+
+
+
+        InputProcessor diceInput = new InputProcessor() {
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                if(GameScreen.get().state== GameScreen.State.Rolling) {
+                    return BulletStuff.click(screenX, Main.height-screenY, button);
+                }
+                return false;
+            }
+            public boolean keyDown(int keycode) {return false;}
+            public boolean keyUp(int keycode) {return false;}
+            public boolean keyTyped(char character) {return false;}
+            public boolean touchUp(int screenX, int screenY, int pointer, int button) {return false;}
+            public boolean touchDragged(int screenX, int screenY, int pointer) {return false;}
+            public boolean mouseMoved(int screenX, int screenY) {return false;}
+            public boolean scrolled(int amount) {return false;}
+        };
+
+        Gdx.input.setInputProcessor(new InputMultiplexer(diceInput, stage));
+
 		stage.addListener(new InputListener() {
 			public boolean keyDown(InputEvent event, int keycode) {
 				currentScreen.keyPress(keycode);

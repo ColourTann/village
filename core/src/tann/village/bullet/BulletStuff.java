@@ -217,7 +217,7 @@ public class BulletStuff {
 
 	public static boolean allDiceLocked(){
 		for (Die d : BulletStuff.dice) {
-			if (d.getState()!= Die.DieState.Locked){
+			if (d.getState()!= Die.DieState.Locked && d.getState()!= Die.DieState.Locking){
 				return false;
 			}
 		}
@@ -226,7 +226,7 @@ public class BulletStuff {
 
     public static void moveAllToTop(){
         for(Die d:BulletStuff.dice){
-            if(d.getState()== Die.DieState.Stopped){
+            if(d.getState()== Die.DieState.Stopped || d.getState()== Die.DieState.Unlocking){
                 d.moveToTop();
             }
         }
@@ -234,7 +234,7 @@ public class BulletStuff {
 
 	public static boolean noDiceMoving() {
 		for (Die d : BulletStuff.dice) {
-			if (d.getState()==Die.DieState.Rolling || d.getState()==Die.DieState.Locking || d.getState()==Die.DieState.Unlocking){
+			if (d.getState()==Die.DieState.Rolling || d.getState()==Die.DieState.Unlocking){
 				return false;
 			}
 		}

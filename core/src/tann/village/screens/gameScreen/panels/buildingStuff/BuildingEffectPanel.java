@@ -28,6 +28,7 @@ public class BuildingEffectPanel extends Lay{
 
 	@Override
 	public void layout() {
+	    setSize(WIDTH, HEIGHT);
 		l = new Layoo(this);
 		addEffectPanels();
         l.layoo();
@@ -35,18 +36,11 @@ public class BuildingEffectPanel extends Lay{
 	}
 	
 	private void addEffectPanels() {
-	    Eff previous=null;
 		for(int i=0;i<effects.size;i++){
 			l.row(1);
 			Eff e =effects.get(i);
-			if(previous==null || !e.effAct.equiv(previous.effAct)){
-			 TextBox typeBox = new TextBox(e.effAct.toString(), Fonts.fontSmall, -1, Align.center);
-			 l.actor(typeBox);
-			 l.absRow(8);
-            }
-			EffectPanel item = new EffectPanel(e);
+			EffectPanel item = new EffectPanel(e, false);
 			l.actor(item);
-			previous = e;
 		}
 		l.row(1);
 	}

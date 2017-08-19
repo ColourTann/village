@@ -3,6 +3,7 @@ package tann.village.gameplay.effect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
+import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.villager.die.Die;
@@ -84,34 +85,24 @@ public class Eff {
 	    Village.get().activateEffect(this, asNow);
     }
 
+    public String getValueString(){
+	     return (value>=0?"+":"-")+Math.abs(value);
+    }
+
     public String toString(){
+	    return getValueString()+" "+typeString()+" "+effAct.toString();
+    }
 
-	    return (value>=0?"+":"-")+Math.abs(value)+" "+typeString()+" "+effAct.toString();
+    public String toWriterString(){
+        return getValueString()+"[h]"+getwriterString()+""+effAct.toWriterString();
+    }
 
+    private String getwriterString(){
+        return "["+typeString()+"]";
     }
 
 	public String typeString(){
-		switch(type){
-            case Food:
-                return "food";
-            case Wood:
-                return "wood";
-            case Skull:
-                return "ohdear skull";
-            case Morale:
-                return "morale";
-            case FoodStorage:
-                return "food storage";
-            case Fate:
-                return "fate";
-            case Brain:
-                return "exp";
-            case Reroll:
-                return "reroll";
-            case Gem:
-                return "gem";
-        }
-	    return "ohdear"+type;
+        return type.toString().toLowerCase();
 	}
 	
 	public Eff copy(){
@@ -119,17 +110,42 @@ public class Eff {
 		return result;
 	}
 
+	boolean dead;
+
+    public void turn() {
+        if(effAct==null) {
+            System.err.println("Trying to tick "+this);
+            return;
+        }
+        switch(effAct.type){
+            case NOW:
+                break;
+            case IN_TURNS:
+                effAct.value--;
+                if(effAct.value==0){
+                    activateAsDelta();
+                    dead=true;
+                }
+                break;
+            case FOR_TURNS:
+                effAct.value--;
+                dead=true;
+                activateAsDelta();
+                break;
+            case UPKEEP:
+                break;
+            case PASSIVE:
+                break;
+        }
+    }
+
+    private void activateAsDelta() {
+        Village.getInventory().addDelta(this, false);
+    }
+
     public void clearActivation() {
         this.effAct=new EffAct(EffAct.ActivationType.NOW,0);
     }
-
-	public String getValueString() {
-		return (value>0?"+":"")+value;
-	}
-
-    public Eff eachTurn(int numTurns){return setActivation(new EffAct(EffAct.ActivationType.FOR_TURNS, numTurns));}
-
-    public Eff upkeep(){return setActivation(new EffAct(EffAct.ActivationType.UPKEEP, -1));}
 
     private Eff setActivation(EffAct activation){
         if(this.effAct==null){
@@ -138,6 +154,12 @@ public class Eff {
         this.effAct = activation;
         return this;
     }
+
+
+
+    public Eff eachTurn(int numTurns){return setActivation(new EffAct(EffAct.ActivationType.FOR_TURNS, numTurns));}
+    public Eff inTurns(int numTurns) {return setActivation(new EffAct(EffAct.ActivationType.IN_TURNS, numTurns));}
+    public Eff upkeep(){return setActivation(new EffAct(EffAct.ActivationType.UPKEEP, -1));}
 
     public Eff food(int amount){return type(EffectType.Food, amount);}
     public Eff wood(int amount){return type(EffectType.Wood, amount);}

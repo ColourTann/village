@@ -41,7 +41,7 @@ public class UpkeepPanel extends Lay{
                 l.row(1);
             }
             Eff e=effects.get(i);
-            l.actor(new EffectPanel(e));
+            l.actor(new EffectPanel(e, true));
             l.abs(Main.h(1));
 
         }

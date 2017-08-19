@@ -15,7 +15,7 @@ import tann.village.util.*;
 public class ConstructionPanel extends InfoPanel{
 
 	Array<BuildingPanel> availables = new Array<>();
-	static final float WIDTH = 550, HEIGHT = 330;
+	static final float WIDTH = 650, HEIGHT = 330;
 	public ConstructionPanel() {
 		setSize(WIDTH, HEIGHT);
 

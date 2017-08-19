@@ -73,7 +73,7 @@ public class EventPanel extends Lay{
 
             }
              else {
-                pann = new EffectPanel(effect);
+                pann = new EffectPanel(effect, true);
 
             }
             if(count%items_per_row==0) height += pann.getHeight();

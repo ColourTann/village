@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 import tann.village.Images;
+import tann.village.Main;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +26,6 @@ public class TextWriter extends Lay {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(0,0,0,.5f);
-        Draw.fillActor(batch,this);
         super.draw(batch, parentAlpha);
     }
 
@@ -35,13 +34,17 @@ public class TextWriter extends Lay {
 
     public static void setup(){
         textureMap.put("food", Images.food);
-        textureMap.put("food_storage", Images.food_storage);
+        textureMap.put("foodstorage", Images.food_storage);
         textureMap.put("brain", Images.brain);
         textureMap.put("wood", Images.wood);
         textureMap.put("morale", Images.morale);
         textureMap.put("fate", Images.fate);
         textureMap.put("hut", Images.obj_village);
         textureMap.put("turn", Images.turn);
+        textureMap.put("reroll", Images.roll);
+        textureMap.put("buildtown", Images.obj_village);
+
+
         colorMap.put("turn", Colours.light);
     }
 
@@ -59,17 +62,23 @@ public class TextWriter extends Lay {
             }
             else{
                 // image
-                TextureRegion tr = textureMap.get(s);
-                if(tr==null){
-                    System.err.println("unable to find texture "+s+" for string "+text);
+                boolean image = true;
+                switch(s){
+                    case "h": x += font.getSpaceWidth()/2; image = false;
                 }
-                float scale = font.getCapHeight()/tr.getRegionHeight();
-                ImageActor ia = new ImageActor(tr, tr.getRegionWidth()*scale, tr.getRegionHeight()*scale);
-                Color col = colorMap.get(s);
-                if(col!=null) ia.setColor(col);
-                addActor(ia);
-                ia.setX(x);
-                x+=ia.getWidth();
+                if(image) {
+                    TextureRegion tr = textureMap.get(s);
+                    if (tr == null) {
+                        System.err.println("unable to find texture " + s + " for string " + text);
+                    }
+                    float scale = font.getCapHeight() / tr.getRegionHeight();
+                    ImageActor ia = new ImageActor(tr, tr.getRegionWidth() * scale, tr.getRegionHeight() * scale);
+                    Color col = colorMap.get(s);
+                    if (col != null) ia.setColor(col);
+                    addActor(ia);
+                    ia.setX(x);
+                    x += ia.getWidth();
+                }
             }
             index++;
         }

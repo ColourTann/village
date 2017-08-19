@@ -77,7 +77,6 @@ public class Inventory{
                 get(Eff.EffectType.Food).addMax(value);
                 break;
         }
-
 	}
 
     public void addDelta(Eff e, boolean invert){

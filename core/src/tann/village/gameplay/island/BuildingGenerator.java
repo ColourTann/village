@@ -22,6 +22,30 @@ public class BuildingGenerator {
         w=8;
         e1 =new Eff().eachTurn(10).food(1);
         make();
+        l=0; // *********************level 0********************* //
+        title="Dock";
+        description="A short pier leading into the ocean";
+        w=8;
+        e1 =new Eff().eachTurn(10).food(1);
+        make();
+        l=0; // *********************level 0********************* //
+        title="Plantation";
+        description="A short pier leading into the ocean";
+        w=3;
+        e1 =new Eff().inTurns(2).food(8);
+        make();
+        l=0; // *********************level 0********************* //
+        title="Plantation";
+        description="A short pier leading into the ocean";
+        w=3;
+        e1 =new Eff().inTurns(2).food(8);
+        make();
+        l=0; // *********************level 0********************* //
+        title="Plantation";
+        description="A short pier leading into the ocean";
+        w=3;
+        e1 =new Eff().inTurns(2).food(8);
+        make();
 
         title="Bonfire";
         description="A big bonfire can really bring the community together";

@@ -10,7 +10,7 @@ import tann.village.util.Layoo;
 public class TurnStatsPanel extends BottomBarPanel{
 
     public TurnStatsPanel() {
-        setColor(Colours.blue_dark);
+        setColor(Colours.dark);
         layout();
     }
 
@@ -32,13 +32,16 @@ public class TurnStatsPanel extends BottomBarPanel{
     }
 
     public void endOfRolling(){
+        System.out.println("end of rolling");
         for(Eff e: turnEffects)
             switch (e.effAct.type) {
                 case NOW:
                     break;
                 case IN_TURNS:
+                    e.turn();
                     break;
                 case FOR_TURNS:
+                    e.turn();
                     Village.getInventory().activate(e);
                     break;
                 case UPKEEP:
@@ -47,7 +50,6 @@ public class TurnStatsPanel extends BottomBarPanel{
                     break;
             }
     }
-
 
     private Array<Eff> turnEffects = new Array<>();
     public void addTurnEffects(Eff te){
@@ -58,18 +60,34 @@ public class TurnStatsPanel extends BottomBarPanel{
 
     @Override
     public void layout() {
+        clearChildren();
         setSize(BottomBar.width(), BottomBar.height());
         Layoo l = new Layoo(this);
+        l.row(2);
         l.gap(1);
+        int x = 0;
         for(Eff te:turnEffects){
-            l.actor(new TurnEffectPanel(te));
+            TurnEffectPanel tep = new TurnEffectPanel(te);
+            x+= tep.getWidth();
+            if(x>getWidth()){
+                x=0;
+                l.row(1.5f);
+                l.gap(1);
+            }
+            l.actor(tep);
             l.gap(1);
         }
+        l.row(2);
         l.layoo();
     }
 
     @Override
     public String getName() {
         return "stats";
+    }
+
+    @Override
+    public void refresh() {
+        layout();
     }
 }

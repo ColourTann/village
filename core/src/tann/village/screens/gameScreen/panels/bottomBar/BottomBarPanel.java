@@ -28,4 +28,6 @@ public abstract class BottomBarPanel extends Lay {
             GameScreen.get().btb.addPanel(this);
         }
     }
+    public abstract void refresh();
+
 }

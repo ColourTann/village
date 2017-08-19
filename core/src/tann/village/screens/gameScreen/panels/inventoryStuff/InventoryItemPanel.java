@@ -127,12 +127,6 @@ public class InventoryItemPanel extends Lay{
         }
 	}
 
-//    ImageActor ia = new ImageActor(Draw.getSq());
-//        ia.setSize(Main.h(0.3f), getHeight());
-//        ia.setColor(Colours.brown_dark);
-//        l.actor(ia);
-//        l.gap(1);
-
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.setColor(Colours.dark);

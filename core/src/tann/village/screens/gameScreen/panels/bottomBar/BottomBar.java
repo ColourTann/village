@@ -48,11 +48,14 @@ public class BottomBar extends Lay{
         }
     }
 
+
+
     @Override
     public void layout() {
         setSize(width(), height());
         setPosition(GameScreen.getConstructionCircleSize()+gap(), getY());
         for(BottomBarPanel bbp:panels){
+            bbp.refresh();
             BottomTab bt = bbp.getTab();
             bt.setPosition(getWidth()/3*(panels.indexOf(bbp, true)+1)-bt.getWidth()/2, getHeight());
         }

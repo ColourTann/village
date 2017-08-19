@@ -36,10 +36,18 @@ public class EffAct {
     }
 
     public String toWriterString(){
+        switch(type){
+            case IN_TURNS:
+                return "in "+value+"[turn]";
+            case FOR_TURNS:
+                return "/[turn]("+value+")";
+        }
         return "";
     }
 
     public boolean equiv(EffAct other){
         return this.type==other.type && this.value==other.value;
     }
+
+
 }

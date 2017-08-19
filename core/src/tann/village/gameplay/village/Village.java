@@ -8,6 +8,7 @@ import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.building.Building;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
+import tann.village.screens.gameScreen.panels.bottomBar.TurnStatsPanel;
 import tann.village.screens.gameScreen.panels.rollStuff.RerollPanel;
 import tann.village.util.Sounds;
 
@@ -58,6 +59,7 @@ public class Village {
 
 	public void upkeep(){
         GameScreen.get().tsp.endOfRolling();
+
 //		for(Building b:buildings){
 //			b.upkeep();
 //		}

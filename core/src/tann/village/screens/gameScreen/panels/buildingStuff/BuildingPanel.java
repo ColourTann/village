@@ -17,7 +17,7 @@ public class BuildingPanel extends Group{
 
 	public Building building;
 	
-	public static final float WIDTH = 150, HEIGHT=240;
+	public static final float WIDTH = 180, HEIGHT=240;
 	public static final float IMAGE_SIZE= 60;
 	private static final int border = 3;
 	public BuildingPanel(Building building) {

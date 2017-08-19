@@ -24,7 +24,6 @@ public class ObjectivePanel extends BottomBarPanel{
         refresh();
     }
 
-
     public void addObject(Objective obj){
 	    objectives.add(obj);
 	    refresh();
@@ -111,4 +110,6 @@ public class ObjectivePanel extends BottomBarPanel{
         }
         return complete? ObjectiveOutcome.Success: ObjectiveOutcome.Nothing;
     }
+
+
 }

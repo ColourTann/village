@@ -13,17 +13,22 @@ public class TurnEffectPanel extends Lay {
         layout();
     }
 
+    private float getGap(){
+        return Main.h(.7f);
+    }
+
     @Override
     public void layout() {
         setSize(30,30);
-        TextBox tb = new TextBox(eff.toString(), Fonts.fontSmall, -1, Align.center);
-        addActor(tb);
-        setSize(tb.getWidth(), tb.getHeight());
+        TextWriter tw = new TextWriter(eff.toWriterString(), Fonts.fontSmallish);
+        addActor(tw);
+        tw.setPosition(getGap(), getGap());
+        setSize(tw.getWidth()+getGap()*2, tw.getHeight()+getGap()*2);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, Colours.dark, Colours.brown_light, Main.h(.3f));
+        Draw.fillActor(batch, this, Colours.dark, Colours.brown_light, Main.h(.5f));
         super.draw(batch, parentAlpha);
     }
 }

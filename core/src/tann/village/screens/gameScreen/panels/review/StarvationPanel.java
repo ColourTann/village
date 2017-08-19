@@ -24,7 +24,7 @@ public class StarvationPanel extends InfoPanel{
 		TextBox missing = new TextBox("Missing "+amountMissing+" resource"+(amountMissing==1?"":"s"), Fonts.fontSmall, -1, Align.center);
 		int moraleLoss = 1 + Math.abs(amountMissing/2);
 		Eff moraleLossEffect =new Eff(EffectType.Morale, -moraleLoss);
-		EffectPanel moralePanel=new EffectPanel(moraleLossEffect);
+		EffectPanel moralePanel=new EffectPanel(moraleLossEffect, true);
 		Village.getInventory().activate(moraleLossEffect);
 		int gap = 20;
 		setSize(Math.max(ranOut.getWidth(), missing.getWidth())+gap*2,ranOut.getHeight() + missing.getHeight() +  moralePanel.getHeight() + gap * 4);

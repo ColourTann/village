@@ -26,6 +26,7 @@ import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
+import tann.village.screens.gameScreen.panels.miscStuff.ProceedButton;
 import tann.village.screens.gameScreen.panels.rollStuff.LockBar;
 import tann.village.screens.gameScreen.panels.villagerStuff.*;
 import tann.village.screens.gameScreen.panels.bottomBar.BottomBar;
@@ -44,6 +45,10 @@ public class GameScreen extends Screen{
 
     public static void reset() {
         self=null;
+    }
+
+    public boolean allowDieClicking() {
+        return stack.size==0;
     }
 
 
@@ -369,7 +374,7 @@ public class GameScreen extends Screen{
 		for(Die d:BulletStuff.dice){
 			d.activate();
 		}
-        tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().moveAway();
+        LockBar.get().moveAway();
 		showWisps();
         Village.getInventory().clearDeltas();
         BulletStuff.clearDice();
@@ -460,7 +465,7 @@ public class GameScreen extends Screen{
 	    rollContainer.addAction(Actions.moveTo(show?0:Main.h(50), 0, .5f, Interpolation.pow2Out));
     }
 	
-	private tann.village.screens.gameScreen.panels.miscStuff.ProceedButton proceedButton = new tann.village.screens.gameScreen.panels.miscStuff.ProceedButton();
+	private ProceedButton proceedButton = new ProceedButton();
 	
 	public void addProceedButton(Actor relativeTo){
 		proceedButton.setColor(Colours.green_light);
@@ -469,7 +474,7 @@ public class GameScreen extends Screen{
 	}
 	
 	public void addVillagerPanel(Villager villager) {
-		tann.village.screens.gameScreen.panels.villagerStuff.VillagerPanel panel = new tann.village.screens.gameScreen.panels.villagerStuff.VillagerPanel(villager);
+		VillagerPanel panel = new tann.village.screens.gameScreen.panels.villagerStuff.VillagerPanel(villager);
 		push(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 	}

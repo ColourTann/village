@@ -108,7 +108,7 @@ public class Main extends ApplicationAdapter {
 
         InputProcessor diceInput = new InputProcessor() {
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                if(GameScreen.get().state== GameScreen.State.Rolling) {
+                if(GameScreen.get().state== GameScreen.State.Rolling && GameScreen.get().allowDieClicking()) {
                     return BulletStuff.click(screenX, Main.height-screenY, button);
                 }
                 return false;

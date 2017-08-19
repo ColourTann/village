@@ -26,7 +26,7 @@ public class OutcomePanel extends Group {
         l.gap(1);
         for(int i=0;i<o.effects.size;i++){
             Eff e=o.effects.get(i);
-            l.actor(new EffectPanel(e));
+            l.actor(new EffectPanel(e, true));
             l.gap(1);
             if(i%2 == 1 && i < o.effects.size-1) {
                 l.row(1);

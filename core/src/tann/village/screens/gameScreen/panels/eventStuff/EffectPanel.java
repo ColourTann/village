@@ -11,10 +11,7 @@ import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.village.Upkeep;
-import tann.village.util.Colours;
-import tann.village.util.Draw;
-import tann.village.util.Fonts;
-import tann.village.util.Lay;
+import tann.village.util.*;
 
 public class EffectPanel extends Lay {
 
@@ -23,15 +20,16 @@ public class EffectPanel extends Lay {
 	HashMap<EffectType, Integer> effectAmounts = new HashMap<>();
 	public Eff effect;
 	public int value;
-
-	public EffectPanel(Eff effect) {
+    BitmapFont font;
+	public EffectPanel(Eff effect, boolean big) {
 		this.effect = effect;
+		font = big?Fonts.font:Fonts.fontSmallish;
 		layout();
 		this.value = effect.value;
 	}
 
     public static float staticWidth(){
-        return Main.h(17);
+        return Main.h(21);
     }
 
     public static float staticHeight(){
@@ -40,7 +38,11 @@ public class EffectPanel extends Lay {
 
     @Override
     public void layout() {
+        clearChildren();
         setSize(staticWidth(), staticHeight());
+        TextWriter tw = new TextWriter(effect.toWriterString(), font);
+        addActor(tw);
+        tw.setPosition(getWidth()/2-tw.getWidth()/2, getHeight()/2-tw.getHeight()/2);
     }
 
 	public void changeValue(int value) {
@@ -54,7 +56,6 @@ public class EffectPanel extends Lay {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		float imageGap = getHeight() * (1 - imageSize) / 2f;
 		int border = Math.max(1,(int)(Main.h(.3f)));
 
 		batch.setColor(Colours.light);
@@ -62,29 +63,6 @@ public class EffectPanel extends Lay {
 
 		batch.setColor(Colours.dark);
 		Draw.fillRectangle(batch, getX() + border, getY() + border, getWidth() - border * 2, getHeight() - border * 2);
-
-		batch.setColor(Colours.z_white);
-		if(effect.type==EffectType.Fate){
-            batch.setColor(effect.value>0?Colours.blue_light:Colours.red);
-        }
-
-		Draw.drawSize(batch, effect.type.region, getX() + imageGap, getY() + imageGap, (getHeight() - imageGap * 2),
-				(getHeight() - imageGap * 2));
-		BitmapFont font = Fonts.font;
-
-		if (!effect.type.objective) {
-			float textStart = getHeight() - imageGap;
-			float textWidth = getWidth() - textStart - imageGap;
-			Color col = Colours.light;
-			 if (value < 0) {
-				col = Colours.red;
-			}
-			String s= (value > 0 ? "+" : "") + value;
-			 float fiddle = 2;
-			Fonts.draw(batch, s, Fonts.font, col, getX()+textStart, getY()+fiddle, getWidth()-textStart, getHeight());
-//			font.draw(batch, , getX() + textStart,
-//					getY() + getHeight() / 2f + font.getXHeight() * .35f, textWidth, Align.center, false);
-		}
 
 		super.draw(batch, parentAlpha);
 	}

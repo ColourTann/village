@@ -50,58 +50,64 @@ public class Inventory{
 		if(panel==null) panel = new InventoryPanel(this);
 		return panel;
 	}
-	
 
-	public void activate(Eff effect) {
-		internalActivate(effect, false);
-	}
 
-	public void activateNegative(Eff effect) {
-		internalActivate(effect, true);
-	}
-	
-	private void internalActivate(Eff effect, boolean inverse){
-	    if(effect.type == EffectType.Gem){
-	        if(gems == null){
-	            gems = new InventoryItem(Images.gem);
-	            items.insert(0,gems);
-	            getGroup().layout(true);
-            }
-            Village.get().objectiveProgress(Objective.ObjectiveEffect.Gem, effect.value);
-        }
-		int value = effect.value*(inverse?-1:1);
-		InventoryItem item = get(effect.type);
-        if(item!=null) item.changeValue(value);
-        switch(effect.type){
-            case FoodStorage:
-                get(Eff.EffectType.Food).addMax(value);
+	Array<Eff> potentialEffects = new Array<>();
+	void activate(Eff e, boolean activateNow, boolean invert){
+	    if(activateNow){
+            switch(e.type){
+                case Brain:
+                    e.sourceDie.villager.gainXP(e.value);
+                    break;
+                case Gem:
+                    if(gems == null){
+                        gems = new InventoryItem(Images.gem);
+                        items.insert(0,gems);
+                        getGroup().layout(true);
+                    }
+                    Village.get().objectiveProgress(Objective.ObjectiveEffect.Gem, e.value);
                 break;
+            }
+            int value = e.value*(invert?-1:1);
+            InventoryItem item = get(e.type);
+            if(item!=null) item.changeValue(value);
+            switch(e.type){
+                case FoodStorage:
+                    get(Eff.EffectType.Food).addMax(value);
+                    break;
+            }
         }
-	}
+        else{
+	        // potential zone
 
-    public void addDelta(Eff e, boolean invert){
-        InventoryItem item = get(e);
-        if(item!=null){
-            item.addDelta(e.value, invert);
-        }
-        if(e.type==EffectType.Brain){
-            e.sourceDie.villager.addPotentialXP(e.value*(invert?-1:1));
+             if(invert){
+                 if (e.type == EffectType.Brain) {
+                     e.sourceDie.villager.addPotentialXP(e.value * (invert ? -1 : 1));
+                 }
+	            boolean removed = potentialEffects.removeValue(e, true);
+	            if(!removed){
+	                System.err.println("Failed to remove "+e);
+                }
+            }
+            else {
+                 if (e.type == EffectType.Brain) {
+                     e.sourceDie.villager.addPotentialXP(e.value * (invert ? -1 : 1));
+                 }
+                potentialEffects.add(e);
+                InventoryItem item = get(e);
+                if (item != null) item.addDelta(e.value, invert);
+            }
         }
     }
 
-    public void addDelta(Array<Eff> effects, boolean invert) {
-        for (Eff e : effects) {
-            addDelta(e, invert);
-        }
-    }
 
-    public void addDelta(Eff[] effects, boolean invert) {
-        for (Eff e : effects) {
-            addDelta(e, invert);
-        }
-    }
 
-    public void clearDeltas(){
+    public void activateAndclearDeltas(){
+	    for(Eff e:potentialEffects){
+	        Village.get().activate(e, true);
+        }
+        potentialEffects.clear();
+	    // potential xp stuff?
 	    for(InventoryItem item:items){
 	        item.clearDelta();
         }
@@ -142,7 +148,7 @@ public class Inventory{
 
 	public void spendCost(Cost c){
 		for(Eff e:c.effects){
-			activateNegative(e);
+		    activate(e, true,true);
 		}
 	}
 
@@ -186,4 +192,26 @@ public class Inventory{
         }
     }
 
+    /*
+      public void activateEffect(Eff eff, boolean asNow) {
+        if(asNow){
+            internalActuallyActivate(eff);
+            return;
+        }
+        switch(eff.effAct.type){
+            case NOW:
+                internalActuallyActivate(eff);
+                break;
+            case UPKEEP:
+                addToUpkeepp(eff);
+                break;
+            case FOR_TURNS:
+                getInventory().addDelta(eff, false);
+            case IN_TURNS:
+            case PASSIVE:
+                addTurnEff(eff);
+                break;
+        }
+    }
+     */
 }

@@ -3,6 +3,7 @@ package tann.village.gameplay.village;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.building.Building;
@@ -46,6 +47,26 @@ public class Village {
 	    return get().inventory;
     }
 
+    public void activate(Eff[] effs, boolean activateNow, boolean invert){for(Eff e:effs){activate(e, activateNow, invert);}}
+    public void activate(Array<Eff> effs, boolean activateNow, boolean invert){for(Eff e:effs){activate(e, activateNow, invert);}}
+    public void activate(Array<Eff> effs, boolean activateNow){for(Eff e:effs){activate(e, activateNow, false);}}
+    public void activate(Eff e, boolean activateNow){
+        activate(e, activateNow, false);
+    }
+    public void activate(Eff e, boolean activateNow, boolean invert){
+        if(e.effAct!=null) {
+            switch (e.effAct.type) {
+                case FOR_TURNS:
+                    activate(e.copy().now(), false);
+                    // fallthrough
+                case IN_TURNS:
+                    addTurnEff(e);
+                    return;
+            }
+        }
+        getInventory().activate(e, activateNow, invert);
+    }
+
 	public void setup(){
 	    dayNum=0;
         buildings.clear();
@@ -57,23 +78,10 @@ public class Village {
 	    GameScreen.get().tsp.startOfRolling();
     }
 
-	public void upkeep(){
-        GameScreen.get().tsp.endOfRolling();
-
-//		for(Building b:buildings){
-//			b.upkeep();
-//		}
-	}
-
 	public void addBuilding(Building b) {
         Sounds.playSound(Sounds.build,1,1);
         buildings.add(b);
         getObjectivePanel().objectiveProgress(Objective.ObjectiveEffect.Building, 1);
-        for(Eff e:b.effects){
-            activateEffect(e);
-        }
-        //todo this??
-//        GameScreen.get().tsp.addTurnEffects();
 	}
 
     public int getRerolls() {
@@ -102,48 +110,12 @@ public class Village {
         //todo process
     }
 
-    public void activateEffect(Eff eff){
-        activateEffect(eff, false);
-    }
-
-    public void activateEffect(Eff eff, boolean asNow) {
-        if(asNow){
-            internalActuallyActivate(eff);
-            return;
-        }
-        switch(eff.effAct.type){
-            case NOW:
-                internalActuallyActivate(eff);
-                break;
-            case UPKEEP:
-                addToUpkeepp(eff);
-                break;
-            case FOR_TURNS:
-                getInventory().addDelta(eff, false);
-            case IN_TURNS:
-            case PASSIVE:
-                addTurnEff(eff);
-                break;
-        }
-    }
-
     private void addTurnEff(Eff eff){
         GameScreen.get().tsp.addTurnEffects(eff);
     }
 
     private void addToUpkeepp(Eff eff){
         upkeep.addEffect(eff);
-    }
-
-    private void internalActuallyActivate(Eff eff){
-        getInventory().activate(eff);
-        getObjectivePanel().activate(eff);
-        int value = eff.value;
-        switch(eff.type){
-            case Brain:
-                eff.sourceDie.villager.gainXP(value);
-                break;
-        }
     }
 
     public ObjectivePanel getObjectivePanel() {

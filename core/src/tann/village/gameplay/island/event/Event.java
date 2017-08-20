@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
+import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 
@@ -62,10 +63,8 @@ public class Event {
 
 	public void action() {
 		GameScreen.get().resetWisps();
-		new Eff(EffectType.Fate, fateDelta).activate();
-		for(Eff e:effects){
-			e.activate();
-		}
+        Village.get().activate(new Eff().fate(fateDelta), true, false);
+        Village.get().activate(effects, true, false);
 		GameScreen.get().showWisps();
 	}
 

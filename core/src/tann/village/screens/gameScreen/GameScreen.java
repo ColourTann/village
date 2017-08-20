@@ -287,7 +287,6 @@ public class GameScreen extends Screen{
 			break;
 		case Rolling:
             finishRolling();
-            Village.get().upkeep();
             Village.getInventory().imposeLimits();
 			setState(State.Upkeep);
 			break;
@@ -370,45 +369,34 @@ public class GameScreen extends Screen{
 	private void finishRolling() {
 		resetWisps();
         showRollContainer(false);
-		Village.get().getUpkeep().activate();
-		for(Die d:BulletStuff.dice){
-			d.activate();
-		}
         LockBar.get().moveAway();
-		showWisps();
-        Village.getInventory().clearDeltas();
+        Village.getInventory().activateAndclearDeltas();
+        showWisps();
         BulletStuff.clearDice();
 	}
 	
 
 	
 	private void showEvent() {
-
 	    int dayNum = Village.get().getDayNum();
 		Village.get().nextDay();
         if(checkEnd()){
             return;
         }
-
 		state=State.Event;
-		
 		Event event = island.getEventForTurn(dayNum);
 
 		if(event.isStory() && dayNum != 0){
 		    state=State.Story;
         }
-
         else {
-
             int goodness = event.getGoodness();
             String[] sound = null;
             if (goodness == -1) sound = Sounds.eventNegBird;
             else if (goodness == 1) sound = Sounds.eventPosBird;
             else sound = Sounds.eventNeuBird;
-
             Sounds.playSound(sound, 1, 1);
         }
-
 		eventPanel= new tann.village.screens.gameScreen.panels.eventStuff.EventPanel(event, dayNum);
 		event.action();
 		center(eventPanel);

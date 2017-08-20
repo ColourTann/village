@@ -71,20 +71,6 @@ public class Eff {
     public Eff(EffectType type){this(type, 0);}
     public Eff(){this(null);};
 
-	public void activate(){
-        Eff e = this.copy();
-        e.internalActivate(false);
-	}
-
-    public void activateAsNow() {
-        Eff e = this.copy();
-        e.internalActivate(true);
-    }
-
-	private void internalActivate(boolean asNow){
-	    Village.get().activateEffect(this, asNow);
-    }
-
     public String getValueString(){
 	     return (value>=0?"+":"-")+Math.abs(value);
     }
@@ -110,7 +96,7 @@ public class Eff {
 		return result;
 	}
 
-	boolean dead;
+	public boolean dead;
 
     public void turn() {
         if(effAct==null) {
@@ -123,14 +109,17 @@ public class Eff {
             case IN_TURNS:
                 effAct.value--;
                 if(effAct.value==0){
-                    activateAsDelta();
+                    Village.get().activate(this.copy().now(), false, false);
                     dead=true;
                 }
                 break;
             case FOR_TURNS:
                 effAct.value--;
-                dead=true;
-                activateAsDelta();
+                if(effAct.value==0){
+                    dead=true;
+                }
+                System.out.println("addding effect from building to potentials");
+                Village.get().activate(this.copy().now(), false, false);
                 break;
             case UPKEEP:
                 break;
@@ -139,9 +128,18 @@ public class Eff {
         }
     }
 
-    private void activateAsDelta() {
-        Village.getInventory().addDelta(this, false);
-    }
+    public Eff eachTurn(int numTurns){return setActivation(new EffAct(EffAct.ActivationType.FOR_TURNS, numTurns));}
+    public Eff inTurns(int numTurns) {return setActivation(new EffAct(EffAct.ActivationType.IN_TURNS, numTurns));}
+    public Eff upkeep(){return setActivation(new EffAct(EffAct.ActivationType.UPKEEP, -1));}
+    public Eff now() {return setActivation(new EffAct(EffAct.ActivationType.NOW, 0));}
+
+    public Eff food(int amount){return type(EffectType.Food, amount);}
+    public Eff wood(int amount){return type(EffectType.Wood, amount);}
+    public Eff fate(int amount) {return type(EffectType.Fate, amount);}
+    public Eff morale(int amount) {return type(EffectType.Morale, amount);}
+    public Eff gem(int amount) {return type(EffectType.Gem, amount);}
+    public Eff storage(int amount) {return type(EffectType.FoodStorage, amount);}
+    public Eff brain(int amount) {return type(EffectType.Brain, amount);}
 
     public void clearActivation() {
         this.effAct=new EffAct(EffAct.ActivationType.NOW,0);
@@ -154,20 +152,6 @@ public class Eff {
         this.effAct = activation;
         return this;
     }
-
-
-
-    public Eff eachTurn(int numTurns){return setActivation(new EffAct(EffAct.ActivationType.FOR_TURNS, numTurns));}
-    public Eff inTurns(int numTurns) {return setActivation(new EffAct(EffAct.ActivationType.IN_TURNS, numTurns));}
-    public Eff upkeep(){return setActivation(new EffAct(EffAct.ActivationType.UPKEEP, -1));}
-
-    public Eff food(int amount){return type(EffectType.Food, amount);}
-    public Eff wood(int amount){return type(EffectType.Wood, amount);}
-    public Eff fate(int amount) {return type(EffectType.Fate, amount);}
-    public Eff morale(int amount) {return type(EffectType.Morale, amount);}
-    public Eff gem(int amount) {return type(EffectType.Gem, amount);}
-    public Eff storage(int amount) {return type(EffectType.FoodStorage, amount);}
-    public Eff brain(int amount) {return type(EffectType.Brain, amount);}
 
     private Eff type(EffectType type, int amount){
         if(this.type!=null){

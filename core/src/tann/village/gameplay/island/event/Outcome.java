@@ -15,9 +15,7 @@ public class Outcome {
     }
 
     public void activate(){
-        for(Eff e: effects){
-            e.activate();
-        }
+        Village.get().activate(effects, true);
     }
 
     public OutcomePanel getPanel(){

@@ -46,9 +46,9 @@ public class TutorialIsland extends Island {
         ev.storyTurn(3);
         addEvent(ev);
 
-        ev.storyTurn(8);
         ev = new Event("Hunger", "The village grows hungry. Upkeep increased by one.");
         ev.eff(new Eff().upkeep().food(-1));
+        ev.storyTurn(8);
         addEvent(ev);
 
         ev = new Event("Cold", "The nights are getting colder, you need fuel to keep warm.");

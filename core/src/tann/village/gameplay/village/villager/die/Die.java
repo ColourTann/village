@@ -85,8 +85,9 @@ public class Die {
             case Rolling:
                 if(isStopped()){
                     setState(Stopped);
+                    this.lockedSide=getSide();
                     glow = 1;
-                    Village.getInventory().addDelta(sides.get(lockedSide).effects, false);
+                    Village.get().activate(sides.get(lockedSide).effects, false, false);
                 }
                 else{
                     timeInAir+=delta;
@@ -132,7 +133,6 @@ public class Die {
             case Rolling:
                 break;
             case Stopped:
-                this.lockedSide=getSide();
                 damp();
                 break;
             case Locked:
@@ -215,7 +215,7 @@ public class Die {
             resetForRoll();
         }
         if(reroll && lockedSide>=0){
-            Village.getInventory().addDelta(sides.get(lockedSide).effects, true);
+            Village.get().activate(sides.get(lockedSide).effects, false, true);
         }
         this.lockedSide=-1;
         setState(Rolling);
@@ -338,10 +338,6 @@ public class Die {
 	        physical.transform.getTranslation(out);
         }
     }
-
-	public void activate() {
-		for(Eff e:sides.get(lockedSide).effects) e.activate();
-	}
 
 	public void destroy() {
 		removeFromScreen();

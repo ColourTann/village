@@ -15,40 +15,23 @@ public class TurnStatsPanel extends BottomBarPanel{
     }
 
     public void startOfRolling(){
-        for(Eff e: turnEffects)
+        for(int i=turnEffects.size-1;i>=0;i--) {
+            Eff e = turnEffects.get(i);
             switch (e.effAct.type) {
-                case NOW:
-                    break;
-                case IN_TURNS:
-                    break;
                 case FOR_TURNS:
-                    Village.getInventory().addDelta(e, false);
+                case IN_TURNS:
+                    e.turn();
                     break;
                 case UPKEEP:
                     break;
                 case PASSIVE:
                     break;
             }
-    }
-
-    public void endOfRolling(){
-        System.out.println("end of rolling");
-        for(Eff e: turnEffects)
-            switch (e.effAct.type) {
-                case NOW:
-                    break;
-                case IN_TURNS:
-                    e.turn();
-                    break;
-                case FOR_TURNS:
-                    e.turn();
-                    Village.getInventory().activate(e);
-                    break;
-                case UPKEEP:
-                    break;
-                case PASSIVE:
-                    break;
+            if(e.dead){
+                turnEffects.removeValue(e, true);
             }
+        }
+        layout();
     }
 
     private Array<Eff> turnEffects = new Array<>();

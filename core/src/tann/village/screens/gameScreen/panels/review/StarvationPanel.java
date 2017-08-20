@@ -25,7 +25,7 @@ public class StarvationPanel extends InfoPanel{
 		int moraleLoss = 1 + Math.abs(amountMissing/2);
 		Eff moraleLossEffect =new Eff(EffectType.Morale, -moraleLoss);
 		EffectPanel moralePanel=new EffectPanel(moraleLossEffect, true);
-		Village.getInventory().activate(moraleLossEffect);
+		Village.get().activate(moraleLossEffect, true);
 		int gap = 20;
 		setSize(Math.max(ranOut.getWidth(), missing.getWidth())+gap*2,ranOut.getHeight() + missing.getHeight() +  moralePanel.getHeight() + gap * 4);
 		Layoo l = new Layoo(this);

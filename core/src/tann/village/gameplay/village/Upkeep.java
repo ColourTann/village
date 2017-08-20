@@ -41,15 +41,7 @@ public class Upkeep {
     }
 
     public void activateDelta(){
-        for(Eff e:effects){
-            Village.getInventory().addDelta(e, false);
-        }
-    }
-
-    public void activate() {
-        for(Eff e:effects){
-            Village.get().activateEffect(e);
-        }
+        Village.get().activate(effects, false);
     }
 
 }

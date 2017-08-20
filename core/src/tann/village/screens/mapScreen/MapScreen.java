@@ -31,7 +31,7 @@ public class MapScreen extends Screen{
 		for(Island i:map.islands){
 			addActor(i.getActor());
 		}
-		TextWriter tw = new TextWriter("You need a lot of [wood][wood][turn] and [food] to build a [hut]", Fonts.font);
+		TextWriter tw = new TextWriter("You need a lot of [wood], [food] and [turn] to build a [hut]", Fonts.font);
 		tw.setPosition(getWidth()/2, getHeight()/10, Align.center);
 		addActor(tw);
 	}

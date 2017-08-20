@@ -18,9 +18,13 @@ public class Building {
 	public Array<Eff> effects = new Array<>();
 	public TextureRegion image = Main.atlas.findRegion("building/hut");
 
-    public Building(String name, String description) {
-	    this.name = name;
-	    this.description = description;
+    public Building(String name) {
+        this(name,"");
+    }
+
+	public Building(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public void onBuild() {

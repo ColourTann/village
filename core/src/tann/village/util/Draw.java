@@ -142,8 +142,7 @@ public class Draw {
 				lineWidth, height - lineWidth * 2);
 	}
 
-	public static void fillRectangle(Batch batch, float x, float y,
-			float width, float height) {
+	public static void fillRectangle(Batch batch, float x, float y,float width, float height) {
 		Draw.drawScaled(batch, Draw.getSq(), x, y, width, height);
 	}
 

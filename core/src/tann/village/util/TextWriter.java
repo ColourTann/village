@@ -44,7 +44,6 @@ public class TextWriter extends Lay {
         textureMap.put("reroll", Images.roll);
         textureMap.put("buildtown", Images.obj_village);
 
-
         colorMap.put("turn", Colours.light);
     }
 

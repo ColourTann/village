@@ -6,6 +6,7 @@ import tann.village.gameplay.island.BuildingGenerator;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.village.building.Building;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.util.Sounds;
 
@@ -119,9 +120,31 @@ public class GemIsland extends Island{
 
     @Override
     protected void setupBuildings() {
-        BuildingGenerator.makeBasicBuildings();
-        BuildingGenerator.makeGemBuildings();
-        this.availableBuildings = BuildingGenerator.getBuildings();
+        this.availableBuildings.addAll(BuildingGenerator.makeBasicBuildings());
+
+        Building b;
+
+        b = new Building("Mining","");
+        b.setCost(5,3);
+        b.addEffect(new Eff().gem(3));
+        b.addEffect(new Eff().morale(-1));
+        availableBuildings.add(b);
+
+        b = new Building("Fountain","");
+        b.setCost(15,5);
+        b.addEffect(new Eff().gem(5));
+        availableBuildings.add(b);
+
+        b = new Building("Expedition");
+        b.setCost(10,2);
+        b.addEffect(new Eff().gem(2));
+        b.addEffect(new Eff().morale(1));
+        availableBuildings.add(b);
+
+        b = new Building("Ocean sifting");
+        b.setCost(4,1);
+        b.addEffect(new Eff().gem(1));
+        availableBuildings.add(b);
     }
 
     @Override

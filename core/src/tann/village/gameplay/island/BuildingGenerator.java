@@ -10,139 +10,59 @@ import tann.village.gameplay.village.building.Building;
 public class BuildingGenerator {
 
 	private static Array<Building> buildings = new Array<>();
-	private static String title, description;
-	private static int w,f,l;
-	private static Eff e1;
-    	private static Eff e2;
-	public static void makeBasicBuildings(){
+    static Building b;
+	public static Array<Building> makeBasicBuildings(){
+        Array<Building> results = new Array<>();
 
-        l=0; // *********************level 0********************* //
-        title="Dock";
-        description="A short pier leading into the ocean";
-        w=8;
-        e1 =new Eff().eachTurn(10).food(1);
-        make();
-        l=0; // *********************level 0********************* //
-        title="Dock";
-        description="A short pier leading into the ocean";
-        w=8;
-        e1 =new Eff().eachTurn(10).food(1);
-        make();
-        l=0; // *********************level 0********************* //
-        title="Plantation";
-        description="A short pier leading into the ocean";
-        w=3;
-        e1 =new Eff().inTurns(2).food(8);
-        make();
-        l=0; // *********************level 0********************* //
-        title="Plantation";
-        description="A short pier leading into the ocean";
-        w=3;
-        e1 =new Eff().inTurns(2).food(8);
-        make();
-        l=0; // *********************level 0********************* //
-        title="Plantation";
-        description="A short pier leading into the ocean";
-        w=3;
-        e1 =new Eff().inTurns(2).food(8);
-        make();
+        b = new Building("Dock", "A short pier leading into the ocean. +1 food per turn for 12 turns.");
+        b.setCost(6);
+        b.addEffect(new Eff().eachTurn(12).food(1));
+        results.add(b);
 
-        title="Bonfire";
-        description="A big bonfire can really bring the community together";
-        w=4;
-        e1 = new Eff(EffectType.Morale, 2);
-        make();
+        b = new Building("Fishing Trip", "A small expedition to catch fish. +4 food next turn");
+        b.setCost(4);
+        b.addEffect(new Eff().inTurns(1).food(4));
+        results.add(b);
 
-        title="Offering";
-        description="If the gods exist, it's a good idea to get on their good side";
-        w=4;
-        f=2;
-        e1 =new Eff(EffectType.Morale, 1);
-        e2 =new Eff(EffectType.Fate, 2);
-        make();
+        b = new Building("Bonfire", "A big bonfire can really bring the community together");
+        b.setCost(4);
+        b.addEffect(new Eff().morale(2));
+        results.add(b);
 
-        title="Crate";
-        description="A little extra storage for food can help out when times are hard";
-        w=3;
-        e1 = new Eff(EffectType.FoodStorage, 2);
-        make();
+        b = new Building("Offering", "If the gods exist, it's a good idea to get on their good side");
+        b.setCost(4,2);
+        b.addEffect(new Eff().morale(2));
+        b.addEffect(new Eff().fate(1));
+        results.add(b);
 
-        title="Salvage Hut";
-        description="A place to sort through useful materials";
-        w=7;
-        e1 = new Eff().eachTurn(10).wood(1);
-        make();
+        b = new Building("Crate", "A little extra storage for food can help out when times are hard");
+        b.setCost(3);
+        b.addEffect(new Eff().storage(2));
+        results.add(b);
 
-        // *********************level 1********************* //
+        b = new Building("Salvage Hut", "A place to sort through useful materials. +1 wood per turn for 10 turns");
+        b.setCost(5);
+        b.addEffect(new Eff().eachTurn(10).wood(1));
+        results.add(b);
 
-        l=1;
-        title="Palm Grove";
-        description="A small grove for harvesting fast-growing trees";
-        w=11; f=3;
-        e1 = new Eff().eachTurn(10).wood(1);
-        e2 = new Eff().eachTurn(10).food(1);
-        make();
+        b = new Building("Palm Grove", "A small grove for harvesting fast-growing trees, +1 wood and food per turn for 10 turns");
+        b.setCost(6, 4);
+        b.addEffect(new Eff().eachTurn(10).wood(1));
+        b.addEffect(new Eff().eachTurn(10).food(1));
+        results.add(b);
 
-        title="Larder";
-        description="Large storage area for food";
-        w=5;
-        e1 = new Eff(EffectType.FoodStorage, 6);
-        make();
+        b = new Building("Larder", "Large storage area for food");
+        b.setCost(4);
+        b.addEffect(new Eff().storage(6));
+        results.add(b);
 
-        title="Shrine";
-        description="An offering to the gods";
-        w=10;
-        e1 = new Eff().fate(4);
-        e2 = new Eff().morale(1);
-        make();
-    }
+        b = new Building("Shrine", "An offering to the gods");
+        b.setCost(10);
+        b.addEffect(new Eff().fate(4));
+        b.addEffect(new Eff().morale(1));
+        results.add(b);
 
-    public static void makeGemBuildings(){
-        title = "Mining";
-        w = 5;
-        f = 3;
-        e1 = new Eff().gem(3);
-        e2 = new Eff().morale(-1);
-        make();
 
-        title = "Fountain";
-        w = 15;
-        f = 5;
-        e1 = new Eff().gem(5);
-        make();
-
-        title = "Expedition";
-        w = 10;
-        f = 2;
-        e1 = new Eff().gem(2);
-        e2 = new Eff().morale(1);
-        make();
-
-        title = "Ocean sifting";
-        w = 4;
-        f = 1;
-        e1 = new Eff().gem(1);
-        make();
-    }
-
-    private static void make(){
-		if(title==null||e1==null){
-			System.err.println("Something went wrong making "+title+":"+description);
-			return;
-		}
-		Array<Eff> effects = new Array<>();
-		if(e1!=null)effects.add(e1);
-		if(e2!=null)effects.add(e2);
-		buildings.add(new Building(title, description, l, new Cost(w, f), effects));
-		w=0; f=0;
-		title=null; description=null;
-		e1=null;
-		e2=null;
-	}
-
-	public static Array<Building> getBuildings(){
-        Array<Building> result = buildings;
-        buildings = new Array<>();
-        return result;
+        return results;
     }
 }

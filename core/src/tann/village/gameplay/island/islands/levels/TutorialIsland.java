@@ -79,8 +79,7 @@ public class TutorialIsland extends Island {
 
     @Override
     protected void setupBuildings() {
-        BuildingGenerator.makeBasicBuildings();
-        this.availableBuildings = BuildingGenerator.getBuildings();
+        this.availableBuildings.addAll(BuildingGenerator.makeBasicBuildings());
     }
 
     @Override

@@ -55,7 +55,7 @@ public class BulletStuff {
 		broadphase = new btDbvtBroadphase();
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-		dynamicsWorld.setGravity(new Vector3(0, -30f, 0));
+		dynamicsWorld.setGravity(new Vector3(0, -38f, 0));
 		contactListener = new MyContactListener();
 		modelBatch = new ModelBatch();
 

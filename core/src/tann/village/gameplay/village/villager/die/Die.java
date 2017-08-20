@@ -38,7 +38,7 @@ public class Die {
     public CollisionObject physical;
     public TextureRegion lapel;
     public Array<Side> sides = new Array<>();
-    private static final float MAX_AIRTIME = 2.8f;
+    private static final float MAX_AIRTIME = 2.2f;
     private static final float INTERP_SPEED = .4f;
 
     // gameplay stuff
@@ -223,7 +223,7 @@ public class Die {
 
         timeInAir=0;
         physical.body.clearForces();
-        randomise(12, 0, 7, 0, .7f, .7f);
+        randomise(13, 0, 7, 0, .9f, .7f);
     }
 
     private void resetForRoll() {
@@ -235,7 +235,7 @@ public class Die {
 
     public void jiggle(){
         timeInAir=0;
-        randomise(5, 0, 2, 0, 1, 0);
+        randomise(4, 0, 3.5f, 0, 1, 0);
     }
 
     boolean glowOverride;

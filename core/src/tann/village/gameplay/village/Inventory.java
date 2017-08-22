@@ -79,24 +79,23 @@ public class Inventory{
         }
         else{
 	        // potential zone
-
              if(invert){
                  if (e.type == EffectType.Brain) {
                      e.sourceDie.villager.addPotentialXP(e.value * (invert ? -1 : 1));
                  }
-	            boolean removed = potentialEffects.removeValue(e, true);
-	            if(!removed){
-	                System.err.println("Failed to remove "+e);
-                }
+                 boolean removed = potentialEffects.removeValue(e, true);
+                 if(!removed){
+                     System.err.println("Failed to remove "+e);
+                 }
             }
             else {
                  if (e.type == EffectType.Brain) {
                      e.sourceDie.villager.addPotentialXP(e.value * (invert ? -1 : 1));
                  }
                 potentialEffects.add(e);
-                InventoryItem item = get(e);
-                if (item != null) item.addDelta(e.value, invert);
             }
+            InventoryItem item = get(e);
+            if (item != null) item.addDelta(e.value, invert);
         }
     }
 

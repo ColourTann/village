@@ -16,14 +16,12 @@ public class Event {
     public Array<Outcome> outcomes = new Array<>();
     public Array<Eff> effects = new Array<>();
     public Array<Eff> requirements = new Array<>();
-    public int fateDelta = 0;
     public float chance = 1;
-	int fateLeft, fateRight;
 	boolean story;
 	public int turn = -1;
 	public int uses = 999;
 	public int minTurn = -1, maxTurn = -1;
-
+    public float joel=-123456789;
 
     public Event(String title) {
         this(title, null);
@@ -33,24 +31,22 @@ public class Event {
 	    this.title=title;
 	    this.description=description;
     }
-	public Event (String title, String description, Array<Eff> effects, Array<Outcome> outcomes, Array<Eff> requirements, float chance, int fate, int variance, int fateDelta, boolean story, int turn, int uses){
+	public Event (String title, String description, Array<Eff> effects, Array<Outcome> outcomes, Array<Eff> requirements, float chance, float joel, boolean story, int turn, int uses){
 	    this.uses=uses;
 	    this.turn=turn;
 	    this.requirements=requirements;
 	    this.effects=effects;
-	    this.fateDelta=fateDelta;
 		this.title=title;
 		this.description=description;
 		this.outcomes=outcomes;
 		this.chance=chance;
-		this.fateLeft =fate;
-		this.fateRight =variance;
+		this.joel = joel;
 		this.story = story;
 	}
 
     public boolean isPotential() {
-		int currentFate = Village.getInventory().getResourceAmount(EffectType.Fate);
-		if(currentFate<fateLeft || currentFate > fateRight || uses<=0) return false;
+		float joel = Village.getJoel() + this.joel;
+		if(joel>1||joel<-1) return false;
         for(Eff e: requirements){
             if(!Village.getInventory().isEffectValid(e)) return false;
         }
@@ -58,18 +54,18 @@ public class Event {
 	}
 	
 	public int getGoodness(){
-        return -(int)(Math.signum(fateDelta));
+        return -(int)(Math.signum(joel));
     }
 
 	public void action() {
 		GameScreen.get().resetWisps();
-        Village.get().activate(new Eff().fate(fateDelta), true, false);
+        Village.get().addJoel(joel);
         Village.get().activate(effects, true, false);
 		GameScreen.get().showWisps();
 	}
 
 	public String toString(){
-	    return title+":"+fateDelta;
+	    return title+":"+joel;
     }
 
     public boolean isStory() {
@@ -85,8 +81,8 @@ public class Event {
 	    requirements.add(eff);
     }
 
-    public void fate(int fateLeft, int fateRight, int fateDelta) {
-	    this.fateLeft=fateLeft; this.fateRight=fateRight; this.fateDelta = fateDelta;
+    public void setJoel(float joel) {
+	    this.joel=joel;
     }
 
     public void chance(float chance){
@@ -112,7 +108,7 @@ public class Event {
     }
 
     public void validate(){
-        if(fateLeft>fateRight) System.err.println("fate left > fate right for "+this);
+        if(joel<-1||joel>1) System.err.println("fate left > fate right for "+this);
         if(turn==-1 && isStory()) System.err.println("story with no turn for "+this);
         if(title==null || description==null) System.err.println("no title or desc for "+this);
         if(chance<=0 && !isStory()) System.err.println("no chance for "+this);

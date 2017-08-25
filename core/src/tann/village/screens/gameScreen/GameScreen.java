@@ -25,6 +25,9 @@ import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
+import tann.village.screens.gameScreen.panels.bottomBar.BottomTab;
+import tann.village.screens.gameScreen.panels.eventStuff.EventPanel;
+import tann.village.screens.gameScreen.panels.eventStuff.JoelDebugPanel;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
 import tann.village.screens.gameScreen.panels.miscStuff.ProceedButton;
 import tann.village.screens.gameScreen.panels.rollStuff.LockBar;
@@ -173,7 +176,7 @@ public class GameScreen extends Screen{
         }
 
         if(eventPanel!=null){
-            center(eventPanel);
+            center(eventPanel,true);
         }
         if(proceedButton!=null){
             proceedButton.refreshPosition();
@@ -184,8 +187,8 @@ public class GameScreen extends Screen{
         return Main.h(26);
     }
 	
-	public void center(Actor a){
-        a.setPosition(getWidth()/2-a.getWidth()/2, (getHeight())/2-a.getHeight()/2);
+	public void center(Actor a, boolean andProgressBar){
+        a.setPosition(getWidth()/2-a.getWidth()/2, (andProgressBar?50:0)+BottomBar.height()+(getHeight()-BottomBar.height())/2-a.getHeight()/2);
 	}
 	
 	private void refreshBulletStuff() {
@@ -199,6 +202,12 @@ public class GameScreen extends Screen{
             edp.setPosition(getWidth()/2-edp.getWidth()/2, getHeight()/2-edp.getHeight()/2);
         }
         if(!edp.remove()) addActor(edp);
+    }
+
+    public void toggleJoelDebug(){
+        JoelDebugPanel jdp =Village.get().getJoelDebugPanel();
+        jdp.setPosition(getWidth()/2-jdp.getWidth()/2, BottomBar.height()+ 40);
+        if(!jdp.remove()) addActor(jdp);
     }
 	
 	@Override
@@ -228,6 +237,9 @@ public class GameScreen extends Screen{
         switch(keycode){
             case Input.Keys.SPACE:
                 toggleEventDebug();
+                break;
+            case Input.Keys.SHIFT_LEFT:
+                toggleJoelDebug();
                 break;
             case Input.Keys.ESCAPE:
                 toggleEscMenu();
@@ -322,7 +334,7 @@ public class GameScreen extends Screen{
 		int woodMissing = Math.max(0, -wood);
 		StarvationPanel panel = new StarvationPanel(foodMissing, woodMissing);
 		addActor(panel);
-		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
+		center(panel, true);
 		addProceedButton(panel);
 		Village.getInventory().imposeFoodAndWoodMinimum();
 	}
@@ -331,7 +343,7 @@ public class GameScreen extends Screen{
 	private void levelup(Villager v){
 		tann.village.screens.gameScreen.panels.villagerStuff.LevelupPanel lup = new tann.village.screens.gameScreen.panels.villagerStuff.LevelupPanel(v, island.getRandomVillagerTypes(Math.min(Villager.MAX_LEVEL, v.type.level+1), 3));
 		addActor(lup);
-		center(lup);
+		center(lup,false);
 		if(!levelledUpAlready) {
             Sounds.playSound(Sounds.marimba_happy, 1, 1);
         }
@@ -397,9 +409,9 @@ public class GameScreen extends Screen{
             else sound = Sounds.eventNeuBird;
             Sounds.playSound(sound, 1, 1);
         }
-		eventPanel= new tann.village.screens.gameScreen.panels.eventStuff.EventPanel(event, dayNum);
+		eventPanel= new EventPanel(event, dayNum);
 		event.action();
-		center(eventPanel);
+		center(eventPanel,true);
 		addActor(eventPanel);
 		if(event.outcomes.size==0) {
             addProceedButton(eventPanel);

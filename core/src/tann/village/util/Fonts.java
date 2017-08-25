@@ -16,6 +16,7 @@ import tann.village.Main;
 
 public class Fonts {
 
+    public static BitmapFont fontTiny;
     public static BitmapFont fontSmall;
     public static BitmapFont fontSmallish;
 	public static BitmapFont font;
@@ -24,6 +25,8 @@ public class Fonts {
 	public static void setup(){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/ElMessiri-Regular.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.size = (int)Main.h(15/700f*100);
+        fontTiny= generator.generateFont(parameter);
         parameter.size = (int)Main.h(24/700f*100);
         fontSmall = generator.generateFont(parameter);
         parameter.size=(int)Main.h(30/700f*100);

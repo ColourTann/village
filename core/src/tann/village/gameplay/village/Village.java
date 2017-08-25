@@ -8,8 +8,8 @@ import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.building.Building;
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.panels.eventStuff.JoelDebugPanel;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
-import tann.village.screens.gameScreen.panels.bottomBar.TurnStatsPanel;
 import tann.village.screens.gameScreen.panels.rollStuff.RerollPanel;
 import tann.village.util.Sounds;
 
@@ -128,9 +128,19 @@ public class Village {
 
     public void addJoel(float joel){
         this.joel+=joel;
+        getJoelDebugPanel().setJoel(this.joel);
     }
 
     public float getJoel(){
         return joel;
+    }
+
+    private JoelDebugPanel jdp;
+    public JoelDebugPanel getJoelDebugPanel() {
+        if(jdp == null){
+            jdp = new JoelDebugPanel();
+            jdp.setJoel(0);
+        }
+        return jdp;
     }
 }

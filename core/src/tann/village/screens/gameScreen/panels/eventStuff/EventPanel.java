@@ -110,12 +110,6 @@ public class EventPanel extends Lay{
         height += Main.h(10);
         setSize(width, height);
         l.layoo();
-
-        if(e.fateDelta!=0) {
-            SideFatePanel panel = new SideFatePanel(e.fateDelta);
-            addActor(panel);
-            panel.setPosition(getWidth() + BORDER, getHeight() / 2 - panel.getHeight() / 2);
-        }
     }
 
 	@Override

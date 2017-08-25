@@ -20,9 +20,13 @@ public class EventDebugPanel extends Group {
 
     Map<Integer, List<SingleEventPanel>> map = new HashMap<>();
 
+    private static final float WIDTH = 1000;
+
+    private static final int STRIATIONS = 21;
+
     public EventDebugPanel(Array<Event> events) {
         int max = 0;
-        setSize(SingleEventPanel.WIDTH * 25, 600);
+        setSize(WIDTH, 600);
         for(int i=0;i<events.size;i++){
             Event e = events.get(i);
             SingleEventPanel panel = new SingleEventPanel(e, i);
@@ -42,7 +46,7 @@ public class EventDebugPanel extends Group {
                 }
                 if(good){
                     list.add(panel);
-                    panel.setPosition((12+e.fateLeft)*SingleEventPanel.WIDTH, level*SingleEventPanel.HEIGHT+40);
+                    panel.setPosition((((-e.joel)/2f+1)/(STRIATIONS/10f))*WIDTH-SingleEventPanel.WIDTH/2 + getWidth()/STRIATIONS/2f, level*SingleEventPanel.HEIGHT+40);
                     break;
                 }
             }
@@ -59,41 +63,51 @@ public class EventDebugPanel extends Group {
 
         Draw.fillActor(batch,this);
         batch.setColor(Colours.light);
-        for(int i=0;i<=24;i++){
-            if(i<12) {
-                batch.setColor(Colours.shiftedTowards(Colours.grey, Colours.red, (12-i+1) / 12f));
+
+        Draw.fillRectangle(batch, getX()+getWidth()/2, getY(), getWidth()/2, getHeight());
+        for(int i=0;i<=STRIATIONS;i++){
+            if(i<10) {
+                batch.setColor(Colours.shiftedTowards(Colours.red, Colours.grey, i/10f));
             }
-            else if (i>12){
-                batch.setColor(Colours.shiftedTowards(Colours.grey, Colours.blue_light, (i-12+1) / 12f));
+            else if (i>10){
+                batch.setColor(Colours.shiftedTowards(Colours.grey, Colours.green_light, (i-10f) / 10f));
             }
             else{
                 batch.setColor(Colours.grey);
             }
-            Draw.fillRectangle(batch, getX()+i*SingleEventPanel.WIDTH+1, getY(), SingleEventPanel.WIDTH-1, getHeight());
+
+
+
+            Draw.fillRectangle(batch, getX()+i*getWidth()/STRIATIONS, getY(), getWidth()/STRIATIONS, getHeight());
+            batch.setColor(Colours.grey);
+
             Color c;
-            if (i<12){
+            if (i<10){
                  c=Colours.red;
             }
-            else if(i>12){
+            else if(i>10){
                 c=Colours.blue_light;
             }
             else{
                c=Colours.grey;
             }
-            batch.setColor(Colours.fate_darkest);
-            Fonts.fontSmall.setColor(Colours.dark);
-            Draw.fillRectangle(batch, getX()+i*SingleEventPanel.WIDTH, getY(), 1, getHeight());
-            Fonts.fontSmall.draw(batch, (i-12)+"", getX()+(i+.2f)*SingleEventPanel.WIDTH, getY()+20);
+            batch.setColor(Colours.light);
+            Fonts.fontSmall.draw(batch, (i-STRIATIONS/2)/5f+"", getX()+i*WIDTH/STRIATIONS, getY()+STRIATIONS);
+        }
+        batch.setColor(Colours.dark);
+        for(int i=0;i<=STRIATIONS;i++){
+            float toX =getX()+(float)i/STRIATIONS*getWidth();
+            Draw.drawLine(batch, toX, getY(), toX, getY()+getHeight(), 2);
         }
         super.draw(batch, parentAlpha);
     }
 
     static class SingleEventPanel extends Actor{
         Event e;
-        private static int WIDTH = 30, HEIGHT = 30;
+        private static int WIDTH = 140, HEIGHT = 30;
         public SingleEventPanel(Event e, int index) {
             this.e=e;
-            setSize((e.fateRight - e.fateLeft +1)*WIDTH,HEIGHT);
+            setSize(WIDTH,HEIGHT);
         }
 
         @Override
@@ -101,29 +115,26 @@ public class EventDebugPanel extends Group {
             float border = 2;
             batch.setColor(Colours.blue_dark);
             Draw.fillActor(batch,this);
-            batch.setColor((e.fateRight+e.fateLeft) >0? Colours.blue_light:(e.fateLeft+e.fateRight) <0?Colours.red:Colours.grey);
+            batch.setColor((e.joel) <0? Colours.green_light:(e.joel)>0?Colours.red:Colours.grey);
 
             Draw.fillRectangle(batch,getX()+border,getY()+border, getWidth()-border*2, getHeight()-border*2);
             String toDraw = e.title;
-            int maxLength = 1+Math.abs(e.fateRight-e.fateLeft)*6;
+            int maxLength = 15;
             if(e.title.length()>maxLength){
-                toDraw=e.title.substring(0, maxLength);
+                toDraw=e.title.substring(0, maxLength-3)+"...";
             }
             Fonts.fontSmall.setColor(Colours.light);
             Fonts.fontSmall.draw(batch, toDraw, getX(), getY()+getHeight()/2+7, getWidth(), Align.center, false);
-            int fateDiff=e.fateDelta;
-            batch.setColor(fateDiff>0?Colours.blue_light:Colours.red);
+
+            batch.setColor(e.joel>0?Colours.blue_light:Colours.red);
             int orbSize = 10;
-            for(int i=0;i<Math.abs(fateDiff);i++){
-                Draw.fillEllipse(batch, getX()+getWidth()/2-orbSize/2*Math.abs(fateDiff)+i*orbSize, getY()+getHeight()-orbSize, orbSize, orbSize);
-            }
             super.draw(batch, parentAlpha);
         }
 
         public boolean collidesWith(SingleEventPanel panel) {
             Event e1 = panel.e;
             Event e2 = e;
-            return ! (e1.fateLeft  >  e2.fateRight || e1.fateRight < e2.fateLeft );
+            return Math.abs(e1.joel  - e2.joel)<.7f;
         }
     }
 }

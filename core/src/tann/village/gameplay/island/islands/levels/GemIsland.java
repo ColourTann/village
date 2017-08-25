@@ -20,7 +20,7 @@ public class GemIsland extends Island{
         Event ev;
         ev = new Event("Shooting star", "Incredible! A shooting star lands at the outskirts of your village. Inside you find a small red gem.");
         ev.eff(new Eff().gem(1));
-        ev.fate(0, 12, -2);
+        ev.joel(-.5f);
         addEvent(ev);
 
         ev = new Event("Starstorm", "A barrage from the skies assaults the village. In the carnage you find a lot of red shards and one whole gem.");
@@ -29,7 +29,7 @@ public class GemIsland extends Island{
         ev.eff(new Eff().food(-3));
         ev.eff(new Eff().wood(-2));
         ev.eff(new Eff().morale(-2));
-        ev.fate(-12, -1, 2);
+        ev.joel(.7f);
         addEvent(ev);
 
         ev = new Event("Lights in the sky", "A dance of red and green in the sky awes the village");
@@ -39,26 +39,28 @@ public class GemIsland extends Island{
         ev.eff(new Eff().wood(-2));
         ev.eff(new Eff().fate(2));
         ev.addOutcome("Make an offering");
-        ev.fate(-2, 2, 0);
+        ev.joel(.1f);
         ev.chance(.4f, 1);
         addEvent(ev);
 
         ev = new Event("Cursed Orange", "Lightning strikes the ground as someone picked an orange from a tree");
         ev.effR(new Eff().food(1));
-        ev.fate(-2, 1, -1);
+        ev.effR(new Eff().fate(-1));
+        ev.joel(.1f);
+        ev.chance(1,1);
         addEvent(ev);
 
         ev = new Event("Astral Visitor","A shining deer approaches the village, it seems unafraid. It doesn't linger long and once it's gone you notice it left you something");
         ev.eff(new Eff(Eff.EffectType.Gem, 2));
-        ev.fate(3,12,-4);
-        ev.chance(2,1);
+        ev.joel(-1);
+        ev.chance(1,1);
         addEvent(ev);
 
         ev = new Event("Fury","A ferocious bull charges through the village and eats your food");
         ev.effR(new Eff().food(-2));
         ev.eff(new Eff().storage(-2));
         ev.eff(new Eff().morale(-2));
-        ev.fate(-12,-1, 3);
+        ev.joel(1.4f);
         addEvent(ev);
 
         addEvents(EventCreator.makeBasicEvents());

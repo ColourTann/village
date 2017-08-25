@@ -20,40 +20,40 @@ public class WeatherIsland extends Island {
 
         Event ev;
         ev = new Event("Hailstorm", "Huge hailstones batter your huts");
-        ev.eff(new Eff().morale(-1));
+        ev.eff(new Eff().morale(-2));
         ev.addOutcome("Cold night");
         ev.eff(new Eff().wood(-3));
         ev.addOutcome("Quickly, repair the roof!");
-        ev.fate(-5,-1,1);
+        ev.joel(.7f);
         addEvent(ev);
 
         ev = new Event("Momentary Repose", "A break in the clouds lifts your spirits");
         ev.eff(new Eff().morale(2));
         ev.eff(new Eff(Eff.EffectType.Reroll, 2));
-        ev.fate(1,12, -2);
+        ev.joel(-.6f);
         addEvent(ev);
 
         ev = new Event("Whale Carcass",  "The storm in the night washed up a grisly prize");
         ev.effR(new Eff().food(5));
         ev.eff(new Eff().morale(1));
-        ev.fate(1, 12, -3);
+        ev.joel(-1.2f);
         addEvent(ev);
 
         ev = new Event("Relentless Rain", "It never stops");
         ev.effR(new Eff().food(-1));
-        ev.fate(0,-1, 0);
+        ev.joel(.5f);
         addEvent(ev);
 
         ev = new Event("Lightning", "Lightning strikes, setting fire to your storage hut");
         ev.eff(new Eff().food(-2));
         ev.eff(new Eff().storage(-2));
         ev.eff(new Eff().wood(-2));
-        ev.fate(2,04,2);
+        ev.joel(1);
         addEvent(ev);
 
         ev = new Event("Fallen tree", "In the night, a tree falls near one of the huts. You're lucky nobody was injured!");
         ev.effR(new Eff().wood(2));
-        ev.fate(-1, 3, -1);
+        ev.joel(.4f);
         addEvent(ev);
     }
 

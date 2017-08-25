@@ -22,7 +22,7 @@ public class Village {
     public Upkeep getUpkeep() {
         return upkeep;
     }
-
+    private float joel;
     private Upkeep upkeep;
 
     private int dayNum=0;
@@ -124,5 +124,13 @@ public class Village {
 
     public void objectiveProgress(Objective.ObjectiveEffect obj, int value) {
         getObjectivePanel().objectiveProgress(obj, value);
+    }
+
+    public void addJoel(float joel){
+        this.joel+=joel;
+    }
+
+    public float getJoel(){
+        return joel;
     }
 }

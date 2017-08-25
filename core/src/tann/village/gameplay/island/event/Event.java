@@ -45,7 +45,7 @@ public class Event {
 	}
 
     public boolean isPotential() {
-		float joel = Village.getJoel() + this.joel;
+		float joel = Village.get().getJoel() + this.joel;
 		if(joel>1||joel<-1) return false;
         for(Eff e: requirements){
             if(!Village.getInventory().isEffectValid(e)) return false;
@@ -81,7 +81,10 @@ public class Event {
 	    requirements.add(eff);
     }
 
-    public void setJoel(float joel) {
+    public void joel(float joel) {
+	    if(Math.abs(joel)>2){
+            System.err.println("too much joel: "+this);
+        }
 	    this.joel=joel;
     }
 
@@ -100,6 +103,7 @@ public class Event {
     public void storyTurn(int turn) {
         this.turn=turn;
         this.story=true;
+        this.joel=0;
     }
 
     public void addOutcome(String description) {

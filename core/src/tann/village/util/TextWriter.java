@@ -1,6 +1,7 @@
 package tann.village.util;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -43,13 +44,16 @@ public class TextWriter extends Lay {
         textureMap.put("turn", Images.turn);
         textureMap.put("reroll", Images.roll);
         textureMap.put("buildtown", Images.obj_village);
+        textureMap.put("frill-left", Main.atlas.findRegion("frill-left"));
+        textureMap.put("frill-right", Main.atlas.findRegion("frill-right"));
+
 
         colorMap.put("turn", Colours.light);
     }
 
     @Override
     public void layout() {
-        int index = (text.charAt(0)=='[')?1:0;
+        int index=0;
         float x = 0;
         for(String s:split){
             if(index%2==0){
@@ -68,7 +72,7 @@ public class TextWriter extends Lay {
                 if(image) {
                     TextureRegion tr = textureMap.get(s);
                     if (tr == null) {
-                        System.err.println("unable to find texture " + s + " for string " + text);
+                        System.err.println("unable to find texture '" + s + "' for string " + text);
                     }
                     float scale = font.getCapHeight() / tr.getRegionHeight();
                     ImageActor ia = new ImageActor(tr, tr.getRegionWidth() * scale, tr.getRegionHeight() * scale);

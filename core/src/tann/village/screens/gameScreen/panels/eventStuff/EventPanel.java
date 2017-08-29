@@ -1,7 +1,11 @@
 package tann.village.screens.gameScreen.panels.eventStuff;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 
 import com.badlogic.gdx.utils.Array;
@@ -11,12 +15,14 @@ import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.Outcome;
+import tann.village.gameplay.village.Village;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.UpkeepPanel;
 import tann.village.util.*;
 
 public class EventPanel extends Lay{
 
-    Event e;
+    public Event e;
     int dayNumber;
     TextBox day, eventTitle, description;
     public static float WIDTH;
@@ -38,9 +44,11 @@ public class EventPanel extends Lay{
         if(e.isStory()){
             border = Colours.blue_dark;
         }
+        else{
+            border = Colours.brown_light;
+        }
         int goodness = e.getGoodness();
-        if(goodness==1) border = Colours.blue_light;
-        if(goodness==-1) border = Colours.red;
+
         int height=0;
 
         this.e=e;
@@ -48,7 +56,7 @@ public class EventPanel extends Lay{
         height += day.getHeight();
         eventTitle = new TextBox(e.title, Fonts.fontBig, 99999, Align.center);
         height += eventTitle.getHeight();
-        description = new TextBox(e.description, Fonts.fontSmall, WIDTH-GAP, Align.left);
+        description = new TextBox(e.description, Fonts.fontSmall, 9999, Align.left);
         height += description.getHeight();
 
         Layoo l = new Layoo(this);
@@ -61,7 +69,6 @@ public class EventPanel extends Lay{
             Eff effect = e.effects.get(i);
             if(count%items_per_row==0) {
                 l.row(1);
-
             }
             Lay pann = null;
             if(effect.effAct.type== EffAct.ActivationType.UPKEEP){
@@ -88,20 +95,39 @@ public class EventPanel extends Lay{
         l.row(1);
 
         if(e.outcomes.size>0){
-            height += 300;
-            TextBox tb = new TextBox("Choose One", Fonts.fontSmall, WIDTH, Align.center);
-            l.actor(tb);
+            TextWriter tw = new TextWriter("[frill-left] Choose One [frill-right]", Fonts.fontSmall);
+            l.actor(tw);
             l.row(1);
+            float absOutcomesGap = Main.h(4);
+            l.absRow(absOutcomesGap);
             l.gap(1);
+
+            float biggestHeight=0;
             for(int i=0;i<e.outcomes.size;i++){
-                Outcome o = e.outcomes.get(i);
-                l.actor(o.getPanel());
+                final Outcome o = e.outcomes.get(i);
+                final OutcomePanel op = o.getPanel();
+                l.actor(op);
                 l.gap(1);
+                if(op.getHeight()>biggestHeight) biggestHeight=op.getHeight();
+                op.addListener(new InputListener(){
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                      selectOutcome(o);
+                      return true;
+                    }
+
+                    @Override
+                    public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                        event.cancel();
+                        return;
+//                        System.out.println("tup");
+//                        super.touchUp(event, x, y, pointer, button);
+                    }
+                });
             }
             l.row(1);
-
+            height+=biggestHeight+absOutcomesGap;
         }
-
 
         float width = Math.max(WIDTH, eventTitle.getWidth()+30);
         if(e.outcomes.size>0){
@@ -110,6 +136,24 @@ public class EventPanel extends Lay{
         height += Main.h(10);
         setSize(width, height);
         l.layoo();
+    }
+
+    public void selectOutcome(Outcome chosen){
+        for(Outcome o:e.outcomes){
+            if(o.getPanel().locked){
+                Sounds.playSound(Sounds.error, 1, 1);
+                return;
+            }
+        }
+        if(chosen.isValid()){
+            for(Outcome o:e.outcomes){
+                o.getPanel().deselect();
+            }
+            chosen.getPanel().select();
+        }
+        else{
+            Sounds.playSound(Sounds.error, 1, 1);
+        }
     }
 
 	@Override

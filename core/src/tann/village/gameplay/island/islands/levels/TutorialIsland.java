@@ -28,7 +28,7 @@ public class TutorialIsland extends Island {
         addEvent(ev);
 
         ev = new Event("Clear skies", "Everyone wakes up with a clear head.");
-        ev.joel(-.1f);
+        ev.joel(-   .1f);
         ev.eff(new Eff(Eff.EffectType.Reroll, +1));
         addEvent(ev);
 	}
@@ -37,7 +37,7 @@ public class TutorialIsland extends Island {
     protected void setupStory() {
         ev = new Event("Land ho!", "You've found land again, it looks like a perfect place to start a new village!");
         ev.storyTurn(0);
-        ev.eff(new Eff().food(3));
+        ev.eff(new Eff().food(30));
         ev.eff(new Eff().wood(3));
         addEvent(ev);
 

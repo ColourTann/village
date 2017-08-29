@@ -22,7 +22,7 @@ public class Cost {
     }
 
     private Cost add(EffectType type, int amount){
-	    effects.add(new Eff(type, amount));
+	    if(amount!=0) effects.add(new Eff(type, amount));
 	    return this;
     }
 
@@ -33,5 +33,12 @@ public class Cost {
             result += e.value+"[h]["+e.typeString()+"]";
         }
         return result;
+    }
+
+    public boolean has(EffectType type) {
+        for(Eff e:effects){
+            if(e.type==type) return true;
+        }
+        return false;
     }
 }

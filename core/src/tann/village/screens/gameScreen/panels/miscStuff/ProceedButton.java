@@ -16,9 +16,11 @@ public class ProceedButton extends Button{
 		setRunnable(new Runnable() {
 			@Override
 			public void run() {
-				remove(); 
-				linkedActor.remove();
-				GameScreen.get().proceed();
+                boolean success = GameScreen.get().proceed();
+                if(success) {
+                    remove();
+                    linkedActor.remove();
+                }
 			}
 		});
 	}

@@ -2,6 +2,7 @@ package tann.village.gameplay.island.event;
 
 import com.badlogic.gdx.utils.Array;
 
+import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.village.Inventory;
@@ -57,11 +58,26 @@ public class Event {
         return -(int)(Math.signum(joel));
     }
 
-	public void action() {
-		GameScreen.get().resetWisps();
+    public void initialAction(){
         Village.get().addJoel(joel);
         Village.get().activate(effects, true, false);
-		GameScreen.get().showWisps();
+        Village.get().activate(effects, true, false);
+    }
+
+
+	public boolean choiceAction() {
+        if(outcomes!=null&&outcomes.size>0){
+            boolean ok = false;
+            for(Outcome o:outcomes){
+                if(o.chosen){
+                    ok = true;
+                    Village.get().activate(o.effects, true);
+                    break;
+                }
+            }
+            if(!ok) return false;
+        }
+        return true;
 	}
 
 	public String toString(){
@@ -111,7 +127,15 @@ public class Event {
     }
 
     public void addOutcome(String description, int fateCost) {
-        Outcome o = new Outcome(description, effects, fateCost);
+        addOutcome(description, 0,0, fateCost);
+    }
+
+    public void addOutcome(String description, int foodCost, int woodCost, int fateCost) {
+        Cost c = null;
+        if(foodCost!=0 || woodCost!= 0 || fateCost!=0){
+            c = new Cost().food(foodCost).wood(woodCost).fate(fateCost);
+        }
+        Outcome o = new Outcome(description, effects, c);
         effects = new Array<>();
         outcomes.add(o);
     }

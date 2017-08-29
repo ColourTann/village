@@ -63,7 +63,7 @@ public class Village {
                     return;
             }
         }
-        getInventory().activate(e.copy(), activateNow, invert);
+        getInventory().activate(e, activateNow, invert);
     }
 
 	public void setup(){

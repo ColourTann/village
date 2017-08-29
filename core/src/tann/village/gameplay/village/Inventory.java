@@ -37,7 +37,7 @@ public class Inventory{
 		morale.setValue(4);
 		food.setValue(0);
 		wood.setValue(0);
-		fate.setValue(0);
+		fate.setValue(3);
 
 		items.add(food);
 		items.add(wood);
@@ -54,7 +54,7 @@ public class Inventory{
 
 	Array<Eff> potentialEffects = new Array<>();
 	void activate(Eff e, boolean activateNow, boolean invert){
-	    if(activateNow){
+        if(activateNow){
             switch(e.type){
                 case Brain:
                     e.sourceDie.villager.gainXP(e.value);

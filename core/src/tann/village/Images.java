@@ -36,6 +36,8 @@ public class Images {
     public static final TextureRegion obj_hourglass = Main.atlas.findRegion("objective/hourglass");
     public static final TextureRegion obj_gems = Main.atlas.findRegion("objective/gems");
 
+    public static final TextureRegion eagle = Main.atlas.findRegion("generalIcons/eagle");
+
     {
         ball.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }

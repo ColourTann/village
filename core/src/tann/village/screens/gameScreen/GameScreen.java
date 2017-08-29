@@ -18,19 +18,19 @@ import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventDebugPanel;
-import tann.village.gameplay.island.event.Outcome;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
-import tann.village.screens.gameScreen.panels.bottomBar.BottomTab;
+import tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel;
 import tann.village.screens.gameScreen.panels.eventStuff.EventPanel;
 import tann.village.screens.gameScreen.panels.eventStuff.JoelDebugPanel;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
 import tann.village.screens.gameScreen.panels.miscStuff.ProceedButton;
 import tann.village.screens.gameScreen.panels.rollStuff.LockBar;
+import tann.village.screens.gameScreen.panels.rollStuff.RerollPanel;
 import tann.village.screens.gameScreen.panels.villagerStuff.*;
 import tann.village.screens.gameScreen.panels.bottomBar.BottomBar;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
@@ -43,7 +43,7 @@ import tann.village.util.*;
 public class GameScreen extends Screen{
 	public static final int BUTTON_BORDER=10;
 	private static GameScreen self;
-    public tann.village.screens.gameScreen.panels.rollStuff.RerollPanel rollButtonPanel;
+    public RerollPanel rollButtonPanel;
     Group rollContainer;
 
     public static void reset() {
@@ -61,8 +61,8 @@ public class GameScreen extends Screen{
 	public Array<Villager> villagers = new Array<>();
 	public CircleButton constructionCircle;
 	public Array<Villager> villagersToLevelUp = new Array<>();
-	tann.village.screens.gameScreen.panels.eventStuff.EventPanel eventPanel;
-	public tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel constructionPanel;
+	EventPanel eventPanel;
+	public ConstructionPanel constructionPanel;
     CircleButton cButt1;
     public BottomBar btb;
 	public TurnStatsPanel tsp;
@@ -87,7 +87,7 @@ public class GameScreen extends Screen{
 	public void init(Island island, Village village){
 		this.village=village;
 		this.island=island;
-		addActor(tann.village.screens.gameScreen.panels.rollStuff.LockBar.get());
+		addActor(LockBar.get());
 		setSize(Main.width, Main.height);
 		addListener(new ClickListener(){
 			@Override
@@ -129,7 +129,7 @@ public class GameScreen extends Screen{
 
 
         showRollContainer(false);
-        constructionPanel= new tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel();
+        constructionPanel= new ConstructionPanel();
         vbp = new VillagerBarPanel();
         addActor(vbp);
 
@@ -169,10 +169,10 @@ public class GameScreen extends Screen{
 
         vbp.setPosition(Main.width-vbp.getWidth(), GameScreen.getConstructionCircleSize());
 
-        tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().setPosition(getWidth()/2- tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().getWidth()/2, getHeight()+ tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().getHeight());
+        LockBar.get().setPosition(getWidth()/2- LockBar.get().getWidth()/2, getHeight()+ LockBar.get().getHeight());
 
         if(state==State.Rolling){
-            tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().moveIn();
+            LockBar.get().moveIn();
         }
 
         if(eventPanel!=null){
@@ -214,7 +214,7 @@ public class GameScreen extends Screen{
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
 		Draw.drawSize(batch, island.background, getX(), getY(), getWidth(), getHeight());
-        tann.village.screens.gameScreen.panels.rollStuff.LockBar.get().render(batch);
+        LockBar.get().render(batch);
 	}
 
 
@@ -287,15 +287,19 @@ public class GameScreen extends Screen{
 	}
 
 
-	public void proceed() {
+	public boolean proceed() {
         if(Village.getInventory().getResourceAmount(EffectType.Morale)<=0){
             showLoss();
-            return;
+            return true;
         }
 		switch(state){
-        case Story:
-		case Event:
-			setState(State.Rolling);
+            case Event:
+            case Story:
+                if(!eventPanel.e.choiceAction()){
+                    Sounds.playSound(Sounds.error, 1,1);
+                    return false;
+                }
+                setState(State.Rolling);
 			break;
 		case Rolling:
             finishRolling();
@@ -316,6 +320,7 @@ public class GameScreen extends Screen{
             }
 			break;
 		}
+		return true;
 	}
 
 	boolean lost;
@@ -410,12 +415,10 @@ public class GameScreen extends Screen{
             Sounds.playSound(sound, 1, 1);
         }
 		eventPanel= new EventPanel(event, dayNum);
-		event.action();
+		event.initialAction();
 		center(eventPanel,true);
 		addActor(eventPanel);
-		if(event.outcomes.size==0) {
-            addProceedButton(eventPanel);
-        }
+        addProceedButton(eventPanel);
 		Village.getInventory().imposeLimits();
 	}
 
@@ -535,17 +538,6 @@ public class GameScreen extends Screen{
 	    vp.setPosition(getWidth()/2-vp.getWidth()/2, getHeight()/2 - vp.getHeight()/2);
 	    addActor(vp);
 	}
-
-    public void chooseOutcome(Outcome o) {
-	    if(o.isValid()) {
-            eventPanel.remove();
-            o.activate();
-            proceed();
-        }
-        else{
-	        Sounds.playSound(Sounds.error, 1, 1);
-        }
-    }
 
     public void resetWisps(){
         village.getInventory().resetWisps();

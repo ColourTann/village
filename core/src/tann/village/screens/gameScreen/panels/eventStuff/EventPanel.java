@@ -89,6 +89,9 @@ public class EventPanel extends Lay{
 
         if(e.outcomes.size>0){
             height += 300;
+            TextBox tb = new TextBox("Choose One", Fonts.fontSmall, WIDTH, Align.center);
+            l.actor(tb);
+            l.row(1);
             l.gap(1);
             for(int i=0;i<e.outcomes.size;i++){
                 Outcome o = e.outcomes.get(i);
@@ -96,15 +99,12 @@ public class EventPanel extends Lay{
                 l.gap(1);
             }
             l.row(1);
-            TextBox tb = new TextBox("Choose One", Fonts.fontSmall, WIDTH, Align.center);
-            l.actor(tb);
-            l.row(1);
+
         }
 
 
         float width = Math.max(WIDTH, eventTitle.getWidth()+30);
         if(e.outcomes.size>0){
-            //TODO GC?
             width = e.outcomes.get(0).getPanel().getWidth()*2 + GAP*3;
         }
         height += Main.h(10);

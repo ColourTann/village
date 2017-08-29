@@ -38,7 +38,7 @@ public class Building {
     }
 
     public void setCost(int wood, int food) {
-        this.cost = new Cost(wood, food);
+        this.cost = new Cost().food(food).wood(wood);
     }
 
     public void addEffect(Eff e) {

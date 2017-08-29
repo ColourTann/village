@@ -1,17 +1,12 @@
 package tann.village.screens.mapScreen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 
 import com.badlogic.gdx.utils.Align;
-import tann.village.Images;
 import tann.village.Main;
-import tann.village.gameplay.island.event.EventCreator;
-import tann.village.gameplay.island.event.EventDebugPanel;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.util.*;
 

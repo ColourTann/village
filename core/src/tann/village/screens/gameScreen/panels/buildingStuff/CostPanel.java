@@ -55,12 +55,6 @@ public class CostPanel extends Group{
 		Draw.fillActor(batch, this);
 		batch.setColor(Colours.dark);
 		Draw.fillRectangle(batch, getX()+g, getY()+g, getWidth()-g*2, getHeight()-g*2);
-		
-		
-		
-		
-		
-		
 		super.draw(batch, parentAlpha);
 	}
 

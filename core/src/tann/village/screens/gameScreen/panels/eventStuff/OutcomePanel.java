@@ -7,31 +7,28 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
+import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.event.Outcome;
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.panels.buildingStuff.CostPanel;
 import tann.village.util.*;
 
 public class OutcomePanel extends Group {
-    public static int WIDTH = 270, HEIGHTBASE = 10, HEIGHTADD = 70;
+    public static int WIDTH = 270, HEIGHTBASE = 40;
     Color border = Colours.dark;
     public OutcomePanel(final Outcome o) {
-        setSize(WIDTH, HEIGHTBASE+HEIGHTADD*((o.effects.size+1)/2));
+        setSize(WIDTH, HEIGHTBASE+(EffectPanel.staticHeight()+5)*o.effects.size);
         Layoo l = new Layoo(this);
         l.row(1);
         Fonts.fontSmall.setColor(Colours.light);
         TextBox tb = new TextBox(o.description, Fonts.fontSmall, WIDTH, Align.center);
         l.actor(tb);
-        l.row(1);
-        l.gap(1);
+        l.row(2);
         for(int i=0;i<o.effects.size;i++){
             Eff e=o.effects.get(i);
             l.actor(new EffectPanel(e, true));
-            l.gap(1);
-            if(i%2 == 1 && i < o.effects.size-1) {
                 l.row(1);
-                l.gap(1);
-            }
         }
         l.row(1);
         l.layoo();
@@ -52,6 +49,12 @@ public class OutcomePanel extends Group {
                 return true;
             }
         });
+        if(o.fateAmount!=0){
+            CostTab ct = new CostTab(new Cost().fate(o.fateAmount));
+            addActor(ct);
+            ct.setPosition(getWidth()/2-ct.getWidth()/2, getHeight());
+        }
+
     }
 
     @Override

@@ -8,10 +8,12 @@ import tann.village.screens.gameScreen.panels.eventStuff.OutcomePanel;
 public class Outcome {
     public Array<Eff> effects = new Array<>();
     public String description;
+    public int fateAmount;
 
-    public Outcome(String description, Array<Eff> events) {
+    public Outcome(String description, Array<Eff> events, int fateAmount) {
         this.effects = events;
         this.description = description;
+        this.fateAmount=fateAmount;
     }
 
     public void activate(){

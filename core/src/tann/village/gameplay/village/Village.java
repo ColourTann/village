@@ -58,13 +58,12 @@ public class Village {
             switch (e.effAct.type) {
                 case FOR_TURNS:
                     activate(e.copy().now(), false);
-                    // fallthrough
-                case IN_TURNS:
-                    addTurnEff(e);
+                case IN_TURNS: // fallthrough
+                    addTurnEff(e.copy());
                     return;
             }
         }
-        getInventory().activate(e, activateNow, invert);
+        getInventory().activate(e.copy(), activateNow, invert);
     }
 
 	public void setup(){

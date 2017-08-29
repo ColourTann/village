@@ -118,7 +118,6 @@ public class Eff {
                 if(effAct.value==0){
                     dead=true;
                 }
-                System.out.println("addding effect from building to potentials");
                 Village.get().activate(this.copy().now(), false, false);
                 break;
             case UPKEEP:

@@ -46,6 +46,7 @@ public class EventCreator {
         ev.joel(-.2f);
         current.add(ev);
 
+
         //neutral//
         ev = new Event("Quiet day", "Thankfully uneventful");
         ev.joel(0);
@@ -70,7 +71,12 @@ public class EventCreator {
         current.add(ev);
 
         ev = new Event("Gorilla", "Ook Ook OOK!!");
-        ev.effR(new Eff().food(-4));
+        ev.eff(new Eff().food(-4));
+        ev.addOutcome("Flee");
+        ev.eff(new Eff().food(2));
+        ev.eff(new Eff().morale(1));
+        ev.addOutcome("A gift from an ancestor", 3);
+        ev.chance(1000);
         ev.joel(.8f);
         current.add(ev);
 

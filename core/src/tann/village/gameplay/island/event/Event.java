@@ -92,7 +92,7 @@ public class Event {
 	    chance(chance,-1);
     }
 
-    public void chance(float change, int amount){
+    public void chance(float chance, int amount){
         this.chance=chance; this.uses=amount;
     }
 
@@ -107,8 +107,13 @@ public class Event {
     }
 
     public void addOutcome(String description) {
-        Outcome o = new Outcome(description, effects);
+        addOutcome(description,0);
+    }
+
+    public void addOutcome(String description, int fateCost) {
+        Outcome o = new Outcome(description, effects, fateCost);
         effects = new Array<>();
+        outcomes.add(o);
     }
 
     public void validate(){

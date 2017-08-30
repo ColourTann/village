@@ -19,7 +19,7 @@ public class Event {
     public Array<Eff> requirements = new Array<>();
     public float chance = 1;
 	boolean story;
-	public int turn = -1;
+	public int storyTurn = -1;
 	public int uses = 999;
 	public int minTurn = -1, maxTurn = -1;
     public float joel=-123456789;
@@ -32,9 +32,9 @@ public class Event {
 	    this.title=title;
 	    this.description=description;
     }
-	public Event (String title, String description, Array<Eff> effects, Array<Outcome> outcomes, Array<Eff> requirements, float chance, float joel, boolean story, int turn, int uses){
+	public Event (String title, String description, Array<Eff> effects, Array<Outcome> outcomes, Array<Eff> requirements, float chance, float joel, boolean story, int storyTurn, int uses){
 	    this.uses=uses;
-	    this.turn=turn;
+	    this.storyTurn=storyTurn;
 	    this.requirements=requirements;
 	    this.effects=effects;
 		this.title=title;
@@ -119,7 +119,7 @@ public class Event {
     }
 
     public void storyTurn(int turn) {
-        this.turn=turn;
+        this.storyTurn=turn;
         this.story=true;
         this.joel=0;
     }
@@ -144,7 +144,7 @@ public class Event {
 
     public void validate(){
         if(joel<-1||joel>1) System.err.println("fate left > fate right for "+this);
-        if(turn==-1 && isStory()) System.err.println("story with no turn for "+this);
+        if(storyTurn==-1 && isStory()) System.err.println("story with no turn for "+this);
         if(title==null || description==null) System.err.println("no title or desc for "+this);
         if(chance<=0 && !isStory()) System.err.println("no chance for "+this);
         if(uses<=0 && !isStory()) System.err.println("no uses for "+this);

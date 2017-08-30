@@ -1,5 +1,6 @@
 package tann.village.desktop;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 
@@ -9,6 +10,8 @@ public class VillagePack {
 	settings.combineSubdirectories = false;
 	settings.maxWidth=2048;
 	settings.maxHeight=2048;
+    settings.filterMag= Texture.TextureFilter.Linear;
+    settings.filterMin= Texture.TextureFilter.Linear;
 	TexturePacker.process(settings, "../images", "../android/assets", "atlas_image");
 
 

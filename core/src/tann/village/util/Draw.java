@@ -173,11 +173,11 @@ public class Draw {
 		return (float) (rad * 180f / Math.PI);
 	}
 
-	private static TextureRegion wSq;
+	private static Texture wSq;
 
-	public static TextureRegion getSq() {
+	public static Texture getSq() {
 		if (wSq == null) {
-			wSq = Main.atlas.findRegion("pixel");
+			wSq = new Texture(Gdx.files.internal("pixel.png"));
 		}
 		return wSq;
 	}
@@ -207,9 +207,9 @@ public class Draw {
 
 	public static void fillActor(Batch batch, Actor a, Color bg, Color border, float borderSize) {
 		batch.setColor(border);
-		Draw.fillRectangle(batch, a.getX()-borderSize, a.getY()-borderSize, a.getWidth()+borderSize*2, a.getHeight()+borderSize*2);
-		batch.setColor(bg);
 		Draw.fillRectangle(batch, a.getX(), a.getY(), a.getWidth(), a.getHeight());
+		batch.setColor(bg);
+		Draw.fillRectangle(batch, a.getX()+borderSize, a.getY()+borderSize, a.getWidth()-borderSize*2, a.getHeight()-borderSize*2);
 	}
 
 	public static void drawArrow(Batch batch, float x, float y, float x1, float y1, int width){

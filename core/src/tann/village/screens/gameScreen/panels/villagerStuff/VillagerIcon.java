@@ -27,8 +27,8 @@ public class VillagerIcon extends Lay {
     public void layout() {
         setSize(width(), height());
         clearChildren();
-        TextBox name = new TextBox(v.firstName, Fonts.fontSmall, 999, Align.center);
-        TextBox prof = new TextBox(v.type.toString(), Fonts.fontSmall, 999, Align.center);
+        TextBox name = new TextBox(v.firstName, Fonts.fontSmall, -1, Align.center);
+        TextBox prof = new TextBox(v.type.toString(), Fonts.fontSmall, -1, Align.center);
         XPDisplay xpd = new XPDisplay(v);
         Layoo l = new Layoo(this);
         l.row(2);

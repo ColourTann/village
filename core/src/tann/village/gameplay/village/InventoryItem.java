@@ -1,7 +1,9 @@
 package tann.village.gameplay.village;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import tann.village.Images;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
+import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanelSmall;
 
 public class InventoryItem {
 
@@ -62,7 +64,9 @@ public class InventoryItem {
     private InventoryItemPanel panel;
     public InventoryItemPanel getPanel(){
         if(panel==null){
-            panel = new InventoryItemPanel(image, value, max);
+            if(image== Images.food_storage) panel = new InventoryItemPanelSmall(image, value, max);
+            else panel = new InventoryItemPanel(image, value, max);
+
         }
         return panel;
     }

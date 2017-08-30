@@ -3,6 +3,7 @@ package tann.village.screens.mapScreen;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 
 import com.badlogic.gdx.utils.Align;
@@ -41,6 +42,9 @@ public class MapScreen extends Screen{
 	int size = 200;
 	@Override
 	public void postDraw(Batch batch) {
+	    BitmapFont font = new BitmapFont();
+        font.draw(batch, "Lorem ipsum dolor sit amet", 50, 50, 100, Align.center, true);
+        font.draw(batch, "Lorem ipsum\ndolor sit amet", 50, 50, 100, Align.center, true);
 	}
 
 	@Override

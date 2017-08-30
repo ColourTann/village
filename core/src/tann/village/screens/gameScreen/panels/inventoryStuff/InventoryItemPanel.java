@@ -14,6 +14,7 @@ public class InventoryItemPanel extends Lay{
 	private int value;
 	public int max;
 	TextureRegion tr;
+    protected Color border = Colours.dark;
 	public InventoryItemPanel(TextureRegion tr, int value, int max) {
 		this.value=value;
 		this.max=max;
@@ -36,8 +37,6 @@ public class InventoryItemPanel extends Lay{
     @Override
     public void layout() {
         setSize(invPanelWidth(), invPanelHeight());
-        float TEXTURESIZE =getHeight()*.65f;
-        imageActor = new ImageActor(tr, TEXTURESIZE, TEXTURESIZE);
         setup();
     }
 	
@@ -96,9 +95,11 @@ public class InventoryItemPanel extends Lay{
     TextBox amount;
 	TextBox outOf;
 	ImageActor imageActor;
-	private void setup(){
+	protected void setup(){
         clearChildren();
 
+        float TEXTURESIZE =getHeight()*.65f;
+        imageActor = new ImageActor(tr, TEXTURESIZE, TEXTURESIZE);
 		Color col = null;
         if(tr== Images.fate){
              col = (getValue()>0?Colours.blue_light:getValue()<0?Colours.red:Colours.grey);
@@ -129,8 +130,7 @@ public class InventoryItemPanel extends Lay{
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.setColor(Colours.dark);
-		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
+	    Draw.fillActor(batch, this, Colours.dark, border, 2);
 		batch.setColor(Colours.z_white);
         super.draw(batch, parentAlpha);
 	}
@@ -169,13 +169,13 @@ public class InventoryItemPanel extends Lay{
             setSize(extraBitWidth(), invPanelHeight());
             BitmapFont font = Fonts.fontSmallish;
             if(plus!=0){
-                TextBox plusBox = new TextBox("+"+plus, font, 999, Align.center);
+                TextBox plusBox = new TextBox("+"+plus, font, -1, Align.center);
                 plusBox.setTextColour(Colours.green_light);
                 l.row(1);
                 l.actor(plusBox);
             }
             if(negative!=0){
-                TextBox minusBox = new TextBox(""+negative, font, 999, Align.center);
+                TextBox minusBox = new TextBox(""+negative, font, -1, Align.center);
                 minusBox.setTextColour(Colours.red);
                 l.row(1);
                 l.actor(minusBox);

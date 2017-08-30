@@ -14,7 +14,8 @@ public class Inventory{
 	static final int GAP = 20;
 
 
-	InventoryItem food;
+    InventoryItem food;
+    InventoryItem foodStorage;
 	InventoryItem wood;
 	InventoryItem morale;
 	InventoryItem fate;
@@ -29,7 +30,8 @@ public class Inventory{
 	public static final int ITEM_GAP=30;
 
 	public Inventory() {
-		food = new InventoryItem(Images.food, 0, 5);
+        food = new InventoryItem(Images.food, 0, Integer.MAX_VALUE);
+        foodStorage = new InventoryItem(Images.food_storage, 0, Integer.MAX_VALUE);
 		wood = new InventoryItem(Images.wood, 0, Integer.MAX_VALUE);
 		morale = new InventoryItem(Images.morale);
 		fate = new InventoryItem(Images.fate);
@@ -38,7 +40,9 @@ public class Inventory{
 		food.setValue(0);
 		wood.setValue(0);
 		fate.setValue(3);
+		foodStorage.setValue(5);
 
+        items.add(foodStorage);
 		items.add(food);
 		items.add(wood);
 		items.add(morale);

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -25,6 +26,8 @@ public class Fonts {
 	public static void setup(){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/ElMessiri-Regular.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.minFilter= Texture.TextureFilter.Linear;
+        parameter.magFilter= Texture.TextureFilter.Linear;
         parameter.size = (int)Main.h(15/700f*100);
         fontTiny= generator.generateFont(parameter);
         parameter.size = (int)Main.h(24/700f*100);

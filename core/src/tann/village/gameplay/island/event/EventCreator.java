@@ -75,7 +75,7 @@ public class EventCreator {
         ev.addOutcome("Back away and watch the enormous ape steal your food");
         ev.eff(new Eff().food(2));
         ev.eff(new Eff().morale(1));
-        ev.addOutcome("He approaches and leaves a small bundle of fruit wrapped in leaves, then beats his chest and scurries off.", 3);
+        ev.addOutcome("He approaches and leaves\na", 3);
         ev.chance(1000);
         ev.joel(.8f);
         current.add(ev);

@@ -54,9 +54,15 @@ public class EventPanel extends Lay{
         this.e=e;
         day = new TextBox("Event", Fonts.font, WIDTH-GAP, Align.center);
         height += day.getHeight();
-        eventTitle = new TextBox(e.title, Fonts.fontBig, 99999, Align.center);
+        eventTitle = new TextBox(e.title, Fonts.fontBig, -1, Align.center);
+
+        float width = Math.max(WIDTH, eventTitle.getWidth()+30);
+        if(e.outcomes.size>0){
+            width = e.outcomes.get(0).getPanel().getWidth()*2 + GAP*3;
+        }
+
         height += eventTitle.getHeight();
-        description = new TextBox(e.description, Fonts.fontSmall, 9999, Align.left);
+        description = new TextBox(e.description, Fonts.fontSmall, width-20, Align.left);
         height += description.getHeight();
 
         Layoo l = new Layoo(this);
@@ -129,10 +135,7 @@ public class EventPanel extends Lay{
             height+=biggestHeight+absOutcomesGap;
         }
 
-        float width = Math.max(WIDTH, eventTitle.getWidth()+30);
-        if(e.outcomes.size>0){
-            width = e.outcomes.get(0).getPanel().getWidth()*2 + GAP*3;
-        }
+
         height += Main.h(10);
         setSize(width, height);
         l.layoo();

@@ -83,6 +83,9 @@ public class Main extends ApplicationAdapter {
 		logTime("start");
         Sounds.setup();
 		atlas = new TextureAtlas(Gdx.files.internal("atlas_image.atlas"));
+		for(Texture t:atlas.getTextures()){
+		    t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        }
 		atlas_3d = new TextureAtlas(Gdx.files.internal("3d/atlas_image.atlas"));
 		for(Texture t: atlas_3d.getTextures()){
 			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);

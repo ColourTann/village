@@ -27,7 +27,7 @@ public class IslandActor extends Lay{
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		});
-        TextBox tb = new TextBox(island.getIslandName(), Fonts.fontSmall, 2000, Align.center);
+        TextBox tb = new TextBox(island.getIslandName(), Fonts.fontSmall, -1, Align.center);
         addActor(tb);
         tb.setPosition(getWidth()/2-tb.getWidth()/2, -tb.getHeight()-20);
 	}

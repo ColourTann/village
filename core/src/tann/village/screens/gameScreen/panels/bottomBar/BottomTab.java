@@ -33,7 +33,7 @@ public class BottomTab extends Lay {
     @Override
     public void layout() {
         clearChildren();
-        TextBox tb = new TextBox(name, Fonts.fontSmall, 999, Align.center);
+        TextBox tb = new TextBox(name, Fonts.fontSmall, -1, Align.center);
         float gap = Main.h(1);
         setSize(tb.getWidth()+gap*2, tb.getHeight()+gap*2);
         addActor(tb);

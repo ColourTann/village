@@ -6,7 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.objective.Objective;
-import tann.village.gameplay.village.building.Building;
+import tann.village.gameplay.village.project.Project;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.eventStuff.JoelDebugPanel;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
@@ -15,7 +15,7 @@ import tann.village.util.Sounds;
 
 public class Village {
 	
-	private List<Building> buildings  = new ArrayList<>();
+	private List<Project> buildings  = new ArrayList<>();
 	private static Village self;
 	private RerollPanel panel;
     private Inventory inventory;
@@ -77,7 +77,7 @@ public class Village {
 	    GameScreen.get().tsp.startOfRolling();
     }
 
-	public void addBuilding(Building b) {
+	public void addBuilding(Project b) {
         Sounds.playSound(Sounds.build,1,1);
         buildings.add(b);
         getObjectivePanel().objectiveProgress(Objective.ObjectiveEffect.Building, 1);

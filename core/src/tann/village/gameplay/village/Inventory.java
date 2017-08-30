@@ -75,11 +75,6 @@ public class Inventory{
             int value = e.value*(invert?-1:1);
             InventoryItem item = get(e.type);
             if(item!=null) item.changeValue(value);
-            switch(e.type){
-                case FoodStorage:
-                    get(Eff.EffectType.Food).addMax(value);
-                    break;
-            }
         }
         else{
 	        // potential zone
@@ -122,17 +117,12 @@ public class Inventory{
 	
 	public InventoryItem get(EffectType type){
         switch(type){
-		case Food:
-			return food;
-		case Morale:
-			return morale;
-		case Wood:
-			return wood;
-		case Fate:
-			return fate;
-        case Gem:
-            return gems;
-
+		case Food:          return food;
+		case Morale:        return morale;
+		case Wood:          return wood;
+		case Fate:          return fate;
+        case Gem:           return gems;
+        case FoodStorage:   return foodStorage;
 		}
 		return null;
 	}
@@ -162,10 +152,13 @@ public class Inventory{
 		return get(resourceType).getValue();
 	}
 
-	public void imposeLimits(){
-		for(InventoryItem item:items){
-			item.imposeMaximum();
-		}
+	public int imposeLimits(){
+	    if(food.getValue()>foodStorage.getValue()){
+	        int spoiled = food.getValue()-foodStorage.getValue();
+	        food.setValue(foodStorage.getValue());
+	        return spoiled;
+        }
+        return 0;
 	}
 
 	public void imposeFoodAndWoodMinimum(){
@@ -194,27 +187,4 @@ public class Inventory{
             ii.getPanel().clearWisp();
         }
     }
-
-    /*
-      public void activateEffect(Eff eff, boolean asNow) {
-        if(asNow){
-            internalActuallyActivate(eff);
-            return;
-        }
-        switch(eff.effAct.type){
-            case NOW:
-                internalActuallyActivate(eff);
-                break;
-            case UPKEEP:
-                addToUpkeepp(eff);
-                break;
-            case FOR_TURNS:
-                getInventory().addDelta(eff, false);
-            case IN_TURNS:
-            case PASSIVE:
-                addTurnEff(eff);
-                break;
-        }
-    }
-     */
 }

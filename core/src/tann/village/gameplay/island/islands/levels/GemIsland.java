@@ -2,11 +2,11 @@ package tann.village.gameplay.island.islands.levels;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tann.village.gameplay.effect.Eff;
-import tann.village.gameplay.island.BuildingGenerator;
+import tann.village.gameplay.island.ProjectGenerator;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
-import tann.village.gameplay.village.building.Building;
+import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.util.Sounds;
 
@@ -122,28 +122,28 @@ public class GemIsland extends Island{
 
     @Override
     protected void setupBuildings() {
-        this.availableBuildings.addAll(BuildingGenerator.makeBasicBuildings());
+        this.availableBuildings.addAll(ProjectGenerator.makeBasicProjects());
 
-        Building b;
+        Project b;
 
-        b = new Building("Mining","");
+        b = new Project("Mining","");
         b.setCost(5,3);
         b.addEffect(new Eff().gem(3));
         b.addEffect(new Eff().morale(-1));
         availableBuildings.add(b);
 
-        b = new Building("Fountain","");
+        b = new Project("Fountain","");
         b.setCost(15,5);
         b.addEffect(new Eff().gem(5));
         availableBuildings.add(b);
 
-        b = new Building("Expedition");
+        b = new Project("Expedition");
         b.setCost(10,2);
         b.addEffect(new Eff().gem(2));
         b.addEffect(new Eff().morale(1));
         availableBuildings.add(b);
 
-        b = new Building("Ocean sifting");
+        b = new Project("Ocean sifting");
         b.setCost(4,1);
         b.addEffect(new Eff().gem(1));
         availableBuildings.add(b);

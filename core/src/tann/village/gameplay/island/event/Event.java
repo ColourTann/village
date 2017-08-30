@@ -47,7 +47,10 @@ public class Event {
 
     public boolean isPotential() {
 		float joel = Village.get().getJoel() + this.joel;
-		if(joel>1||joel<-1) return false;
+        int currentTurn = Village.get().getDayNum();
+        System.out.println(this+":"+joel+":"+currentTurn+":"+minTurn);
+        if(joel>1||joel<-1) return false;
+        if((minTurn!=-1&&currentTurn<minTurn) || (maxTurn!=-1&&currentTurn>maxTurn)) return false;
         for(Eff e: requirements){
             if(!Village.getInventory().isEffectValid(e)) return false;
         }
@@ -61,7 +64,6 @@ public class Event {
     public void initialAction(){
         Village.get().addJoel(joel);
         Village.get().activate(effects, true, false);
-        Village.get().activate(effects, true, false);
     }
 
 
@@ -71,7 +73,7 @@ public class Event {
             for(Outcome o:outcomes){
                 if(o.chosen){
                     ok = true;
-                    Village.get().activate(o.effects, true);
+                    o.activate();
                     break;
                 }
             }

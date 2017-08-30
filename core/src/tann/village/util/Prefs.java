@@ -30,11 +30,20 @@ public class Prefs {
         get().flush();
     }
 
+    public static void setBoolean(String key, boolean value){
+        get().putBoolean(key, value);
+        get().flush();
+    }
+
+    public static boolean getBoolean(String key, boolean def){
+        return get().getBoolean(key, def);
+    }
+
     public static String getString(String key, String def){
         return get().getString(key, def);
     }
 
-    public static Integer getInt(String key, int def){
+    public static int getInt(String key, int def){
         return get().getInteger(key, def);
     }
 
@@ -43,4 +52,8 @@ public class Prefs {
     }
 
 
+    public static void RESETSAVEDATA() {
+        prefs.clear();
+        prefs.flush();
+    }
 }

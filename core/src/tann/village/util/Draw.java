@@ -19,7 +19,6 @@ public class Draw {
         circle300 = Main.atlas.findRegion("circle300");
 	}
 	
-	public static Draw draww = new Draw();
 	//Texture stuff//
 	//noncentered stuff//
 
@@ -62,8 +61,7 @@ public class Draw {
 		drawCenteredRotatedScaled(batch, t, x, y, 1, 1, radianRotation);
 	}
 
-	public static void drawCenteredRotatedScaled(Batch batch, Texture t,
-			float x, float y, float xScale, float yScale, float radianRotation) {
+	public static void drawCenteredRotatedScaled(Batch batch, Texture t, float x, float y, float xScale, float yScale, float radianRotation) {
 		drawCenteredRotatedScaledFlipped(batch, t, x, y, xScale, yScale,
 				radianRotation, false, false);
 	}
@@ -121,9 +119,7 @@ public class Draw {
 				radianRotation);
 	}
 
-	public static void drawCenteredRotatedScaledFlipped(Batch batch,
-			TextureRegion t, float x, float y, float scaleX, float scaleY,
-			float radianRotation) {
+	public static void drawCenteredRotatedScaledFlipped(Batch batch, TextureRegion t, float x, float y, float scaleX, float scaleY, float radianRotation) {
 		batch.draw(t, x - t.getRegionWidth() / 2f,
 				y - t.getRegionHeight() / 2f, t.getRegionWidth() / 2f,
 				t.getRegionHeight() / 2f, t.getRegionWidth(),
@@ -131,15 +127,11 @@ public class Draw {
 	}
 
 	//geometric stuff//
-	
-	public static void drawRectangle(Batch batch, float x, float y,
-			float width, float height, int lineWidth) {
+	public static void drawRectangle(Batch batch, float x, float y, float width, float height, int lineWidth) {
 		drawScaled(batch, getSq(), x, y, width, lineWidth);
 		drawScaled(batch, getSq(), x, y + height - lineWidth, width, lineWidth);
-		drawScaled(batch, getSq(), x, y + lineWidth, lineWidth, height
-				- lineWidth * 2);
-		drawScaled(batch, getSq(), x + width - lineWidth, y + lineWidth,
-				lineWidth, height - lineWidth * 2);
+		drawScaled(batch, getSq(), x, y + lineWidth, lineWidth, height - lineWidth * 2);
+		drawScaled(batch, getSq(), x + width - lineWidth, y + lineWidth, lineWidth, height - lineWidth * 2);
 	}
 
 	public static void fillRectangle(Batch batch, float x, float y,float width, float height) {
@@ -152,8 +144,7 @@ public class Draw {
 		Draw.drawScaled(batch, circle300, x-width/2, y-width/2, width/300f, height/300f);
 	}
 	
-	public static void drawLine(Batch batch, float x, float y, float tX,
-			float tY, float width) {
+	public static void drawLine(Batch batch, float x, float y, float tX, float tY, float width) {
 		float dist = (float) Math.sqrt((tX - x) * (tX - x) + (tY - y)
 				* (tY - y));
 		float radians = (float) Math.atan2(tY - y, tX - x);

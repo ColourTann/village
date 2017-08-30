@@ -13,7 +13,7 @@ import tann.village.util.*;
 public class BuildingEffectPanel extends Lay{
 
 	public static final float WIDTH = (EffectPanel.staticWidth());
-	public static final float HEIGHT = 120;
+	public static final float HEIGHT = 90;
 
 	Array<Eff> effects;
 	Layoo l;
@@ -30,20 +30,18 @@ public class BuildingEffectPanel extends Lay{
 	public void layout() {
 	    setSize(WIDTH, HEIGHT);
 		l = new Layoo(this);
-		addEffectPanels();
+        for(int i=0;i<effects.size;i++){
+            Eff e =effects.get(i);
+            EffectPanel item = new EffectPanel(e, false);
+            l.actor(item);
+            if(i<effects.size-1){
+                l.row(1);
+            }
+        }
         l.layoo();
 		
 	}
 	
-	private void addEffectPanels() {
-		for(int i=0;i<effects.size;i++){
-			l.row(1);
-			Eff e =effects.get(i);
-			EffectPanel item = new EffectPanel(e, false);
-			l.actor(item);
-		}
-		l.row(1);
-	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {

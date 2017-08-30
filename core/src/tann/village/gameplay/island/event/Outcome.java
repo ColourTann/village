@@ -5,6 +5,7 @@ import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.panels.eventStuff.OutcomePanel;
+import tann.village.util.Prefs;
 
 public class Outcome {
     public Array<Eff> effects = new Array<>();
@@ -23,12 +24,13 @@ public class Outcome {
     }
 
     public void activate(){
-        if(cost!=null) Village.get().activate(cost.effects, true);
+        if(cost!=null) Village.get().activate(cost.effects, true, true);
         Village.get().activate(effects, true);
     }
 
     OutcomePanel ocp;
     public OutcomePanel getPanel(){
+        this.pickedBeforeEver = Prefs.getBoolean(getPrefKey(), false);
         if(ocp==null)ocp= new OutcomePanel(this);
         return ocp;
     }
@@ -41,5 +43,14 @@ public class Outcome {
             }
         }
         return true;
+    }
+
+    public String getPrefKey(){
+        return "outcome: description";
+    }
+
+    public void pick() {
+        pickedBeforeEver = true;
+        Prefs.setBoolean(getPrefKey(), true);
     }
 }

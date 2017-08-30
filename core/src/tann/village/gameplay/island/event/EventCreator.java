@@ -77,7 +77,8 @@ public class EventCreator {
         ev.eff(new Eff().morale(1));
         ev.addOutcome("He approaches and leaves\na", 3);
         ev.chance(1000);
-        ev.joel(.8f);
+        ev.joel(0);
+        ev.turn(2,2);
         current.add(ev);
 
         ev = new Event("Noises in the night", "Some of your food is gone, along with some storage!");

@@ -29,6 +29,7 @@ import tann.village.screens.gameScreen.panels.eventStuff.EventPanel;
 import tann.village.screens.gameScreen.panels.eventStuff.JoelDebugPanel;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
 import tann.village.screens.gameScreen.panels.miscStuff.ProceedButton;
+import tann.village.screens.gameScreen.panels.review.SpoilPanel;
 import tann.village.screens.gameScreen.panels.rollStuff.LockBar;
 import tann.village.screens.gameScreen.panels.rollStuff.RerollPanel;
 import tann.village.screens.gameScreen.panels.villagerStuff.*;
@@ -287,26 +288,36 @@ public class GameScreen extends Screen{
 	}
 
 
-	public boolean proceed() {
+	public boolean canProceed(){
+        if((state==State.Event||state==State.Story) && !eventPanel.e.choiceAction()){
+            Sounds.playSound(Sounds.error, 1,1);
+            return false;
+        }
+        return true;
+    }
+
+	public void proceed() {
         if(Village.getInventory().getResourceAmount(EffectType.Morale)<=0){
             showLoss();
-            return true;
+            return;
         }
 		switch(state){
             case Event:
             case Story:
-                if(!eventPanel.e.choiceAction()){
-                    Sounds.playSound(Sounds.error, 1,1);
-                    return false;
-                }
                 setState(State.Rolling);
 			break;
 		case Rolling:
             finishRolling();
-            Village.getInventory().imposeLimits();
 			setState(State.Upkeep);
 			break;
 		case Upkeep:
+
+            int spoiled = Village.getInventory().imposeLimits();
+            if(spoiled>0){
+                showSpoiled(spoiled);
+                break;
+            }
+
             if(Village.getInventory().getResourceAmount(EffectType.Food)<0 || Village.getInventory().getResourceAmount(EffectType.Wood)<0){
                 showStarvation();
                 break;
@@ -320,10 +331,10 @@ public class GameScreen extends Screen{
             }
 			break;
 		}
-		return true;
+		return;
 	}
 
-	boolean lost;
+    boolean lost;
 	public void showLoss() {
 	    lost = true;
         Sounds.playSound(Sounds.marimba_sad,1,1);
@@ -331,6 +342,13 @@ public class GameScreen extends Screen{
 		addActor(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 	}
+
+    private void showSpoiled(int amount) {
+	    SpoilPanel panel = new SpoilPanel(amount);
+	    addActor(panel);
+	    center(panel, true);
+	    addProceedButton(panel);
+    }
 
 	private void showStarvation() {
 		int food = Village.getInventory().getResourceAmount(EffectType.Food);
@@ -346,7 +364,7 @@ public class GameScreen extends Screen{
 
 	boolean levelledUpAlready=false;
 	private void levelup(Villager v){
-		tann.village.screens.gameScreen.panels.villagerStuff.LevelupPanel lup = new tann.village.screens.gameScreen.panels.villagerStuff.LevelupPanel(v, island.getRandomVillagerTypes(Math.min(Villager.MAX_LEVEL, v.type.level+1), 3));
+		LevelupPanel lup = new LevelupPanel(v, island.getRandomVillagerTypes(Math.min(Villager.MAX_LEVEL, v.type.level+1), 3));
 		addActor(lup);
 		center(lup,false);
 		if(!levelledUpAlready) {
@@ -396,13 +414,12 @@ public class GameScreen extends Screen{
 	
 	private void showEvent() {
 	    int dayNum = Village.get().getDayNum();
-		Village.get().nextDay();
         if(checkEnd()){
             return;
         }
 		state=State.Event;
 		Event event = island.getEventForTurn(dayNum);
-
+        Village.get().nextDay();
 		if(event.isStory() && dayNum != 0){
 		    state=State.Story;
         }
@@ -419,7 +436,6 @@ public class GameScreen extends Screen{
 		center(eventPanel,true);
 		addActor(eventPanel);
         addProceedButton(eventPanel);
-		Village.getInventory().imposeLimits();
 	}
 
     public boolean checkEnd() {

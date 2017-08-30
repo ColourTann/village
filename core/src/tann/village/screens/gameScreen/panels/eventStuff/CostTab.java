@@ -14,15 +14,19 @@ public class CostTab extends Lay{
         layout();
     }
 
+    public static float height(){
+        return Main.h(4.5f);
+    }
+
     NinePatch np;
     @Override
     public void layout() {
-        np = new NinePatch(Main.atlas.findRegion("patchTest"),30,30,27,1);
+        np = new NinePatch(Main.atlas.findRegion("patchTest"),30,30,30,0);
         float baseWidth = Main.h(11);
         for(int i=0;i<cost.effects.size;i++){
-            baseWidth += Main.h(4);
+            baseWidth += Main.h(4.5f);
         }
-        setSize(baseWidth, Main.h(4.5f));
+        setSize(baseWidth, height());
         Layoo l = new Layoo(this);
         TextWriter tw = new TextWriter(cost.toWriterString(), Fonts.fontSmallish);
         addActor(tw);
@@ -32,8 +36,11 @@ public class CostTab extends Lay{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        float gap = 2;
         batch.setColor(Colours.brown_dark);
         np.draw(batch, getX(), getY(), getWidth(), getHeight());
+        batch.setColor(Colours.dark);
+        np.draw(batch, getX()+gap, getY(), getWidth()-gap*2, getHeight()-gap);
         super.draw(batch, parentAlpha);
     }
 }

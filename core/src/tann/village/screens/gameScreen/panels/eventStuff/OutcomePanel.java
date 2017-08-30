@@ -3,19 +3,12 @@ package tann.village.screens.gameScreen.panels.eventStuff;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import tann.village.Images;
-import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.event.Outcome;
-import tann.village.gameplay.village.Village;
-import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.panels.buildingStuff.CostPanel;
 import tann.village.util.*;
 
 public class OutcomePanel extends Group {
@@ -73,7 +66,7 @@ public class OutcomePanel extends Group {
 
     private void lock(){
         locked=true;
-        o.pickedBeforeEver=true;
+        o.pick();
         setColor(Colours.light);
         addAction(Actions.fadeOut(.5f, Interpolation.pow2In));
     }

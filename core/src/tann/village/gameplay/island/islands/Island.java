@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
 import tann.village.gameplay.island.event.Event;
-import tann.village.gameplay.village.building.Building;
+import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
 
 public abstract class Island {
@@ -21,7 +21,7 @@ public abstract class Island {
 	int x,y;
 
 	protected Array<Villager.VillagerType> availablesVillagerTypes = new Array<>();
-    protected Array<Building> availableBuildings = new Array<>();
+    protected Array<Project> availableBuildings = new Array<>();
 
 	public Island(TextureRegion tr, int x, int y){
 		this.tr=tr;
@@ -119,7 +119,7 @@ public abstract class Island {
 
     public abstract String getVictoryText();
 
-    public Building getRandomBuilding() {
+    public Project getRandomBuilding() {
         return availableBuildings.random();
     }
 

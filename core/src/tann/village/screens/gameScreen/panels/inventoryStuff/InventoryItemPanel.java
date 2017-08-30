@@ -102,7 +102,7 @@ public class InventoryItemPanel extends Lay{
         imageActor = new ImageActor(tr, TEXTURESIZE, TEXTURESIZE);
 		Color col = null;
         if(tr== Images.fate){
-             col = (getValue()>0?Colours.blue_light:getValue()<0?Colours.red:Colours.grey);
+             col = Colours.light;
         }
 		amount = new TextBox(String.valueOf(getValue()), Fonts.font, getWidth(), Align.center);
 		outOf = new TextBox(max!=Integer.MAX_VALUE?"/"+max:"", Fonts.fontSmall, getWidth(), Align.center);

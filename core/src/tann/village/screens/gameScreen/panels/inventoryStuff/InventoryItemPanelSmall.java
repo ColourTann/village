@@ -7,7 +7,7 @@ import tann.village.util.Colours;
 public class InventoryItemPanelSmall extends InventoryItemPanel{
     public InventoryItemPanelSmall(TextureRegion tr, int value, int max) {
         super(tr, value, max);
-        this.border = Colours.brown_light;
+        this.border = Colours.brown_dark;
     }
 
     @Override

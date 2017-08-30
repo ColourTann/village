@@ -4,7 +4,7 @@ package tann.village.gameplay.island.islands.levels;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.gameplay.effect.Eff;
-import tann.village.gameplay.island.BuildingGenerator;
+import tann.village.gameplay.island.ProjectGenerator;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
@@ -79,7 +79,7 @@ public class TutorialIsland extends Island {
 
     @Override
     protected void setupBuildings() {
-        this.availableBuildings.addAll(BuildingGenerator.makeBasicBuildings());
+        this.availableBuildings.addAll(ProjectGenerator.makeBasicProjects());
     }
 
     @Override

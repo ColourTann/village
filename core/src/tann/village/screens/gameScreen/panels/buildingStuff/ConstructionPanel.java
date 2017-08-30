@@ -7,37 +7,40 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.gameplay.village.Village;
-import tann.village.gameplay.village.building.Building;
+import tann.village.gameplay.village.project.Project;
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.panels.eventStuff.CostTab;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.util.*;
 
 public class ConstructionPanel extends InfoPanel{
 
-	Array<BuildingPanel> availables = new Array<>();
-	static final float WIDTH = 650, HEIGHT = 330;
+	Array<ProjectPanel> availables = new Array<>();
+	static final float WIDTH = 650, HEIGHT = 350;
 	public ConstructionPanel() {
 		setSize(WIDTH, HEIGHT);
 
 		Layoo l = new Layoo(this);
         l.row(1);
         Fonts.font.setColor(Colours.light);
-        TextBox title = new TextBox("Build something!", Fonts.font, WIDTH, Align.center);
+        TextBox title = new TextBox("choose a project", Fonts.font, WIDTH, Align.center);
         l.actor(title);
         l.row(1);
+        l.absRow(CostTab.height());
 		l.gap(1);
 		
 		for(int i=0;i<3;i++){
-			BuildingPanel bpan = new BuildingPanel();
+			ProjectPanel bpan = new ProjectPanel();
 			l.actor(bpan);
 			availables.add(bpan);
 			l.gap(1);
 		}
+        l.absRow(UnlockedByPanel.height());
 		l.row(1);
 		l.layoo();
 		
 
-		for(final BuildingPanel bp:availables){
+		for(final ProjectPanel bp:availables){
 			bp.addListener(new InputListener(){
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -61,7 +64,7 @@ public class ConstructionPanel extends InfoPanel{
 
 	}
 	
-	public void attemptToBuy(Building b){
+	public void attemptToBuy(Project b){
 		// maybe have an inventory manager class to deal with this kind of thing.
 		// doesn't really make sense to pass it onto gamescreen :P
 		if(!Village.getInventory().checkCost(b.cost)){
@@ -70,15 +73,15 @@ public class ConstructionPanel extends InfoPanel{
 		Village.getInventory().spendCost(b.cost);
 		Village.get().addBuilding(b);
 		resetAvailablePanels();
-		b.onBuild();
+		b.onCommence();
 		GameScreen.get().checkEnd();
 	}
 
 	private void resetAvailablePanels() {
 		int levelToGenerate = 0;
 		levelToGenerate = Math.min(1, levelToGenerate);
-		for(BuildingPanel bp:availables){
-			bp.setBuilding(GameScreen.get().island.getRandomBuilding());
+		for(ProjectPanel bp:availables){
+			bp.setProject(GameScreen.get().island.getRandomBuilding());
 		}
 	}
 

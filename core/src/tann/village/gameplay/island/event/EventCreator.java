@@ -87,13 +87,40 @@ public class EventCreator {
         current.add(ev);
 
         ev = new Event("Rot","You're sure it looked fine yesterday...");
-        ev.effR(new Eff().food(-2));
+        ev.effR(new Eff().food(-1));
         ev.addOutcome("Rotten food");
-        ev.eff(new Eff().wood(-2));
+        ev.eff(new Eff().wood(-1));
         ev.addOutcome("Rotten wood");
-        ev.joel(-.4);
-        ev.chance(10000);
+        ev.joel(-.2);
         current.add(ev);
+
+        ev = new Event("Noises in the night", "You have some nocturnal visitors");
+        ev.effR(new Eff().wood(-4));
+        ev.addOutcome("An elephant tramples some of your tools");
+        ev.eff(new Eff().food(-2));
+        ev.eff(new Eff().storage(-2));
+        ev.addOutcome("Those damn monkeys!!");
+        ev.eff(new Eff().morale(-1));
+        ev.joel(-1.2);
+        current.add(ev);
+
+        ev = new Event("Fresh breeze", "The whole village feels refreshed today");
+        ev.eff(new Eff(new Buff().rerolls(3)));
+        ev.addOutcome("Get up early for a good day's work");
+        ev.eff(new Eff().morale(1));
+        ev.addOutcome("Time for a lie-in");
+        ev.joel(.4);
+        current.add(ev);
+
+        ev = new Event("Sniffles", "Everyone's feeling a bit under the weather");
+        ev.eff(new Eff().food(-1));
+        ev.addOutcome("Extra rations");
+        ev.eff(new Eff(new Buff().rerolls(1)));
+        ev.addOutcome("Slow day");
+        ev.joel(-.2);
+        current.add(ev);
+
+
 
         ev = new Event("Buried Chest","An incredible find! Has some useful tools in it"); 
         ev.effR(new Eff().wood(2));

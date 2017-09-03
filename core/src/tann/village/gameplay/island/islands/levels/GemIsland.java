@@ -63,6 +63,13 @@ public class GemIsland extends Island{
         ev.joel(1.4f);
         addEvent(ev);
 
+        ev = new Event("Rainy night", "The rain beats down all night");
+        ev.eff(new Eff().morale(-1));
+        ev.addOutcome("You wake up damp");
+        ev.eff(new Eff().gem(1));
+        ev.addOutcome("The rain uncovers a gem!", 3);
+        addEvent(ev);
+
         addEvents(EventCreator.makeBasicEvents());
     }
 

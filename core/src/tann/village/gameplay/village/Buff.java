@@ -77,15 +77,21 @@ public class Buff {
         this.turnsLeft--;
         this.dead=turnsLeft==0;
     }
+
+    public String getValueString(){
+        return value>0?"+"+value:"-"+value;
+    }
+
+
     public String toWriterString(){
         switch(type){
 
             case BonusFoodFromDice:
-                return "+1[h][dice][food]";
+                return getValueString()+"[h][dice][food]";
             case BonusWoodFromDice:
-                return "+1[dice][wood]";
+                return getValueString()+"[dice][wood]";
             case Rerolls:
-                break;
+                return getValueString()+"[dice]";
         }
         return "";
     }

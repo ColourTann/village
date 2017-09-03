@@ -286,7 +286,7 @@ public class GameScreen extends Screen{
 
 
 	public boolean canProceed(){
-        if((state==State.Event||state==State.Story) && !eventPanel.e.choiceAction()){
+        if((state==State.Event||state==State.Story) && !eventPanel.choiceAction()){
             Sounds.playSound(Sounds.error, 1,1);
             return false;
         }

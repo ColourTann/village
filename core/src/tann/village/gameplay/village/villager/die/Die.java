@@ -38,7 +38,7 @@ public class Die {
     public CollisionObject physical;
     public TextureRegion lapel;
     public Array<Side> sides = new Array<>();
-    private static final float MAX_AIRTIME = 2.2f;
+    private static final float MAX_AIRTIME = 2.4f;
     private static final float INTERP_SPEED = .4f;
 
     // gameplay stuff

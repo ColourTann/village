@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import tann.village.Main;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
@@ -40,7 +41,11 @@ public class EffectPanel extends Lay {
     public void layout() {
         clearChildren();
         setSize(staticWidth(), staticHeight());
+
         TextWriter tw = new TextWriter(effect.toWriterString(), font);
+        if(tw.getWidth()>getWidth()){
+            tw = new TextWriter(effect.toWriterString(), Fonts.fontSmall);
+        }
         addActor(tw);
         tw.setPosition(getWidth()/2-tw.getWidth()/2, getHeight()/2-tw.getHeight()/2);
     }

@@ -6,6 +6,7 @@ import tann.village.gameplay.effect.Eff.EffectType;
 public class Buff {
     public boolean dead;
 
+
     public enum BuffType{
         BonusFoodFromDice,
         BonusWoodFromDice,
@@ -75,5 +76,17 @@ public class Buff {
     public void turn(){
         this.turnsLeft--;
         this.dead=turnsLeft==0;
+    }
+    public String toWriterString(){
+        switch(type){
+
+            case BonusFoodFromDice:
+                return "+1[h][dice][food]";
+            case BonusWoodFromDice:
+                return "+1[dice][wood]";
+            case Rerolls:
+                break;
+        }
+        return "";
     }
 }

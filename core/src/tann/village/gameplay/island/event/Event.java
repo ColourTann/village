@@ -49,22 +49,6 @@ public class Event {
         this.uses++;
     }
 
-
-	public boolean choiceAction() {
-        if(outcomes!=null&&outcomes.size>0){
-            boolean ok = false;
-            for(Outcome o:outcomes){
-                if(o.chosen){
-                    ok = true;
-                    o.activate();
-                    break;
-                }
-            }
-            if(!ok) return false;
-        }
-        return true;
-	}
-
 	public String toString(){
 	    return title;
     }

@@ -40,7 +40,7 @@ public class TextWriter extends Lay {
         textureMap.put("wood", Images.wood);
         textureMap.put("morale", Images.morale);
         textureMap.put("fate", Images.fate);
-        textureMap.put("foodfromdice", Images.roll);
+        textureMap.put("dice", Images.roll);
 
 
         textureMap.put("hut", Images.obj_village);

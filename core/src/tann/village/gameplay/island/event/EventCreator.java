@@ -52,14 +52,48 @@ public class EventCreator {
         ev.eff(new Eff().morale(1));
         current.add(ev);
 
-//        ev = new Event("Spawning", "Hundreds of small fish have come near the shore");
-//        ev.eff(new Eff().food(2));
-//        ev.addOutcome("A lot of them just wash up on the beach!");
-//        ev.eff(new Eff(new Buff().bonusFood(1)));
-//        ev.addOutcome("You rush out to gather them!");
-//        ev.joel(-.5f);
-//        ev.chance(100000);
-//        current.add(ev);
+        ev = new Event("Spawning", "Hundreds of small fish have come near the shore");
+        ev.eff(new Eff().food(2));
+        ev.addOutcome("A lot of them just wash up on the beach");
+        ev.eff(new Eff(new Buff().bonusFood(1)));
+        ev.addOutcome("You rush out to gather them\n(+1 food from dice this turn)");
+        ev.joel(.5f);
+        current.add(ev);
+
+        ev = new Event("A coconut tree", "You've found a big coconut tree but there's not much growing on it yet");
+        ev.eff(new Eff().food(1));
+        ev.eff(new Eff().wood(2));
+        ev.addOutcome("Chop it down");
+        ev.eff(new Eff().inTurns(3).food(5));
+        ev.addOutcome("Let it grow");
+        ev.joel(.7);
+        current.add(ev);
+
+        ev = new Event("Bamboo shoots", "Tasty-looking bamboo shoots were found!");
+        ev.eff(new Eff().food(2));
+        ev.addOutcome("Eat them up!");
+        ev.eff(new Eff().inTurns(2).wood(3));
+        ev.addOutcome("Wait for it to grow");
+        ev.joel(.4);
+        current.add(ev);
+
+        ev = new Event("Two-headed fish","It's huge and stared at you with its four eyes");
+        ev.eff(new Eff().food(3));
+        ev.addOutcome("Tasty!");
+        ev.eff(new Eff().fate(1));
+        ev.addOutcome("Release it back into the ocean");
+        ev.joel(.6);
+        ev.chance(.5f);
+        current.add(ev);
+
+        ev = new Event("Rot","You're sure it looked fine yesterday...");
+        ev.effR(new Eff().food(-2));
+        ev.addOutcome("Rotten food");
+        ev.eff(new Eff().wood(-2));
+        ev.addOutcome("Rotten wood");
+        ev.joel(-.4);
+        ev.chance(10000);
+        current.add(ev);
 
         ev = new Event("Buried Chest","An incredible find! Has some useful tools in it"); 
         ev.effR(new Eff().wood(2));

@@ -81,7 +81,7 @@ public class Eff {
     public Eff(){this((EffectType)null);};
 
     public String getValueString(){
-	     return (value>=0?"+":"-")+Math.abs(value);
+	     return (value>=0?"":"-")+Math.abs(value);
     }
 
     public String toString(){
@@ -89,6 +89,7 @@ public class Eff {
     }
 
     public String toWriterString(){
+        if(buff!=null) return buff.toWriterString();
         return getValueString()+"[h]"+getwriterString()+""+effAct.toWriterString();
     }
 

@@ -30,6 +30,7 @@ public class EventPanel extends Lay{
     private static final int GAP = 10;
     public static final int BORDER = 10;
     Color border = Colours.grey;
+    Array<OutcomePanel> outcomePanels = new Array<>();
 	public EventPanel(Event e, int dayNumber) {
 	    this.e=e;
         this.dayNumber=dayNumber;
@@ -58,7 +59,7 @@ public class EventPanel extends Lay{
 
         float width = Math.max(WIDTH, eventTitle.getWidth()+30);
         if(e.outcomes.size>0){
-            width = Math.max(width,e.outcomes.get(0).getPanel().getWidth()*e.outcomes.size + GAP*(e.outcomes.size+1));
+            width = Math.max(width,OutcomePanel.WIDTHBIG*e.outcomes.size + GAP*(e.outcomes.size+1));
         }
 
         height += eventTitle.getHeight();
@@ -109,7 +110,8 @@ public class EventPanel extends Lay{
             float biggestHeight=0;
             for(int i=0;i<e.outcomes.size;i++){
                 final Outcome o = e.outcomes.get(i);
-                final OutcomePanel op = o.getPanel();
+                final OutcomePanel op = o.makePanel();
+                outcomePanels.add(op);
                 l.actor(op);
                 l.gap(1);
                 float ocHeight = op.getHeight()+(op.o.cost!=null?CostTab.height():0);
@@ -117,7 +119,7 @@ public class EventPanel extends Lay{
                 op.addListener(new InputListener(){
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                      selectOutcome(o);
+                      selectOutcome(op);
                       return true;
                     }
 
@@ -140,18 +142,18 @@ public class EventPanel extends Lay{
         l.layoo();
     }
 
-    public void selectOutcome(Outcome chosen){
-        for(Outcome o:e.outcomes){
-            if(o.getPanel().locked){
+    public void selectOutcome(OutcomePanel chosen){
+	    for(OutcomePanel ocp:outcomePanels){
+            if(ocp.locked){
                 Sounds.playSound(Sounds.error, 1, 1);
                 return;
             }
         }
-        if(chosen.isValid()){
-            for(Outcome o:e.outcomes){
-                o.getPanel().deselect();
+        if(chosen.o.isValid()) {
+            for (OutcomePanel ocp : outcomePanels) {
+                ocp.deselect();
             }
-            chosen.getPanel().select();
+            chosen.select();
         }
         else{
             Sounds.playSound(Sounds.error, 1, 1);
@@ -206,8 +208,22 @@ public class EventPanel extends Lay{
             Draw.fillActor(batch, this);
             super.draw(batch, parentAlpha);
         }
+    }
 
+    public boolean choiceAction() {
+        if(e.outcomes!=null&&e.outcomes.size>0){
+            boolean ok = false;
 
+            for(OutcomePanel op:outcomePanels){
+                if(op.chosen){
+                    ok = true;
+                    op.o.activate();
+                    break;
+                }
+            }
+            if(!ok) return false;
+        }
+        return true;
     }
 
 }

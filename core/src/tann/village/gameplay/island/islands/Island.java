@@ -68,7 +68,6 @@ public abstract class Island {
             System.err.print("No event generated for some reason, getting random valid event");
             toReturn = validEvents.get((int)(Math.random()*validEvents.size));
         }
-		toReturn.uses--;
         return toReturn;
 
 	}
@@ -100,11 +99,17 @@ public abstract class Island {
 		setupBuildings();
 		setupClasses();
 		background = Main.atlas.findRegion(getBackgroundString());
+		for(Event e:randomEventsPool){
+		    e.validate();
+        }
+        for(Event e:storyEvents.values()){
+		    e.validate();
+        }
     }
 
     public void addEvent(Event event){
         if(event.isStory()){
-            storyEvents.put(event.turn, event);
+            storyEvents.put(event.storyTurn, event);
         }
         else{
             randomEventsPool.add(event);

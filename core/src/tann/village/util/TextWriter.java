@@ -40,9 +40,15 @@ public class TextWriter extends Lay {
         textureMap.put("wood", Images.wood);
         textureMap.put("morale", Images.morale);
         textureMap.put("fate", Images.fate);
+        textureMap.put("foodfromdice", Images.roll);
+
+
         textureMap.put("hut", Images.obj_village);
         textureMap.put("turn", Images.turn);
         textureMap.put("reroll", Images.roll);
+
+
+
         textureMap.put("buildtown", Images.obj_village);
         textureMap.put("frill-left", Main.atlas.findRegion("frill-left"));
         textureMap.put("frill-right", Main.atlas.findRegion("frill-right"));

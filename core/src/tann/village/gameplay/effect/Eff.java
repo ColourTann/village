@@ -3,6 +3,7 @@ package tann.village.gameplay.effect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
+import tann.village.gameplay.village.Buff;
 import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
@@ -12,6 +13,11 @@ public class Eff {
 
     public Eff getInverse() {
         return new Eff(type, -value, sourceDie, effAct);
+    }
+    int bonus;
+
+    public int getAdjustedValue() {
+        return value+bonus;
     }
 
     public enum EffectType{
@@ -24,7 +30,7 @@ public class Eff {
         Brain(Images.brain),
         Reroll(Images.roll),
         Gem(Images.gem),
-        FoodBonus(Images.sunflower),
+        Buff,
 
         //objectives
         Survive(Images.obj_pocketwatch, true),
@@ -55,12 +61,17 @@ public class Eff {
 	public int value;
 	public Die sourceDie;
     public EffAct effAct;
+    private Buff buff;
 
-
+    public Eff(Buff buff){
+        this.buff=buff;
+        this.type=EffectType.Buff;
+    }
 
 	public Eff(EffectType type, int value, Die sourceDie, EffAct effectActivation){
         this.type=type; this.value=value;  this.sourceDie=sourceDie; this.effAct = effectActivation;
     }
+
     public Eff(EffectType type, int value, Die sourceDie){this(type, value, sourceDie, EffAct.now);}
     public Eff(EffectType type, int value, EffAct effectActivation){
         this(type,value,null, effectActivation);
@@ -69,7 +80,7 @@ public class Eff {
 	    this(type,value, null, EffAct.now);
     }
     public Eff(EffectType type){this(type, 0);}
-    public Eff(){this(null);};
+    public Eff(){this((EffectType)null);};
 
     public String getValueString(){
 	     return (value>=0?"+":"-")+Math.abs(value);
@@ -161,5 +172,8 @@ public class Eff {
         return this;
     }
 
+    public Buff getBuff(){
+        return buff;
+    }
 
 }

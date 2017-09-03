@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Align;
 import tann.village.Images;
 import tann.village.Main;
 import tann.village.gameplay.village.villager.Villager;
+import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
 import tann.village.util.*;
 
 public class VillagerIcon extends Lay {
@@ -16,7 +17,7 @@ public class VillagerIcon extends Lay {
     }
 
     public static float width(){
-        return Main.h(22);
+        return InventoryItemPanel.invPanelWidth();
     }
 
     public static float height(){

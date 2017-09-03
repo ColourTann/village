@@ -8,16 +8,15 @@ import com.badlogic.gdx.utils.Align;
 
 import tann.village.Images;
 import tann.village.Main;
+import tann.village.gameplay.village.AddSub;
 import tann.village.util.*;
 
 public class InventoryItemPanel extends Lay{
 	private int value;
-	public int max;
 	TextureRegion tr;
     protected Color border = Colours.dark;
-	public InventoryItemPanel(TextureRegion tr, int value, int max) {
+	public InventoryItemPanel(TextureRegion tr, int value) {
 		this.value=value;
-		this.max=max;
 		this.tr=tr;
         layout();
     }
@@ -44,12 +43,7 @@ public class InventoryItemPanel extends Lay{
 		this.value=value;
 		setup();
 	}
-	
-	public void setMax(int max){
-		this.max=max;
-		setup();
-	}
-	
+
 	int prevAmount=0;
 
 	public void clearWisp(){
@@ -93,7 +87,6 @@ public class InventoryItemPanel extends Lay{
     }
 
     TextBox amount;
-	TextBox outOf;
 	ImageActor imageActor;
 	protected void setup(){
         clearChildren();
@@ -105,12 +98,9 @@ public class InventoryItemPanel extends Lay{
              col = Colours.light;
         }
 		amount = new TextBox(String.valueOf(getValue()), Fonts.font, getWidth(), Align.center);
-		outOf = new TextBox(max!=Integer.MAX_VALUE?"/"+max:"", Fonts.fontSmall, getWidth(), Align.center);
-		outOf.setup(max!=Integer.MAX_VALUE?"/"+max:"");
         amount.setup(String.valueOf(getValue()));
-        outOf.setTextColour(Colours.light);
         Layoo l = new Layoo(this);
-        l.add(1,imageActor,1, amount, 0, outOf, 1);
+        l.add(1,imageActor,1, amount, 1);
         l.layoo();
         if(col!=null){
             amount.setTextColour(col);
@@ -134,20 +124,14 @@ public class InventoryItemPanel extends Lay{
 		batch.setColor(Colours.z_white);
         super.draw(batch, parentAlpha);
 	}
-
-	public void maxOut() {
-		setValue(max);
-		setup();
-	}
-
-	public void addMax(int value) {
-		setMax(max+value);
-	}
-
     public void setDeltas(int pos, int neg) {
 	    this.pos=pos;
 	    this.neg=neg;
 	    layout();
+    }
+
+    public void setDeltas(AddSub addSub) {
+	    setDeltas(addSub.add, addSub.sub);
     }
 
     static class InventoryDeltaGroup extends Lay{

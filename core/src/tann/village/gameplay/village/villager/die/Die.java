@@ -172,7 +172,7 @@ public class Die {
         if(getState()==Stopped) physical.transform.getRotation(originalRotation);
         int index = LockBar.get().addDie(this);
         float width = 5;
-        float x = -(width/(GameScreen.STARTING_VILLAGERS-1)*index - width/2);
+        float x = -(width/(Village.STARTING_VILLAGERS-1)*index - width/2);
         moveTo(new Vector3(x, 0f, 6.55f), d6QuatsWithLean[lockedSide]);
         setState(Locking);
         removeFromPhysics();

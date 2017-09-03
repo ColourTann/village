@@ -14,6 +14,7 @@ public class Outcome {
     public boolean pickedBeforeEver;
     public boolean chosen;
     public boolean fateful;
+    private boolean triple;
     public Outcome(String description, Array<Eff> events, Cost cost) {
         this.cost=cost;
         this.effects = events;
@@ -31,7 +32,7 @@ public class Outcome {
     OutcomePanel ocp;
     public OutcomePanel getPanel(){
         this.pickedBeforeEver = Prefs.getBoolean(getPrefKey(), false);
-        if(ocp==null)ocp= new OutcomePanel(this);
+        if(ocp==null)ocp= new OutcomePanel(this, triple);
         return ocp;
     }
 
@@ -46,11 +47,15 @@ public class Outcome {
     }
 
     public String getPrefKey(){
-        return "outcome: description";
+        return "outcome: "+description;
     }
 
     public void pick() {
         pickedBeforeEver = true;
         Prefs.setBoolean(getPrefKey(), true);
+    }
+
+    public void setTriple(){
+        this.triple=true;
     }
 }

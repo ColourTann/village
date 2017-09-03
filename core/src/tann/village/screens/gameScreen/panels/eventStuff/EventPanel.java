@@ -27,7 +27,7 @@ public class EventPanel extends Lay{
     TextBox day, eventTitle, description;
     public static float WIDTH;
     private static final int items_per_row = 3;
-    private static final int GAP = 30;
+    private static final int GAP = 10;
     public static final int BORDER = 10;
     Color border = Colours.grey;
 	public EventPanel(Event e, int dayNumber) {
@@ -58,7 +58,7 @@ public class EventPanel extends Lay{
 
         float width = Math.max(WIDTH, eventTitle.getWidth()+30);
         if(e.outcomes.size>0){
-            width = e.outcomes.get(0).getPanel().getWidth()*2 + GAP*3;
+            width = Math.max(width,e.outcomes.get(0).getPanel().getWidth()*e.outcomes.size + GAP*(e.outcomes.size+1));
         }
 
         height += eventTitle.getHeight();
@@ -104,8 +104,6 @@ public class EventPanel extends Lay{
             TextWriter tw = new TextWriter("[frill-left] Choose One [frill-right]", Fonts.fontSmall);
             l.actor(tw);
             l.row(1);
-            float absOutcomesGap = Main.h(4);
-            l.absRow(absOutcomesGap);
             l.gap(1);
 
             float biggestHeight=0;
@@ -114,7 +112,8 @@ public class EventPanel extends Lay{
                 final OutcomePanel op = o.getPanel();
                 l.actor(op);
                 l.gap(1);
-                if(op.getHeight()>biggestHeight) biggestHeight=op.getHeight();
+                float ocHeight = op.getHeight()+(op.o.cost!=null?CostTab.height():0);
+                if(ocHeight>biggestHeight) biggestHeight=ocHeight;
                 op.addListener(new InputListener(){
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -132,7 +131,7 @@ public class EventPanel extends Lay{
                 });
             }
             l.row(1);
-            height+=biggestHeight+absOutcomesGap;
+            height+=biggestHeight;
         }
 
 

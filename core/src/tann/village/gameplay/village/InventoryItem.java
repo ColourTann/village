@@ -2,27 +2,24 @@ package tann.village.gameplay.village;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tann.village.Images;
+import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanelSmall;
 
+import java.util.Map;
+
+
 public class InventoryItem {
 
-    private int min, max, value;
+    private int value;
+    protected EffectType type;
     private TextureRegion image;
 
-    public InventoryItem(TextureRegion image) {
-        this(image, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    public InventoryItem(EffectType type) {
+        this.type=type;
+        this.image=type.region;
     }
 
-    public InventoryItem(TextureRegion image, int max) {
-        this(image, Integer.MIN_VALUE, max);
-    }
-
-    public InventoryItem(TextureRegion image, int min, int max) {
-        this.max=max;
-        this.min=min;
-        this.image=image;
-    }
 
     public int getValue(){
         return value;
@@ -39,17 +36,7 @@ public class InventoryItem {
     }
 
     public boolean canChangeBy(int delta){
-        return value+delta >= min && value+delta <= max;
-    }
-
-    public void addMax(int delta){
-        this.max+=delta;
-        getPanel().setMax(max);
-    }
-
-    public void imposeMaximum(){
-        this.value = Math.min(max, value);
-        valueChanged();
+        return value+delta >= 0;
     }
 
     public void imposeMinimum(){
@@ -64,8 +51,8 @@ public class InventoryItem {
     private InventoryItemPanel panel;
     public InventoryItemPanel getPanel(){
         if(panel==null){
-            if(image== Images.food_storage) panel = new InventoryItemPanelSmall(image, value, max);
-            else panel = new InventoryItemPanel(image, value, max);
+            if(image== Images.food_storage) panel = new InventoryItemPanelSmall(image, value);
+            else panel = new InventoryItemPanel(image, value);
 
         }
         return panel;
@@ -88,5 +75,9 @@ public class InventoryItem {
         pos=0;
         neg=0;
         getPanel().setDeltas(pos,neg);
+    }
+
+    public void setDelta(AddSub addSub) {
+        getPanel().setDeltas(addSub);
     }
 }

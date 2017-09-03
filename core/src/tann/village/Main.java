@@ -53,7 +53,8 @@ public class Main extends ApplicationAdapter {
 			System.out.println(id+": "+(currentTime-previousTime));
 		}
 		previousTime = System.currentTimeMillis();
-	}
+
+    }
 
 	public Main(){};
 
@@ -77,7 +78,7 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-	    Main.width = Gdx.graphics.getWidth();
+	    Main.width = Gdx.graphics.getWidth() ;
 	    Main.height = Gdx.graphics.getHeight();
         logTime(null);
 		logTime("start");

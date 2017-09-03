@@ -53,7 +53,7 @@ public class Prefs {
 
 
     public static void RESETSAVEDATA() {
-        prefs.clear();
-        prefs.flush();
+        get().clear();
+        get().flush();
     }
 }

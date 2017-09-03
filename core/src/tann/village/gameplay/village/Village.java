@@ -1,16 +1,21 @@
 package tann.village.gameplay.village;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.project.Project;
+import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.eventStuff.JoelDebugPanel;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
 import tann.village.screens.gameScreen.panels.rollStuff.RerollPanel;
+import tann.village.screens.gameScreen.panels.villagerStuff.VillagerIcon;
 import tann.village.util.Sounds;
 
 public class Village {
@@ -24,6 +29,10 @@ public class Village {
     }
     private float joel;
     private Upkeep upkeep;
+    private Array<Buff> buffs = new Array<Buff>();
+
+    public static final int STARTING_VILLAGERS = 5;
+    public Array<Villager> villagers = new Array<>();
 
     private int dayNum=0;
 	public static Village get(){
@@ -47,6 +56,9 @@ public class Village {
 	    return get().inventory;
     }
 
+
+    Array<Eff> potentialEffects = new Array<>();
+
     public void activate(Eff[] effs, boolean activateNow, boolean invert){for(Eff e:effs){activate(e, activateNow, invert);}}
     public void activate(Array<Eff> effs, boolean activateNow, boolean invert){for(Eff e:effs){activate(e, activateNow, invert);}}
     public void activate(Array<Eff> effs, boolean activateNow){for(Eff e:effs){activate(e, activateNow, false);}}
@@ -63,14 +75,121 @@ public class Village {
                     return;
             }
         }
-        getInventory().activate(e, activateNow, invert);
+
+        if(activateNow){
+            switch(e.type){
+                case Brain:
+                    e.sourceDie.villager.gainXP(e.value);
+                    break;
+                case Gem:
+                    Village.get().objectiveProgress(Objective.ObjectiveEffect.Gem, e.value);
+                    break;
+                case Buff:
+                    Village.get().addBuff(e.getBuff());
+                    break;
+            }
+            int value = e.value*(invert?-1:1);
+            InventoryItem item = getInventory().get(e.type);
+            if(item!=null) item.changeValue(value);
+        }
+        else{
+            // potential zone
+            if(invert){
+                boolean removed = potentialEffects.removeValue(e, true);
+                if(!removed){
+                    System.err.println("Failed to remove "+e);
+                }
+            }
+            else {
+                potentialEffects.add(e);
+            }
+        }
+
+
+
+        refreshDelta();
     }
+
+
+
+    private void actuallyActivate(Eff e){
+
+    }
+
+
+    private void refreshDelta(){
+        calculateDelta();
+        getInventory().setDeltas(deltaMap);
+        for(Villager v:villagers){
+            v.setDelta(deltaMap);
+        }
+    }
+
+    private AddSub getFromMap(Object key){
+        AddSub as = deltaMap.get(key);
+        if(as==null){
+            as = new AddSub();
+            deltaMap.put(key, as);
+        }
+        return as;
+    }
+
+    private Map<Object, AddSub> deltaMap = new HashMap<>();
+    private void calculateDelta(){
+        for(AddSub ad:deltaMap.values()){
+            ad.reset();
+        }
+        for(int i=0;i<potentialEffects.size;i++){
+            Eff e = potentialEffects.get(i);
+            for(Buff b:buffs){
+                b.process(e);
+            }
+            Object key = null;
+            switch(e.type){
+
+                case Food:
+                case Wood:
+                case Morale:
+                case FoodStorage:
+                case Fate:
+                case Gem:
+                    key = e.type;
+                    break;
+                case Brain:
+                    key = e.sourceDie.villager;
+                    break;
+                case Reroll:
+                case Buff:
+                    // hmm not sure
+                    break;
+            }
+            AddSub as = getFromMap(key);
+            as.add(e.getAdjustedValue());
+        }
+    }
+
+    public void actionPotential() {
+        calculateDelta();
+        potentialEffects.clear();
+        for(Villager v:villagers){
+            AddSub as = deltaMap.get(v);
+            if(as!=null){
+                v.gainXP(as.getTotal());
+            }
+        }
+        getInventory().actionPotential(deltaMap);
+    }
+
 
 	public void setup(){
 	    dayNum=0;
         buildings.clear();
         inventory = new Inventory();
         upkeep= new Upkeep();
+        villagers.clear();
+        for(int i=0;i<STARTING_VILLAGERS;i++){
+            villagers.add(new Villager(i));
+        }
     }
 
     public void startOfRoll(){
@@ -103,10 +222,9 @@ public class Village {
     }
 
     public void process(Eff effect) {
-//        for(Buff b:buffs){
-//            b.process(effect);
-//        }
-        //todo process
+        for(Buff b:buffs){
+            b.process(effect);
+        }
     }
 
     private void addTurnEff(Eff eff){
@@ -142,4 +260,15 @@ public class Village {
         }
         return jdp;
     }
+
+    public void addBuff(Buff b){
+        buffs.add(b);
+        b.onAdd();
+    }
+
+    public void removeBuff(Buff b){
+        buffs.removeValue(b, true);
+        b.onRemove();
+    }
+
 }

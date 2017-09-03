@@ -6,8 +6,11 @@ import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.island.objective.Objective;
+import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
+
+import java.util.Map;
 
 
 public class Inventory{
@@ -30,11 +33,11 @@ public class Inventory{
 	public static final int ITEM_GAP=30;
 
 	public Inventory() {
-        food = new InventoryItem(Images.food, 0, Integer.MAX_VALUE);
-        foodStorage = new InventoryItem(Images.food_storage, 0, Integer.MAX_VALUE);
-		wood = new InventoryItem(Images.wood, 0, Integer.MAX_VALUE);
-		morale = new InventoryItem(Images.morale);
-		fate = new InventoryItem(Images.fate);
+        food = new InventoryItem(EffectType.Food);
+        foodStorage = new InventoryItem(EffectType.FoodStorage);
+		wood = new InventoryItem(EffectType.Wood);
+		morale = new InventoryItem(EffectType.Morale);
+		fate = new InventoryItem(EffectType.Fate);
 
 		morale.setValue(4);
 		food.setValue(0);
@@ -56,60 +59,9 @@ public class Inventory{
 	}
 
 
-	Array<Eff> potentialEffects = new Array<>();
-	void activate(Eff e, boolean activateNow, boolean invert){
-        if(activateNow){
-            switch(e.type){
-                case Brain:
-                    e.sourceDie.villager.gainXP(e.value);
-                    break;
-                case Gem:
-                    if(gems == null){
-                        gems = new InventoryItem(Images.gem);
-                        items.insert(0,gems);
-                        getGroup().layout(true);
-                    }
-                    Village.get().objectiveProgress(Objective.ObjectiveEffect.Gem, e.value);
-                break;
-            }
-            int value = e.value*(invert?-1:1);
-            InventoryItem item = get(e.type);
-            if(item!=null) item.changeValue(value);
-        }
-        else{
-	        // potential zone
-             if(invert){
-                 if (e.type == EffectType.Brain) {
-                     e.sourceDie.villager.addPotentialXP(e.value * (invert ? -1 : 1));
-                 }
-                 boolean removed = potentialEffects.removeValue(e, true);
-                 if(!removed){
-                     System.err.println("Failed to remove "+e);
-                 }
-            }
-            else {
-                 if (e.type == EffectType.Brain) {
-                     e.sourceDie.villager.addPotentialXP(e.value * (invert ? -1 : 1));
-                 }
-                potentialEffects.add(e);
-            }
-            InventoryItem item = get(e);
-            if (item != null) item.addDelta(e.value, invert);
-        }
-    }
 
 
 
-    public void activateAndclearDeltas(){
-	    for(Eff e:potentialEffects){
-	        Village.get().activate(e, true);
-        }
-        potentialEffects.clear();
-	    // potential xp stuff?
-	    for(InventoryItem item:items){
-	        item.clearDelta();
-        }
-    }
 
 	public InventoryItem get(Eff e){
 		return get(e.type);
@@ -121,8 +73,14 @@ public class Inventory{
 		case Morale:        return morale;
 		case Wood:          return wood;
 		case Fate:          return fate;
-        case Gem:           return gems;
         case FoodStorage:   return foodStorage;
+            case Gem:
+            if(gems == null){
+                gems = new InventoryItem(EffectType.Gem);
+                items.insert(0,gems);
+                getGroup().layout(true);
+            }
+            return gems;
 		}
 		return null;
 	}
@@ -141,7 +99,7 @@ public class Inventory{
 
 	public void spendCost(Cost c){
 		for(Eff e:c.effects){
-		    activate(e, true,true);
+		    Village.get().activate(e, true,true);
 		}
 	}
 
@@ -185,6 +143,28 @@ public class Inventory{
     public void resetWisps() {
         for(InventoryItem ii: items){
             ii.getPanel().clearWisp();
+        }
+    }
+
+    public void setDeltas(Map<Object, AddSub> deltaMap) {
+	    for(InventoryItem ii:items){
+	        AddSub as = deltaMap.get(ii.type);
+	        if(as==null){
+	            ii.clearDelta();
+            }
+            else{
+                ii.setDelta(as);
+            }
+        }
+    }
+
+    public void actionPotential(Map<Object, AddSub> deltaMap) {
+        for(InventoryItem ii:items){
+            AddSub as = deltaMap.get(ii.type);
+            ii.clearDelta();
+            if(as!=null){
+                ii.changeValue(as.getTotal());
+            }
         }
     }
 }

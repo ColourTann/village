@@ -12,17 +12,18 @@ import tann.village.gameplay.island.event.Outcome;
 import tann.village.util.*;
 
 public class OutcomePanel extends Group {
-    public static int WIDTH = 270, HEIGHTBASE = 40;
+    public static int WIDTHSMALL = 220, WIDTHBIG=320, HEIGHTBASE = 40;
     Color border = Colours.dark;
     Outcome o;
     boolean locked;
-    public OutcomePanel(final Outcome o) {
+    public OutcomePanel(final Outcome o, boolean triple) {
         this.o=o;
         float height = HEIGHTBASE;
         Layoo l = new Layoo(this);
         l.row(1);
         Fonts.fontSmall.setColor(Colours.light);
-        TextBox tb = new TextBox(o.description, Fonts.fontSmall, WIDTH, Align.center);
+        float WIDTH = triple?WIDTHSMALL:WIDTHBIG;
+        TextBox tb = new TextBox(o.description, Fonts.fontSmall, WIDTH-10, Align.center);
         height += tb.getHeight();
         l.actor(tb);
         l.row(2);
@@ -53,7 +54,7 @@ public class OutcomePanel extends Group {
         batch.setColor(border);
         Draw.fillRectangle(batch, getX()+gap, getY()+gap, getWidth()-gap*2, getHeight()-gap*2);
         super.draw(batch, parentAlpha);
-        if(!o.pickedBeforeEver && o.cost!=null){
+        if(!o.pickedBeforeEver && o.fateful){
             batch.setColor(border);
             Draw.fillRectangle(batch, getX()+gap, getY()+gap, getWidth()-gap*2, getHeight()-gap*2);
             batch.setColor(Colours.light);

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import tann.village.Images;
 import tann.village.Main;
 import tann.village.bullet.BulletStuff;
+import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.Colours;
@@ -37,7 +38,7 @@ public class LockBar extends Lay{
         BulletStuff.moveAllToTop();
     }
 
-    Die[] dice = new Die[GameScreen.STARTING_VILLAGERS];
+    Die[] dice = new Die[Village.STARTING_VILLAGERS];
 
     public void reset(){
         for(int i=0;i<dice.length;i++){

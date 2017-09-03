@@ -8,11 +8,14 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
+import tann.village.gameplay.village.AddSub;
 import tann.village.gameplay.village.villager.die.Side;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.panels.villagerStuff.VillagerIcon;
 import tann.village.util.Colours;
+
+import java.util.Map;
 
 public class Villager {
 
@@ -79,10 +82,6 @@ public class Villager {
 
 	public int potentialXp;
 
-	public void addPotentialXP(int value){
-	    this.potentialXp+=value;
-	    getIcon().layout();
-    }
 
 	private static Array<String> firstNames;
 	private static Array<String> lastNames;
@@ -114,6 +113,15 @@ public class Villager {
     public VillagerIcon getIcon() {
         if(icon==null)icon = new VillagerIcon(this);
         return icon;
+    }
+
+    public void setDelta(Map<Object, AddSub> deltaMap) {
+        AddSub as = deltaMap.get(this);
+        potentialXp=0;
+        if(as!=null){
+            potentialXp=as.getTotal();
+        }
+        getIcon().layout();
     }
 
 

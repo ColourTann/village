@@ -20,6 +20,7 @@ import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventDebugPanel;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
+import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
@@ -58,8 +59,6 @@ public class GameScreen extends Screen{
 
     public enum State{Story, Event, Rolling, Upkeep, Levelling}
 	public State state;
-	public static final int STARTING_VILLAGERS = 5;
-	public Array<Villager> villagers = new Array<>();
 	public CircleButton constructionCircle;
 	public Array<Villager> villagersToLevelUp = new Array<>();
 	EventPanel eventPanel;
@@ -100,9 +99,7 @@ public class GameScreen extends Screen{
 		});
 
 		addActor(Village.getInventory().getGroup());
-		for(int i=0;i<STARTING_VILLAGERS;i++){
-			villagers.add(new Villager(i));
-		}
+
 		refreshBulletStuff();
         //todo upkeep
         Village.get().getUpkeep().addEffect(new Eff(EffectType.Food, -2));
@@ -193,7 +190,7 @@ public class GameScreen extends Screen{
 	}
 	
 	private void refreshBulletStuff() {
-		BulletStuff.refresh(villagers);
+		BulletStuff.refresh(Village.get().villagers);
 	}
 
     EventDebugPanel edp;
@@ -405,7 +402,7 @@ public class GameScreen extends Screen{
 		resetWisps();
         showRollContainer(false);
         LockBar.get().moveAway();
-        Village.getInventory().activateAndclearDeltas();
+        Village.get().actionPotential();
         showWisps();
         BulletStuff.clearDice();
 	}
@@ -463,7 +460,7 @@ public class GameScreen extends Screen{
         levelledUpAlready=false;
 	    showRollContainer(true);
 		Village.get().startOfRoll();
-		BulletStuff.refresh(villagers);
+		BulletStuff.refresh(Village.get().villagers);
 
 		RollManager.setMaximumRolls(Village.get().getRerolls());
 		RollManager.refreshRolls();

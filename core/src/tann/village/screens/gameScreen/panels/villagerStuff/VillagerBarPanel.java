@@ -2,6 +2,7 @@ package tann.village.screens.gameScreen.panels.villagerStuff;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import tann.village.Main;
+import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.Lay;
@@ -14,7 +15,7 @@ public class VillagerBarPanel extends Lay{
         setSize(VillagerIcon.width(), Main.height-GameScreen.getConstructionCircleSize());
         clearChildren();
         Layoo l = new Layoo(this);
-        for(Villager v: GameScreen.get().villagers){
+        for(Villager v: Village.get().villagers){
             l.actor(v.getIcon());
             l.row(1);
         }

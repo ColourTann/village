@@ -26,6 +26,15 @@ public class Cost {
 	    return this;
     }
 
+    @Override
+    public String toString() {
+        String result = "Cost: ";
+        for(Eff e:effects){
+            result+=e.toString();
+        }
+        return result;
+    }
+
     public String toWriterString() {
         String result ="";
         for(Eff e:effects){

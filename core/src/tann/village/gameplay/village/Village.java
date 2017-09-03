@@ -50,6 +50,17 @@ public class Village {
     public void nextDay(){
 	    dayNum++;
 	    getObjectivePanel().objectiveProgress(Objective.ObjectiveEffect.Turn, 1);
+	    tickBuffs();
+    }
+
+    private void tickBuffs(){
+        for(int i=buffs.size-1;i>=0;i--){
+            Buff b = buffs.get(i);
+            b.turn();
+            if(b.dead){
+                buffs.removeValue(b, true);
+            }
+        }
     }
 
 	public static Inventory getInventory(){
@@ -66,6 +77,11 @@ public class Village {
         activate(e, activateNow, false);
     }
     public void activate(Eff e, boolean activateNow, boolean invert){
+        doEffectStuff(e,activateNow,invert);
+        refreshDelta();
+    }
+
+    private void doEffectStuff(Eff e, boolean activateNow, boolean invert){
         if(e.effAct!=null) {
             switch (e.effAct.type) {
                 case FOR_TURNS:
@@ -75,17 +91,17 @@ public class Village {
                     return;
             }
         }
+        if(e.type==EffectType.Buff){
+            e.getBuff().resetTurns();
+            if(invert) buffs.removeValue(e.getBuff(), true);
+            else buffs.add(e.getBuff());
+            return;
+        }
 
         if(activateNow){
             switch(e.type){
                 case Brain:
                     e.sourceDie.villager.gainXP(e.value);
-                    break;
-                case Gem:
-                    Village.get().objectiveProgress(Objective.ObjectiveEffect.Gem, e.value);
-                    break;
-                case Buff:
-                    Village.get().addBuff(e.getBuff());
                     break;
             }
             int value = e.value*(invert?-1:1);
@@ -104,12 +120,7 @@ public class Village {
                 potentialEffects.add(e);
             }
         }
-
-
-
-        refreshDelta();
     }
-
 
 
     private void actuallyActivate(Eff e){
@@ -141,9 +152,7 @@ public class Village {
         }
         for(int i=0;i<potentialEffects.size;i++){
             Eff e = potentialEffects.get(i);
-            for(Buff b:buffs){
-                b.process(e);
-            }
+            processBuffs(e);
             Object key = null;
             switch(e.type){
 
@@ -165,6 +174,13 @@ public class Village {
             }
             AddSub as = getFromMap(key);
             as.add(e.getAdjustedValue());
+        }
+    }
+
+    private void processBuffs(Eff e){
+        e.resetBonus();
+        for(Buff b:buffs){
+            b.process(e);
         }
     }
 
@@ -221,12 +237,6 @@ public class Village {
         return buildings.size();
     }
 
-    public void process(Eff effect) {
-        for(Buff b:buffs){
-            b.process(effect);
-        }
-    }
-
     private void addTurnEff(Eff eff){
         GameScreen.get().tsp.addTurnEffects(eff);
     }
@@ -260,15 +270,4 @@ public class Village {
         }
         return jdp;
     }
-
-    public void addBuff(Buff b){
-        buffs.add(b);
-        b.onAdd();
-    }
-
-    public void removeBuff(Buff b){
-        buffs.removeValue(b, true);
-        b.onRemove();
-    }
-
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tann.village.Images;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
+import tann.village.gameplay.village.Buff;
 
 public class Side {
 
@@ -66,7 +67,7 @@ public class Side {
 	public Side copy(){
 		Eff[] newEffects = new Eff[effects.length];
 		for(int i=0;i<effects.length;i++){
-			newEffects[i] = new Eff(effects[i].type, effects[i].value);
+			newEffects[i] = effects[i].copy();
 		}
 		return new Side(tr, newEffects);
 	}

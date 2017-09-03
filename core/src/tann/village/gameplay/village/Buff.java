@@ -1,8 +1,11 @@
 package tann.village.gameplay.village;
 
 import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.effect.Eff.EffectType;
 
 public class Buff {
+    public boolean dead;
+
     public enum BuffType{
         BonusFoodFromDice,
         BonusWoodFromDice,
@@ -11,6 +14,16 @@ public class Buff {
     public BuffType type;
     int value=0;
     int turns=1;
+    int turnsLeft=1;
+
+    public Buff copy(){
+        Buff result = new Buff();
+        result.type=type;
+        result.value=value;
+        result.turns=turns;
+        result.resetTurns();
+        return result;
+    }
 
     public Buff(){}
 
@@ -28,7 +41,12 @@ public class Buff {
 
     public Buff forTurns(int amount){
         this.turns=amount;
+        resetTurns();
         return this;
+    }
+
+    public void resetTurns(){
+        this.turnsLeft=this.turns;
     }
 
     private Buff type(BuffType type, int value){
@@ -38,10 +56,24 @@ public class Buff {
     }
 
     public void process(Eff e){
-
+        switch(type){
+            case BonusFoodFromDice:
+                if(e.sourceDie!=null && e.type== EffectType.Food){
+                    e.addBonus(value);
+                }
+                break;
+            case BonusWoodFromDice:
+                if(e.sourceDie!=null && e.type== EffectType.Wood){
+                    e.addBonus(value);
+                }
+                break;
+            case Rerolls:
+                break;
+        }
     }
 
-    public void onAdd(){}
-    public void onRemove(){}
-
+    public void turn(){
+        this.turnsLeft--;
+        this.dead=turnsLeft==0;
+    }
 }

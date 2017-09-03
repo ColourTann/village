@@ -4,20 +4,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import tann.village.Images;
 import tann.village.gameplay.village.Buff;
-import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.Village;
-import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.villager.die.Die;
 
 public class Eff {
 
-    public Eff getInverse() {
-        return new Eff(type, -value, sourceDie, effAct);
+    public void resetBonus() {
+        this.bonus=0;
     }
-    int bonus;
 
-    public int getAdjustedValue() {
-        return value+bonus;
+    public void addBonus(int value) {
+        this.bonus+=value;
     }
 
     public enum EffectType{
@@ -59,6 +56,7 @@ public class Eff {
 
 	public EffectType type;
 	public int value;
+    int bonus;
 	public Die sourceDie;
     public EffAct effAct;
     private Buff buff;
@@ -104,6 +102,7 @@ public class Eff {
 	
 	public Eff copy(){
 		Eff result = new Eff(type, value, sourceDie, effAct);
+		if(buff!=null) result.buff=buff.copy();
 		return result;
 	}
 
@@ -174,6 +173,10 @@ public class Eff {
 
     public Buff getBuff(){
         return buff;
+    }
+
+    public int getAdjustedValue() {
+        return value+bonus;
     }
 
 }

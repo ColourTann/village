@@ -63,14 +63,18 @@ public class EventPanel extends Lay{
         }
 
         height += eventTitle.getHeight();
-        description = new TextBox(e.description, Fonts.fontSmall, width-20, Align.left);
-        height += description.getHeight();
+        if(e.description!=null) {
+            description = new TextBox(e.description, Fonts.fontSmall, width - 20, Align.left);
+            height += description.getHeight();
+        }
 
         Layoo l = new Layoo(this);
         l.row(1);
         l.actor(eventTitle);
-        l.row(1);
-        l.actor(description);
+        if(e.description!=null) {
+            l.row(1);
+            l.actor(description);
+        }
         int count =0;
         for(int i=0;i<e.effects.size;i++){
             Eff effect = e.effects.get(i);
@@ -104,34 +108,44 @@ public class EventPanel extends Lay{
         if(e.outcomes.size>0){
             TextWriter tw = new TextWriter("[frill-left] Choose One [frill-right]", Fonts.fontSmall);
             l.actor(tw);
-            l.row(1);
-            l.gap(1);
 
+            float totalBiggestHeight=0;
             float biggestHeight=0;
+            boolean biggestHasCost = false;
             for(int i=0;i<e.outcomes.size;i++){
                 final Outcome o = e.outcomes.get(i);
                 final OutcomePanel op = o.makePanel();
                 outcomePanels.add(op);
-                l.actor(op);
-                l.gap(1);
-                float ocHeight = op.getHeight()+(op.o.cost!=null?CostTab.height():0);
-                if(ocHeight>biggestHeight) biggestHeight=ocHeight;
+                float ocHeight = op.getHeight();
+
+                if(op.o.cost!=null){
+                    ocHeight+=CostTab.height();
+                }
+                if(ocHeight>biggestHeight) {
+                    biggestHeight=ocHeight;
+                    if(op.o.cost!=null){
+                        biggestHasCost=true;
+                    }
+                }
                 op.addListener(new InputListener(){
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                       selectOutcome(op);
                       return true;
                     }
-
-                    @Override
-                    public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                        event.cancel();
-                        return;
-//                        System.out.println("tup");
-//                        super.touchUp(event, x, y, pointer, button);
-                    }
                 });
             }
+
+            if(biggestHasCost){
+                l.absRow(CostTab.height());
+            }
+            l.row(1);
+            l.gap(1);
+            for(OutcomePanel op: outcomePanels){
+                l.actor(op);
+                l.gap(1);
+            }
+
             l.row(1);
             height+=biggestHeight;
         }

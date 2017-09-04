@@ -115,27 +115,49 @@ public class EventCreator {
         ev = new Event("Sniffles", "Everyone's feeling a bit under the weather");
         ev.eff(new Eff().food(-1));
         ev.addOutcome("Extra rations");
-        ev.eff(new Eff(new Buff().rerolls(1)));
+        ev.eff(new Eff(new Buff().rerolls(-1)));
         ev.addOutcome("Slow day");
         ev.joel(-.2);
         current.add(ev);
 
-
-
-        ev = new Event("Buried Chest","An incredible find! Has some useful tools in it"); 
-        ev.effR(new Eff().wood(2));
-        ev.effR(new Eff().morale(1));
-        ev.joel(-.8f);
+        ev = new Event("Sky feast", "The festival of the sky is upon us");
+        ev.eff(new Eff().morale(1));
+        ev.addOutcome("Observe the rites", 1,0,0);
+        ev.eff(new Eff().fate(2));
+        ev.addOutcome("Holy feast", 4,0,0);
+        ev.req(new Eff().food(-3));
+        ev.joel(.2);
+        ev.chance(1,1);
         current.add(ev);
 
-        ev = new Event("Floating Mast", "A huge bit of boat is spotted floating, someone swims out to gather it!");
-        ev.effR(new Eff().wood(2));
-        ev.joel(-.5f);
+        ev = new Event("Injured Tortoise", "A sad sight with a cracked shell");
+        ev.eff(new Eff().food(1));
+        ev.addOutcome("No need to waste a meal");
+        ev.eff(new Eff().fate(2));
+        ev.addOutcome("Nurse it back to health", 4,0,0);
+        ev.joel(-.7);
+        ev.chance(1,1);
+        ev.eff(new Eff().morale(-1));
+        ev.eff(new Eff().fate(-1));
         current.add(ev);
 
-        ev = new Event("Driftwood", "Looks like it was part of a boat. It's damp but usable.");
-        ev.effR(new Eff().wood(1));
-        ev.joel(-.2f);
+        ev = new Event("Scarcity");
+        ev.eff(new Eff(new Buff().bonusFood(-1)));
+        ev.addOutcome("Maybe you can find something");
+        ev.eff(new Eff().food(4));
+        ev.addOutcome("You find a hidden cave full of weird fungus!", 3);
+        ev.joel(-.4);
+        current.add(ev);
+
+        ev = new Event("Monkey Troup", "They've come out in force!");
+        ev.effR(new Eff().food(-3));
+        ev.addOutcome("Keep them away from the food");
+        ev.effR(new Eff().wood(-3));
+        ev.addOutcome("We need to keep our wood safe");
+        ev.eff(new Eff().morale(2));
+        ev.addOutcome("Lightning strikes in front of the monkeys, a sign!",3);
+        ev.joel(-.6);
+        ev.chance(1000);
         current.add(ev);
 
 

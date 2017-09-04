@@ -22,9 +22,13 @@ public class Event {
 	public int minTurn = -1, maxTurn = -1;
     public float joel=-123456789;
 
-	public Event(String title, String description){
-	    this.title=title;
-	    this.description=description;
+    public Event(String title){
+        this(title,null);
+    }
+
+    public Event(String title, String description){
+        this.title=title;
+        this.description=description;
     }
 
     public boolean isPotential() {

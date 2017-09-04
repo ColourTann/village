@@ -79,7 +79,7 @@ public class Buff {
     }
 
     public String getValueString(){
-        return value>0?"+"+value:"-"+value;
+        return value>0?"+"+value:""+value;
     }
 
 

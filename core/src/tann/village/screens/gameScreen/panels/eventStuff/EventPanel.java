@@ -28,9 +28,12 @@ public class EventPanel extends Lay{
     public static float WIDTH;
     private static final int items_per_row = 3;
     private static final int GAP = 10;
+    private static final int OUTCOMEGAP = 25;
     public static final int BORDER = 10;
     Color border = Colours.grey;
     Array<OutcomePanel> outcomePanels = new Array<>();
+
+
 	public EventPanel(Event e, int dayNumber) {
 	    this.e=e;
         this.dayNumber=dayNumber;
@@ -59,7 +62,7 @@ public class EventPanel extends Lay{
 
         float width = Math.max(WIDTH, eventTitle.getWidth()+30);
         if(e.outcomes.size>0){
-            width = Math.max(width,OutcomePanel.WIDTHBIG*e.outcomes.size + GAP*(e.outcomes.size+1));
+            width = Math.max(width,OutcomePanel.WIDTHBIG*2 + OUTCOMEGAP*3);
         }
 
         height += eventTitle.getHeight();
@@ -109,24 +112,10 @@ public class EventPanel extends Lay{
             TextWriter tw = new TextWriter("[frill-left] Choose One [frill-right]", Fonts.fontSmall);
             l.actor(tw);
 
-            float totalBiggestHeight=0;
-            float biggestHeight=0;
-            boolean biggestHasCost = false;
             for(int i=0;i<e.outcomes.size;i++){
                 final Outcome o = e.outcomes.get(i);
                 final OutcomePanel op = o.makePanel();
                 outcomePanels.add(op);
-                float ocHeight = op.getHeight();
-
-                if(op.o.cost!=null){
-                    ocHeight+=CostTab.height();
-                }
-                if(ocHeight>biggestHeight) {
-                    biggestHeight=ocHeight;
-                    if(op.o.cost!=null){
-                        biggestHasCost=true;
-                    }
-                }
                 op.addListener(new InputListener(){
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -134,22 +123,34 @@ public class EventPanel extends Lay{
                       return true;
                     }
                 });
-            }
 
-            if(biggestHasCost){
-                l.absRow(CostTab.height());
-            }
-            l.row(1);
-            l.gap(1);
-            for(OutcomePanel op: outcomePanels){
+                if(i%2==0){
+                    for(int j = i;j<e.outcomes.size&&j<i+2;j++){
+                        Outcome test = e.outcomes.get(j);
+                        if(test.cost!=null){
+                            l.absRow(CostTab.height());
+                            break;
+                        }
+                    }
+
+                    if(i==2){
+                        l.gap(1);
+                    }
+
+                    l.row(1);
+                    l.gap(1);
+                }
+
                 l.actor(op);
                 l.gap(1);
             }
 
-            l.row(1);
-            height+=biggestHeight;
+            height += ((e.outcomes.size+1)/2)*OutcomePanel.HEIGHT;
+            height += (((e.outcomes.size+1)/2)+1) * Main.h(2);
+
         }
 
+        l.row(1);
 
         height += Main.h(10);
         setSize(width, height);

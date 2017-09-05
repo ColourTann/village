@@ -12,32 +12,28 @@ import tann.village.gameplay.island.event.Outcome;
 import tann.village.util.*;
 
 public class OutcomePanel extends Group {
-    public static int WIDTHSMALL = 220, WIDTHBIG=320, HEIGHTBASE = 40;
+    public static int WIDTHSMALL = 220, WIDTHBIG=260, HEIGHTBASE = 40, HEIGHT = 115;
     Color border = Colours.dark;
     Outcome o;
     boolean locked;
     public boolean chosen;
     public OutcomePanel(final Outcome o, boolean triple) {
         this.o=o;
-        float height = HEIGHTBASE;
-        Layoo l = new Layoo(this);
-        l.row(1);
+
+        setSize(WIDTHBIG, HEIGHT);
         Fonts.fontSmall.setColor(Colours.light);
-        float WIDTH = triple?WIDTHSMALL:WIDTHBIG;
-        TextBox tb = new TextBox(o.description, Fonts.fontSmall, WIDTH-10, Align.center);
-        height += tb.getHeight();
-        l.actor(tb);
-        l.row(2);
-        for(int i=0;i<o.effects.size;i++){
-            Eff e=o.effects.get(i);
-            EffectPanel ep =new EffectPanel(e, true);
-            l.actor(ep);
-            height += ep.getHeight()+5;
-            l.row(1);
-        }
-        l.row(1);
-        setSize(WIDTH, height);
-        l.layoo();
+        TextBox tb = new TextBox(o.description, Fonts.fontSmall, WIDTHBIG-10, Align.center);
+        float textPosition = .73f;
+        tb.setPosition(getWidth()/2-tb.getWidth()/2, getHeight()*textPosition-tb.getHeight()/2);
+        addActor(tb);
+
+        Eff e = o.effects.get(0);
+        EffectPanel ep =new EffectPanel(e, true);
+        float effPanelPosition = .28f;
+        ep.setPosition(getWidth()/2-ep.getWidth()/2, getHeight()*effPanelPosition-ep.getHeight()/2);
+        addActor(ep);
+
+
         if(o.cost!=null){
             CostTab ct = new CostTab(o.cost);
             addActor(ct);

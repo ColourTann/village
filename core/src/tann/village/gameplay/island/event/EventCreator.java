@@ -151,15 +151,14 @@ public class EventCreator {
 
         ev = new Event("Monkey Troup", "They've come out in force!");
         ev.effR(new Eff().food(-3));
-        ev.addOutcome("Keep them away from the food");
+        ev.addOutcome("Throw food at them");
         ev.effR(new Eff().wood(-3));
-        ev.addOutcome("We need to keep our wood safe");
+        ev.addOutcome("Keep them away from the food");
         ev.eff(new Eff().morale(2));
-        ev.addOutcome("Lightning strikes in front of the monkeys, a sign!",3);
+        ev.addOutcome("Lightning strikes in front of the monkeys!",3);
         ev.joel(-.6);
         ev.chance(1000);
         current.add(ev);
-
 
         //neutral//
         ev = new Event("Quiet day", "Thankfully uneventful");
@@ -168,7 +167,6 @@ public class EventCreator {
         current.add(ev);
 
         //not ok//
-
         ev = new Event("Tiny Thieves", "A few monkeys run off with handfuls of food!");
         ev.effR(new Eff().food(-2));
         ev.joel(.4f);

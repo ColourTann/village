@@ -6,6 +6,7 @@ import tann.village.gameplay.island.ProjectGenerator;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.village.Buff;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.util.Sounds;
 
@@ -29,7 +30,7 @@ public class WeatherIsland extends Island {
 
         ev = new Event("Momentary Repose", "A break in the clouds lifts your spirits");
         ev.eff(new Eff().morale(2));
-        ev.eff(new Eff(Eff.EffectType.Reroll, 2));
+        ev.eff(new Eff(new Buff().rerolls(2)));
         ev.joel(-.6f);
         addEvent(ev);
 

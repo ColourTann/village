@@ -8,6 +8,7 @@ import tann.village.gameplay.island.ProjectGenerator;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.village.Buff;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.util.Sounds;
 
@@ -24,12 +25,12 @@ public class TutorialIsland extends Island {
 
         ev = new Event("Heatwave", "The sweltering heat is draining the village");
         ev.eff(new Eff().morale(-1));
-        ev.joel(.4f);
+        ev.joel(.4);
         addEvent(ev);
 
         ev = new Event("Clear skies", "Everyone wakes up with a clear head.");
-        ev.joel(-   .1f);
-        ev.eff(new Eff(Eff.EffectType.Reroll, +1));
+        ev.joel(-.1);
+        ev.eff(new Eff(new Buff().rerolls(1)));
         addEvent(ev);
 	}
 
@@ -37,7 +38,7 @@ public class TutorialIsland extends Island {
     protected void setupStory() {
         ev = new Event("Land ho!", "You've found land again, it looks like a perfect place to start a new village!");
         ev.storyTurn(0);
-        ev.eff(new Eff().food(30));
+        ev.eff(new Eff().food(3));
         ev.eff(new Eff().wood(3));
         addEvent(ev);
 

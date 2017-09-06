@@ -25,7 +25,6 @@ public class Eff {
         FoodStorage(Images.food_storage),
         Fate(Images.fate),
         Brain(Images.brain),
-        Reroll(Images.roll),
         Gem(Images.gem),
         Buff,
 

@@ -167,7 +167,6 @@ public class Village {
                 case Brain:
                     key = e.sourceDie.villager;
                     break;
-                case Reroll:
                 case Buff:
                     // hmm not sure
                     break;

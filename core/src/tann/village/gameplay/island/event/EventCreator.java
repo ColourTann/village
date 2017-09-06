@@ -56,13 +56,12 @@ public class EventCreator {
         ev.eff(new Eff().food(2));
         ev.addOutcome("A lot of them just wash up on the beach");
         ev.eff(new Eff(new Buff().bonusFood(1)));
-        ev.addOutcome("You rush out to gather them\n(+1 food from dice this turn)");
+        ev.addOutcome("Fishing time! (+1 food from dice this turn)");
         ev.joel(.5f);
         current.add(ev);
 
         ev = new Event("A coconut tree", "You've found a big coconut tree but there's not much growing on it yet");
-        ev.eff(new Eff().food(1));
-        ev.eff(new Eff().wood(2));
+        ev.eff(new Eff().wood(3));
         ev.addOutcome("Chop it down");
         ev.eff(new Eff().inTurns(3).food(5));
         ev.addOutcome("Let it grow");
@@ -166,22 +165,6 @@ public class EventCreator {
         ev.chance(.2f);
         current.add(ev);
 
-        //not ok//
-        ev = new Event("Tiny Thieves", "A few monkeys run off with handfuls of food!");
-        ev.effR(new Eff().food(-2));
-        ev.joel(.4f);
-        current.add(ev);
-
-        ev = new Event("Rot", "Rot starts to set in");
-        ev.effR(new Eff().wood(-1));
-        ev.joel(.2f);
-        current.add(ev);
-
-        ev = new Event("Despair", "Dark dreams haunt the village");
-        ev.effR(new Eff().morale(-2));
-        ev.joel(.4f);
-        current.add(ev);
-
         ev = new Event("Gorilla", "An alpha male gorilla approaches the village");
         ev.effR(new Eff().food(-4));
         ev.addOutcome("Back away and watch the enormous ape steal your food");
@@ -197,7 +180,7 @@ public class EventCreator {
         ev.joel(.3f);
         current.add(ev);
 
-        ev = new Event("Flood", "The weather has taken a turn and washed away your supplies.");
+        ev = new Event("Flood", "The weather got bad during the night.");
         ev.effR(new Eff().food(-3));
         ev.effR(new Eff().wood(-3));
         ev.joel(1.2f);

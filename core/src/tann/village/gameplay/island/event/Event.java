@@ -49,7 +49,7 @@ public class Event {
 
     public void initialAction(){
         Village.get().addJoel(joel);
-        Village.get().activate(effects, true, false);
+        Village.get().activate(Eff.copyArray(effects), true, false);
         this.uses++;
     }
 

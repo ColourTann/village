@@ -12,6 +12,10 @@ public abstract class Objective {
 
     public abstract boolean isDeath();
 
+    public String toWriterString() {
+        return "objective";
+    }
+
     public enum ObjectiveEffect{Building, Turn, Gem};
     int current, required;
 

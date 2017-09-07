@@ -25,6 +25,7 @@ public class ObjectivePanel extends BottomBarPanel{
     }
 
     public void addObject(Objective obj){
+        obj.init();
 	    objectives.add(obj);
 	    refresh();
 	    somethingAdded();
@@ -64,29 +65,6 @@ public class ObjectivePanel extends BottomBarPanel{
     @Override
     public String getName() {
         return "objective";
-    }
-
-    Objective temp;
-    public void activate(Eff eff) {
-        temp=null;
-        switch(eff.type){
-            case Survive:
-                temp = new SurviveObjective(eff.value);
-                break;
-            case BuildTown:
-                temp = new BuildingObjective(eff.value);
-                break;
-            case CollectGems:
-                temp = new GemsObjective(eff.value);
-                break;
-            case TimeLimit:
-                temp = new TimeLimitObjective(eff.value);
-                break;
-        }
-        if(temp!=null){
-            temp.init();
-            addObject(temp);
-        }
     }
 
     public void objectiveProgress(Objective.ObjectiveEffect type, int i) {

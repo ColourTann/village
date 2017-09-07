@@ -39,7 +39,7 @@ public class Cost {
         String result ="";
         for(Eff e:effects){
             if(result.length()!=0) result += " ";
-            result += e.value+"[h]["+e.typeString()+"]";
+            result += e.value+"[h]"+e.typeString();
         }
         return result;
     }

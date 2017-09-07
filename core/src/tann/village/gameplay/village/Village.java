@@ -91,6 +91,7 @@ public class Village {
                     return;
             }
         }
+
         if(e.type==EffectType.Buff){
             e.getBuff().resetTurns();
             if(invert) buffs.removeValue(e.getBuff(), true);
@@ -102,6 +103,9 @@ public class Village {
             switch(e.type){
                 case Brain:
                     e.sourceDie.villager.gainXP(e.value);
+                    break;
+                case Objective:
+                    GameScreen.get().objectivePanel.addObject(e.obj);
                     break;
             }
             int value = e.value*(invert?-1:1);

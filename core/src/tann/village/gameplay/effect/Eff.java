@@ -2,7 +2,9 @@ package tann.village.gameplay.effect;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
+import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.Buff;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.die.Die;
@@ -27,6 +29,7 @@ public class Eff {
         Brain(Images.brain),
         Gem(Images.gem),
         Buff,
+        Objective,
 
         //objectives
         Survive(Images.obj_pocketwatch, true),
@@ -57,12 +60,18 @@ public class Eff {
 	public int value;
     int bonus;
 	public Die sourceDie;
-    public EffAct effAct;
+    public EffAct effAct = EffAct.now;
     private Buff buff;
+    public Objective obj;
 
     public Eff(Buff buff){
         this.buff=buff;
         this.type=EffectType.Buff;
+    }
+
+    public Eff(Objective obj){
+        this.obj=obj;
+        this.type=EffectType.Objective;
     }
 
 	public Eff(EffectType type, int value, Die sourceDie, EffAct effectActivation){
@@ -88,21 +97,23 @@ public class Eff {
     }
 
     public String toWriterString(){
+        if(obj!=null) return obj.toWriterString();
         if(buff!=null) return buff.toWriterString();
         return getValueString()+"[h]"+getwriterString()+""+effAct.toWriterString();
     }
 
     private String getwriterString(){
-        return "["+typeString()+"]";
+        return typeString();
     }
 
 	public String typeString(){
-        return type.toString().toLowerCase();
+        return "["+type.toString().toLowerCase()+"]";
 	}
 	
 	public Eff copy(){
 		Eff result = new Eff(type, value, sourceDie, effAct);
 		if(buff!=null) result.buff=buff.copy();
+		if(obj!=null) result.obj=obj;
 		return result;
 	}
 
@@ -177,6 +188,14 @@ public class Eff {
 
     public int getAdjustedValue() {
         return value+bonus;
+    }
+
+    public static Array<Eff> copyArray(Array<Eff> effects) {
+        Array<Eff> results = new Array<>();
+        for(Eff e:effects){
+            results.add(e.copy());
+        }
+        return results;
     }
 
 }

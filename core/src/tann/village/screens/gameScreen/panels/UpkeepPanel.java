@@ -28,8 +28,7 @@ public class UpkeepPanel extends Lay{
         EXTRA = Main.h(2);
         clearChildren();
         TextBox title = new TextBox("Upkeep", Fonts.font, 599, Align.center);
-        setSize(
-                Math.max(title.getWidth(), (EffectPanel.staticWidth()+EXTRA)*Math.min(2,effects.size))+EXTRA,
+        setSize(Math.max(title.getWidth(), (EffectPanel.staticWidth()+EXTRA)*Math.min(2,effects.size))+EXTRA,
                 Main.h(8) + (EffectPanel.staticHeight()+Main.h(1)) * (Math.max(1, (effects.size-1)/2)));
         Layoo l = new Layoo(this);
         l.row(1);

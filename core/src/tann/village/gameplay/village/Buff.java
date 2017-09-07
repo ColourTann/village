@@ -85,7 +85,6 @@ public class Buff {
 
     public String toWriterString(){
         switch(type){
-
             case BonusFoodFromDice:
                 return getValueString()+"[h][dice][food]";
             case BonusWoodFromDice:

@@ -1,5 +1,7 @@
 package tann.village.screens.gameScreen.panels.buildingStuff;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -44,11 +46,13 @@ public class ConstructionPanel extends InfoPanel{
 			bp.addListener(new InputListener(){
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				    if(GameScreen.get().state!= GameScreen.State.Rolling) return false;
 					attemptToBuy(bp.building);
 					return super.touchDown(event, x, y, pointer, button);
 				}
 				@Override
 				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    if(GameScreen.get().state!= GameScreen.State.Rolling) return;
 					bp.highlight(true);
 					super.enter(event, x, y, pointer, fromActor);
 				}
@@ -71,19 +75,35 @@ public class ConstructionPanel extends InfoPanel{
 			return;
 		}
 		Village.getInventory().spendCost(b.cost);
-		Village.get().addBuilding(b);
-		resetAvailablePanels();
-		b.onCommence();
-		GameScreen.get().checkEnd();
+		startProject(b);
 	}
+
+	private void startProject(Project p ){
+        Village.get().addBuilding(p);
+        p.onCommence();
+        GameScreen.get().checkEnd();
+        built=true;
+        for(ProjectPanel bp:availables){
+            bp.setVisible(false);
+        }
+    }
 
 	private void resetAvailablePanels() {
 		int levelToGenerate = 0;
 		levelToGenerate = Math.min(1, levelToGenerate);
 		for(ProjectPanel bp:availables){
+		    bp.setVisible(true);
 			bp.setProject(GameScreen.get().island.getRandomBuilding());
 		}
 	}
+
+	boolean built;
+	public void turn(){
+	    if(built){
+	        built=false;
+	        resetAvailablePanels();
+        }
+    }
 
     @Override
     public void clipEnd() {
@@ -92,5 +112,22 @@ public class ConstructionPanel extends InfoPanel{
 
     public static float staticHeight() {
 	    return 300;
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if(built){
+            Fonts.draw(batch, "Come back next turn", Fonts.font, Colours.light, getX(), getY(), getWidth(), getHeight(), Align.center);
+        }
+        else if(GameScreen.get().state!= GameScreen.State.Rolling){
+            batch.setColor(0,0,0,.6f);
+            Draw.fillActor(batch,this);
+            batch.setColor(Colours.dark);
+            float w = 550;
+            float h = 50;
+            Draw.fillRectangle(batch, getX()+getWidth()/2-w/2, getY()+getHeight()/2-h/2, w, h);
+            Fonts.draw(batch, "Can only build while rolling", Fonts.font, Colours.light, getX(), getY(), getWidth(), getHeight(), Align.center);
+        }
     }
 }

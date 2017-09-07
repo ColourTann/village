@@ -169,8 +169,7 @@ public class EventCreator {
         ev.effR(new Eff().food(-4));
         ev.addOutcome("Back away and watch the enormous ape steal your food");
         ev.eff(new Eff().food(2));
-        ev.eff(new Eff().morale(1));
-        ev.addOutcome("He approaches and leaves a small bundle wrapped in leaves", 3);
+        ev.addOutcome("He approaches and leaves a small bundle wrapped in leaves", 2);
         ev.joel(-.8f);
         current.add(ev);
 

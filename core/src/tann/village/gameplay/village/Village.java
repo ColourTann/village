@@ -12,6 +12,7 @@ import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.GameScreen;
+import tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel;
 import tann.village.screens.gameScreen.panels.eventStuff.JoelDebugPanel;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
 import tann.village.screens.gameScreen.panels.rollStuff.RerollPanel;
@@ -51,6 +52,7 @@ public class Village {
 	    dayNum++;
 	    getObjectivePanel().objectiveProgress(Objective.ObjectiveEffect.Turn, 1);
 	    tickBuffs();
+        GameScreen.get().constructionPanel.turn();
     }
 
     private void tickBuffs(){

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
+import tann.village.Images;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.project.Project;
 import tann.village.screens.gameScreen.GameScreen;
@@ -38,7 +39,7 @@ public class ConstructionPanel extends InfoPanel{
 			l.gap(1);
 		}
         l.absRow(UnlockedByPanel.height());
-		l.row(1);
+		l.row(.5f);
 		l.layoo();
 		
 
@@ -65,6 +66,15 @@ public class ConstructionPanel extends InfoPanel{
 		}
 
 		resetAvailablePanels();
+
+		Button refreshButton = new Button(50, 50, Images.refresh, Colours.dark, new Runnable() {
+			@Override
+			public void run() {
+				resetAvailablePanels();
+			}
+		});
+		addActor(refreshButton);
+		refreshButton.setPosition(getWidth()-refreshButton.getWidth()-20, getHeight()-refreshButton.getHeight()-20);
 
 	}
 	

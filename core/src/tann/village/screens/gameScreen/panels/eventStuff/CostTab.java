@@ -9,7 +9,14 @@ import tann.village.util.*;
 
 public class CostTab extends Lay{
     Cost cost;
+    boolean small;
+
     public CostTab(Cost cost) {
+        this(cost, false);
+    }
+
+    public CostTab(Cost cost, boolean small) {
+        this.small=small;
         this.cost=cost;
         layout();
     }
@@ -22,13 +29,14 @@ public class CostTab extends Lay{
     @Override
     public void layout() {
         np = new NinePatch(Main.atlas.findRegion("patchTest"),30,30,30,0);
-        float baseWidth = Main.h(11);
+        float mult = small?.4f:1;
+        float baseWidth = Main.h(11*mult);
         for(int i=0;i<cost.effects.size;i++){
-            baseWidth += Main.h(4.5f);
+            baseWidth += Main.h(4.5f*mult);
         }
-        setSize(baseWidth, height());
+        setSize(baseWidth, height()*mult);
         Layoo l = new Layoo(this);
-        TextWriter tw = new TextWriter(cost.toWriterString(), Fonts.fontSmallish);
+        TextWriter tw = new TextWriter(cost.toWriterString(), small?Fonts.fontTiny:Fonts.fontSmallish);
         addActor(tw);
         tw.setPosition(getWidth()/2, getHeight()/2, Align.center);
 

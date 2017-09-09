@@ -22,6 +22,7 @@ public class TextWriter extends Lay {
         this.text=text;
         split = text.split("[\\[\\]]");
         this.font=font;
+        setColor(Colours.light);
         layout();
     }
 
@@ -55,12 +56,14 @@ public class TextWriter extends Lay {
 
     @Override
     public void layout() {
+        clearChildren();
         int index=0;
         float x = 0;
         for(String s:split){
             if(index%2==0){
                 // text
                 TextBox tb =  new TextBox(s, font, -1, Align.center);
+                tb.setTextColour(getColor());
                 addActor(tb);
                 tb.setX(x);
                 x += tb.getWidth();

@@ -3,12 +3,14 @@ package tann.village.screens.gameScreen.panels.buildingStuff;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 import tann.village.Images;
+import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.project.Project;
 import tann.village.screens.gameScreen.GameScreen;
@@ -20,6 +22,7 @@ public class ConstructionPanel extends InfoPanel{
 
 	Array<ProjectPanel> availables = new Array<>();
 	static final float WIDTH = 650, HEIGHT = 350;
+	Cost resetCost = new Cost().wood(2);
 	public ConstructionPanel() {
 		setSize(WIDTH, HEIGHT);
 
@@ -67,18 +70,35 @@ public class ConstructionPanel extends InfoPanel{
 
 		resetAvailablePanels();
 
-		Button refreshButton = new Button(50, 50, Images.refresh, Colours.dark, new Runnable() {
+		Button refreshButton = new Button(50, 50, .7f, Images.refresh, Colours.dark, new Runnable() {
 			@Override
 			public void run() {
-				resetAvailablePanels();
+				resetButtonPush();
 			}
 		});
 		addActor(refreshButton);
-		refreshButton.setPosition(getWidth()-refreshButton.getWidth()-20, getHeight()-refreshButton.getHeight()-20);
+		refreshButton.setBorder(Colours.dark, Colours.brown_light, 3);
+        Group scaleGroup = new Group();
+        float scale = .45f;
+        scaleGroup.setScale(scale,scale);
+        scaleGroup.addActor(new CostTab(resetCost, false));
+        refreshButton.addActor(scaleGroup);
+        scaleGroup.setPosition(0,refreshButton.getHeight());
 
-	}
-	
-	public void attemptToBuy(Project b){
+
+        refreshButton.setPosition(getWidth()-refreshButton.getWidth()-5, getHeight()-refreshButton.getHeight()-5-CostTab.height()*scale);
+    }
+
+    private void resetButtonPush() {
+	    if(!Village.getInventory().checkCost(resetCost)){
+	        Sounds.playSound(Sounds.error, 1,1);
+	        return;
+        }
+        Village.getInventory().spendCost(resetCost);
+	    resetAvailablePanels();
+    }
+
+    public void attemptToBuy(Project b){
 		// maybe have an inventory manager class to deal with this kind of thing.
 		// doesn't really make sense to pass it onto gamescreen :P
 		if(!Village.getInventory().checkCost(b.cost)){

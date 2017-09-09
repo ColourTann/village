@@ -10,11 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class Button extends Lay{
 	private TextureRegion region;
-	private Color backgroundColour = Colours.dark;
 	private float imageScale;
 	public Button(float width, float height, float imageScale, final TextureRegion region, Color backgroundColour, final Runnable runnable) {
 		this.region=region;
-		this.backgroundColour=backgroundColour;
+		this.bg=backgroundColour;
 		this.imageScale=imageScale;
 		setRunnable(runnable);
 		setSize(width, height);
@@ -22,7 +21,7 @@ public class Button extends Lay{
 	
 	public Button(float width, float height, float imageScale, final TextureRegion region, Color backgroundColour) {
 		this.region=region;
-		this.backgroundColour=backgroundColour;
+		this.bg=backgroundColour;
 		this.imageScale=imageScale;
 		setSize(width, height);
 	}
@@ -42,14 +41,20 @@ public class Button extends Lay{
 	}
 	
 	public void setBackgroundColour(Color col){
-		backgroundColour=col;
+		bg=col;
 	}
-	
+
+	Color bg, border;
+	float borderSize;
+	public void setBorder(Color bg, Color border, float size){
+	    this.bg=bg; this.border=border; this.borderSize=size;
+    }
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.setColor(backgroundColour);
-		Draw.fillRectangle(batch, getX(), getY(), getWidth(), getHeight());
+		batch.setColor(bg);
+		if(border==null) border=bg;
+		Draw.fillActor(batch, this, bg, border, borderSize);
 		batch.setColor(getColor());
 		Draw.drawSize(batch, region, 
 				getX()+(getWidth())*(1-imageScale)/2, 

@@ -39,10 +39,8 @@ public class TextBox extends BasicLay{
 
 	public void setup(String text){
 	    this.text=text;
-        layout.setText(font, text, Colours.light, maxWidth, align, true);
+        layout.setText(font, text, textCol, maxWidth, align, true);
         setSize(Math.min(maxWidth, layout.width), layout.height);
-        layout.setText(font, text, Colours.light, getWidth(), Align.center, true);
-//        layout.setText(font, text, Colours.light, getWidth(), align, true);
     }
 	
 	public void setBackgroundColour(Color col){
@@ -60,8 +58,8 @@ public class TextBox extends BasicLay{
 		batch.setColor(bgCol);
 		Draw.fillRectangle(batch, getX()-50, getY()-50, getWidth()+100, getHeight()+100);
 		font.setColor(textCol);
-		font.draw(batch, layout, getX(), getY()+getHeight());
-//		font.draw(batch, text, getX(), getY()+getHeight(), layout.width,  align, true);
+//		font.draw(batch, layout, getX(), getY()+getHeight());
+		font.draw(batch, text, getX(), getY()+getHeight(), layout.width,  align, true);
 		super.draw(batch, parentAlpha);
 	}
 	

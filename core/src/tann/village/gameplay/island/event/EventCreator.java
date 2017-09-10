@@ -137,7 +137,7 @@ public class EventCreator {
         ev.joel(-.7);
         ev.chance(1,1);
         ev.eff(new Eff().morale(-1));
-        ev.eff(new Eff().fate(-1));
+        ev.effR(new Eff().fate(-1));
         current.add(ev);
 
         ev = new Event("Scarcity");

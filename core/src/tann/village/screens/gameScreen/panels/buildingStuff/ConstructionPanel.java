@@ -23,6 +23,7 @@ public class ConstructionPanel extends InfoPanel{
 	Array<ProjectPanel> availables = new Array<>();
 	static final float WIDTH = 650, HEIGHT = 350;
 	Cost resetCost = new Cost().wood(2);
+    Button refreshButton;
 	public ConstructionPanel() {
 		setSize(WIDTH, HEIGHT);
 
@@ -68,9 +69,7 @@ public class ConstructionPanel extends InfoPanel{
 			});
 		}
 
-		resetAvailablePanels();
-
-		Button refreshButton = new Button(50, 50, .7f, Images.refresh, Colours.dark, new Runnable() {
+		refreshButton = new Button(50, 50, .7f, Images.refresh, Colours.dark, new Runnable() {
 			@Override
 			public void run() {
 				resetButtonPush();
@@ -79,14 +78,13 @@ public class ConstructionPanel extends InfoPanel{
 		addActor(refreshButton);
 		refreshButton.setBorder(Colours.dark, Colours.brown_light, 3);
         Group scaleGroup = new Group();
+        refreshButton.addActor(scaleGroup);
         float scale = .45f;
         scaleGroup.setScale(scale,scale);
         scaleGroup.addActor(new CostTab(resetCost, false));
-        refreshButton.addActor(scaleGroup);
         scaleGroup.setPosition(0,refreshButton.getHeight());
-
-
         refreshButton.setPosition(getWidth()-refreshButton.getWidth()-5, getHeight()-refreshButton.getHeight()-5-CostTab.height()*scale);
+        resetAvailablePanels();
     }
 
     private void resetButtonPush() {
@@ -96,6 +94,7 @@ public class ConstructionPanel extends InfoPanel{
         }
         Village.getInventory().spendCost(resetCost);
 	    resetAvailablePanels();
+        addActor(new Flasher(this, Colours.dark));
     }
 
     public void attemptToBuy(Project b){
@@ -116,6 +115,8 @@ public class ConstructionPanel extends InfoPanel{
         for(ProjectPanel bp:availables){
             bp.setVisible(false);
         }
+        refreshButton.setVisible(false);
+        GameScreen.get().pop();
     }
 
 	private void resetAvailablePanels() {
@@ -125,6 +126,7 @@ public class ConstructionPanel extends InfoPanel{
 		    bp.setVisible(true);
 			bp.setProject(GameScreen.get().island.getRandomBuilding());
 		}
+		refreshButton.setVisible(true);
 	}
 
 	boolean built;

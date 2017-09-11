@@ -6,6 +6,7 @@ import tann.village.gameplay.island.ProjectGenerator;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.island.objective.GemsObjective;
 import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.util.Sounds;
@@ -68,6 +69,7 @@ public class GemIsland extends Island{
         ev.addOutcome("You wake up damp");
         ev.eff(new Eff().gem(1));
         ev.addOutcome("The rain uncovers a gem!", 3);
+        ev.joel(-.4);
         addEvent(ev);
 
         addEvents(EventCreator.makeBasicEvents());
@@ -76,14 +78,9 @@ public class GemIsland extends Island{
     @Override
     protected void setupStory() {
         Event ev;
-        ev = new Event("Red Island", "The island faintly glows red, you are worried that it may erupt");
+        ev = new Event("Crimson Dreams", "The island faintly glows red, you are worried that it may erupt");
+        ev.eff(new Eff(new GemsObjective(13)));
         ev.storyTurn(0);
-        addEvent(ev);
-
-        ev = new Event("Crimson Dreams", "The eldest villager wakes up from a dream. They tell of a great catastrophe unless 13 crimson gems are offered to the gods here.");
-        ev.storyTurn(3);
-        ev.eff(new Eff(Eff.EffectType.CollectGems, 13));
-        ev.eff(new Eff().gem(1));
         addEvent(ev);
 
         ev = new Event("Blood Skies", "The sky has turned deep red, the heat makes it hard to work");

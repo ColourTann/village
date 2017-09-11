@@ -29,13 +29,9 @@ public class Eff {
         Brain(Images.brain),
         Gem(Images.gem),
         Buff,
-        Objective,
+        Objective;
 
         //objectives
-        Survive(Images.obj_pocketwatch, true),
-        BuildTown(Images.obj_village, true),
-        CollectGems(Images.obj_gems, true),
-        TimeLimit(Images.obj_hourglass, true);
 
         public boolean objective;
         public TextureRegion region;

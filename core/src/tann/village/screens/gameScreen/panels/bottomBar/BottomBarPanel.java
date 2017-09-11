@@ -9,7 +9,7 @@ import tann.village.util.Lay;
 public abstract class BottomBarPanel extends Lay {
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Draw.fillActor(batch, this, getColor(), Colours.grey, BottomBar.border());
+        Draw.fillActor(batch, this, getColor(), getColor(), BottomBar.border());
         super.draw(batch, parentAlpha);
     }
 

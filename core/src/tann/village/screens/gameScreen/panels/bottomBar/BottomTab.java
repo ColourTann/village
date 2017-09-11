@@ -43,8 +43,8 @@ public class BottomTab extends Lay {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         float border = BottomBar.border();
-        batch.setColor(Colours.grey);
-        Draw.fillRectangle(batch, getX()-border, getY(), getWidth()+border*2, getHeight()+border*1);
+//        batch.setColor(Colours.grey);
+//        Draw.fillRectangle(batch, getX()-border, getY(), getWidth()+border*2, getHeight()+border*1);
         batch.setColor(bg);
         Draw.fillActor(batch,this);
         super.draw(batch, parentAlpha);

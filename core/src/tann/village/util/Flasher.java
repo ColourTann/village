@@ -10,7 +10,8 @@ public class Flasher extends Group {
     public Flasher(Actor a, Color col) {
         setSize(a.getWidth(), a.getHeight());
         setColor(col);
-        addAction(Actions.sequence(Actions.fadeOut(.7f), Actions.removeActor()));
+        addAction(Actions.fadeOut(.8f));
+        addAction(Actions.after(Actions.removeActor()));
     }
 
     @Override

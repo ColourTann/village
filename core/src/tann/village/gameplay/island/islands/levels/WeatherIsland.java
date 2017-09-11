@@ -6,6 +6,8 @@ import tann.village.gameplay.island.ProjectGenerator;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.island.objective.Objective;
+import tann.village.gameplay.island.objective.SurviveObjective;
 import tann.village.gameplay.village.Buff;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.util.Sounds;
@@ -63,14 +65,9 @@ public class WeatherIsland extends Island {
         Event ev;
         ev = new Event("A stormy beach", "This island is known to be stormy, good job you brought a lot of supplies.");
         ev.storyTurn(0);
-        ev.eff(new Eff().storage(2));
-        ev.eff(new Eff().food(7));
-        ev.eff(new Eff().wood(5));
-        addEvent(ev);
-
-        ev = new Event("Survive", "There's a storm on the way, you think that if you can weather the storm you will claim the island");
-        ev.storyTurn(2);
-        ev.eff(new Eff(Eff.EffectType.Survive, 25));
+        ev.eff(new Eff().food(3));
+        ev.eff(new Eff().wood(3));
+        ev.eff(new Eff(new SurviveObjective(25)));
         addEvent(ev);
 
         ev = new Event("Dark skies", "The weather takes a turn, you must be ready soon!");

@@ -78,8 +78,6 @@ public class GemIsland extends Island{
         Event ev;
         ev = new Event("Red Island", "The island faintly glows red, you are worried that it may erupt");
         ev.storyTurn(0);
-        ev.eff(new Eff().food(2));
-        ev.eff(new Eff().wood(2));
         addEvent(ev);
 
         ev = new Event("Crimson Dreams", "The eldest villager wakes up from a dream. They tell of a great catastrophe unless 13 crimson gems are offered to the gods here.");

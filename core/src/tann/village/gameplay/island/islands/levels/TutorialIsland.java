@@ -8,7 +8,7 @@ import tann.village.gameplay.island.ProjectGenerator;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
-import tann.village.gameplay.island.objective.BuildingObjective;
+import tann.village.gameplay.island.objective.ProjectObjective;
 import tann.village.gameplay.village.Buff;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.util.Sounds;
@@ -39,20 +39,15 @@ public class TutorialIsland extends Island {
     protected void setupStory() {
         ev = new Event("Build a village", "In order to survive you're going to need to make this a home.");
         ev.storyTurn(0);
-        ev.eff(new Eff().food(3));
-        ev.eff(new Eff().wood(3));
-        ev.eff(new Eff(new BuildingObjective(7)));
+        ev.eff(new Eff().food(2));
+        ev.eff(new Eff().wood(2));
+        ev.eff(new Eff(new ProjectObjective(5)));
         addEvent(ev);
 
 
         ev = new Event("Hunger", "The village grows hungry. Upkeep increased by one.");
         ev.eff(new Eff().upkeep().food(-1));
-        ev.storyTurn(8);
-        addEvent(ev);
-
-        ev = new Event("Cold", "The nights are getting colder, you need fuel to keep warm.");
-        ev.effR(new Eff().upkeep().wood(-1));
-        ev.storyTurn(16);
+        ev.storyTurn(6);
         addEvent(ev);
 	}
 

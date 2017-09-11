@@ -49,7 +49,9 @@ public class Event {
 
     public void initialAction(){
         Village.get().addJoel(joel);
-        Village.get().activate(Eff.copyArray(effects), true, false);
+        Array<Eff> copied = Eff.copyArray(effects);
+        process(copied);
+        Village.get().activate(copied, true, false);
         this.uses++;
     }
 
@@ -125,9 +127,29 @@ public class Event {
     public void validate(){
         if(joel<=-2||joel>=2) System.err.println("joel out of bounds for "+this);
         if(storyTurn==-1 && isStory()) System.err.println("story with no turn for "+this);
-        if(title==null || description==null) System.err.println("no title or desc for "+this);
+        if(title==null) System.err.println("no title for "+this);
         if(chance<=0 && !isStory()) System.err.println("no chance for "+this);
         if(maxUses <=0 && !isStory()) System.err.println("no uses for "+this);
+    }
+
+    public static void process(Array<Eff> effs){
+        for(Eff e:effs){
+            process(e);
+        }
+    }
+
+    public static void process(Eff e){
+        switch(e.effAct.type){
+            case IN_TURNS:
+                e.effAct.value++;
+                break;
+            case FOR_TURNS:
+                break;
+            case UPKEEP:
+                break;
+            case PASSIVE:
+                break;
+        }
     }
 
 }

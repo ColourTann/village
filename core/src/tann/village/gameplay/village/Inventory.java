@@ -40,8 +40,8 @@ public class Inventory{
 		fate = new InventoryItem(EffectType.Fate);
 
 		morale.setValue(4);
-		food.setValue(0);
-		wood.setValue(0);
+		food.setValue(2);
+		wood.setValue(2);
 		fate.setValue(0);
 		foodStorage.setValue(5);
 

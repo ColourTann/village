@@ -111,7 +111,7 @@ public class Eff {
 	}
 	
 	public Eff copy(){
-		Eff result = new Eff(type, value, sourceDie, effAct);
+		Eff result = new Eff(type, value, sourceDie, effAct.copy());
 		if(buff!=null) result.buff=buff.copy();
 		if(obj!=null) result.obj=obj;
 		return result;

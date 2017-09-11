@@ -49,5 +49,7 @@ public class EffAct {
         return this.type==other.type && this.value==other.value;
     }
 
-
+    public EffAct copy() {
+        return new EffAct(type, value);
+    }
 }

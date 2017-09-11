@@ -3,10 +3,10 @@ package tann.village.gameplay.island.objective;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 
-public class BuildingObjective extends Objective{
+public class ProjectObjective extends Objective{
 
 
-    public BuildingObjective(int numBuildings) {
+    public ProjectObjective(int numBuildings) {
         this.required = numBuildings;
     }
 
@@ -31,7 +31,7 @@ public class BuildingObjective extends Objective{
 
     @Override
     public String getTitleString() {
-        return "Build "+required+" buildings";
+        return "Complete projects";
     }
 
     @Override

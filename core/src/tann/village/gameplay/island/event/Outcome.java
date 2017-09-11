@@ -25,7 +25,9 @@ public class Outcome {
 
     public void activate(){
         if(cost!=null) Village.get().activate(cost.effects, true, true);
-        Village.get().activate(Eff.copyArray(effects), true);
+        Array<Eff> copied = Eff.copyArray(effects);
+        Event.process(copied);
+        Village.get().activate(copied, true);
     }
 
     OutcomePanel ocp;

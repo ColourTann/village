@@ -25,7 +25,7 @@ public class EventCreator {
 
         ev = new Event("Nightmares", "A deep fear invades the sleep of the vilage");
         ev.eff(new Eff().morale(-1));
-        ev.addOutcome("You know it was just a dream but it still haunts you");
+        ev.addOutcome("You know it was just a dream but...");
         ev.eff(new Eff().morale(1));
         ev.addOutcome("You fly away on a shining bird", 2);
         ev.joel(-.4);
@@ -66,6 +66,7 @@ public class EventCreator {
         ev.eff(new Eff().inTurns(3).food(5));
         ev.addOutcome("Let it grow");
         ev.joel(.7);
+        ev.chance(10000);
         current.add(ev);
 
         ev = new Event("Bamboo shoots", "Tasty-looking bamboo shoots were found!");
@@ -156,7 +157,6 @@ public class EventCreator {
         ev.eff(new Eff().morale(2));
         ev.addOutcome("Lightning strikes in front of the monkeys!",3);
         ev.joel(-.6);
-        ev.chance(1000);
         current.add(ev);
 
         //neutral//

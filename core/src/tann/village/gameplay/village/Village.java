@@ -8,6 +8,7 @@ import java.util.Map;
 import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
+import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
@@ -102,6 +103,10 @@ public class Village {
         }
 
         if(activateNow){
+            if(e.effAct.type== EffAct.ActivationType.UPKEEP){
+                upkeep.addEffect(e);
+                return;
+            }
             switch(e.type){
                 case Brain:
                     e.sourceDie.villager.gainXP(e.value);

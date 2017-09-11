@@ -94,7 +94,7 @@ public class ConstructionPanel extends InfoPanel{
         }
         Village.getInventory().spendCost(resetCost);
 	    resetAvailablePanels();
-        addActor(new Flasher(this, Colours.dark));
+        addActor(new Flasher(this, Colours.grey));
     }
 
     public void attemptToBuy(Project b){

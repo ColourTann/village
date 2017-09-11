@@ -60,7 +60,10 @@ public class EventPanel extends Lay{
         height += day.getHeight();
         eventTitle = new TextBox(e.title, Fonts.fontBig, -1, Align.center);
 
-        float width = Math.max(WIDTH, eventTitle.getWidth()+30);
+        float width = Math.max(
+                WIDTH, Math.max(
+                eventTitle.getWidth()+30,
+                Math.min(3,e.effects.size)*(EffectPanel.staticWidth()+GAP)+GAP)+50);
         if(e.outcomes.size>0){
             width = Math.max(width,OutcomePanel.WIDTHBIG*2 + OUTCOMEGAP*3);
         }

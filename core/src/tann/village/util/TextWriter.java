@@ -43,6 +43,7 @@ public class TextWriter extends Lay {
         textureMap.put("fate", Images.fate);
         textureMap.put("dice", Images.roll);
         textureMap.put("refresh", Images.refresh);
+        textureMap.put("gem", Images.gem);
 
         textureMap.put("hut", Images.obj_village);
         textureMap.put("turn", Images.turn);

@@ -30,4 +30,5 @@ public abstract class BottomBarPanel extends Lay {
     }
     public abstract void refresh();
 
+    public abstract void reset();
 }

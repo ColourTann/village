@@ -66,7 +66,6 @@ public class EventCreator {
         ev.eff(new Eff().inTurns(3).food(5));
         ev.addOutcome("Let it grow");
         ev.joel(.7);
-        ev.chance(10000);
         current.add(ev);
 
         ev = new Event("Bamboo shoots", "Tasty-looking bamboo shoots were found!");
@@ -95,13 +94,13 @@ public class EventCreator {
         current.add(ev);
 
         ev = new Event("Noises in the night", "You have some nocturnal visitors");
-        ev.effR(new Eff().wood(-4));
+        ev.effR(new Eff().wood(-3));
         ev.addOutcome("An elephant tramples some of your tools");
-        ev.eff(new Eff().food(-2));
+        ev.eff(new Eff().food(-3));
+        ev.addOutcome("Damn, monkeys again!");
         ev.eff(new Eff().storage(-2));
-        ev.addOutcome("Those damn monkeys!!");
         ev.eff(new Eff().morale(-1));
-        ev.joel(-1.2);
+        ev.joel(-1.4);
         current.add(ev);
 
         ev = new Event("Fresh breeze", "The whole village feels refreshed today");
@@ -167,7 +166,7 @@ public class EventCreator {
 
         ev = new Event("Gorilla", "An alpha male gorilla approaches the village");
         ev.effR(new Eff().food(-4));
-        ev.addOutcome("Back away and watch the enormous ape steal your food");
+        ev.addOutcome("Watch the enormous ape steal your food");
         ev.eff(new Eff().food(2));
         ev.addOutcome("He approaches and leaves a small bundle wrapped in leaves", 2);
         ev.joel(-.8f);

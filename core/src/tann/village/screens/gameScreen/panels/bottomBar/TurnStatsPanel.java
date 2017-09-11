@@ -73,4 +73,9 @@ public class TurnStatsPanel extends BottomBarPanel{
     public void refresh() {
         layout();
     }
+
+    @Override
+    public void reset() {
+        turnEffects.clear();
+    }
 }

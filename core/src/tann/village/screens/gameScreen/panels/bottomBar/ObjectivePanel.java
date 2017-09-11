@@ -63,6 +63,11 @@ public class ObjectivePanel extends BottomBarPanel{
 	}
 
     @Override
+    public void reset() {
+        objectives.clear();
+    }
+
+    @Override
     public String getName() {
         return "objective";
     }

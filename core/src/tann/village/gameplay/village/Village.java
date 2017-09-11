@@ -213,6 +213,11 @@ public class Village {
         inventory = new Inventory();
         upkeep= new Upkeep();
         villagers.clear();
+        buffs.clear();
+        potentialEffects.clear();
+        if(GameScreen.get().btb !=null){
+            GameScreen.get().btb.reset();
+        }
         for(int i=0;i<STARTING_VILLAGERS;i++){
             villagers.add(new Villager(i));
         }

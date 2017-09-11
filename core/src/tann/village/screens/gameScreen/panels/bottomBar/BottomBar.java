@@ -65,4 +65,9 @@ public class BottomBar extends Lay{
         return Main.h(.5f);
     }
 
+    public void reset() {
+        for(BottomBarPanel bbp:panels){
+            bbp.reset();
+        }
+    }
 }

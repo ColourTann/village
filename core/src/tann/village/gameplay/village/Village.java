@@ -209,6 +209,7 @@ public class Village {
 
 	public void setup(){
 	    dayNum=0;
+	    this.joel=0;
         buildings.clear();
         inventory = new Inventory();
         upkeep= new Upkeep();

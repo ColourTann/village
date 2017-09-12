@@ -42,7 +42,7 @@ public class Inventory{
 		morale.setValue(4);
 		food.setValue(2);
 		wood.setValue(2);
-		fate.setValue(0);
+		fate.setValue(1);
 		foodStorage.setValue(5);
 
         items.add(foodStorage);
@@ -58,11 +58,6 @@ public class Inventory{
 		return panel;
 	}
 
-
-
-
-
-
 	public InventoryItem get(Eff e){
 		return get(e.type);
 	}
@@ -77,7 +72,7 @@ public class Inventory{
             case Gem:
             if(gems == null){
                 gems = new InventoryItem(EffectType.Gem);
-                items.insert(0,gems);
+                items.insert(items.size,gems);
                 getGroup().layout(true);
             }
             return gems;

@@ -22,11 +22,11 @@ public class InventoryItemPanel extends Lay{
     }
 
     public static float invPanelWidth(){
-	    return Main.h(19);
+	    return Main.h(18);
     }
 
     public static float invPanelHeight(){
-        return Main.h(14);
+        return Main.h(12);
     }
 
     public static float extraBitWidth(){ return Main.h(8);}

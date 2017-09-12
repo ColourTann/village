@@ -27,11 +27,13 @@ public class OutcomePanel extends Group {
         tb.setPosition(getWidth()/2-tb.getWidth()/2, getHeight()*textPosition-tb.getHeight()/2);
         addActor(tb);
 
-        Eff e = o.effects.get(0);
-        EffectPanel ep =new EffectPanel(e, true);
-        float effPanelPosition = .28f;
-        ep.setPosition(getWidth()/2-ep.getWidth()/2, getHeight()*effPanelPosition-ep.getHeight()/2);
-        addActor(ep);
+        if(o.effects.size>0) {
+            Eff e = o.effects.get(0);
+            EffectPanel ep = new EffectPanel(e, true);
+            float effPanelPosition = .28f;
+            ep.setPosition(getWidth() / 2 - ep.getWidth() / 2, getHeight() * effPanelPosition - ep.getHeight() / 2);
+            addActor(ep);
+        }
 
 
         if(o.cost!=null){

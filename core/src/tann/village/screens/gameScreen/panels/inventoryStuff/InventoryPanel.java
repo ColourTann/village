@@ -29,6 +29,9 @@ public class InventoryPanel extends Lay {
         for(int i=inventory.items.size-1;i>=0;i--){
             InventoryItem item = inventory.items.get(i);
             InventoryItemPanel panel = item.getPanel();
+            if(panel.getY()==0){
+                panel.setPosition(-panel.getWidth(), getHeight()-panel.getHeight());
+            }
             l.actor(panel);
             if(panel.tr==Images.food_storage) l.gap(1);
             if(panel.tr==Images.food) l.row(0);

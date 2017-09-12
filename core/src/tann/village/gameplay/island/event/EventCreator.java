@@ -42,12 +42,11 @@ public class EventCreator {
         current.add(ev);
 
         ev = new Event("Supply Crate", "You don't understand where it could have come from");
-        ev.eff(new Eff().wood(3));
-        ev.addOutcome("It contains a strange tool, may be useful");
-        ev.eff(new Eff().storage(2));
+        ev.eff(new Eff().storage(5));
+        ev.addOutcome("It's empty but very sturdy");
         ev.eff(new Eff().food(2));
-        ev.addOutcome("A fish is stuck inside. Plus you can store things in it");
-        ev.joel(1.1);
+        ev.addOutcome("A dead shark is inside, how did she get there?");
+        ev.joel(4);
         ev.chance(.5,1);
         ev.eff(new Eff().morale(1));
         current.add(ev);

@@ -49,6 +49,7 @@ public class Eff {
 			this.region=region;
 			this.special=true;
 		}
+
 	}
 	
 

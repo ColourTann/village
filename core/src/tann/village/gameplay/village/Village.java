@@ -88,7 +88,7 @@ public class Village {
         if(e.effAct!=null) {
             switch (e.effAct.type) {
                 case FOR_TURNS:
-                    activate(e.copy().now(), false);
+//                    activate(e.copy().now(), false);
                 case IN_TURNS: // fallthrough
                     addTurnEff(e.copy());
                     return;

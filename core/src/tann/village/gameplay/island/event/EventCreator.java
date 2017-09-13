@@ -174,13 +174,12 @@ public class EventCreator {
         ev = new Event("Noises in the night", "Some of your food is gone, along with some storage!");
         ev.effR(new Eff().food(-1));
         ev.effR(new Eff().storage(-1));
-        ev.joel(.3f);
+        ev.joel(-.3f);
         current.add(ev);
 
-        ev = new Event("Flood", "The weather got bad during the night.");
-        ev.effR(new Eff().food(-3));
-        ev.effR(new Eff().wood(-3));
-        ev.joel(1.2f);
+        ev = new Event("Slow Rot", "The food is getting infected");
+        ev.eff(new Eff().eachTurn(3).food(-2));
+        ev.joel(-1);
         current.add(ev);
 
         return current;

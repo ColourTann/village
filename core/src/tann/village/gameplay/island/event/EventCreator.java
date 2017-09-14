@@ -46,7 +46,7 @@ public class EventCreator {
         ev.addOutcome("It's empty but very sturdy");
         ev.eff(new Eff().food(2));
         ev.addOutcome("A dead shark is inside, how did she get there?");
-        ev.joel(4);
+        ev.joel(.4);
         ev.chance(.5,1);
         ev.eff(new Eff().morale(1));
         current.add(ev);

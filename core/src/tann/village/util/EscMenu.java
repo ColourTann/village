@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Align;
 import tann.village.Main;
 import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.review.InfoPanel;
 import tann.village.screens.mapScreen.MapScreen;
@@ -49,7 +50,7 @@ public class EscMenu extends InfoPanel {
             public void run() {
                 BulletStuff.reset();
                 GameScreen.get().pop();
-                Island island = GameScreen.get().island;
+                Island island = Village.island;
                 GameScreen.nullScreen();
                 Main.self.travelTo(island);
             }

@@ -9,23 +9,37 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.effect.EffAct;
+import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
+import tann.village.gameplay.village.phase.Phase;
 import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel;
 import tann.village.screens.gameScreen.panels.eventStuff.JoelDebugPanel;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
 import tann.village.screens.gameScreen.panels.rollStuff.RerollPanel;
-import tann.village.screens.gameScreen.panels.villagerStuff.VillagerIcon;
 import tann.village.util.Sounds;
 
 public class Village {
 	
 	private List<Project> buildings  = new ArrayList<>();
-	private static Village self;
 	private RerollPanel panel;
     private Inventory inventory;
+    private List<Phase> phaseStack = new ArrayList<>();
+    public static Island island;
+    public void pushPhase(Phase p){
+        phaseStack.add(p);
+    }
+    public Phase currentPhase;
+    public void popPhase(){
+        if(phaseStack.size()==0){
+            System.err.println("no phase to pop");
+        }
+        Phase p =  phaseStack.remove(0);
+        p.activate();
+        currentPhase=p;
+    }
+
     public Upkeep getUpkeep() {
         return upkeep;
     }
@@ -37,6 +51,8 @@ public class Village {
     public Array<Villager> villagers = new Array<>();
 
     private int dayNum=0;
+
+    private static Village self;
 	public static Village get(){
 		if(self==null){
 			self = new Village();
@@ -284,5 +300,9 @@ public class Village {
             jdp.setJoel(0);
         }
         return jdp;
+    }
+
+    public static Phase getPhase() {
+        return get().currentPhase;
     }
 }

@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.*;
 import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.village.Village;
+import tann.village.gameplay.village.phase.RollingPhase;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.mapScreen.MapScreen;
 import tann.village.util.*;
@@ -112,7 +113,7 @@ public class Main extends ApplicationAdapter {
 
         InputProcessor diceInput = new InputProcessor() {
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                if(GameScreen.get().state== GameScreen.State.Rolling && GameScreen.get().allowDieClicking()) {
+                if(Village.getPhase().allowDieClicking() &&  GameScreen.get().allowDieClicking()) {
                     return BulletStuff.click(screenX, Main.height-screenY, button);
                 }
                 return false;
@@ -215,7 +216,7 @@ public class Main extends ApplicationAdapter {
 
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
 		stage.draw();
-
+        System.out.println(batch.renderCalls);
 //		BulletStuff.render();
 
 		drawVersion();

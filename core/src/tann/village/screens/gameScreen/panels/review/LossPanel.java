@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Align;
 
 import tann.village.Main;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.mapScreen.MapScreen;
 import tann.village.util.*;
@@ -44,7 +45,7 @@ public class LossPanel extends InfoPanel{
             @Override
             public void run() {
                 GameScreen.get().pop();
-                Island island = GameScreen.get().island;
+                Island island = Village.island;
                 GameScreen.nullScreen();
                 Main.self.travelTo(island);
             }

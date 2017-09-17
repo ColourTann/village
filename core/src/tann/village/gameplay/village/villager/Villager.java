@@ -9,6 +9,9 @@ import tann.village.Images;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.village.AddSub;
+import tann.village.gameplay.village.Village;
+import tann.village.gameplay.village.phase.LevelupPhase;
+import tann.village.gameplay.village.phase.Phase;
 import tann.village.gameplay.village.villager.die.Side;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.villager.die.Die;
@@ -74,7 +77,7 @@ public class Villager {
 		this.xp+=amount;
 		while(xp>=xpToLevelUp){
 			xp-=xpToLevelUp;
-			GameScreen.get().villagersToLevelUp.add(this);
+            Village.get().pushPhase(new LevelupPhase(this));
 		}
         this.potentialXp=0;
         getIcon().layout();

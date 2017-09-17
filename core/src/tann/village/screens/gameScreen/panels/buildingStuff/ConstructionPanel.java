@@ -51,13 +51,13 @@ public class ConstructionPanel extends InfoPanel{
 			bp.addListener(new InputListener(){
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				    if(GameScreen.get().state!= GameScreen.State.Rolling) return false;
+				    if(!Village.getPhase().allowBuying()) return false;
 					attemptToBuy(bp.building);
 					return super.touchDown(event, x, y, pointer, button);
 				}
 				@Override
 				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                    if(GameScreen.get().state!= GameScreen.State.Rolling) return;
+                    if(!Village.getPhase().allowBuying()) return;
 					bp.highlight(true);
 					super.enter(event, x, y, pointer, fromActor);
 				}
@@ -124,7 +124,7 @@ public class ConstructionPanel extends InfoPanel{
 		levelToGenerate = Math.min(1, levelToGenerate);
 		for(ProjectPanel bp:availables){
 		    bp.setVisible(true);
-			bp.setProject(GameScreen.get().island.getRandomBuilding());
+			bp.setProject(Village.island.getRandomBuilding());
 		}
 		refreshButton.setVisible(true);
 	}
@@ -152,7 +152,7 @@ public class ConstructionPanel extends InfoPanel{
         if(built){
             Fonts.draw(batch, "Come back next turn", Fonts.font, Colours.light, getX(), getY(), getWidth(), getHeight(), Align.center);
         }
-        else if(GameScreen.get().state!= GameScreen.State.Rolling){
+        else if(!Village.getPhase().allowBuying()){
             batch.setColor(0,0,0,.6f);
             Draw.fillActor(batch,this);
             batch.setColor(Colours.dark);

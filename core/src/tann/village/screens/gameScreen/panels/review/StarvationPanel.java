@@ -16,7 +16,6 @@ public class StarvationPanel extends InfoPanel{
 
 	public StarvationPanel(int foodMissing, int woodMissing) {
 
-        GameScreen.get().resetWisps();
 	    TextBox ranOut = new TextBox("You ran out of "+(foodMissing>0?"food":"") + ((foodMissing>0 && woodMissing>0)?" and " :"") +((woodMissing>0)?"wood":"") +"!", Fonts.font, -1, Align.center);
 
         int amountMissing = foodMissing + woodMissing;
@@ -37,7 +36,6 @@ public class StarvationPanel extends InfoPanel{
 		l.actor(moralePanel);
 		l.row(1);
 		l.layoo();
-		GameScreen.get().showWisps();
 	}
 
 }

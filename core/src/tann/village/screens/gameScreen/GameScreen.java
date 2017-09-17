@@ -15,7 +15,6 @@ import tann.village.Main;
 import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
-import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventDebugPanel;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
@@ -24,7 +23,6 @@ import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel;
-import tann.village.screens.gameScreen.panels.eventStuff.EventPanel;
 import tann.village.screens.gameScreen.panels.eventStuff.JoelDebugPanel;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
 import tann.village.screens.gameScreen.panels.miscStuff.ProceedButton;
@@ -53,12 +51,16 @@ public class GameScreen extends Screen{
         return stack.size==0;
     }
 
+    public void addWithProceedButton(Actor panel, boolean proceedButton) {
+        center(panel,proceedButton);
+        addActor(panel);
+        if(proceedButton){
+            addProceedButton(panel);
+        }
+    }
 
-    public enum State{Story, Event, Rolling, Upkeep, Levelling}
-	public State state;
+
 	public CircleButton constructionCircle;
-	public Array<Villager> villagersToLevelUp = new Array<>();
-	EventPanel eventPanel;
 	public ConstructionPanel constructionPanel;
     CircleButton rollCircle;
     public BottomBar btb;
@@ -78,12 +80,11 @@ public class GameScreen extends Screen{
 		
 	}
 	
-	public Island island;
 	public Village village;
 	VillagerBarPanel vbp;
 	public void init(Island island, Village village){
 		this.village=village;
-		this.island=island;
+		Village.island = island;
 		addActor(LockBar.get());
 		setSize(Main.width, Main.height);
 		addListener(new ClickListener(){
@@ -131,7 +132,6 @@ public class GameScreen extends Screen{
 		objectivePanel= new ObjectivePanel();
 		tsp = new TurnStatsPanel();
 
-		setState(State.Event);
 		Sounds.playMusic(island.getAmbienceString());
 
 
@@ -164,13 +164,7 @@ public class GameScreen extends Screen{
 
         LockBar.get().setPosition(getWidth()/2- LockBar.get().getWidth()/2, getHeight()+ LockBar.get().getHeight());
 
-        if(state==State.Rolling){
-            LockBar.get().moveIn();
-        }
 
-        if(eventPanel!=null){
-            center(eventPanel,true);
-        }
         if(proceedButton!=null){
             proceedButton.refreshPosition();
         }
@@ -191,7 +185,7 @@ public class GameScreen extends Screen{
     EventDebugPanel edp;
     public void toggleEventDebug(){
         if(edp==null) {
-            edp = new EventDebugPanel(island.getRandomEvents());
+            edp = new EventDebugPanel(Village.island.getRandomEvents());
             edp.setPosition(getWidth()/2-edp.getWidth()/2, getHeight()/2-edp.getHeight()/2);
         }
         if(!edp.remove()) addActor(edp);
@@ -206,7 +200,7 @@ public class GameScreen extends Screen{
 	@Override
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
-		Draw.drawSize(batch, island.background, getX(), getY(), getWidth(), getHeight());
+		Draw.drawSize(batch, Village.island.background, getX(), getY(), getWidth(), getHeight());
         LockBar.get().render(batch);
 	}
 
@@ -260,7 +254,8 @@ public class GameScreen extends Screen{
     }
 
 	public void roll(boolean reroll){
-        if(state!=State.Rolling) return;
+        //TODO this maybe
+//        if(state!=State.Rolling) return;
 		if(!RollManager.hasRoll()) return;
 		if(!reroll){
 
@@ -281,49 +276,20 @@ public class GameScreen extends Screen{
 
 
 	public boolean canProceed(){
-        if((state==State.Event||state==State.Story) && !eventPanel.choiceAction()){
-            Sounds.playSound(Sounds.error, 1,1);
-            return false;
-        }
+	    //TODO here something?????
+//        if((state==State.Event||state==State.Story) && !eventPanel.choiceAction()){
+//            Sounds.playSound(Sounds.error, 1,1);
+//            return false;
+//        }
         return true;
     }
 
 	public void proceed() {
+	    //TODO this
         if(Village.getInventory().getResourceAmount(EffectType.Morale)<=0){
             showLoss();
             return;
         }
-		switch(state){
-            case Event:
-            case Story:
-                setState(State.Rolling);
-			break;
-		case Rolling:
-            finishRolling();
-			setState(State.Upkeep);
-			break;
-		case Upkeep:
-
-            int spoiled = Village.getInventory().imposeLimits();
-            if(spoiled>0){
-                showSpoiled(spoiled);
-                break;
-            }
-
-            if(Village.getInventory().getResourceAmount(EffectType.Food)<0 || Village.getInventory().getResourceAmount(EffectType.Wood)<0){
-                showStarvation();
-                break;
-            }
-            if(villagersToLevelUp.size>0){
-                levelup(villagersToLevelUp.removeIndex(0));
-                break;
-            }
-            else{
-                setState(State.Event);
-            }
-			break;
-		}
-		return;
 	}
 
     boolean lost;
@@ -354,36 +320,11 @@ public class GameScreen extends Screen{
 		Village.getInventory().imposeFoodAndWoodMinimum();
 	}
 
-	boolean levelledUpAlready=false;
 	private void levelup(Villager v){
-		LevelupPanel lup = new LevelupPanel(v, island.getRandomVillagerTypes(Math.min(Villager.MAX_LEVEL, v.type.level+1), 3));
-		addActor(lup);
-		center(lup,false);
-		if(!levelledUpAlready) {
-            Sounds.playSound(Sounds.marimba_happy, 1, 1);
-        }
-        levelledUpAlready=true;
+
 	}
 	
-	private void setState(State state) {
-		this.state=state;
-		switch(state){
-		case Rolling:
-			startRolling();
-			break;
-		case Upkeep:
-            proceed();
-			break;
-		case Event:
-			showEvent();
-			break;
-		default:
-			break;
-			
-		}
-	
-	}
-	
+
 	@Override
 	public void act(float delta) {
 		super.act(delta);
@@ -393,41 +334,11 @@ public class GameScreen extends Screen{
 		RollManager.updateRolls();
 	}
 	
-	private void finishRolling() {
-		resetWisps();
-        showRollContainer(false);
-        LockBar.get().moveAway();
-        Village.get().actionPotential();
-        showWisps();
-        BulletStuff.clearDice();
-	}
-	
+
 
 	
 	private void showEvent() {
-	    int dayNum = Village.get().getDayNum();
-        if(checkEnd()){
-            return;
-        }
-		state=State.Event;
-		Event event = island.getEventForTurn(dayNum);
-        Village.get().nextDay();
-		if(event.isStory() && dayNum != 0){
-		    state=State.Story;
-        }
-        else {
-            int goodness = event.getGoodness();
-            String[] sound = null;
-            if (goodness == -1) sound = Sounds.eventNegBird;
-            else if (goodness == 1) sound = Sounds.eventPosBird;
-            else sound = Sounds.eventNeuBird;
-            Sounds.playSound(sound, 1, 1);
-        }
-		eventPanel= new EventPanel(event, dayNum);
-		event.initialAction();
-		center(eventPanel,true);
-		addActor(eventPanel);
-        addProceedButton(eventPanel);
+
 	}
 
     public boolean checkEnd() {
@@ -445,30 +356,6 @@ public class GameScreen extends Screen{
         }
         return false;
     }
-
-    private void startRolling() {
-
-        if(checkEnd()){
-            return;
-        }
-
-        levelledUpAlready=false;
-	    showRollContainer(true);
-		Village.get().startOfRoll();
-		BulletStuff.refresh(Village.get().villagers);
-
-		RollManager.setMaximumRolls(Village.get().getRerolls());
-		RollManager.refreshRolls();
-		state=State.Rolling;
-		for(Die d: BulletStuff.dice){
-			d.addToScreen();
-		}
-		roll(false);
-        Village.get().getUpkeep().activateDelta();
-        LockBar.get().moveIn();
-        LockBar.get().reset();
-
-	}
 
 	boolean lastRollContainerShow;
 	public void showRollContainer(boolean show){
@@ -542,19 +429,12 @@ public class GameScreen extends Screen{
 
 	    addActor(inputBlocker);
         Sounds.playSound(Sounds.marimba_too_happy,1,1);
-	    String vicText = island.getVictoryText();
+	    String vicText = Village.island.getVictoryText();
 	    tann.village.screens.gameScreen.panels.miscStuff.VictoryPanel vp = new tann.village.screens.gameScreen.panels.miscStuff.VictoryPanel(vicText);
 	    vp.setPosition(getWidth()/2-vp.getWidth()/2, getHeight()/2 - vp.getHeight()/2);
 	    addActor(vp);
 	}
 
-    public void resetWisps(){
-        village.getInventory().resetWisps();
-    }
-
-    public void showWisps(){
-        village.getInventory().showWisps();
-    }
 
     @Override
     public void removeFromScreen(){

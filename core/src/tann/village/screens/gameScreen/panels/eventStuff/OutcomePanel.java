@@ -16,7 +16,6 @@ public class OutcomePanel extends Group {
     Color border = Colours.dark;
     Outcome o;
     boolean locked;
-    public boolean chosen;
     public OutcomePanel(final Outcome o, boolean triple) {
         this.o=o;
 
@@ -48,7 +47,7 @@ public class OutcomePanel extends Group {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         int gap = 2;
-        batch.setColor(chosen?Colours.light:Colours.grey);
+        batch.setColor(o.chosen?Colours.light:Colours.grey);
         Draw.fillActor(batch,this);
         batch.setColor(border);
         Draw.fillRectangle(batch, getX()+gap, getY()+gap, getWidth()-gap*2, getHeight()-gap*2);
@@ -72,12 +71,12 @@ public class OutcomePanel extends Group {
     }
 
     public void deselect() {
-        chosen=false;
+        o.chosen=false;
         border = Colours.dark;
     }
 
     public void select() {
-        chosen=true;
+        o.chosen=true;
         if(o.fateful && !o.pickedBeforeEver){
             lock();
         }

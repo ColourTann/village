@@ -14,6 +14,7 @@ public class Outcome {
     public boolean pickedBeforeEver;
     public boolean fateful;
     private boolean triple;
+    public boolean chosen;
     public Outcome(String description, Array<Eff> events, Cost cost) {
         this.cost=cost;
         this.effects = events;
@@ -38,6 +39,7 @@ public class Outcome {
 
     public void reset(){
         ocp=null;
+        this.chosen=false;
     }
 
     public boolean isValid() {

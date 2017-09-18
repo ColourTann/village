@@ -11,10 +11,7 @@ import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
-import tann.village.gameplay.village.phase.EventPhase;
-import tann.village.gameplay.village.phase.NothingPhase;
-import tann.village.gameplay.village.phase.Phase;
-import tann.village.gameplay.village.phase.RollingPhase;
+import tann.village.gameplay.village.phase.*;
 import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.GameScreen;
@@ -34,7 +31,15 @@ public class Village {
         phaseStack.add(p);
     }
     public Phase currentPhase = new NothingPhase();
+
+    public boolean canPop(){
+        return currentPhase.canContinue();
+    }
+
     public void popPhase(){
+        if(!canPop()){
+            System.err.println("trying to pop and can't! "+currentPhase);
+        }
         if(currentPhase!=null){
             currentPhase.deactivate();
         }
@@ -135,6 +140,9 @@ public class Village {
                     break;
                 case Objective:
                     GameScreen.get().objectivePanel.addObject(e.obj);
+                    break;
+                case XpToVillager:
+                    Village.get().pushPhase(new BuffVillagerPhase(e));
                     break;
             }
             int value = e.value*(invert?-1:1);
@@ -247,6 +255,8 @@ public class Village {
     }
 
     public void start(){
+	    currentPhase = new NothingPhase();
+	    phaseStack.clear();
         pushPhase(new EventPhase());
         popPhase();
     }

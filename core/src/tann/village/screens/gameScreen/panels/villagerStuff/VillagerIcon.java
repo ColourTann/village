@@ -2,18 +2,28 @@ package tann.village.screens.gameScreen.panels.villagerStuff;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 import tann.village.Images;
 import tann.village.Main;
+import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
 import tann.village.util.*;
 
 public class VillagerIcon extends Lay {
     Villager v;
-    public VillagerIcon(Villager v){
+    public VillagerIcon(final Villager v){
         this.v=v;
         layout();
+        addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Village.getPhase().selectVillager(v);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
     }
 
     public static float width(){

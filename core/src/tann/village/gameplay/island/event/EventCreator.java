@@ -160,7 +160,8 @@ public class EventCreator {
         //neutral//
         ev = new Event("Quiet day", "Thankfully uneventful");
         ev.joel(0);
-        ev.chance(.2f);
+        ev.eff(new Eff().villagerXP(1));
+        ev.chance(11111.2f);
         current.add(ev);
 
         ev = new Event("Gorilla", "An alpha male gorilla approaches the village");

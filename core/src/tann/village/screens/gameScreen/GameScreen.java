@@ -81,7 +81,7 @@ public class GameScreen extends Screen{
 	}
 	
 	public Village village;
-	VillagerBarPanel vbp;
+	public VillagerBarPanel vbp;
 	public void init(Island island, Village village){
 		this.village=village;
 		Village.island = island;
@@ -276,15 +276,6 @@ public class GameScreen extends Screen{
 	}
 
 
-	public boolean canProceed(){
-	    //TODO here something?????
-//        if((state==State.Event||state==State.Story) && !eventPanel.choiceAction()){
-//            Sounds.playSound(Sounds.error, 1,1);
-//            return false;
-//        }
-        return true;
-    }
-
 //	public void proceed() {
 //	    //TODO this
 //        if(Village.getInventory().getResourceAmount(EffectType.Morale)<=0){
@@ -348,9 +339,10 @@ public class GameScreen extends Screen{
 		addActor(proceedButton);
 		proceedButton.setLinkedActor(relativeTo);
 	}
-	
+
+
 	public void addVillagerPanel(Villager villager) {
-		VillagerPanel panel = new tann.village.screens.gameScreen.panels.villagerStuff.VillagerPanel(villager);
+		VillagerPanel panel = new VillagerPanel(villager);
 		push(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 	}
@@ -360,7 +352,14 @@ public class GameScreen extends Screen{
 	public void push(Actor a){
 		
 		if(inputBlocker==null){
-			inputBlocker = new Actor();
+			inputBlocker = new Actor(){
+
+                @Override
+                public void draw(Batch batch, float parentAlpha) {
+                    batch.setColor(0,0,0,.5f);
+                    Draw.fillActor(batch,this);
+                }
+            };
 			inputBlocker.setSize(Main.width, Main.height);
 			inputBlocker.addListener(new InputListener(){
 				@Override

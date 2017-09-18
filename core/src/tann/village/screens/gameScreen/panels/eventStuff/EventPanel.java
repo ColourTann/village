@@ -228,20 +228,13 @@ public class EventPanel extends Lay{
         }
     }
 
-    public boolean choiceAction() {
-        if(e.outcomes!=null&&e.outcomes.size>0){
-            boolean ok = false;
-
-            for(OutcomePanel op:outcomePanels){
-                if(op.chosen){
-                    ok = true;
-                    op.o.activate();
-                    break;
-                }
+    public void choiceAction() {
+        for(Outcome o:e.outcomes){
+            if(o.chosen){
+                o.activate();
+                break;
             }
-            if(!ok) return false;
         }
-        return true;
     }
 
 }

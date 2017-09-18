@@ -9,6 +9,7 @@ import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.Button;
 import tann.village.util.Colours;
+import tann.village.util.Sounds;
 
 public class ProceedButton extends Button{
 
@@ -17,12 +18,13 @@ public class ProceedButton extends Button{
 		setRunnable(new Runnable() {
 			@Override
 			public void run() {
-			    Actor linked = linkedActor;
-			    if(GameScreen.get().canProceed()){
-                    remove();
-                    linked.remove();
-					Village.get().popPhase();
-                }
+            if(!Village.get().canPop()){
+                Sounds.playSound(Sounds.error, 1,1);
+                return;
+            }
+            remove();
+            linkedActor.remove();
+            Village.get().popPhase();
 			}
 		});
 	}

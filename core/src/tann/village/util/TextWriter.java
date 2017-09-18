@@ -38,6 +38,7 @@ public class TextWriter extends Lay {
         textureMap.put("food", Images.food);
         textureMap.put("foodstorage", Images.food_storage);
         textureMap.put("brain", Images.brain);
+        textureMap.put("xptovillager", Images.brain);
         textureMap.put("wood", Images.wood);
         textureMap.put("morale", Images.morale);
         textureMap.put("fate", Images.fate);

@@ -31,6 +31,12 @@ public class Event {
         this.description=description;
     }
 
+    public void init(){
+        for(Outcome o:outcomes){
+            o.reset();
+        }
+    }
+
     public boolean isPotential() {
         if(this.uses>=maxUses) return false;
         float joel = Village.get().getJoel() + this.joel;
@@ -45,14 +51,6 @@ public class Event {
 	
 	public int getGoodness(){
         return -(int)(Math.signum(joel));
-    }
-
-    public void initialAction(){
-        Village.get().addJoel(joel);
-        Array<Eff> copied = Eff.copyArray(effects);
-        process(copied);
-        Village.get().activate(copied, true, false);
-        this.uses++;
     }
 
 	public String toString(){
@@ -152,4 +150,26 @@ public class Event {
         }
     }
 
+    public boolean validChosen(){
+        if(outcomes.size==0) return true;
+        for(Outcome o:outcomes){
+            if(o.chosen){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void activate() {
+        Village.get().addJoel(joel);
+        Array<Eff> copied = Eff.copyArray(effects);
+        process(copied);
+        Village.get().activate(copied, true, false);
+        for(Outcome o:outcomes){
+            if(o.chosen){
+                o.activate();
+            }
+        }
+        this.uses++;
+    }
 }

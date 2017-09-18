@@ -38,7 +38,7 @@ public class TutorialIsland extends Island {
 	@Override
     protected void setupStory() {
         ev = new Event("Build a village", "In order to survive you're going to need to make this a home.");
-        ev.storyTurn(0);
+        ev.storyTurn(1110);
         ev.eff(new Eff().food(2));
         ev.eff(new Eff().wood(2));
         ev.eff(new Eff(new ProjectObjective(5)));

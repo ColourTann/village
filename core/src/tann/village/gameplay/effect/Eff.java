@@ -29,7 +29,9 @@ public class Eff {
         Brain(Images.brain),
         Gem(Images.gem),
         Buff,
-        Objective;
+        Objective,
+        XpToVillager(Images.brain)
+        ;
 
         //objectives
 
@@ -150,6 +152,7 @@ public class Eff {
     public Eff upkeep(){return setActivation(new EffAct(EffAct.ActivationType.UPKEEP, -1));}
     public Eff now() {return setActivation(new EffAct(EffAct.ActivationType.NOW, 0));}
 
+    public Eff villagerXP(int amount) {return type(EffectType.XpToVillager, amount);}
     public Eff food(int amount){return type(EffectType.Food, amount);}
     public Eff wood(int amount){return type(EffectType.Wood, amount);}
     public Eff fate(int amount) {return type(EffectType.Fate, amount);}

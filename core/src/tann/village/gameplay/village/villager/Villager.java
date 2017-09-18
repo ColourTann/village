@@ -127,6 +127,16 @@ public class Villager {
         getIcon().layout();
     }
 
+    public void giveBuff(Eff eff) {
+        switch(eff.type){
+            case XpToVillager:
+                gainXP(eff.value);
+                break;
+            default:
+                System.err.println("Can't give "+eff+" to villager");
+        }
+    }
+
 
     public enum VillagerType{
 //		Villager(0,"no description maybe?",                     Images.lapel,    Side.food2, Side.food1, Side.wood1, Side.wood1, Side.brain, Side.skull),

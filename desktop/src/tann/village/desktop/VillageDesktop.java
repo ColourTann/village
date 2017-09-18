@@ -17,6 +17,7 @@ public class VillageDesktop {
 		config.height=Main.height;
 		config.title="Village";
 		config.addIcon("icon.png", FileType.Internal);
+//		System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 		new LwjglApplication(new Main(), config);
 	}
 }

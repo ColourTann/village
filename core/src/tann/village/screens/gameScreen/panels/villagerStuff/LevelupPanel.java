@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 
+import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
 import tann.village.gameplay.village.villager.die.*;
@@ -65,7 +66,7 @@ public class LevelupPanel extends InfoPanel{
 	
 	public void removeThis(){
 		remove();
-		GameScreen.get().finishedLevellingUp();
+        Village.get().popPhase();
 	}
 	
 	@Override

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import tann.village.Main;
+import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.util.Button;
 import tann.village.util.Colours;
@@ -20,7 +21,7 @@ public class ProceedButton extends Button{
 			    if(GameScreen.get().canProceed()){
                     remove();
                     linked.remove();
-                    GameScreen.get().proceed();
+					Village.get().popPhase();
                 }
 			}
 		});
@@ -39,7 +40,9 @@ public class ProceedButton extends Button{
 	}
 
 	public void refreshPosition(){
-        setPosition(Main.width/2-getWidth()/2, linkedActor.getY()-getHeight()-Main.h(5));
+		if(linkedActor!=null) {
+			setPosition(Main.width / 2 - getWidth() / 2, linkedActor.getY() - getHeight() - Main.h(5));
+		}
     }
 
 	

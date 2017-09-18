@@ -23,7 +23,6 @@ public class RollingPhase extends Phase{
         Village.get().getUpkeep().activateDelta();
         LockBar.get().moveIn();
         LockBar.get().reset();
-        Village.get().pushPhase(new EventPhase());
     }
 
     @Override
@@ -34,11 +33,12 @@ public class RollingPhase extends Phase{
         BulletStuff.clearDice();
         int spoiled = Village.getInventory().imposeLimits();
         if(spoiled>0){
-            Village.get().pushPhase(new SpoilPhase());
+            Village.get().pushPhase(new SpoilPhase(spoiled));
         }
         if(Village.getInventory().getResourceAmount(Eff.EffectType.Food)<0 || Village.getInventory().getResourceAmount(Eff.EffectType.Wood)<0){
             Village.get().pushPhase(new StarvationPhase());
         }
+        Village.get().pushPhase(new EventPhase());
     }
 
     @Override

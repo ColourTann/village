@@ -11,7 +11,10 @@ import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
+import tann.village.gameplay.village.phase.EventPhase;
+import tann.village.gameplay.village.phase.NothingPhase;
 import tann.village.gameplay.village.phase.Phase;
+import tann.village.gameplay.village.phase.RollingPhase;
 import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.GameScreen;
@@ -30,8 +33,11 @@ public class Village {
     public void pushPhase(Phase p){
         phaseStack.add(p);
     }
-    public Phase currentPhase;
+    public Phase currentPhase = new NothingPhase();
     public void popPhase(){
+        if(currentPhase!=null){
+            currentPhase.deactivate();
+        }
         if(phaseStack.size()==0){
             System.err.println("no phase to pop");
         }
@@ -238,6 +244,11 @@ public class Village {
         for(int i=0;i<STARTING_VILLAGERS;i++){
             villagers.add(new Villager(i));
         }
+    }
+
+    public void start(){
+        pushPhase(new EventPhase());
+        popPhase();
     }
 
     public void startOfRoll(){

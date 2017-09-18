@@ -216,8 +216,6 @@ public class Main extends ApplicationAdapter {
 
 		Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
 		stage.draw();
-        System.out.println(batch.renderCalls);
-//		BulletStuff.render();
 
 		drawVersion();
 		

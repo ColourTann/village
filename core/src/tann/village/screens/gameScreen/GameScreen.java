@@ -54,7 +54,7 @@ public class GameScreen extends Screen{
     public void addWithProceedButton(Actor panel, boolean proceedButton) {
         center(panel,proceedButton);
         addActor(panel);
-        if(proceedButton){
+		if(proceedButton){
             addProceedButton(panel);
         }
     }
@@ -136,6 +136,7 @@ public class GameScreen extends Screen{
 
 
 		layChain();
+		Village.get().start();
 	}
 
     @Override
@@ -246,7 +247,7 @@ public class GameScreen extends Screen{
     public void rollButtonClick(){
 	    if(BulletStuff.allDiceLocked() || (!RollManager.hasRoll()&&BulletStuff.noDiceMoving())){
             Sounds.playSound(Sounds.accept,1,1);
-            proceed();
+            Village.get().popPhase();
         }
         else if(BulletStuff.noDiceMoving()){
             roll(true);
@@ -284,13 +285,13 @@ public class GameScreen extends Screen{
         return true;
     }
 
-	public void proceed() {
-	    //TODO this
-        if(Village.getInventory().getResourceAmount(EffectType.Morale)<=0){
-            showLoss();
-            return;
-        }
-	}
+//	public void proceed() {
+//	    //TODO this
+//        if(Village.getInventory().getResourceAmount(EffectType.Morale)<=0){
+//            showLoss();
+//            return;
+//        }
+//	}
 
     boolean lost;
 	public void showLoss() {
@@ -300,30 +301,6 @@ public class GameScreen extends Screen{
 		addActor(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 	}
-
-    private void showSpoiled(int amount) {
-	    SpoilPanel panel = new SpoilPanel(amount);
-	    addActor(panel);
-	    center(panel, true);
-	    addProceedButton(panel);
-    }
-
-	private void showStarvation() {
-		int food = Village.getInventory().getResourceAmount(EffectType.Food);
-		int wood = Village.getInventory().getResourceAmount(EffectType.Wood);
-		int foodMissing = Math.max(0, -food);
-		int woodMissing = Math.max(0, -wood);
-		StarvationPanel panel = new StarvationPanel(foodMissing, woodMissing);
-		addActor(panel);
-		center(panel, true);
-		addProceedButton(panel);
-		Village.getInventory().imposeFoodAndWoodMinimum();
-	}
-
-	private void levelup(Villager v){
-
-	}
-	
 
 	@Override
 	public void act(float delta) {
@@ -414,11 +391,6 @@ public class GameScreen extends Screen{
 		}
 	}
 
-
-	public void finishedLevellingUp() {
-		proceed();
-	}
-	
 	public void openBuildingPanel() {
 	    Sounds.playSound(Sounds.buildPanel, 1, 1);
 		constructionPanel.setPosition(Main.width/2-constructionPanel.getWidth()/2, Main.height/2-constructionPanel.getHeight()/2);

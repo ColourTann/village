@@ -20,11 +20,11 @@ public class EventPhase extends Phase {
         Sounds.playSound(sound, 1, 1);
         EventPanel eventPanel = new EventPanel(event, dayNum);
         event.initialAction();
-        GameScreen.get().addWithProceedButton(eventPanel, false);
+        GameScreen.get().addWithProceedButton(eventPanel, true);
     }
 
     @Override
     public void deactivate() {
-
+        Village.get().pushPhase(new RollingPhase());
     }
 }

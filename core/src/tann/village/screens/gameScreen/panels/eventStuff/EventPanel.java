@@ -147,8 +147,12 @@ public class EventPanel extends Lay{
                 l.actor(op);
                 l.gap(1);
             }
-
-            height += ((e.outcomes.size+1)/2)*OutcomePanel.HEIGHT;
+            if(e.outcomes.size>0){
+                height += OutcomePanel.HEIGHT;
+            }
+            if(e.outcomes.size==3){
+                height += outcomePanels.get(2).getHeight();
+            }
             height += (((e.outcomes.size+1)/2)+1) * Main.h(2);
 
         }

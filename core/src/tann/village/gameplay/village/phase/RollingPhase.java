@@ -50,4 +50,9 @@ public class RollingPhase extends Phase{
     public boolean allowBuying() {
         return true;
     }
+
+    @Override
+    public boolean putOnBottom() {
+        return true;
+    }
 }

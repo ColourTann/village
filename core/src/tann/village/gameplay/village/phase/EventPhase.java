@@ -33,4 +33,9 @@ public class EventPhase extends Phase {
     public boolean canContinue() {
         return event.validChosen();
     }
+
+    @Override
+    public boolean putOnBottom() {
+        return true;
+    }
 }

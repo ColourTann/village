@@ -14,31 +14,14 @@ public class EventCreator {
 	public static Array<Event> makeBasicEvents() {
         Array<Event> current = new Array<>();
 
-        ev = new Event("High Tide", "The tide is coming in fast, there's not much time!");
-        ev.effR(new Eff().food(-2));
-        ev.effR(new Eff().storage(-2));
-        ev.addOutcome("Get everyone to safety");
-        ev.addOutcome("Quickly build some flood defences", 0,3,0);
-        ev.joel(-.5);
-        ev.chance(1,1);
-        current.add(ev);
-
-        ev = new Event("Nightmares", "A deep fear invades the sleep of the vilage");
-        ev.eff(new Eff().morale(-1));
-        ev.addOutcome("You know it was just a dream but...");
-        ev.eff(new Eff().morale(1));
-        ev.addOutcome("You fly away on a shining bird", 2);
-        ev.joel(-.4);
-        ev.chance(1,1);
-        current.add(ev);
-
+        //-------------------------positive---------------------------------//
         ev = new Event("Stellar Alignment", "The sacred stars are in alignment");
         ev.eff(new Eff().fate(1));
         ev.addOutcome("They say it means the gull has found a new egg");
-        ev.eff(new Eff().wood(30));
-        ev.addOutcome("??????", 5);
+        ev.eff(new Eff().villagerXP(3));
+        ev.addOutcome("Stare at the twinkling stars all night", 2);
         ev.joel(.3);
-        ev.chance(.08, 1);
+        ev.chance(.3, 1);
         current.add(ev);
 
         ev = new Event("Supply Crate", "You don't understand where it could have come from");
@@ -47,7 +30,7 @@ public class EventCreator {
         ev.eff(new Eff().food(2));
         ev.addOutcome("A dead shark is inside, how did she get there?");
         ev.joel(.4);
-        ev.chance(.5,1);
+        ev.chance(.5f,1);
         ev.eff(new Eff().morale(1));
         current.add(ev);
 
@@ -56,6 +39,9 @@ public class EventCreator {
         ev.addOutcome("A lot of them just wash up on the beach");
         ev.eff(new Eff(new Buff().bonusFood(1)));
         ev.addOutcome("Fishing time! (+1 food from dice this turn)");
+        ev.eff(new Eff().food(2));
+        ev.eff(new Eff(new Buff().bonusFood(1)));
+        ev.addOutcome("porque no los dos", 1);
         ev.joel(.5f);
         current.add(ev);
 
@@ -84,6 +70,80 @@ public class EventCreator {
         ev.chance(.5f);
         current.add(ev);
 
+        ev = new Event("Fresh breeze", "The whole village feels refreshed today");
+        ev.eff(new Eff(new Buff().rerolls(3)));
+        ev.addOutcome("Get up early for a good day's work");
+        ev.eff(new Eff().morale(1));
+        ev.addOutcome("Time for a lie-in");
+        ev.joel(.4);
+        current.add(ev);
+
+        ev = new Event("Sky feast", "The festival of the sky is upon us");
+        ev.eff(new Eff().morale(1));
+        ev.addOutcome("Observe the rites", 1,0,0);
+        ev.eff(new Eff().fate(2));
+        ev.addOutcome("Holy feast", 4,0,0);
+        ev.req(new Eff().food(-3));
+        ev.joel(.2);
+        ev.chance(1,1);
+        current.add(ev);
+        //------------------------------------------------------------------//
+
+        //------------------------------neutral-----------------------------//
+        ev = new Event("Quiet day", "Thankfully uneventful");
+        ev.joel(0);
+        ev.chance(.2f);
+        current.add(ev);
+        //------------------------------------------------------------------//
+
+        //------------------------------negative----------------------------//
+        ev = new Event("Gorilla", "An alpha male gorilla approaches the village");
+        ev.effR(new Eff().food(-4));
+        ev.addOutcome("Watch the enormous ape steal your food");
+        ev.eff(new Eff().food(2));
+        ev.addOutcome("He approaches and leaves a small bundle wrapped in leaves", 2);
+        ev.joel(-.8f);
+        current.add(ev);
+
+        ev = new Event("Noises in the night", "Some of your food is gone, along with some storage!");
+        ev.effR(new Eff().food(-1));
+        ev.effR(new Eff().storage(-1));
+        ev.joel(-.3f);
+        current.add(ev);
+
+        ev = new Event("Monkey Troup", "They've come out in force!");
+        ev.effR(new Eff().food(-3));
+        ev.addOutcome("Throw food at them");
+        ev.effR(new Eff().wood(-3));
+        ev.addOutcome("Keep them away from the food");
+        ev.eff(new Eff().morale(2));
+        ev.addOutcome("Lightning strikes in front of the monkeys!",3);
+        ev.joel(-.6);
+        current.add(ev);
+
+        ev = new Event("Slow Rot", "The food is getting infected");
+        ev.eff(new Eff().eachTurn(3).food(-2));
+        ev.joel(-1);
+        current.add(ev);
+
+        ev = new Event("High Tide", "The tide is coming in fast, there's not much time!");
+        ev.effR(new Eff().food(-2));
+        ev.effR(new Eff().storage(-2));
+        ev.addOutcome("Get everyone to safety");
+        ev.addOutcome("Quickly build some flood defences", 0,3,0);
+        ev.joel(-.5);
+        ev.chance(1,1);
+        current.add(ev);
+
+        ev = new Event("Nightmares", "A deep fear invades the sleep of the vilage");
+        ev.eff(new Eff().morale(-1));
+        ev.addOutcome("You know it was just a dream but...");
+        ev.eff(new Eff().morale(1));
+        ev.addOutcome("You fly away on a shining bird", 2);
+        ev.joel(-.4);
+        ev.chance(1,1);
+        current.add(ev);
+
         ev = new Event("Rot","You're sure it looked fine yesterday...");
         ev.effR(new Eff().food(-1));
         ev.addOutcome("Rotten food");
@@ -102,30 +162,12 @@ public class EventCreator {
         ev.joel(-1.4);
         current.add(ev);
 
-        ev = new Event("Fresh breeze", "The whole village feels refreshed today");
-        ev.eff(new Eff(new Buff().rerolls(3)));
-        ev.addOutcome("Get up early for a good day's work");
-        ev.eff(new Eff().morale(1));
-        ev.addOutcome("Time for a lie-in");
-        ev.joel(.4);
-        current.add(ev);
-
         ev = new Event("Sniffles", "Everyone's feeling a bit under the weather");
         ev.eff(new Eff().food(-1));
         ev.addOutcome("Extra rations");
         ev.eff(new Eff(new Buff().rerolls(-1)));
         ev.addOutcome("Slow day");
         ev.joel(-.2);
-        current.add(ev);
-
-        ev = new Event("Sky feast", "The festival of the sky is upon us");
-        ev.eff(new Eff().morale(1));
-        ev.addOutcome("Observe the rites", 1,0,0);
-        ev.eff(new Eff().fate(2));
-        ev.addOutcome("Holy feast", 4,0,0);
-        ev.req(new Eff().food(-3));
-        ev.joel(.2);
-        ev.chance(1,1);
         current.add(ev);
 
         ev = new Event("Injured Tortoise", "A sad sight with a cracked shell");
@@ -146,42 +188,7 @@ public class EventCreator {
         ev.addOutcome("You find a hidden cave full of weird fungus!", 3);
         ev.joel(-.4);
         current.add(ev);
-
-        ev = new Event("Monkey Troup", "They've come out in force!");
-        ev.effR(new Eff().food(-3));
-        ev.addOutcome("Throw food at them");
-        ev.effR(new Eff().wood(-3));
-        ev.addOutcome("Keep them away from the food");
-        ev.eff(new Eff().morale(2));
-        ev.addOutcome("Lightning strikes in front of the monkeys!",3);
-        ev.joel(-.6);
-        current.add(ev);
-
-        //neutral//
-        ev = new Event("Quiet day", "Thankfully uneventful");
-        ev.joel(0);
-        ev.eff(new Eff().villagerXP(1));
-        ev.chance(11111.2f);
-        current.add(ev);
-
-        ev = new Event("Gorilla", "An alpha male gorilla approaches the village");
-        ev.effR(new Eff().food(-4));
-        ev.addOutcome("Watch the enormous ape steal your food");
-        ev.eff(new Eff().food(2));
-        ev.addOutcome("He approaches and leaves a small bundle wrapped in leaves", 2);
-        ev.joel(-.8f);
-        current.add(ev);
-
-        ev = new Event("Noises in the night", "Some of your food is gone, along with some storage!");
-        ev.effR(new Eff().food(-1));
-        ev.effR(new Eff().storage(-1));
-        ev.joel(-.3f);
-        current.add(ev);
-
-        ev = new Event("Slow Rot", "The food is getting infected");
-        ev.eff(new Eff().eachTurn(3).food(-2));
-        ev.joel(-1);
-        current.add(ev);
+        //------------------------------------------------------------------//
 
         return current;
 	}

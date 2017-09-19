@@ -22,13 +22,18 @@ import tann.village.util.Sounds;
 
 public class Village {
 	
-	private List<Project> buildings  = new ArrayList<>();
+	private Array<Project> buildings  = new Array<>();
 	private RerollPanel panel;
     private Inventory inventory;
-    private List<Phase> phaseStack = new ArrayList<>();
+    private Array<Phase> phaseStack = new Array<>();
     public static Island island;
     public void pushPhase(Phase p){
-        phaseStack.add(p);
+        if(p.putOnBottom()){
+            phaseStack.insert(0, p);
+        }
+        else {
+            phaseStack.add(p);
+        }
     }
     public Phase currentPhase = new NothingPhase();
 
@@ -43,10 +48,10 @@ public class Village {
         if(currentPhase!=null){
             currentPhase.deactivate();
         }
-        if(phaseStack.size()==0){
+        if(phaseStack.size==0){
             System.err.println("no phase to pop");
         }
-        Phase p =  phaseStack.remove(0);
+        Phase p =  phaseStack.removeIndex(phaseStack.size-1);
         p.activate();
         currentPhase=p;
     }
@@ -286,7 +291,7 @@ public class Village {
     }
 
     public int getNumBuildings(){
-        return buildings.size();
+        return buildings.size;
     }
 
     private void addTurnEff(Eff eff){

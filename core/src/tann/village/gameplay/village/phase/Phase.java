@@ -13,4 +13,6 @@ public abstract class Phase {
     public boolean canContinue() {return true;}
 
     public void selectVillager(Villager v){};
+
+    public boolean putOnBottom(){return false;}
 }

@@ -13,34 +13,45 @@ import tann.village.util.*;
 
 public class OutcomePanel extends Group {
     public static int WIDTHSMALL = 220, WIDTHBIG=260, HEIGHTBASE = 40, HEIGHT = 115;
+    private static final float GAP=10, EXTRA = GAP + EffectPanel.staticHeight();
     Color border = Colours.dark;
     Outcome o;
     boolean locked;
     public OutcomePanel(final Outcome o, boolean triple) {
         this.o=o;
-
-        setSize(WIDTHBIG, HEIGHT);
+        float h = HEIGHT;
+        setSize(WIDTHBIG, HEIGHT+EXTRA*(Math.max(0, o.effects.size-1)));
         Fonts.fontSmall.setColor(Colours.light);
         TextBox tb = new TextBox(o.description, Fonts.fontSmall, WIDTHBIG-10, Align.center);
-        float textPosition = .73f;
-        tb.setPosition(getWidth()/2-tb.getWidth()/2, getHeight()*textPosition-tb.getHeight()/2);
+        float textPosition = .27f;
+        tb.setPosition(getWidth()/2-tb.getWidth()/2, getHeight()-HEIGHT*textPosition-tb.getHeight()/2);
         addActor(tb);
-
+        EffectPanel first =null;
         if(o.effects.size>0) {
             Eff e = o.effects.get(0);
-            EffectPanel ep = new EffectPanel(e, true);
-            float effPanelPosition = .28f;
-            ep.setPosition(getWidth() / 2 - ep.getWidth() / 2, getHeight() * effPanelPosition - ep.getHeight() / 2);
-            addActor(ep);
+            first = new EffectPanel(e, true);
+            float effPanelPosition = .72f;
+            first.setPosition(getWidth() / 2 - first.getWidth() / 2, getHeight() -HEIGHT*effPanelPosition - first.getHeight() / 2);
+            addActor(first);
         }
 
+        for(int i=1;i<o.effects.size;i++){
+            Eff e = o.effects.get(i);
+            EffectPanel ep = new EffectPanel(e, true);
+            ep.setPosition(first.getX(), first.getY()-EXTRA);
+            addActor(ep);
+            first = ep;
+            h += EXTRA;
+        }
 
+        setSize(WIDTHBIG, h);
         if(o.cost!=null){
             CostTab ct = new CostTab(o.cost);
             addActor(ct);
             ct.setPosition(getWidth()/2-ct.getWidth()/2, getHeight());
         }
         setColor(0,0,0,0);
+
 
     }
 

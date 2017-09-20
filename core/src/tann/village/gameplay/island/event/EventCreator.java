@@ -15,6 +15,16 @@ public class EventCreator {
         Array<Event> current = new Array<>();
 
         //-------------------------positive---------------------------------//
+        ev = new Event("Hidden Cave", "You find a beautiful hidden cave in the cliffs");
+        ev.eff(new Eff().food(4));
+        ev.addOutcome("It's full of crabs!");
+        ev.eff(new Eff().villagerXP(2));
+        ev.addOutcome("The journey is its own reward");
+        ev.eff(new Eff().morale(2));
+        ev.joel(1.6f);
+        ev.chance(1, 1);
+        current.add(ev);
+
         ev = new Event("Stellar Alignment", "The sacred stars are in alignment");
         ev.eff(new Eff().fate(1));
         ev.addOutcome("They say it means the gull has found a new egg");
@@ -41,7 +51,7 @@ public class EventCreator {
         ev.addOutcome("Fishing time! (+1 food from dice this turn)");
         ev.eff(new Eff().food(2));
         ev.eff(new Eff(new Buff().bonusFood(1)));
-        ev.addOutcome("porque no los dos", 1);
+        ev.addOutcome("Porque no los dos", 1);
         ev.joel(.5f);
         current.add(ev);
 
@@ -51,6 +61,7 @@ public class EventCreator {
         ev.eff(new Eff().inTurns(3).food(5));
         ev.addOutcome("Let it grow");
         ev.joel(.7);
+        ev.chance(.7f);
         current.add(ev);
 
         ev = new Event("Bamboo shoots", "Tasty-looking bamboo shoots were found!");
@@ -59,6 +70,7 @@ public class EventCreator {
         ev.eff(new Eff().inTurns(2).wood(3));
         ev.addOutcome("Wait for it to grow");
         ev.joel(.4);
+        ev.chance(.7f);
         current.add(ev);
 
         ev = new Event("Two-headed fish","It's huge and stared at you with its four eyes");
@@ -66,6 +78,9 @@ public class EventCreator {
         ev.addOutcome("Tasty!");
         ev.eff(new Eff().fate(1));
         ev.addOutcome("Release it back into the ocean");
+        ev.eff(new Eff().morale(3));
+        ev.eff(new Eff().villagerXP(1));
+        ev.addOutcome("It speaks! Surely this is a sign!", 3);
         ev.joel(.6);
         ev.chance(.5f);
         current.add(ev);
@@ -75,6 +90,9 @@ public class EventCreator {
         ev.addOutcome("Get up early for a good day's work");
         ev.eff(new Eff().morale(1));
         ev.addOutcome("Time for a lie-in");
+        ev.eff(new Eff().morale(2));
+        ev.eff(new Eff(new Buff().rerolls(3)));
+        ev.addOutcome("Blue skies all day", 2);
         ev.joel(.4);
         current.add(ev);
 
@@ -83,9 +101,12 @@ public class EventCreator {
         ev.addOutcome("Observe the rites", 1,0,0);
         ev.eff(new Eff().fate(2));
         ev.addOutcome("Holy feast", 4,0,0);
-        ev.req(new Eff().food(-3));
+        ev.eff(new Eff().morale(3));
+        ev.eff(new Eff().villagerXP(3));
+        ev.addOutcome("You feel as if you could fly!", 5,0,3);
         ev.joel(.2);
         ev.chance(1,1);
+        ev.req(new Eff().food(-1));
         current.add(ev);
         //------------------------------------------------------------------//
 
@@ -105,9 +126,12 @@ public class EventCreator {
         ev.joel(-.8f);
         current.add(ev);
 
-        ev = new Event("Noises in the night", "Some of your food is gone, along with some storage!");
+        ev = new Event("Noises in the night", "click...clicklick...click!");
         ev.effR(new Eff().food(-1));
         ev.effR(new Eff().storage(-1));
+        ev.addOutcome("Damn critter!");
+        ev.eff(new Eff().food(4));
+        ev.addOutcome("You get up in time to kill it!", 2);
         ev.joel(-.3f);
         current.add(ev);
 
@@ -121,21 +145,12 @@ public class EventCreator {
         ev.joel(-.6);
         current.add(ev);
 
-        ev = new Event("Slow Rot", "The food is getting infected");
+        ev = new Event("Red Mould", "The food is getting infected");
         ev.eff(new Eff().eachTurn(3).food(-2));
         ev.joel(-1);
         current.add(ev);
 
-        ev = new Event("High Tide", "The tide is coming in fast, there's not much time!");
-        ev.effR(new Eff().food(-2));
-        ev.effR(new Eff().storage(-2));
-        ev.addOutcome("Get everyone to safety");
-        ev.addOutcome("Quickly build some flood defences", 0,3,0);
-        ev.joel(-.5);
-        ev.chance(1,1);
-        current.add(ev);
-
-        ev = new Event("Nightmares", "A deep fear invades the sleep of the vilage");
+        ev = new Event("Nightmares", "A deep fear invades the sleep of the village");
         ev.eff(new Eff().morale(-1));
         ev.addOutcome("You know it was just a dream but...");
         ev.eff(new Eff().morale(1));

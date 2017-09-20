@@ -26,12 +26,7 @@ public class TutorialIsland extends Island {
 
         ev = new Event("Heatwave", "The sweltering heat is draining the village");
         ev.eff(new Eff().morale(-1));
-        ev.joel(.4);
-        addEvent(ev);
-
-        ev = new Event("Clear skies", "Everyone wakes up with a clear head.");
-        ev.joel(-.1);
-        ev.eff(new Eff(new Buff().rerolls(1)));
+        ev.joel(-.4);
         addEvent(ev);
 	}
 

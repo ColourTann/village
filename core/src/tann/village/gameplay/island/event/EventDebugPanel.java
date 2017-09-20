@@ -46,7 +46,7 @@ public class EventDebugPanel extends Group {
                 }
                 if(good){
                     list.add(panel);
-                    panel.setPosition((((-e.joel)/2f+1)/(STRIATIONS/10f))*WIDTH-SingleEventPanel.WIDTH/2 + getWidth()/STRIATIONS/2f, level*SingleEventPanel.HEIGHT+40);
+                    panel.setPosition((((e.joel)/2f+1)/(STRIATIONS/10f))*WIDTH-SingleEventPanel.WIDTH/2 + getWidth()/STRIATIONS/2f, level*SingleEventPanel.HEIGHT+40);
                     break;
                 }
             }
@@ -115,7 +115,7 @@ public class EventDebugPanel extends Group {
             float border = 2;
             batch.setColor(Colours.blue_dark);
             Draw.fillActor(batch,this);
-            batch.setColor((e.joel) <0? Colours.green_light:(e.joel)>0?Colours.red:Colours.grey);
+            batch.setColor((e.joel) >0? Colours.green_light:(e.joel)<0?Colours.red:Colours.grey);
 
             Draw.fillRectangle(batch,getX()+border,getY()+border, getWidth()-border*2, getHeight()-border*2);
             String toDraw = e.title;

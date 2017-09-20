@@ -72,6 +72,17 @@ public class GemIsland extends Island{
         ev.joel(-.4);
         addEvent(ev);
 
+        ev = new Event("High Tide", "The tide is coming in fast, there's not much time!");
+        ev.effR(new Eff().food(-2));
+        ev.effR(new Eff().storage(-2));
+        ev.addOutcome("Get everyone to safety");
+        ev.eff(new Eff().morale(1));
+        ev.addOutcome("Quickly build some flood defences", 0,4,0);
+        ev.joel(-.5);
+        ev.chance(1,1);
+        addEvent(ev);
+        //TODO tide parts to show a cool gem!
+
         addEvents(EventCreator.makeBasicEvents());
     }
 

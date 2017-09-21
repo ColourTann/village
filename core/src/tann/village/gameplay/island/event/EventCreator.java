@@ -12,6 +12,7 @@ public class EventCreator {
 	
 	static Event ev;
 	public static Array<Event> makeBasicEvents() {
+        Event.currentSpecificity= Event.Specificity.General;
         Array<Event> current = new Array<>();
 
         //-------------------------positive---------------------------------//
@@ -205,6 +206,7 @@ public class EventCreator {
         current.add(ev);
         //------------------------------------------------------------------//
 
+        Event.currentSpecificity= null;
         return current;
 	}
 }

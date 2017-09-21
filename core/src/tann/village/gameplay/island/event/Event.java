@@ -7,8 +7,9 @@ import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.Village;
 
 public class Event {
-
-
+    public static Specificity currentSpecificity;
+    public enum Specificity{General, Scenario}
+    private Specificity specificity;
     public String title;
     public String description;
     public Array<Outcome> outcomes = new Array<>();
@@ -29,6 +30,10 @@ public class Event {
     public Event(String title, String description){
         this.title=title;
         this.description=description;
+        if(currentSpecificity==null){
+            System.out.println(this+": null specificity");
+        }
+        this.specificity=Event.currentSpecificity;
     }
 
     public void init(){
@@ -97,6 +102,14 @@ public class Event {
         this.storyTurn=turn;
         this.story=true;
         this.joel=0;
+    }
+
+    public void setSpecificity(Specificity spec){
+        this.specificity=spec;
+    }
+
+    public Specificity getSpecificity(){
+        return this.specificity;
     }
 
     public void addOutcome(String description) {

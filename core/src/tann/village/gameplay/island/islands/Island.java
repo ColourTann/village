@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.Main;
 import tann.village.gameplay.island.event.Event;
+import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
 
@@ -52,17 +53,17 @@ public abstract class Island {
 		for(Event e: randomEventsPool){
 			if(e.isPotential()){
 				validEvents.add(e);
-				totalChance += e.chance;
+				totalChance += e.getChance();
 			}
 		}
 		if(validEvents.size==0) return null;
 		float randomRoll = (float) (Math.random()*totalChance);
 		for(Event e:validEvents){
-			if(e.chance>=randomRoll){
+			if(e.getChance()>=randomRoll){
 			    toReturn = e;
 			    break;
             }
-			randomRoll -= e.chance;
+			randomRoll -= e.getChance();
 		}
 		if(toReturn == null){
             System.err.print("No event generated for some reason, getting random valid event");
@@ -94,17 +95,21 @@ public abstract class Island {
 		validEvents.clear();
 		storyEvents.clear();
 		randomEventsPool.clear();
-		Event.currentSpecificity = Event.Specificity.Scenario;
-		setupRandomPool();
-		setupStory();
+		randomEventsPool.addAll(EventCreator.makeBasicEvents());
+        Event.currentSpecificity = Event.Specificity.Scenario;
+        setupRandomPool();
+        setupStory();
+        Event.currentSpecificity = null;
 		setupBuildings();
 		setupClasses();
 		background = Main.atlas.findRegion(getBackgroundString());
 		for(Event e:randomEventsPool){
 		    e.validate();
+		    e.init();
         }
         for(Event e:storyEvents.values()){
 		    e.validate();
+            e.init();
         }
     }
 

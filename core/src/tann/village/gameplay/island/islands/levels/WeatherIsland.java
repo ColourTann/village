@@ -19,8 +19,6 @@ public class WeatherIsland extends Island {
 
     @Override
     protected void setupRandomPool() {
-        addEvents(EventCreator.makeBasicEvents());
-
         Event ev;
         ev = new Event("Hailstorm", "Huge hailstones batter your huts");
         ev.eff(new Eff().morale(-2));

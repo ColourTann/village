@@ -8,14 +8,20 @@ import tann.village.gameplay.village.Village;
 
 public class Event {
     public static Specificity currentSpecificity;
-    public enum Specificity{General, Scenario}
+    public enum Specificity{
+        General(1), Scenario(3);
+        float multiplier;
+        Specificity(float multiplier){
+            this.multiplier=multiplier;
+        }
+    }
     private Specificity specificity;
     public String title;
     public String description;
     public Array<Outcome> outcomes = new Array<>();
     public Array<Eff> effects = new Array<>();
     public Array<Eff> requirements = new Array<>();
-    public float chance = 1;
+    private float chance = 1;
 	boolean story;
 	public int storyTurn = -1;
 	private int maxUses=999;
@@ -37,6 +43,7 @@ public class Event {
     }
 
     public void init(){
+        uses=0;
         for(Outcome o:outcomes){
             o.reset();
         }
@@ -136,6 +143,7 @@ public class Event {
     }
 
     public void validate(){
+        if(specificity==null) System.err.println("no specificity "+this);
         if(joel<=-2||joel>=2) System.err.println("joel out of bounds for "+this);
         if(storyTurn==-1 && isStory()) System.err.println("story with no turn for "+this);
         if(title==null) System.err.println("no title for "+this);
@@ -184,5 +192,9 @@ public class Event {
             }
         }
         this.uses++;
+    }
+
+    public float getChance(){
+        return chance*specificity.multiplier;
     }
 }

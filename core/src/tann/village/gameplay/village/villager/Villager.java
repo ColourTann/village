@@ -18,11 +18,15 @@ import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.panels.villagerStuff.VillagerIcon;
 import tann.village.util.Colours;
 
+import javax.xml.transform.Source;
 import java.util.Map;
 
 public class Villager {
 
 	public static final int MAX_LEVEL = 2;
+
+
+
     public static Array<VillagerType> basicVillagerTypes = new Array<>(new VillagerType[]{
             VillagerType.Villager,
             VillagerType.Fisher,
@@ -43,6 +47,8 @@ public class Villager {
 	public static final int xpToLevelUp = 3;
 	public VillagerType type;
 	public Die die;
+    Array<VillagerType> sources = new Array<>();
+
 
 	private static final Color[] colours = new Color[]{(Colours.blue_light), (Colours.fate_light), (Colours.green_light), (Colours.brown_light), (Colours.red)};
 	
@@ -139,35 +145,104 @@ public class Villager {
 
 
     public enum VillagerType{
-//		Villager(0,"no description maybe?",                     Images.lapel,    Side.food2, Side.food1, Side.wood1, Side.wood1, Side.brain, Side.skull),
-        Villager(0,"no description maybe?",                     Images.lapel,    Side.skull, Side.food1, Side.food1, Side.wood1, Side.wood1, Side.brain),
+        Villager(0,"no description maybe?", new Array<VillagerType>(),
+                Side.skull, Side.food1, Side.food1, Side.wood1, Side.wood1, Side.brain),
+
         // 1
-		Fisher(1, "Catch lots of fish!.. on a good day",        Images.lapel1,   Side.food3, Side.food2, Side.food1, Side.brain, Side.skull, Side.skull),
-        SongKeeper(1, "Remember the ancients",                  Images.lapel1,   Side.morale1, Side.morale1, Side.food1, Side.food1, Side.wood1, Side.brain),
-        Mystic(1, "Rituals of the stone",                       Images.lapel1,   Side.fate1, Side.fate1, Side.food1, Side.brain, Side.skull, Side.brain),
-        Gatherer(1, "Be careful whilst foraging!",              Images.lapel1,   Side.food2, Side.wood2, Side.food2, Side.food1, Side.skull, Side.brain),
-        Chopper(1, "Tok tok tok",                               Images.lapel1,   Side.wood2, Side.wood2, Side.wood1, Side.wood1, Side.food1, Side.brain),
-        Digger(1, "Have to find the gems",                      Images.lapel2,   Side.gem1, Side.skull, Side.skull, Side.skull, Side.skull, Side.brain),
+
+        Fisher(1, "Catch lots of fish!.. on a good day", VillagerType.Villager, //(sailor farmer)
+                Side.food2, Side.food2, Side.food1, Side.food1, Side.brain, Side.skull),
+        Chopper(1, "Tok tok tok", VillagerType.Villager, // (builder, gardener)
+                Side.wood2, Side.wood2, Side.wood1, Side.wood1, Side.food1, Side.brain),
+        Poet(1, "Keep your spirits up", VillagerType.Villager, // (SongKeeeper, Leader)
+                Side.morale1, Side.morale1, Side.food1, Side.food1, Side.wood1, Side.brain),
+        Acolyte(1, "Keep the rituals alive", VillagerType.Villager, //(FateWeaver, Witch)
+                Side.fate1, Side.fate1, Side.food1, Side.brain, Side.skull, Side.skull),
+        Gatherer(1, "Be careful whilst foraging!", VillagerType.Villager, // (Explorer, Herbalist)
+                Side.food2, Side.wood2, Side.food1, Side.wood1, Side.skull, Side.brain),
+        Teacher(1, "Share the knowledge", VillagerType.Villager,
+                Side.brainOther, Side.brainOther, Side.brain, Side.brain, Side.food1, Side.food1),
+
         // 2
-		Farmer(2, "Grow crops to keep the village fed",         Images.lapel2,   Side.food3, Side.food3, Side.food2, Side.wood2, Side.food1, Side.brain),
-        Leader(2, "Strong leader listens to all",               Images.lapel2,   Side.morale2, Side.morale1, Side.morale1, Side.wood2, Side.brain, Side.brain),
-        FateWeaver(2, "Appease the gods for a better future",   Images.lapel2,   Side.fate2, Side.fate2, Side.fate1, Side.skull, Side.skull, Side.brain),
-        Explorer(2, "Search the island for opportunity!",       Images.lapel2,   Side.fate1, Side.morale1, Side.wood2, Side.food2, Side.food3, Side.brain),
-        ShineEye(2, "The gems call to me",                      Images.lapel2,   Side.gem1, Side.gem1, Side.skull, Side.skull, Side.skull, Side.brain),
-        Builder(2, "Construct a strong village",                Images.lapel2,   Side.wood3, Side.wood3, Side.wood2, Side.wood2, Side.wood1, Side.brain);
+
+        Sailor(2, "Scavenging the oceans for fish and flotsam", VillagerType.Fisher,
+                Side.food3, Side.food2, Side.wood2, Side.food1wood1, Side.brain, Side.skull),
+        Farmer(2, "Reliable food production", VillagerType.Fisher,
+                Side.food2, Side.food2, Side.food2, Side.food2, Side.food2, Side.brain),
+
+        Forester(2, "Got to keep busy", VillagerType.Chopper,
+                Side.wood2, Side.wood2, Side.wood2, Side.wood2, Side.wood2, Side.brain),
+        Cultivator(2, "Grow the things the villag eneeds", VillagerType.Chopper,
+                Side.morale1, Side.wood2, Side.wood2, Side.wood1, Side.food1wood1, Side.brain),
+
+        Musician(2, "Remember the ancients", VillagerType.Poet,
+                Side.morale2, Side.morale1, Side.fate1, Side.food1, Side.brain, Side.brain),
+        Leader(2, "Work together, better", VillagerType.Poet,
+                Side.bonusWood, Side.bonusFood, Side.brainOther, Side.food1, Side.food1wood1, Side.brain),
+
+        FateWeaver(2, "Appease the great gull", VillagerType.Acolyte,
+                Side.fate2, Side.fate1, Side.fate1, Side.food1, Side.wood1, Side.brain),
+        Witch(2, "Potions and tinctures", VillagerType.Acolyte,
+                Side.fate2, Side.food2, Side.morale1, Side.food1wood1, Side.skull, Side.brain),
+
+        Explorer(2, "Search the island", VillagerType.Gatherer,
+                Side.food2, Side.wood2, Side.food1wood1, Side.food1wood1, Side.food1wood1, Side.brain),
+        Herbalist(2, "Knowledge of the plants", VillagerType.Gatherer,
+                Side.food2, Side.food2, Side.wood2, Side.food1, Side.brainOther, Side.brain),
+
+        Mentor(2, "Advise the village", VillagerType.Teacher,
+                Side.brainOther2, Side.brainOther2, Side.brainOther, Side.food1wood1, Side.brain, Side.brain),
+        Guide(2, "Show the way", VillagerType.Teacher,
+                Side.brainOther2, Side.bonusFood, Side.morale1, Side.morale1, Side.food1wood1, Side.brain),
+
+        // 3
+
+        Navigator(3, "????", VillagerType.Sailor,
+                Side.food2wood2, Side.food2wood1, Side.food3, Side.food2, Side.food2, Side.morale2),
+        Shepherd(3, "Managing to corral these animals is an achievement!", VillagerType.Farmer,
+                Side.food4, Side.food3, Side.food3, Side.food3, Side.food3, Side.food3),
+
+        Logger(3, "????", VillagerType.Forester,
+                Side.wood4, Side.wood3, Side.wood3, Side.wood3, Side.food1wood2, Side.food1wood2),
+        Druid(3, "????", VillagerType.Cultivator,
+                Side.wood4, Side.wood3, Side.food1wood2, Side.food1wood2, Side.morale2, Side.morale1),
+
+        SongKeeper(3, "???", VillagerType.Musician,
+                )
+
+
+
+
+
+
+
+        //cook!
+
+
 		public int level;
 		public String description;
 		public Side[] sides;
         public TextureRegion lapel;
 
-        VillagerType(int level, String description, TextureRegion lapel, Side... sides){
-		    if(sides.length!=6){
-		        System.err.println("side error making "+this);
+        VillagerType(int level, String description, Array<VillagerType> sources, Side... sides){
+            if(sides.length!=6){
+                System.err.println("side error making "+this);
+            }
+            switch(level){
+                case 0: this.lapel = Images.lapel1;
+                case 1: this.lapel = Images.lapel2;
+                case 2: this.lapel = Images.lapel3;
+                case 3: this.lapel = Images.lapel4;
+                case 4: this.lapel = Images.lapel5;
             }
             this.lapel = lapel;
-		    this.level=level;
+            this.level=level;
             this.description=description;
             this.sides=sides;
+        }
+
+        VillagerType(int level, String description, VillagerType source, Side... sides){
+            this(level, description, new Array<VillagerType>(new VillagerType[]{source}), sides);
         }
 	}
 }

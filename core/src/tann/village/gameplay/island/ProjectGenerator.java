@@ -11,10 +11,14 @@ public class ProjectGenerator {
     static Project p;
 	public static Array<Project> makeBasicProjects(){
         Array<Project> results = new Array<>();
+        p = new Project("Dock", "A short pier leading into the ocean. +1 food per turn for 10 turns.");
+        p.setCost(7);
+        p.addEffect(new Eff().eachTurn(10).food(1));
+        results.add(p);
 
-        p = new Project("Dock", "A short pier leading into the ocean. +1 food per turn for 12 turns.");
+        p = new Project("Salvage Hut", "A place to sort through useful materials. +1 wood per turn for 10 turns");
         p.setCost(6);
-        p.addEffect(new Eff().eachTurn(12).food(1));
+        p.addEffect(new Eff().eachTurn(10).wood(1));
         results.add(p);
 
         p = new Project("Fishing Trip", "A small expedition to catch fish. +4 food next turn");
@@ -38,13 +42,8 @@ public class ProjectGenerator {
         p.addEffect(new Eff().storage(2));
         results.add(p);
 
-        p = new Project("Salvage Hut", "A place to sort through useful materials. +1 wood per turn for 10 turns");
-        p.setCost(5);
-        p.addEffect(new Eff().eachTurn(10).wood(1));
-        results.add(p);
-
         p = new Project("Palm Grove", "Fast-growin trees! +1 wood and food per turn for 10 turns");
-        p.setCost(6, 4);
+        p.setCost(8, 4);
         p.addEffect(new Eff().eachTurn(10).wood(1));
         p.addEffect(new Eff().eachTurn(10).food(1));
         results.add(p);

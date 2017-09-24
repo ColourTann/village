@@ -21,9 +21,6 @@ public class TutorialIsland extends Island {
     Event ev;
 	@Override
 	protected void setupRandomPool() {
-
-        addEvents(EventCreator.makeBasicEvents());
-
         ev = new Event("Heatwave", "The sweltering heat is draining the village");
         ev.eff(new Eff().morale(-1));
         ev.joel(-.4);

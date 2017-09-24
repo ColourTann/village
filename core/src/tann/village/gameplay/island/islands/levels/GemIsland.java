@@ -40,14 +40,14 @@ public class GemIsland extends Island{
         ev.eff(new Eff().wood(-2));
         ev.eff(new Eff().fate(2));
         ev.addOutcome("Make an offering");
-        ev.joel(-.1);
+        ev.joel(-.3);
         ev.chance(.4f, 1);
         addEvent(ev);
 
         ev = new Event("Cursed Orange", "Lightning strikes the ground as someone picked an orange from a tree");
         ev.eff(new Eff().food(1));
         ev.effR(new Eff().fate(-1));
-        ev.joel(-.1);
+        ev.joel(-.2);
         ev.chance(1,1);
         addEvent(ev);
 
@@ -74,16 +74,15 @@ public class GemIsland extends Island{
 
         ev = new Event("High Tide", "The tide is coming in fast, there's not much time!");
         ev.effR(new Eff().food(-2));
-        ev.effR(new Eff().storage(-2));
         ev.addOutcome("Get everyone to safety");
         ev.eff(new Eff().morale(1));
-        ev.addOutcome("Quickly build some flood defences", 0,4,0);
+        ev.addOutcome("Quickly build some flood defences", 0,3,0);
+        ev.eff(new Eff().gem(2));
+        ev.addOutcome("The tide draws back and reveals two gems!", 1);
+        ev.effR(new Eff().storage(-2));
         ev.joel(-.5);
-        ev.chance(1,1);
         addEvent(ev);
         //TODO tide parts to show a cool gem!
-
-        addEvents(EventCreator.makeBasicEvents());
     }
 
     @Override

@@ -48,15 +48,21 @@ public class Side {
 	public static Side skull = make(Images.get("nothing"), EffectType.Skull, 1);
     public static Side brain = make(Images.get("brain"), EffectType.Brain, 1);
     public static Side brainOther = make(Images.get("brain"), EffectType.XpToVillager, 1);  //todo
-    public static Side brainOther2 = make(Images.get("brain"), EffectType.XpToVillager, 2);  //todo
-    public static Side bonusWood = make(Images.get("brain"), EffectType.Brain, 1);  //todo
-    public static Side bonusFood = make(Images.get("brain"), EffectType.Brain, 1);  //todo
+	public static Side brainOther2 = make(Images.get("brain"), EffectType.XpToVillager, 2);  //todo
+	public static Side brainOther3 = make(Images.get("brain"), EffectType.XpToVillager, 3);  //todo
+	public static Side bonusWood = make(Images.get("brain"), EffectType.Brain, 1);  //todo
+	public static Side bonusWood2 = make(Images.get("brain"), EffectType.Brain, 1);  //todo
+	public static Side bonusFood = make(Images.get("brain"), EffectType.Brain, 1);  //todo
+	public static Side bonusFood2 = make(Images.get("brain"), EffectType.Brain, 1);  //todo
 	public static Side TwoMoraleForTwoFood = make(Images.get("morale_2_minus_2_food"), EffectType.Food, -2, EffectType.Morale, 2);
 
 	public static Side morale1 = make(Images.get("morale1"), EffectType.Morale, 1);
 	public static Side morale2 = make(Images.get("morale2"), EffectType.Morale, 2);
+	public static Side morale3 = make(Images.get("morale3"), EffectType.Morale, 3); //todo
+	public static Side morale1fate1 = make(Images.get("morale1fate1"), EffectType.Morale, 1, EffectType.Fate, 1); //todo
     public static Side fate1= make(Images.get("fate1"), EffectType.Fate, 1);
-    public static Side fate2= make(Images.get("fate2"), EffectType.Fate, 2);
+	public static Side fate2= make(Images.get("fate2"), EffectType.Fate, 2);
+	public static Side fate3= make(Images.get("fate3"), EffectType.Fate, 3); //todo
     public static Side fate2ForWoodAndFood= make(Images.get("fate2woodminus1foodminus1"), EffectType.Fate, 2, EffectType.Wood, -1, EffectType.Food, -1);
     public static Side gem1 = make(Images.get("emerald"), EffectType.Gem, 1);
 

@@ -25,22 +25,6 @@ public class Villager {
 
 	public static final int MAX_LEVEL = 2;
 
-
-
-    public static Array<VillagerType> basicVillagerTypes = new Array<>(new VillagerType[]{
-            VillagerType.Villager,
-            VillagerType.Fisher,
-            VillagerType.SongKeeper,
-            VillagerType.Mystic,
-            VillagerType.Gatherer,
-            VillagerType.Chopper,
-            VillagerType.Farmer,
-            VillagerType.Leader,
-            VillagerType.FateWeaver,
-            VillagerType.Explorer,
-            VillagerType.Builder
-    });
-
     Color col;
 	public String firstName, lastName;
 	public int xp;
@@ -172,7 +156,7 @@ public class Villager {
 
         Forester(2, "Got to keep busy", VillagerType.Chopper,
                 Side.wood2, Side.wood2, Side.wood2, Side.wood2, Side.wood2, Side.brain),
-        Cultivator(2, "Grow the things the villag eneeds", VillagerType.Chopper,
+        Cultivator(2, "Grow the things the village needs", VillagerType.Chopper,
                 Side.morale1, Side.wood2, Side.wood2, Side.wood1, Side.food1wood1, Side.brain),
 
         Musician(2, "Remember the ancients", VillagerType.Poet,
@@ -180,7 +164,7 @@ public class Villager {
         Leader(2, "Work together, better", VillagerType.Poet,
                 Side.bonusWood, Side.bonusFood, Side.brainOther, Side.food1, Side.food1wood1, Side.brain),
 
-        FateWeaver(2, "Appease the great gull", VillagerType.Acolyte,
+        FeatherLight(2, "Appease the great gull", VillagerType.Acolyte,
                 Side.fate2, Side.fate1, Side.fate1, Side.food1, Side.wood1, Side.brain),
         Witch(2, "Potions and tinctures", VillagerType.Acolyte,
                 Side.fate2, Side.food2, Side.morale1, Side.food1wood1, Side.skull, Side.brain),
@@ -208,16 +192,24 @@ public class Villager {
                 Side.wood4, Side.wood3, Side.food1wood2, Side.food1wood2, Side.morale2, Side.morale1),
 
         SongKeeper(3, "???", VillagerType.Musician,
-                )
+                Side.morale3, Side.fate2, Side.morale1fate1, Side.morale1fate1, Side.morale1fate1, Side.brainOther2),
+        Elder(3, "???", VillagerType.Leader,
+                Side.bonusWood2, Side.bonusFood2, Side.bonusWood, Side.bonusFood, Side.morale2, Side.brainOther2),
 
+        FateWeaaver(3, "???", VillagerType.FeatherLight,
+                Side.fate3, Side.fate2, Side.fate2, Side.fate2, Side.morale1fate1, Side.food1wood1),
+        Hejari(3, "Natural something", VillagerType.Witch,
+                Side.fate2, Side.fate2, Side.food3, Side.food2wood1, Side.food2wood1, Side.brainOther2),
 
+        Pathfinder(3, "Find anything you want", VillagerType.Explorer,
+                Side.food3, Side.wood3, Side.food2wood2, Side.food2wood2, Side.morale2, Side.fate2),
+        Cook(3, "???", VillagerType.Herbalist,
+                Side.bonusFood2, Side.bonusFood2, Side.bonusFood2, Side.bonusFood, Side.food2, Side.food2),
 
-
-
-
-
-        //cook!
-
+        Enlightended(3, "???", VillagerType.Mentor,
+                Side.brainOther3, Side.brainOther3, Side.brainOther3, Side.food2wood2, Side.food2wood2, Side.morale1fate1),
+        Tracker(3, "???", VillagerType.Guide,
+                Side.brainOther3, Side.bonusFood2, Side.bonusWood2, Side.food2wood2, Side.food2wood2, Side.food2wood2);
 
 		public int level;
 		public String description;

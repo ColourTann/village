@@ -74,7 +74,7 @@ public class Images {
 	public static final TextureRegion side_fateForWood = Main.atlas_3d.findRegion("dice/face/fate1woodminus1");
 	public static final TextureRegion side_2fateForWoodAndFood = Main.atlas_3d.findRegion("dice/face/fate2woodminus1foodminus1");
 
-    public static final TextureRegion lapel = Main.atlas_3d.findRegion("dice/lapel/0");
+    public static final TextureRegion lapel0 = Main.atlas_3d.findRegion("dice/lapel/0");
     public static final TextureRegion lapel1 = Main.atlas_3d.findRegion("dice/lapel/1");
     public static final TextureRegion lapel2 = Main.atlas_3d.findRegion("dice/lapel/2");
     public static final TextureRegion lapel3 = Main.atlas_3d.findRegion("dice/lapel/3");

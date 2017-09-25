@@ -7,18 +7,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.gameplay.effect.Eff;
-import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.village.AddSub;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.phase.LevelupPhase;
-import tann.village.gameplay.village.phase.Phase;
 import tann.village.gameplay.village.villager.die.Side;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.panels.villagerStuff.VillagerIcon;
 import tann.village.util.Colours;
 
-import javax.xml.transform.Source;
 import java.util.Map;
 
 public class Villager {
@@ -130,7 +127,7 @@ public class Villager {
 
     public enum VillagerType{
         Villager(0,"no description maybe?", new Array<VillagerType>(),
-                Side.skull, Side.food1, Side.food1, Side.wood1, Side.wood1, Side.brain),
+                Side.fate1morale1, Side.fate2, Side.fate3, Side.wood1, Side.brain, Side.skull),
 
         // 1
 
@@ -192,12 +189,12 @@ public class Villager {
                 Side.wood4, Side.wood3, Side.food1wood2, Side.food1wood2, Side.morale2, Side.morale1),
 
         SongKeeper(3, "???", VillagerType.Musician,
-                Side.morale3, Side.fate2, Side.morale1fate1, Side.morale1fate1, Side.morale1fate1, Side.brainOther2),
+                Side.morale3, Side.fate2, Side.fate1morale1, Side.fate1morale1, Side.fate1morale1, Side.brainOther2),
         Elder(3, "???", VillagerType.Leader,
                 Side.bonusWood2, Side.bonusFood2, Side.bonusWood, Side.bonusFood, Side.morale2, Side.brainOther2),
 
         FateWeaaver(3, "???", VillagerType.FeatherLight,
-                Side.fate3, Side.fate2, Side.fate2, Side.fate2, Side.morale1fate1, Side.food1wood1),
+                Side.fate3, Side.fate2, Side.fate2, Side.fate2, Side.fate1morale1, Side.food1wood1),
         Hejari(3, "Natural something", VillagerType.Witch,
                 Side.fate2, Side.fate2, Side.food3, Side.food2wood1, Side.food2wood1, Side.brainOther2),
 
@@ -207,7 +204,7 @@ public class Villager {
                 Side.bonusFood2, Side.bonusFood2, Side.bonusFood2, Side.bonusFood, Side.food2, Side.food2),
 
         Enlightended(3, "???", VillagerType.Mentor,
-                Side.brainOther3, Side.brainOther3, Side.brainOther3, Side.food2wood2, Side.food2wood2, Side.morale1fate1),
+                Side.brainOther3, Side.brainOther3, Side.brainOther3, Side.food2wood2, Side.food2wood2, Side.fate1morale1),
         Tracker(3, "???", VillagerType.Guide,
                 Side.brainOther3, Side.bonusFood2, Side.bonusWood2, Side.food2wood2, Side.food2wood2, Side.food2wood2);
 
@@ -222,11 +219,11 @@ public class Villager {
                 System.err.println("side error making "+this);
             }
             switch(level){
-                case 0: this.lapel = Images.lapel1;
-                case 1: this.lapel = Images.lapel2;
-                case 2: this.lapel = Images.lapel3;
-                case 3: this.lapel = Images.lapel4;
-                case 4: this.lapel = Images.lapel5;
+                case 0: this.lapel = Images.lapel0; break;
+                case 1: this.lapel = Images.lapel1; break;
+                case 2: this.lapel = Images.lapel2; break;
+                case 3: this.lapel = Images.lapel3; break;
+                case 4: this.lapel = Images.lapel4; break;
             }
             this.level=level;
             this.description=description;

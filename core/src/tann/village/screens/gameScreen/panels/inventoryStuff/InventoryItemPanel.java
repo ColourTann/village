@@ -94,9 +94,6 @@ public class InventoryItemPanel extends Lay{
         float TEXTURESIZE =getHeight()*.65f;
         imageActor = new ImageActor(tr, TEXTURESIZE, TEXTURESIZE);
 		Color col = null;
-        if(tr== Images.fate){
-             col = Colours.light;
-        }
 		amount = new TextBox(String.valueOf(getValue()), Fonts.font, getWidth(), Align.center);
         amount.setup(String.valueOf(getValue()));
         Layoo l = new Layoo(this);

@@ -36,7 +36,6 @@ public class Die {
 	public Villager villager;
     public VillagerType type;
     public CollisionObject physical;
-    public TextureRegion lapel;
     public Array<Side> sides = new Array<>();
     private static final float MAX_AIRTIME = 2.4f;
     private static final float INTERP_SPEED = .4f;
@@ -370,8 +369,8 @@ public class Die {
 			texLocs[4*i+2] = s.tr[1].getRegionX()/width;
 			texLocs[4*i+3] = s.tr[1].getRegionY()/height;
 		}
-		texLocs[24]=lapel.getRegionX()/width;
-		texLocs[25]=lapel.getRegionY()/height;
+		texLocs[24]=villager.type.lapel.getRegionX()/width;
+		texLocs[25]=villager.type.lapel.getRegionY()/height;
 		
 		return texLocs;
 	}
@@ -439,7 +438,6 @@ public class Die {
 
     public void setup(VillagerType type){
         this.type=type;
-        this.lapel = type.lapel;
         for(Side s:type.sides){
             addSide(s);
         }

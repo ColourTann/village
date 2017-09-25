@@ -54,6 +54,7 @@ public class EventCreator {
         ev.eff(new Eff(new Buff().bonusFood(1)));
         ev.addOutcome("Porque no los dos", 1);
         ev.joel(.5f);
+        ev.chance(1000000);
         current.add(ev);
 
         ev = new Event("A coconut tree", "You've found a big coconut tree but there's not much growing on it yet");

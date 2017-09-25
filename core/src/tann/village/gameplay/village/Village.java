@@ -169,10 +169,6 @@ public class Village {
     }
 
 
-    private void actuallyActivate(Eff e){
-
-    }
-
 
     private void refreshDelta(){
         calculateDelta();
@@ -191,17 +187,24 @@ public class Village {
         return as;
     }
 
+    private Array<Buff> tempBuffs = new Array<>();
     private Map<Object, AddSub> deltaMap = new HashMap<>();
     private void calculateDelta(){
         for(AddSub ad:deltaMap.values()){
             ad.reset();
+        }
+        tempBuffs.clear();
+        for(int i=0;i<potentialEffects.size;i++) {
+            Eff e = potentialEffects.get(i);
+            if(e.type==EffectType.Buff){
+                tempBuffs.add(e.getBuff());
+            }
         }
         for(int i=0;i<potentialEffects.size;i++){
             Eff e = potentialEffects.get(i);
             processBuffs(e);
             Object key = null;
             switch(e.type){
-
                 case Food:
                 case Wood:
                 case Morale:
@@ -212,9 +215,6 @@ public class Village {
                     break;
                 case Brain:
                     key = e.sourceDie.villager;
-                    break;
-                case Buff:
-                    // hmm not sure
                     break;
             }
             AddSub as = getFromMap(key);
@@ -227,9 +227,18 @@ public class Village {
         for(Buff b:buffs){
             b.process(e);
         }
+        for(Buff b:tempBuffs){
+            b.process(e);
+        }
     }
 
     public void actionPotential() {
+        for(Eff e:potentialEffects){
+            switch(e.type){
+                case XpToVillager:
+                doEffectStuff(e, true, false); break;
+            }
+        }
         calculateDelta();
         potentialEffects.clear();
         for(Villager v:villagers){

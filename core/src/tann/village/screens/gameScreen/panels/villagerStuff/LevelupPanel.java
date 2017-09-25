@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Align;
 
+import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.Villager.VillagerType;
@@ -20,8 +21,8 @@ public class LevelupPanel extends InfoPanel{
     private static final int WIDTH = 850;
     private static final int HEIGHT = 600;
     ClassPanel top;
-    ClassPanel[] choices;
-	public LevelupPanel(final Villager villager, VillagerType[] options) {
+    Array<ClassPanel> choices = new Array<>();
+	public LevelupPanel(final Villager villager, Array<VillagerType> options) {
 		
 		setSize(WIDTH, HEIGHT);
 
@@ -43,11 +44,9 @@ public class LevelupPanel extends InfoPanel{
         mainLayoo.row(5);
 
 
-        choices = new ClassPanel[3];
-		for(int i=0;i<3;i++){
-			final VillagerType type =options[i]; 
-			choices[i] = new ClassPanel(type, villager, CLASS_WIDTH, true);
-            choices[i].addListener(new InputListener(){
+		for(final VillagerType type: options){
+		    ClassPanel cp = new ClassPanel(type, villager, CLASS_WIDTH, true);
+		    cp.addListener(new InputListener(){
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 					villager.setDie(new Die(type));
@@ -56,9 +55,10 @@ public class LevelupPanel extends InfoPanel{
                     return super.touchDown(event, x, y, pointer, button);
 				}
 			});
+            choices.add(cp);
             mainLayoo.gap(1);
-            mainLayoo.actor(choices[i]);
-		}
+            mainLayoo.actor(cp);
+        }
         mainLayoo.gap(1);
         mainLayoo.row(1);
         mainLayoo.layoo();
@@ -77,10 +77,6 @@ public class LevelupPanel extends InfoPanel{
         for(ClassPanel cp:choices){
             Draw.drawArrow(batch, getX()+cp.getX(Align.center), getY()+cp.getY(Align.top)+40, getX()+cp.getX(Align.center), getY()+cp.getY(Align.top)+5, width);
         }
-
-        Draw.drawLine(batch, getX()+top.getX(Align.center), getY()+top.getY(Align.bottom), getX()+top.getX(Align.center), getY()+choices[1].getY(Align.top)+10, width);
-        float mid = getY()+choices[1].getY(Align.top)+(top.getY(Align.bottom)-choices[1].getY(Align.top))/2;
-        Draw.drawLine(batch, getX()+choices[0].getX(Align.center)-width/2f, mid, getX()+choices[2].getX(Align.center)+width/2f, mid, width);
 	}
 
 }

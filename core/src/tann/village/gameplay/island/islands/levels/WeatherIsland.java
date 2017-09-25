@@ -97,11 +97,6 @@ public class WeatherIsland extends Island {
     }
 
     @Override
-    protected void setupClasses() {
-        this.availablesVillagerTypes.addAll(Villager.basicVillagerTypes);
-    }
-
-    @Override
     protected void setupBuildings() {
         this.availableBuildings.addAll(ProjectGenerator.makeBasicProjects());
     }

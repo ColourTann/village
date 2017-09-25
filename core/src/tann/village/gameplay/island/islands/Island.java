@@ -21,7 +21,6 @@ public abstract class Island {
 	TextureRegion tr;
 	int x,y;
 
-	protected Array<Villager.VillagerType> availablesVillagerTypes = new Array<>();
     protected Array<Project> availableBuildings = new Array<>();
 
 	public Island(TextureRegion tr, int x, int y){
@@ -83,7 +82,6 @@ public abstract class Island {
 
     protected abstract void setupRandomPool();
     protected abstract void setupStory();
-    protected abstract void setupClasses();
     protected abstract void setupBuildings();
     protected abstract String getBackgroundString();
     public abstract String getAmbienceString();
@@ -101,7 +99,6 @@ public abstract class Island {
         setupStory();
         Event.currentSpecificity = null;
 		setupBuildings();
-		setupClasses();
 		background = Main.atlas.findRegion(getBackgroundString());
 		for(Event e:randomEventsPool){
 		    e.validate();
@@ -134,18 +131,16 @@ public abstract class Island {
         return availableBuildings.random();
     }
 
-    public Villager.VillagerType[] getRandomVillagerTypes(int level, int amount){
-        Villager.VillagerType[] results = new Villager.VillagerType[amount];
-        List<Villager.VillagerType> availables = new ArrayList<>();
-        for(Villager.VillagerType t: availablesVillagerTypes){
-            if(t.level==level){
-                availables.add(t);
+    public Array<Villager.VillagerType> getRandomVillagerTypes(Villager.VillagerType source, int amount){
+        Array<Villager.VillagerType> results = new Array<>();
+        for(Villager.VillagerType t: Villager.VillagerType.values()){
+            if(t.sources.contains(source, true)){
+                results.add(t);
             }
         }
-        if(availables.size()<amount) return null;
-        Collections.shuffle(availables);
-        for(int i=0;i<amount;i++){
-            results[i]=availables.remove(0);
+        results.shuffle();
+        while(results.size>amount){
+            results.removeIndex(0);
         }
         return results;
     }

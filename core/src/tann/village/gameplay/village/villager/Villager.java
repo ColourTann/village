@@ -215,6 +215,7 @@ public class Villager {
 		public String description;
 		public Side[] sides;
         public TextureRegion lapel;
+        public Array<VillagerType> sources;
 
         VillagerType(int level, String description, Array<VillagerType> sources, Side... sides){
             if(sides.length!=6){
@@ -227,10 +228,10 @@ public class Villager {
                 case 3: this.lapel = Images.lapel4;
                 case 4: this.lapel = Images.lapel5;
             }
-            this.lapel = lapel;
             this.level=level;
             this.description=description;
             this.sides=sides;
+            this.sources=sources;
         }
 
         VillagerType(int level, String description, VillagerType source, Side... sides){

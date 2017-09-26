@@ -61,6 +61,7 @@ public class Villager {
 	}
 	
 	public void gainXP(int amount){
+	    if(type.level==3) return;
 		this.xp+=amount;
 		while(xp>=xpToLevelUp){
 			xp-=xpToLevelUp;

@@ -19,7 +19,7 @@ public class BuffVillagerPhase extends Phase {
     @Override
     public void activate() {
         vbp = new VillagerBuffPanel(villagerBuff);
-        vbp.setPosition(Main.width/2-vbp.getWidth()/2, Main.height/2-vbp.getHeight()/2);
+        vbp.setPosition(Main.width/2f-vbp.getWidth()/2, Main.height/2-vbp.getHeight()/2);
         GameScreen.get().push(vbp);
         GameScreen.get().vbp.toFront();
     }

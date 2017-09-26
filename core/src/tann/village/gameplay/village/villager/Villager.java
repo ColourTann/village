@@ -25,7 +25,7 @@ public class Villager {
     Color col;
 	public String firstName, lastName;
 	public int xp;
-	public static final int xpToLevelUp = 3;
+	public int xpToLevelUp = 3;
 	public VillagerType type;
 	public Die die;
     Array<VillagerType> sources = new Array<>();
@@ -35,12 +35,11 @@ public class Villager {
 	
 	public Villager(int index) {
 		this.type=VillagerType.Villager;
-//		this.type=VillagerType.values()[(int)(Math.random()*VillagerType.values().length)];
-		setupDie();
 		firstName=generateName(true);
-		lastName=generateName(false);
-		this.col = colours[index%colours.length];
-	}
+        lastName=generateName(false);
+        this.col = colours[index%colours.length];
+        setupDie();
+    }
 
 	public void setDie(Die die) {
 		if(this.die!=null){
@@ -49,11 +48,12 @@ public class Villager {
 		this.die=die;
 		this.die.villager=this;
 		this.type=die.type;
+        this.xpToLevelUp = die.type.level+3;
         getIcon().layout();
 	}
 	
 	private void setupDie() {
-		this.die= new Die(this);
+		setDie(new Die(this));
 	}
 
 	public void dieRightClicked(){
@@ -127,7 +127,7 @@ public class Villager {
 
     public enum VillagerType{
         Villager(0,"no description maybe?", new Array<VillagerType>(),
-                Side.fate1morale1, Side.fate2, Side.fate3, Side.wood1, Side.brain, Side.skull),
+                Side.brain, Side.brain, Side.fate3, Side.wood1, Side.brain, Side.skull),
 
         // 1
 

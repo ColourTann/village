@@ -5,6 +5,7 @@ import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.villagerStuff.LevelupPanel;
+import tann.village.screens.gameScreen.panels.villagerStuff.VillagerBarPanel;
 import tann.village.util.Sounds;
 
 public class LevelupPhase extends Phase {
@@ -25,6 +26,6 @@ public class LevelupPhase extends Phase {
 
     @Override
     public void deactivate() {
-
+        GameScreen.get().vbp.layout();
     }
 }

@@ -27,32 +27,48 @@ public class VillagerIcon extends Lay {
     }
 
     public static float width(){
-        return InventoryItemPanel.invPanelWidth();
+        return 500;
     }
 
     public static float height(){
         return Main.h(11);
     }
 
+    static float brainWidth = 25;
+    static float gap = 10;
+
     @Override
     public void layout() {
-        setSize(width(), height());
+        setSize((int)(v.xpToLevelUp*brainWidth + gap * (v.xpToLevelUp+1)+ border*2), Main.h(11));
+
         clearChildren();
-        TextBox name = new TextBox(v.firstName, Fonts.fontSmall, -1, Align.center);
-        TextBox prof = new TextBox(v.type.toString(), Fonts.fontSmall, -1, Align.center);
-        XPDisplay xpd = new XPDisplay(v);
+
+        boolean maxLevel = v.type.level==3;
+        if(maxLevel){
+            setWidth(Main.w(17));
+        }
+        String profString = v.type.toString();
+        if(maxLevel) profString= "* "+profString+" *";
+        TextBox prof = new TextBox(profString, Fonts.fontSmall, -1, Align.center);
+
         Layoo l = new Layoo(this);
         l.row(2);
         l.actor(prof);
-        l.row(1);
-        l.actor(xpd);
+        if(!maxLevel){
+            XPDisplay xpd = new XPDisplay(v);
+            l.row(1);
+            l.actor(xpd);
+        }
+
         l.row(2);
         l.layoo();
     }
 
+    static float border = Main.h(.6f);
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        float border = Main.h(.6f);
+
         batch.setColor(v.getColour());
         Draw.fillActor(batch,this);
         batch.setColor(Colours.dark);
@@ -67,16 +83,17 @@ public class VillagerIcon extends Lay {
             layout();
         }
 
-        ImageActor[] brains = new ImageActor[Villager.xpToLevelUp];
 
+        ImageActor[] brains;
         @Override
         public void layout() {
             clearChildren();
-            setSize(width(), Main.h(5));
+
+            setSize(v.xpToLevelUp*brainWidth + gap * (v.xpToLevelUp+1), brainWidth);
             TextureRegion full = Images.brain;
             TextureRegion empty = Images.brainempty;
-            for(int i=0;i<Villager.xpToLevelUp;i++){
-                float size = getWidth()/5;
+            brains = new ImageActor[v.xpToLevelUp];
+            for(int i=0;i<v.xpToLevelUp;i++){
                 TextureRegion tr;
                 if(v.xp>i){
                     tr = Images.brain;
@@ -87,7 +104,7 @@ public class VillagerIcon extends Lay {
                 else{
                     tr = Images.brainempty;
                 }
-                brains[i]= new ImageActor(tr, size, size);
+                brains[i]= new ImageActor(tr, brainWidth, brainWidth);
 
             }
             Layoo l = new Layoo(this);

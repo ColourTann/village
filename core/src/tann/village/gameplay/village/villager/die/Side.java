@@ -49,7 +49,7 @@ public class Side {
     public static final Side food2wood2 = make(Images.get("food2wood2"), EffectType.Food, 2, EffectType.Wood, 2);
 
 	public static final Side skull = make(Images.get("nothing"), EffectType.Skull, 1);
-    public static final Side brain = make(Images.get("brain"), EffectType.Brain, 1);
+    public static final Side brain = make(Images.get("brain"), EffectType.Brain, 4);
     public static final Side brainOther = make(Images.get("givebrain1"), EffectType.XpToVillager, 1);
 	public static final Side brainOther2 = make(Images.get("givebrain2"), EffectType.XpToVillager, 2);
 	public static final Side brainOther3 = make(Images.get("givebrain3"), EffectType.XpToVillager, 3);

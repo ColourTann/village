@@ -46,9 +46,9 @@ public class WeatherIsland extends Island {
         addEvent(ev);
 
         ev = new Event("Lightning", "Lightning strikes, setting fire to your storage hut");
-        ev.eff(new Eff().food(-2));
-        ev.eff(new Eff().storage(-2));
-        ev.eff(new Eff().wood(-2));
+        ev.effR(new Eff().food(-2));
+        ev.effR(new Eff().storage(-2));
+        ev.effR(new Eff().wood(-2));
         ev.joel(1);
         addEvent(ev);
 
@@ -61,38 +61,40 @@ public class WeatherIsland extends Island {
     @Override
     protected void setupStory() {
         Event ev;
-        ev = new Event("A stormy beach", "This island is known to be stormy, good job you brought a lot of supplies.");
+        ev = new Event("A stormy beach", "This island is known to be stormy, you'd better prepare for a rough time.");
         ev.storyTurn(0);
-        ev.eff(new Eff().food(3));
-        ev.eff(new Eff().wood(3));
-        ev.eff(new Eff(new SurviveObjective(25)));
+        ev.eff(new Eff(new SurviveObjective(30)));
         addEvent(ev);
 
-        ev = new Event("Dark skies", "The weather takes a turn, you must be ready soon!");
-        ev.storyTurn(8);
+        ev = new Event("Dark skies", "The weather takes a turn, it's going to be tough");
+        ev.storyTurn(6);
         ev.effR(new Eff().upkeep().food(-1));
         addEvent(ev);
 
         ev = new Event("Storm", "The storm has hit you, it will be tough to survive this.");
         ev.storyTurn(10);
         ev.eff(new Eff().upkeep().food(-2));
-        ev.eff(new Eff().upkeep().wood(-1));
         addEvent(ev);
 
         ev = new Event("Thunderstorm", "And then the rain started");
         ev.storyTurn(14);
-        ev.eff(new Eff().upkeep().wood(-2));
+        ev.eff(new Eff().upkeep().food(-2));
         addEvent(ev);
 
-        ev = new Event("Gap", "A gap in the clouds");
-        ev.storyTurn(18);
-        ev.eff(new Eff().upkeep().wood(1));
+        ev = new Event("Soaked through", "The dirt has turned to mud");
+        ev.storyTurn(14);
+        ev.eff(new Eff().upkeep().food(-1));
+        addEvent(ev);
+
+
+        ev = new Event("Hope", "A gap in the clouds");
+        ev.storyTurn(21);
+        ev.eff(new Eff().upkeep().food(1));
         addEvent(ev);
 
         ev = new Event("Light", "The storm is clearing, finally");
-        ev.storyTurn(22);
-        ev.eff(new Eff().upkeep().food(1));
-        ev.eff(new Eff().upkeep().wood(1));
+        ev.storyTurn(23);
+        ev.eff(new Eff().upkeep().food(2));
         addEvent(ev);
     }
 

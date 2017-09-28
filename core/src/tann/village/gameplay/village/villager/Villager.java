@@ -143,7 +143,7 @@ public class Villager {
         Gatherer(1, "Be careful whilst foraging!", VillagerType.Villager, // (Explorer, Herbalist)
                 Side.food2, Side.wood2, Side.food1, Side.wood1, Side.skull, Side.brain),
         Teacher(1, "Share the knowledge", VillagerType.Villager,
-                Side.brainOther, Side.brainOther, Side.brain, Side.brain, Side.food1, Side.food1),
+                Side.brainOther, Side.brainOther, Side.brainOther, Side.brain, Side.food1, Side.food1),
 
         // 2
 

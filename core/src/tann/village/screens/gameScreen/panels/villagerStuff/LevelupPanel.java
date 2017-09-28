@@ -19,7 +19,7 @@ public class LevelupPanel extends InfoPanel{
 	
     private static final int CLASS_WIDTH = 270;
     private static final int WIDTH = 850;
-    private static final int HEIGHT = 600;
+    private static final int HEIGHT = 500;
     ClassPanel top;
     Array<ClassPanel> choices = new Array<>();
 	public LevelupPanel(final Villager villager, Array<VillagerType> options) {
@@ -28,20 +28,16 @@ public class LevelupPanel extends InfoPanel{
 
 
 		Layoo mainLayoo = new Layoo(this);
-        TextBox levelup = new TextBox("Level up!", Fonts.fontBig, WIDTH, Align.center);
-        TextBox nameBox = new TextBox(villager.firstName+" "+villager.lastName, Fonts.fontSmall, WIDTH, Align.center);
-
         mainLayoo.row(1);
-        mainLayoo.actor(levelup);
-        mainLayoo.row(1);
-        mainLayoo.actor(nameBox);
-        mainLayoo.row(1);
-
         top = new ClassPanel(villager.type, villager, CLASS_WIDTH, false);
 
         mainLayoo.actor(top);
 
-        mainLayoo.row(5);
+        mainLayoo.row(1);
+
+        TextWriter tw = new TextWriter("[frill-left] Level up! Choose a new die! [frill-right]", Fonts.fontSmall);
+        mainLayoo.actor(tw);
+        mainLayoo.row(1);
 
 
 		for(final VillagerType type: options){
@@ -72,11 +68,6 @@ public class LevelupPanel extends InfoPanel{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.setColor(Colours.green_light);
-        int width = 5;
-        for(ClassPanel cp:choices){
-            Draw.drawArrow(batch, getX()+cp.getX(Align.center), getY()+cp.getY(Align.top)+40, getX()+cp.getX(Align.center), getY()+cp.getY(Align.top)+5, width);
-        }
 	}
 
 }

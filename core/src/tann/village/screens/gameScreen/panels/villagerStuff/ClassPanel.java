@@ -45,69 +45,35 @@ public class ClassPanel extends Group{
 		l.row(1);
 		l.actor(className);
 		l.row(1);
-		TextBox classDescription = new TextBox(type.description, Fonts.fontSmall, WIDTH, Align.center);
+		TextBox classDescription = new TextBox(type.description, Fonts.fontTiny, WIDTH, Align.center);
 		l.actor(classDescription);
 		l.row(1);
 		l.add(1,panel,1,rightGroup,1);
         l.row(1);
         l.layoo();
 
-
-        List<TextureRegion> fx = new ArrayList<>();
-        for(Side s:d.sides){
-            for(Eff e:s.effects){
-                for(int i=0;i<e.value;i++){
-                    if(e.type== Eff.EffectType.Skull) continue;
-                    fx.add(e.type.region);
-                }
-            }
-        }
-
-        Collections.sort(fx, new Comparator<TextureRegion>() {
-            @Override
-            public int compare(TextureRegion o1, TextureRegion o2) {
-                if(o1==o2) return 0;
-                Eff.EffectType[] values = Eff.EffectType.values();
-                for(int i=0;i<values.length;i++){
-                    if(o1==values[i].region){
-                        return -1;
-                    }
-                    if(o2 == values[i].region){
-                        return 1;
-                    }
-                }
-                return 0;
-            }
-        });
-
         l= new Layoo(rightGroup);
-        l.row(1);
-        int x=0;
-        int y=0;
-        int maxAcross = 3;
-        float iconSize = 40;
-        l.gap(1);
-        for(TextureRegion tr:fx){
-            ImageActor actor = new ImageActor(tr, iconSize, iconSize);
-            if(actor.tr== Images.fate){
-                actor.setColor(Colours.blue_light);
-            }
-            l.actor(actor);
-            x++;
-            l.gap(1);
-            if(x>=maxAcross){
-                y++;
-                x=0;
-                l.gap(1);
-                l.row(1);
-                l.gap(1);
+        List<TextureRegion> fx = new ArrayList<>();
+        float size = 40;
+        for(int i=0;i<d.sides.size;i++){
+            Side s = d.sides.get(i);
+            ImageActor ia = new ImageActor(s.tr[0], size, size);
+            ia.setImageScale(.9f);
+            ia.setBorder(new Border(Colours.dark, d.getColour(), 2));
+            switch(i){
+                case 0:case 4:case 5:
+                    l.row(0);
+                    l.gap(1);
+                    l.actor(ia);
+                    l.gap(1);
+                    break;
+                case 1:
+                    l.row(0);
+                case 2:case 3:
+                    l.actor(ia);
+                    break;
             }
         }
-
-
-        l.gap(1);
-        l.row(1);
-
 		l.layoo();
 
 		if(pickable) {

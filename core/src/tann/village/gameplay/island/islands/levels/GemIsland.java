@@ -36,10 +36,8 @@ public class GemIsland extends Island{
         ev = new Event("Lights in the sky", "A dance of red and green in the sky awes the village");
         ev.eff(new Eff().morale(-1));
         ev.addOutcome("Cower inside");
-        ev.eff(new Eff().food(-2));
-        ev.eff(new Eff().wood(-2));
         ev.eff(new Eff().fate(2));
-        ev.addOutcome("Make an offering");
+        ev.addOutcome("Make an offering", 0,3,3);
         ev.joel(-.3);
         ev.chance(.4f, 1);
         addEvent(ev);

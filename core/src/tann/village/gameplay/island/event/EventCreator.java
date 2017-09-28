@@ -128,8 +128,7 @@ public class EventCreator {
         current.add(ev);
 
         ev = new Event("Noises in the night", "click...clicklick...click!");
-        ev.effR(new Eff().food(-1));
-        ev.effR(new Eff().storage(-1));
+        ev.effR(new Eff().food(-2));
         ev.addOutcome("Damn critter!");
         ev.eff(new Eff().food(4));
         ev.addOutcome("You get up in time to kill it!", 2);

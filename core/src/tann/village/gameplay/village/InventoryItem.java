@@ -3,6 +3,8 @@ package tann.village.gameplay.village;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tann.village.Images;
 import tann.village.gameplay.effect.Eff.EffectType;
+import tann.village.gameplay.island.objective.Objective;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanelSmall;
 
@@ -33,6 +35,9 @@ public class InventoryItem {
     public void changeValue(int delta){
         setValue(this.value += delta);
         valueChanged();
+        if(type==EffectType.Gem){
+            Village.get().objectiveProgress(Objective.ObjectiveEffect.Gem, delta);
+        }
     }
 
     public boolean canChangeBy(int delta){

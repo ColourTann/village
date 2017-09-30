@@ -12,6 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import tann.village.Main;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Draw {
 	
 	public static void setup(){
@@ -152,7 +155,7 @@ public class Draw {
 		x += Math.sin(radians) * width / 2f;
 		y -= Math.cos(radians) * width / 2f;
 
-		Draw.drawRotatedScaled(batch, getSq(), x, y, dist, width, radians);
+		Draw.drawRotatedScaled(batch, getSq(), (int)x, (int)y, dist, width/2f, radians);
 	}
 
 	
@@ -189,7 +192,7 @@ public class Draw {
 	}
 
 	public static void drawSizeCentered(Batch batch, TextureRegion textureRegion, float x, float y, float width, float height) {
-		batch.draw(textureRegion, x-width/2, y-height/2, 0, 0, textureRegion.getRegionWidth(), textureRegion.getRegionHeight(), width/textureRegion.getRegionWidth(), height/textureRegion.getRegionHeight(), 0);
+	    Draw.drawCenteredScaled(batch, textureRegion, x, y, width/textureRegion.getRegionWidth(), height/textureRegion.getRegionHeight());
 	}
 
 	public static void fillActor(Batch batch, Actor a) {
@@ -222,7 +225,48 @@ public class Draw {
             float drawY = (float)(y + Math.cos(angle)*radius);
 	        Draw.fillEllipse(batch, drawX-size/2, drawY-size/2, size, size);
         }
-
     }
+
+    private static Map<String, Texture> arcs = new HashMap<>();
+    public static void fillArc(Batch batch, float x, float y, int radius, float startRadians, float endRadians){
+        String key = radius+":"+startRadians+":"+endRadians;
+        Texture t = arcs.get(key);
+        if(t==null){
+            Pixmap p = new Pixmap(radius*2, radius*2, Pixmap.Format.RGBA8888);
+            p.setColor(1,1,1,1);
+            for(int pX=-radius;pX<radius;pX++){
+                for(int pY=-radius;pY<radius;pY++){
+                    float dist = Maths.dist(pX, pY);
+                    if(dist>radius) continue;
+                    double angle = Math.atan2(pY, pX);
+                    if(!is_angle_between((float)angle, startRadians+Maths.TAU/2, endRadians+Maths.TAU/2)) continue;
+                    p.drawPixel(pX+radius, pY+radius);
+                }
+            }
+            t = new Texture(p);
+            arcs.put(key, t);
+        }
+        batch.draw(t, x-radius, y-radius);
+    }
+
+    static boolean is_angle_between(float x, float a, float b) {
+        b = modN(b - a);
+        x = modN(x - a);
+
+        if (b < Maths.TAU/2) {
+            return x < b;
+        } else {
+            return b < x;
+        }
+    }
+
+    static float modN(float x) {
+        float m = x % Maths.TAU;
+        if (m < 0) {
+            m += Maths.TAU;
+        }
+        return m;
+    }
+
 
 }

@@ -25,6 +25,7 @@ import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel;
 import tann.village.screens.gameScreen.panels.eventStuff.JoelDebugPanel;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
+import tann.village.screens.gameScreen.panels.inventoryStuff.MoraleCompass;
 import tann.village.screens.gameScreen.panels.miscStuff.ProceedButton;
 import tann.village.screens.gameScreen.panels.review.SpoilPanel;
 import tann.village.screens.gameScreen.panels.rollStuff.LockBar;

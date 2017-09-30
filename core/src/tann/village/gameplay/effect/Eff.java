@@ -29,28 +29,20 @@ public class Eff {
         Brain(Images.brain),
         Gem(Images.gem),
         NewVillager(Images.obj_hourglass),
+        DEATH(Images.skull_red),
         Buff,
         Objective,
         XpToVillager(Images.brain);
 
         //objectives
 
-        public boolean objective;
         public TextureRegion region;
-		boolean special;
         EffectType(){
             this.region=Images.dotdotdot;
         }
         EffectType(TextureRegion region){
             this.region=region;
         }
-        EffectType(TextureRegion region, boolean objective){
-            this.region=region; this.objective=objective;
-        }
-		EffectType(TextureRegion region, String extraText){
-			this.region=region;
-			this.special=true;
-		}
 
 	}
 	
@@ -161,6 +153,7 @@ public class Eff {
     public Eff gem(int amount) {return type(EffectType.Gem, amount);}
     public Eff storage(int amount) {return type(EffectType.FoodStorage, amount);}
     public Eff brain(int amount) {return type(EffectType.Brain, amount);}
+    public Eff death(int amount) {return type(EffectType.DEATH, amount);}
 
     public void clearActivation() {
         this.effAct=new EffAct(EffAct.ActivationType.NOW,0);

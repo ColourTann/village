@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
 import tann.village.Images;
 import tann.village.gameplay.island.islands.Island;
+import tann.village.screens.gameScreen.panels.inventoryStuff.MoraleCompass;
 import tann.village.util.*;
 
 public class MapScreen extends Screen{
@@ -31,6 +32,10 @@ public class MapScreen extends Screen{
         });
 		addActor(tb);
 		tb.setPosition(getWidth()-tb.getWidth(),0);
+
+        MoraleCompass mc = new MoraleCompass();
+        addActor(mc);
+        mc.setPosition(100,100);
 	}
 	
 	@Override

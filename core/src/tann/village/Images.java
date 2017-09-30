@@ -14,11 +14,17 @@ public class Images {
     public static final TextureRegion brainempty = Main.atlas.findRegion("resource/brainempty");
     public static final TextureRegion brainFilling = Main.atlas.findRegion("resource/brainfilling");
 	public static final TextureRegion wood = Main.atlas.findRegion("resource/wood");
-	public static final TextureRegion morale = Main.atlas.findRegion("resource/morale");
+    public static final TextureRegion morale = Main.atlas.findRegion("resource/morale");
+
+    // morale compass
+    public static final TextureRegion morale_outer = Main.atlas.findRegion("generalIcons/moraleouter");
+    public static final TextureRegion morale_inner = Main.atlas.findRegion("generalIcons/moralecenter");
+    public static final TextureRegion morale_pointer = Main.atlas.findRegion("generalIcons/pointer");
+
 	public static final TextureRegion fate = Main.atlas.findRegion("resource/fate");
 	public static final TextureRegion level_up = Main.atlas.findRegion("resource/levelup");
-
-
+    public static final TextureRegion skull = Main.atlas.findRegion("resource/skull");
+    public static final TextureRegion skull_red = Main.atlas.findRegion("resource/skullRed");
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
 	public static final TextureRegion refresh = Main.atlas.findRegion("generalIcons/refresh");
     public static final TextureRegion turn = Main.atlas.findRegion("generalIcons/hourglass");
@@ -64,6 +70,7 @@ public class Images {
 	public static final TextureRegion side_wood_3 = Main.atlas_3d.findRegion("dice/face/wood3");
 	
 	public static final TextureRegion side_skull = Main.atlas_3d.findRegion("dice/face/nothing");
+
 	
 	public static final TextureRegion side_morale_1 = Main.atlas_3d.findRegion("dice/face/morale1");
 	public static final TextureRegion side_morale_2_minus_2_food = Main.atlas_3d.findRegion("dice/face/morale2foodminus2");

@@ -12,7 +12,7 @@ import tann.village.gameplay.village.AddSub;
 import tann.village.util.*;
 
 public class InventoryItemPanel extends Lay{
-	private int value;
+	protected int value;
 	TextureRegion tr;
     protected Color border = Colours.dark;
 	public InventoryItemPanel(TextureRegion tr, int value) {

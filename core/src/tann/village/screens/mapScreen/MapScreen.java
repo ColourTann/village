@@ -32,10 +32,6 @@ public class MapScreen extends Screen{
         });
 		addActor(tb);
 		tb.setPosition(getWidth()-tb.getWidth(),0);
-
-        MoraleCompass mc = new MoraleCompass();
-        addActor(mc);
-        mc.setPosition(100,100);
 	}
 	
 	@Override

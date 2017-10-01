@@ -37,9 +37,10 @@ public class Inventory{
         foodStorage = new InventoryItem(EffectType.FoodStorage);
 		wood = new InventoryItem(EffectType.Wood);
 		morale = new InventoryItem(EffectType.Morale);
+        morale.setBounds(-5,15);
 		fate = new InventoryItem(EffectType.Fate);
 
-		morale.setValue(4);
+		morale.setValue(0);
 		food.setValue(2);
 		wood.setValue(2);
 		fate.setValue(1);
@@ -48,9 +49,9 @@ public class Inventory{
         items.add(foodStorage);
 		items.add(food);
 		items.add(wood);
-		items.add(morale);
 		items.add(fate);
-	}
+        items.add(morale);
+    }
 
 	private InventoryPanel panel;
 	public InventoryPanel getGroup(){

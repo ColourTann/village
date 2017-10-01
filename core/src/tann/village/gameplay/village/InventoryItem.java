@@ -7,6 +7,7 @@ import tann.village.gameplay.island.objective.Objective;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanelSmall;
+import tann.village.screens.gameScreen.panels.inventoryStuff.MoraleCompass;
 
 import java.util.Map;
 
@@ -56,7 +57,12 @@ public class InventoryItem {
     private InventoryItemPanel panel;
     public InventoryItemPanel getPanel(){
         if(panel==null){
-            if(image== Images.food_storage) panel = new InventoryItemPanelSmall(image, value);
+            if(image== Images.food_storage){
+                panel = new InventoryItemPanelSmall(image, value);
+            }
+            else if(image== Images.morale){
+                panel = new MoraleCompass(min, max);
+            }
             else panel = new InventoryItemPanel(image, value);
 
         }
@@ -84,5 +90,10 @@ public class InventoryItem {
 
     public void setDelta(AddSub addSub) {
         getPanel().setDeltas(addSub);
+    }
+
+    int min, max;
+    public void setBounds(int min, int max) {
+        this.min = min; this.max = max;
     }
 }

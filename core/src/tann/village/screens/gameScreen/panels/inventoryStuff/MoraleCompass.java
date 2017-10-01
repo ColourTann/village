@@ -5,28 +5,33 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
-import tann.village.Main;
 import tann.village.gameplay.effect.Eff;
 import tann.village.util.*;
 
-public class MoraleCompass extends Lay {
+public class MoraleCompass extends InventoryItemPanel {
 
     Array<MoralePoint> points = new Array<>();
     Array<MoraleRange> ranges = new Array<>();
-    int value = 0;
-
-    public MoraleCompass() {
+    int moraleMin;
+    int moraleMax;
+    public MoraleCompass(int min, int max) {
+        super(Images.morale, 0);
+        this.moraleMin= min;
+        this.moraleMax = max;
         layout();
+
+        points.add(new MoralePoint(min, null));
+        points.add(new MoralePoint(max, null));
+
         points.add(new MoralePoint(5, new Eff().food(1)));
         points.add(new MoralePoint(9, new Eff().wood(1)));
         points.add(new MoralePoint(11, new Eff().fate(1)));
-        points.add(new MoralePoint(18, new Eff().food(1)));
         points.add(new MoralePoint(-5, new Eff().death(1)));
 
         ranges.add(new MoraleRange(-2,-5,Colours.red, null));
-        ranges.add(new MoraleRange(3,7,Colours.brown_light, null));
-        ranges.add(new MoraleRange(7,15,Colours.green_dark, null));
-        ranges.add(new MoraleRange(15,20,Colours.green_light, null));
+//        ranges.add(new MoraleRange(3,7,Colours.brown_light, null));
+        ranges.add(new MoraleRange(2,15,Colours.green_dark, null));
+//        ranges.add(new MoraleRange(15,20,Colours.green_light, null));
     }
 
     @Override
@@ -43,11 +48,9 @@ public class MoraleCompass extends Lay {
         cx = getX()+getWidth()/2;
         cy = getY()+getHeight()/2;
         textDist = getWidth()/2+10;
-        final int moraleMin = -5;
-        final int moraleMax = 15;
-        final int moraleSize = moraleMax + Math.abs(moraleMin) +1 + 10;
-        final float picDist = getWidth()/2+15;
-        final float picSize = 25;
+        final int moraleSize = moraleMax + Math.abs(moraleMin) +1 + 0;
+        final float picDist = getWidth()/2+18;
+        final float picSize = 20;
         final float pipSize = 5;
         final float extend = 1;
         float moraleIconSize = getWidth()*.7f;
@@ -62,7 +65,7 @@ public class MoraleCompass extends Lay {
         for(MoraleRange mr:ranges){
             float startRadians =    (mr.min/(float)moraleSize *Maths.TAU) + Maths.TAU/4;
             float endRadians =      (mr.max/(float)moraleSize *Maths.TAU) + Maths.TAU/4;
-            batch.setColor(Colours.withAlpha(mr.col,.3f));
+            batch.setColor(Colours.withAlpha(mr.col,.5f));
             Draw.fillArc(batch, cx, cy, (int)(getWidth()/2), startRadians, endRadians);
         }
 
@@ -82,8 +85,12 @@ public class MoraleCompass extends Lay {
 
 //            drawNumber(batch, mp.morale, radians);
             if(mp.eff!=null) {
+                float circleMult = 1.3f;
+                float effX = cx+Maths.cos(radians)*picDist, effY = cy+Maths.sin(radians)*picDist;
+                batch.setColor(Colours.dark);
+                Draw.fillEllipse(batch, effX, effY, picSize*circleMult, picSize*circleMult);
                 batch.setColor(Colours.z_white);
-                Draw.drawSizeCentered(batch, mp.eff.type.region, cx+Maths.cos(radians)*picDist,cy+Maths.sin(radians)*picDist, picSize, picSize);
+                Draw.drawSizeCentered(batch, mp.eff.type.region, effX, effY, picSize, picSize);
             }
         }
 
@@ -100,7 +107,6 @@ public class MoraleCompass extends Lay {
 
         Fonts.draw(batch, ""+value, Fonts.fontSmall, Colours.dark, getX(), getY(), getWidth(), getHeight(), Align.center);
 
-        super.draw(batch, parentAlpha);
     }
 
     private void drawNumber(Batch batch, int morale, float radians){

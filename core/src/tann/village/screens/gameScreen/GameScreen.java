@@ -233,6 +233,12 @@ public class GameScreen extends Screen{
             case Input.Keys.ESCAPE:
                 toggleEscMenu();
                 break;
+            case Input.Keys.LEFT:
+                Village.get().activate(new Eff().morale(-1), true);
+                break;
+            case Input.Keys.RIGHT:
+                Village.get().activate(new Eff().morale(1), true);
+                break;
 		}
 	}
 

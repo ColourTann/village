@@ -1,11 +1,11 @@
 package tann.village.screens.gameScreen.panels.inventoryStuff;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
-import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.village.inventory.MoralePoint;
+import tann.village.gameplay.village.inventory.MoraleRange;
 import tann.village.util.*;
 
 public class MoraleCompass extends InventoryItemPanel {
@@ -14,24 +14,13 @@ public class MoraleCompass extends InventoryItemPanel {
     Array<MoraleRange> ranges = new Array<>();
     int moraleMin;
     int moraleMax;
-    public MoraleCompass(int min, int max) {
+    public MoraleCompass(int min, int max, Array<MoralePoint> points, Array<MoraleRange> ranges) {
         super(Images.morale, 0);
+        this.points = points;
+        this.ranges = ranges;
         this.moraleMin= min;
         this.moraleMax = max;
         layout();
-
-        points.add(new MoralePoint(min, null));
-        points.add(new MoralePoint(max, null));
-
-        points.add(new MoralePoint(5, new Eff().food(1)));
-        points.add(new MoralePoint(9, new Eff().wood(1)));
-        points.add(new MoralePoint(11, new Eff().fate(1)));
-        points.add(new MoralePoint(-5, new Eff().death(1)));
-
-        ranges.add(new MoraleRange(-2,-5,Colours.red, null));
-//        ranges.add(new MoraleRange(3,7,Colours.brown_light, null));
-        ranges.add(new MoraleRange(2,15,Colours.green_dark, null));
-//        ranges.add(new MoraleRange(15,20,Colours.green_light, null));
     }
 
     @Override
@@ -43,6 +32,9 @@ public class MoraleCompass extends InventoryItemPanel {
     float cy;
     @Override
     public void draw(Batch batch, float parentAlpha) {
+//        batch.setColor(Colours.withAlpha(Colours.blue_dark, .1f));
+//        Draw.fillActor(batch, this);
+
         float border = 2;
 
         cx = getX()+getWidth()/2;
@@ -113,26 +105,5 @@ public class MoraleCompass extends InventoryItemPanel {
         Fonts.draw(batch, ""+morale, Fonts.fontTiny, Colours.light,
                 cx+Maths.cos(radians)*textDist,cy+Maths.sin(radians)*textDist,
                 -1, -1, Align.center);
-    }
-
-    static class MoralePoint{
-        int morale;
-        Eff eff;
-        public MoralePoint(int morale, Eff eff) {
-            this.morale = morale;
-            this.eff = eff;
-        }
-    }
-
-    static class MoraleRange{
-        int min, max;
-        Color col;
-        Eff eff;
-        public MoraleRange(int min, int max, Color col, Eff eff) {
-            this.min = min;
-            this.max = max;
-            this.col = col;
-            this.eff = eff;
-        }
     }
 }

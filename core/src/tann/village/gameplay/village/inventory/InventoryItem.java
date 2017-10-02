@@ -1,9 +1,11 @@
-package tann.village.gameplay.village;
+package tann.village.gameplay.village.inventory;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tann.village.Images;
 import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.island.objective.Objective;
+import tann.village.gameplay.village.AddSub;
+import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanelSmall;
@@ -54,14 +56,11 @@ public class InventoryItem {
         getPanel().setValue(getValue());
     }
 
-    private InventoryItemPanel panel;
+    protected InventoryItemPanel panel;
     public InventoryItemPanel getPanel(){
         if(panel==null){
             if(image== Images.food_storage){
                 panel = new InventoryItemPanelSmall(image, value);
-            }
-            else if(image== Images.morale){
-                panel = new MoraleCompass(min, max);
             }
             else panel = new InventoryItemPanel(image, value);
 
@@ -90,10 +89,5 @@ public class InventoryItem {
 
     public void setDelta(AddSub addSub) {
         getPanel().setDeltas(addSub);
-    }
-
-    int min, max;
-    public void setBounds(int min, int max) {
-        this.min = min; this.max = max;
     }
 }

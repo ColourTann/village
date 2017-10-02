@@ -1,13 +1,11 @@
-package tann.village.gameplay.village;
+package tann.village.gameplay.village.inventory;
 
 import com.badlogic.gdx.utils.Array;
-import tann.village.Images;
 import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
-import tann.village.gameplay.island.objective.Objective;
-import tann.village.gameplay.village.villager.Villager;
-import tann.village.screens.gameScreen.GameScreen;
+import tann.village.gameplay.village.AddSub;
+import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
 
 import java.util.Map;
@@ -36,8 +34,7 @@ public class Inventory{
         food = new InventoryItem(EffectType.Food);
         foodStorage = new InventoryItem(EffectType.FoodStorage);
 		wood = new InventoryItem(EffectType.Wood);
-		morale = new InventoryItem(EffectType.Morale);
-        morale.setBounds(-5,15);
+		morale = new MoraleInventoryItem(-5,15);
 		fate = new InventoryItem(EffectType.Fate);
 
 		morale.setValue(0);

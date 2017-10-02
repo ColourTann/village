@@ -2,8 +2,6 @@ package tann.village.screens.gameScreen.panels.bottomBar;
 
 import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
-import tann.village.gameplay.village.Inventory;
-import tann.village.gameplay.village.Village;
 import tann.village.util.Colours;
 import tann.village.util.Layoo;
 

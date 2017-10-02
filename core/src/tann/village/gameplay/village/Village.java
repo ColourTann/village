@@ -1,8 +1,6 @@
 package tann.village.gameplay.village;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.utils.Array;
@@ -11,6 +9,7 @@ import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
+import tann.village.gameplay.village.inventory.InventoryItem;
 import tann.village.gameplay.village.phase.*;
 import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
@@ -24,7 +23,7 @@ public class Village {
 	
 	private Array<Project> buildings  = new Array<>();
 	private RerollPanel panel;
-    private Inventory inventory;
+    private tann.village.gameplay.village.inventory.Inventory inventory;
     private Array<Phase> phaseStack = new Array<>();
     public static Island island;
     public void pushPhase(Phase p){
@@ -98,7 +97,7 @@ public class Village {
         }
     }
 
-	public static Inventory getInventory(){
+	public static tann.village.gameplay.village.inventory.Inventory getInventory(){
 	    return get().inventory;
     }
 
@@ -255,7 +254,7 @@ public class Village {
 	    dayNum=0;
 	    this.joel=0;
         buildings.clear();
-        inventory = new Inventory();
+        inventory = new tann.village.gameplay.village.inventory.Inventory();
         upkeep= new Upkeep();
         villagers.clear();
         buffs.clear();

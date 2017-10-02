@@ -1,7 +1,5 @@
 package tann.village.gameplay.village.phase;
 
-import tann.village.gameplay.island.islands.Island;
-import tann.village.gameplay.village.Inventory;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.review.SpoilPanel;

@@ -1,6 +1,5 @@
-package tann.village.gameplay.village;
+package tann.village.gameplay.village.inventory;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tann.village.gameplay.effect.Eff;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
 

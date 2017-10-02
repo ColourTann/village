@@ -1,12 +1,10 @@
 package tann.village.screens.gameScreen.panels.inventoryStuff;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import tann.village.Images;
 import tann.village.Main;
-import tann.village.gameplay.village.Inventory;
-import tann.village.gameplay.village.InventoryItem;
+import tann.village.gameplay.village.inventory.Inventory;
+import tann.village.gameplay.village.inventory.InventoryItem;
 import tann.village.screens.gameScreen.GameScreen;
-import tann.village.util.Colours;
 import tann.village.util.Lay;
 import tann.village.util.Layoo;
 

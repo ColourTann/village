@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
+import tann.village.Main;
 import tann.village.gameplay.village.inventory.MoralePoint;
 import tann.village.gameplay.village.inventory.MoraleRange;
 import tann.village.util.*;
@@ -60,8 +61,7 @@ public class MoraleCompass extends InventoryItemPanel {
             batch.setColor(Colours.withAlpha(mr.col,.5f));
             Draw.fillArc(batch, cx, cy, (int)(getWidth()/2), startRadians, endRadians);
         }
-
-
+        
         batch.setColor(Colours.z_white);
         Draw.drawSizeCentered(batch, Images.morale_outer, cx, cy, moraleIconSize, moraleIconSize);
 

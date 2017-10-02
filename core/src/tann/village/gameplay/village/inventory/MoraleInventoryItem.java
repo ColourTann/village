@@ -26,7 +26,7 @@ public class MoraleInventoryItem extends InventoryItem {
         points.add(new MoralePoint(-5, new Eff().death(1)));
 
         ranges.add(new MoraleRange(-2,-5, Colours.red, null));
-        ranges.add(new MoraleRange(2,15,Colours.green_dark, null));
+        ranges.add(new MoraleRange(2,5,Colours.green_dark, null));
     }
 
     int min, max;
@@ -40,5 +40,16 @@ public class MoraleInventoryItem extends InventoryItem {
            panel = new MoraleCompass(min, max, points, ranges);
         }
         return panel;
+    }
+
+    @Override
+    public void valueChanged() {
+        super.valueChanged();
+        for(MoralePoint mp: points){
+            if((mp.morale>0 && mp.morale<=getValue()) || (mp.morale<0 && mp.morale>=getValue())){
+                mp.trigger();
+                points.removeValue(mp, true);
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ public class RollingPhase extends Phase{
     @Override
     public void activate() {
         MoraleInventoryItem mii = (MoraleInventoryItem) Village.getInventory().get(Eff.EffectType.Morale);
-        Village.get().activate(mii.getActiveEffects(), true);
+        mii.activateRanges();
         GameScreen.get().showRollContainer(true);
         Village.get().startOfRoll();
         BulletStuff.refresh(Village.get().villagers);

@@ -1,5 +1,7 @@
 package tann.village.gameplay.village.inventory;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.phase.MoralePointPhase;
@@ -9,13 +11,15 @@ import tann.village.gameplay.village.phase.MoralePointPhase;
  */
 public class MoralePoint {
     public int morale;
-    public Eff eff;
-    public MoralePoint(int morale, Eff eff) {
+    public Eff[]effs;
+    public TextureRegion tr;
+    public MoralePoint(int morale, TextureRegion tr, Eff[] effs) {
         this.morale = morale;
-        this.eff = eff;
+        this.effs = effs;
+        this.tr=tr;
     }
 
     public void trigger() {
-        if(eff != null) Village.get().pushPhase(new MoralePointPhase(this));
+        if(effs != null) Village.get().pushPhase(new MoralePointPhase(this));
     }
 }

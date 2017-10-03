@@ -72,8 +72,8 @@ public class InventoryItemPanel extends Lay{
 		return value;
 	}
 
-	int pos;
-	int neg;
+	protected int pos;
+    protected int neg;
 	public void addDelta(int delta, boolean invert){
 	    if(delta>0)pos += delta;
 	    if(delta<0)neg += delta;
@@ -131,7 +131,7 @@ public class InventoryItemPanel extends Lay{
 	    setDeltas(addSub.add, addSub.sub);
     }
 
-    static class InventoryDeltaGroup extends Lay{
+    public static class InventoryDeltaGroup extends Lay{
 
         public InventoryDeltaGroup() {
 

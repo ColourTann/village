@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
-import tann.village.Main;
 import tann.village.gameplay.village.inventory.MoralePoint;
 import tann.village.gameplay.village.inventory.MoraleRange;
 import tann.village.util.*;
@@ -24,9 +23,17 @@ public class MoraleCompass extends InventoryItemPanel {
         layout();
     }
 
+
     @Override
     public void layout() {
         setSize(100, 100);
+        clearChildren();
+        if(pos!=0 || neg != 0){
+            InventoryDeltaGroup idg = new InventoryDeltaGroup();
+            idg.setup(pos, neg);
+            addActor(idg);
+            idg.setPosition(getWidth(),0);
+        }
     }
     float textDist;
     float cx;
@@ -36,12 +43,14 @@ public class MoraleCompass extends InventoryItemPanel {
 //        batch.setColor(Colours.withAlpha(Colours.blue_dark, .1f));
 //        Draw.fillActor(batch, this);
 
+        super.draw(batch, parentAlpha);
+
         float border = 2;
 
         cx = getX()+getWidth()/2;
         cy = getY()+getHeight()/2;
         textDist = getWidth()/2+10;
-        final int moraleSize = moraleMax + Math.abs(moraleMin) +1 + 0;
+        final int moraleSize = moraleMax + Math.abs(moraleMin) +1 + 4;
         final float picDist = getWidth()/2+18;
         final float picSize = 20;
         final float pipSize = 5;
@@ -56,9 +65,13 @@ public class MoraleCompass extends InventoryItemPanel {
 
 
         for(MoraleRange mr:ranges){
-            float startRadians =    (mr.min/(float)moraleSize *Maths.TAU) + Maths.TAU/4;
-            float endRadians =      (mr.max/(float)moraleSize *Maths.TAU) + Maths.TAU/4;
-            batch.setColor(Colours.withAlpha(mr.col,.5f));
+            float startRadians =    ((mr.min+.5f)/(float)moraleSize *Maths.TAU) + Maths.TAU/4;
+            float endRadians =      ((mr.max+.5f)/(float)moraleSize *Maths.TAU) + Maths.TAU/4;
+            float alpha = .35f;
+            if(mr.isActive()){
+                alpha = .8f;
+            }
+            batch.setColor(Colours.withAlpha(mr.col, alpha));
             Draw.fillArc(batch, cx, cy, (int)(getWidth()/2), startRadians, endRadians);
         }
         
@@ -76,13 +89,13 @@ public class MoraleCompass extends InventoryItemPanel {
                     3);
 
 //            drawNumber(batch, mp.morale, radians);
-            if(mp.eff!=null) {
+            if(mp.tr!=null) {
                 float circleMult = 1.3f;
                 float effX = cx+Maths.cos(radians)*picDist, effY = cy+Maths.sin(radians)*picDist;
                 batch.setColor(Colours.dark);
                 Draw.fillEllipse(batch, effX, effY, picSize*circleMult, picSize*circleMult);
                 batch.setColor(Colours.z_white);
-                Draw.drawSizeCentered(batch, mp.eff.type.region, effX, effY, picSize, picSize);
+                Draw.drawSizeCentered(batch, mp.tr, effX, effY, picSize, picSize);
             }
         }
 
@@ -98,6 +111,7 @@ public class MoraleCompass extends InventoryItemPanel {
         Draw.drawSizeCentered(batch, Images.morale_inner, cx, cy, moraleIconSize, moraleIconSize);
 
         Fonts.draw(batch, ""+value, Fonts.fontSmall, Colours.dark, getX(), getY(), getWidth(), getHeight(), Align.center);
+
 
     }
 

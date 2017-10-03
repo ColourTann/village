@@ -7,9 +7,6 @@ import tann.village.gameplay.village.inventory.MoralePoint;
 import tann.village.screens.gameScreen.panels.eventStuff.EffectPanel;
 import tann.village.util.*;
 
-/**
- * Created by Oliver.Garland on 02/10/2017.
- */
 public class MoralePointPanel extends Lay {
 
     MoralePoint point;
@@ -20,14 +17,18 @@ public class MoralePointPanel extends Lay {
 
     @Override
     public void layout() {
-        setSize(Main.w(30), Main.w(20));
+        setSize(Main.w(40), Main.w(20));
         Layoo l = new Layoo(this);
         TextWriter tw = new TextWriter("Morale event", Fonts.font);
         l.row(1);
         l.actor(tw);
         l.row(1);
-        EffectPanel ep = new EffectPanel(point.eff, true);
-        l.actor(ep);
+        l.gap(1);
+        for(Eff e:point.effs){
+            EffectPanel ep = new EffectPanel(e, true);
+            l.actor(ep);
+            l.gap(1);
+        }
         l.row(1);
         l.layoo();
     }

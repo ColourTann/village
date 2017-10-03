@@ -2,6 +2,7 @@ package tann.village.gameplay.village.inventory;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Array;
+import tann.village.Images;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.Buff;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
@@ -15,16 +16,29 @@ public class MoraleInventoryItem extends InventoryItem {
     public MoraleInventoryItem(int min, int max) {
         super(Eff.EffectType.Morale);
         setBounds(min, max);
-        points.add(new MoralePoint(min, null));
-        points.add(new MoralePoint(max, null));
+        points.add(new MoralePoint(min, null,null));
+        points.add(new MoralePoint(max, null,null));
 
-        points.add(new MoralePoint(5, new Eff().food(1)));
-        points.add(new MoralePoint(9, new Eff().wood(1)));
-        points.add(new MoralePoint(11, new Eff().fate(1)));
-        points.add(new MoralePoint(-5, new Eff().lose()));
+        points.add(new MoralePoint(5, Images.food, new Eff[]{new Eff().food(5), new Eff().storage(2)}));
+        points.add(new MoralePoint(9, Images.wood, new Eff[]{new Eff().wood(6)}));
+        points.add(new MoralePoint(11, Images.fate, new Eff[]{new Eff().fate(4)}));
+        points.add(new MoralePoint(-5, Images.skull, new Eff[]{new Eff().lose()}));
 
-        ranges.add(new MoraleRange(-5,-2, Colours.red, new Eff(new Buff().rerolls(-1))));
-        ranges.add(new MoraleRange(2,5,Colours.green_dark, new Eff(new Buff().rerolls(1))));
+        ranges.add(new MoraleRange(-6,-2, Colours.red, new Eff(new Buff().rerolls(-1))));
+        ranges.add(new MoraleRange(2,5,Colours.green_light,
+                new Eff[]{new Eff(new Buff().rerolls(1))}));
+        ranges.add(new MoraleRange(5,10,Colours.blue_light,
+                new Eff[]{
+                        new Eff(new Buff().rerolls(1)),
+                        new Eff(new Buff().bonusFood(1)),
+                        new Eff().morale(-1)
+        }));
+        ranges.add(new MoraleRange(10,15,Colours.light,
+                new Eff[]{
+                    new Eff(new Buff().rerolls(1)),
+                    new Eff(new Buff().bonusFood(3)),
+                    new Eff().morale(-2)
+        }));
     }
 
     private int min, max;
@@ -52,14 +66,13 @@ public class MoraleInventoryItem extends InventoryItem {
         }
     }
 
-    public Array<Eff> getActiveEffects(){
+    public void activateRanges(){
         Array<Eff> result = new Array<>();
         for(MoraleRange mr:ranges){
-            if(mr.isActive(getValue())){
-                result.addAll(Eff.copyArray(mr.effs));
+            if(mr.isActive()){
+                mr.activate();
             }
         }
-        return result;
     }
 
     @Override

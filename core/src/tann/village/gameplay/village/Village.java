@@ -104,6 +104,7 @@ public class Village {
 
     Array<Eff> potentialEffects = new Array<>();
 
+    public void activate(Eff[] effs, boolean activateNow){activate(effs, activateNow, false);}
     public void activate(Eff[] effs, boolean activateNow, boolean invert){for(Eff e:effs){activate(e, activateNow, invert);}}
     public void activate(Array<Eff> effs, boolean activateNow, boolean invert){for(Eff e:effs){activate(e, activateNow, invert);}}
     public void activate(Array<Eff> effs, boolean activateNow){for(Eff e:effs){activate(e, activateNow, false);}}
@@ -116,7 +117,6 @@ public class Village {
     }
 
     private void doEffectStuff(Eff e, boolean activateNow, boolean invert){
-        System.out.println(e.type+":"+activateNow);
         if(e.effAct!=null) {
             switch (e.effAct.type) {
                 case FOR_TURNS:
@@ -150,7 +150,6 @@ public class Village {
                     pushPhase(new BuffVillagerPhase(e));
                     break;
                 case Lose:
-                    System.out.println("loss");
                     pushPhase(new LossPhase(e));
                     break;
             }

@@ -194,4 +194,12 @@ public class Eff {
         return results;
     }
 
+    public static Array<Eff> copyArray(Eff[] effects) {
+        Array<Eff> results = new Array<>();
+        for(Eff e:effects){
+            results.add(e.copy());
+        }
+        return results;
+    }
+
 }

@@ -16,6 +16,6 @@ public class MoralePoint {
     }
 
     public void trigger() {
-        Village.get().pushPhase(new MoralePointPhase(this));
+        if(eff != null) Village.get().pushPhase(new MoralePointPhase(this));
     }
 }

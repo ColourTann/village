@@ -116,6 +116,7 @@ public class Village {
     }
 
     private void doEffectStuff(Eff e, boolean activateNow, boolean invert){
+        System.out.println(e.type+":"+activateNow);
         if(e.effAct!=null) {
             switch (e.effAct.type) {
                 case FOR_TURNS:
@@ -146,7 +147,11 @@ public class Village {
                     GameScreen.get().objectivePanel.addObject(e.obj);
                     break;
                 case XpToVillager:
-                    Village.get().pushPhase(new BuffVillagerPhase(e));
+                    pushPhase(new BuffVillagerPhase(e));
+                    break;
+                case Lose:
+                    System.out.println("loss");
+                    pushPhase(new LossPhase(e));
                     break;
             }
             int value = e.value*(invert?-1:1);
@@ -338,5 +343,13 @@ public class Village {
 
     public static Phase getPhase() {
         return get().currentPhase;
+    }
+
+    public void printPhases(){
+        System.out.println("-------------");
+        for(Phase p:phaseStack){
+            System.out.println(p);
+        }
+        System.out.println("-------------");
     }
 }

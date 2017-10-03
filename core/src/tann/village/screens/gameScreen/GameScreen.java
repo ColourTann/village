@@ -239,6 +239,9 @@ public class GameScreen extends Screen{
             case Input.Keys.RIGHT:
                 Village.get().activate(new Eff().morale(1), true);
                 break;
+            case Input.Keys.ALT_RIGHT:
+                Village.get().printPhases();
+                break;
 		}
 	}
 

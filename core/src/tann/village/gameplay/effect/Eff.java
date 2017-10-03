@@ -30,6 +30,7 @@ public class Eff {
         Gem(Images.gem),
         NewVillager(Images.obj_hourglass),
         DEATH(Images.skull_red),
+        Lose(Images.skull_red),
         Buff,
         Objective,
         XpToVillager(Images.brain);
@@ -154,6 +155,7 @@ public class Eff {
     public Eff storage(int amount) {return type(EffectType.FoodStorage, amount);}
     public Eff brain(int amount) {return type(EffectType.Brain, amount);}
     public Eff death(int amount) {return type(EffectType.DEATH, amount);}
+    public Eff lose() {return type(EffectType.Lose, 1);}
 
     public void clearActivation() {
         this.effAct=new EffAct(EffAct.ActivationType.NOW,0);

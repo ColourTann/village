@@ -21,7 +21,7 @@ public class MoraleInventoryItem extends InventoryItem {
         points.add(new MoralePoint(5, new Eff().food(1)));
         points.add(new MoralePoint(9, new Eff().wood(1)));
         points.add(new MoralePoint(11, new Eff().fate(1)));
-        points.add(new MoralePoint(-5, new Eff().death(1)));
+        points.add(new MoralePoint(-5, new Eff().lose()));
 
         ranges.add(new MoraleRange(-5,-2, Colours.red, new Eff(new Buff().rerolls(-1))));
         ranges.add(new MoraleRange(2,5,Colours.green_dark, new Eff(new Buff().rerolls(1))));
@@ -43,7 +43,8 @@ public class MoraleInventoryItem extends InventoryItem {
     @Override
     public void valueChanged() {
         super.valueChanged();
-        for(MoralePoint mp: points){
+        for(int i=points.size-1; i>=0; i--){
+            MoralePoint mp = points.get(i);
             if((mp.morale>0 && mp.morale<=getValue()) || (mp.morale<0 && mp.morale>=getValue())){
                 mp.trigger();
                 points.removeValue(mp, true);

@@ -289,7 +289,7 @@ public class Village {
     }
 
     private int getBonusRerolls(){
-	    int total = inventory.getResourceAmount(Eff.EffectType.Morale)/3;
+        int total = 0;
 	    for(Buff b : buffs){
 	        if(b.type == Buff.BuffType.Rerolls){
 	            total += b.value;

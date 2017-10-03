@@ -1,6 +1,7 @@
 package tann.village.gameplay.village.inventory;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
 
 /**
@@ -9,11 +10,16 @@ import tann.village.gameplay.effect.Eff;
 public class MoraleRange {
     public int min, max;
     public Color col;
-    public Eff eff;
+    public Array<Eff> effs;
     public MoraleRange(int min, int max, Color col, Eff eff) {
         this.min = min;
         this.max = max;
         this.col = col;
-        this.eff = eff;
+        effs = new Array<>();
+        effs.add(eff);
+    }
+
+    public boolean isActive(int value) {
+        return(value>=min && value<=max);
     }
 }

@@ -3,13 +3,11 @@ package tann.village.gameplay.village.inventory;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.village.Buff;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
 import tann.village.screens.gameScreen.panels.inventoryStuff.MoraleCompass;
 import tann.village.util.Colours;
 
-/**
- * Created by Oliver.Garland on 02/10/2017.
- */
 public class MoraleInventoryItem extends InventoryItem {
 
     Array<MoralePoint> points = new Array<>();
@@ -25,12 +23,12 @@ public class MoraleInventoryItem extends InventoryItem {
         points.add(new MoralePoint(11, new Eff().fate(1)));
         points.add(new MoralePoint(-5, new Eff().death(1)));
 
-        ranges.add(new MoraleRange(-2,-5, Colours.red, null));
-        ranges.add(new MoraleRange(2,5,Colours.green_dark, null));
+        ranges.add(new MoraleRange(-5,-2, Colours.red, new Eff(new Buff().rerolls(-1))));
+        ranges.add(new MoraleRange(2,5,Colours.green_dark, new Eff(new Buff().rerolls(1))));
     }
 
-    int min, max;
-    public void setBounds(int min, int max) {
+    private int min, max;
+    private void setBounds(int min, int max) {
         this.min = min; this.max = max;
     }
 
@@ -51,5 +49,20 @@ public class MoraleInventoryItem extends InventoryItem {
                 points.removeValue(mp, true);
             }
         }
+    }
+
+    public Array<Eff> getActiveEffects(){
+        Array<Eff> result = new Array<>();
+        for(MoraleRange mr:ranges){
+            if(mr.isActive(getValue())){
+                result.addAll(Eff.copyArray(mr.effs));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public boolean canChangeBy(int delta) {
+        return true;
     }
 }

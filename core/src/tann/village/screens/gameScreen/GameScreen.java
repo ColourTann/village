@@ -262,12 +262,7 @@ public class GameScreen extends Screen{
     }
 
 	public void roll(boolean reroll){
-        //TODO this maybe
-//        if(state!=State.Rolling) return;
-		if(!RollManager.hasRoll()) return;
-		if(!reroll){
-
-		}
+        if(!RollManager.hasRoll()) return;
 		int diceRolled = 0;
         for (Die d : BulletStuff.dice) {
             if(d.getState() == Die.DieState.Stopped || !reroll) {
@@ -277,7 +272,9 @@ public class GameScreen extends Screen{
 		}
 
 		if(diceRolled>0) {
-            RollManager.spendRoll();
+            if(reroll) {
+                RollManager.spendRoll();
+            }
             Sounds.playSound(Sounds.roll,1,1);
 		}
 	}

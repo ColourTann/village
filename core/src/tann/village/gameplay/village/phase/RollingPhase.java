@@ -4,6 +4,8 @@ import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
+import tann.village.gameplay.village.inventory.Inventory;
+import tann.village.gameplay.village.inventory.MoraleInventoryItem;
 import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.rollStuff.LockBar;
@@ -11,6 +13,8 @@ import tann.village.screens.gameScreen.panels.rollStuff.LockBar;
 public class RollingPhase extends Phase{
     @Override
     public void activate() {
+        MoraleInventoryItem mii = (MoraleInventoryItem) Village.getInventory().get(Eff.EffectType.Morale);
+        Village.get().activate(mii.getActiveEffects(), true);
         GameScreen.get().showRollContainer(true);
         Village.get().startOfRoll();
         BulletStuff.refresh(Village.get().villagers);

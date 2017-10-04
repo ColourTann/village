@@ -42,7 +42,6 @@ public class EventCreator {
         ev.addOutcome("A dead shark is inside, how did she get there?");
         ev.joel(.4);
         ev.chance(.5f,1);
-        ev.eff(new Eff().morale(1));
         current.add(ev);
 
         ev = new Event("Spawning", "Hundreds of small fish have come near the shore");
@@ -120,10 +119,12 @@ public class EventCreator {
 
         //------------------------------negative----------------------------//
         ev = new Event("Gorilla", "An alpha male gorilla approaches the village");
-        ev.effR(new Eff().food(-4));
+        ev.effR(new Eff().food(-2));
+        ev.eff(new Eff().morale(-1));
         ev.addOutcome("Watch the enormous ape steal your food");
         ev.eff(new Eff().food(2));
-        ev.addOutcome("He approaches and leaves a small bundle wrapped in leaves", 2);
+        ev.eff(new Eff().morale(1));
+        ev.addOutcome("He approaches and leaves a small bundle wrapped in leaves", 3);
         ev.joel(-.8f);
         current.add(ev);
 
@@ -132,7 +133,8 @@ public class EventCreator {
         ev.addOutcome("Damn critter!");
         ev.eff(new Eff().food(4));
         ev.addOutcome("You get up in time to kill it!", 2);
-        ev.joel(-.3f);
+        ev.eff(new Eff().morale(-1));
+        ev.joel(-.6f);
         current.add(ev);
 
         ev = new Event("Monkey Troup", "They've come out in force!");

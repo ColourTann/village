@@ -38,7 +38,7 @@ public class BulletStuff {
 	public static Array<ModelInstance> walls = new Array<>();
 	public static Array<Die> dice = new Array<>();
 	static Model model;
-	static CollisionMagpie ground;
+	static CollisionMagpie earth;
 	static btBroadphaseInterface broadphase;
 	static btCollisionConfiguration collisionConfig;
 	static btDispatcher dispatcher;

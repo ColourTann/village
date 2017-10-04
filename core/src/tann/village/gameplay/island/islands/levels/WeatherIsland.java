@@ -4,12 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.ProjectGenerator;
 import tann.village.gameplay.island.event.Event;
-import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
-import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.island.objective.SurviveObjective;
 import tann.village.gameplay.village.Buff;
-import tann.village.gameplay.village.villager.Villager;
 import tann.village.util.Sounds;
 
 public class WeatherIsland extends Island {
@@ -29,9 +26,13 @@ public class WeatherIsland extends Island {
         addEvent(ev);
 
         ev = new Event("Momentary Repose", "A break in the clouds lifts your spirits");
-        ev.eff(new Eff().morale(2));
         ev.eff(new Eff(new Buff().rerolls(2)));
+        ev.addOutcome("Plenty of time to work");
+        ev.eff(new Eff().villagerXP(4));
+        ev.addOutcome("A moment to reflect leads to a new idea!", 1);
+        ev.chance(5000);
         ev.joel(-.6f);
+        ev.eff(new Eff().morale(2));
         addEvent(ev);
 
         ev = new Event("Whale Carcass",  "The storm in the night washed up a grisly prize");
@@ -63,44 +64,33 @@ public class WeatherIsland extends Island {
         Event ev;
         ev = new Event("A stormy beach", "This island is known to be stormy, you'd better prepare for a rough time.");
         ev.storyTurn(0);
-        ev.eff(new Eff(new SurviveObjective(30)));
+        ev.eff(new Eff(new SurviveObjective(20)));
         addEvent(ev);
 
         ev = new Event("Dark skies", "The weather takes a turn, it's going to be tough");
-        ev.storyTurn(6);
+        ev.storyTurn(5);
         ev.effR(new Eff().upkeep().food(-1));
         addEvent(ev);
 
         ev = new Event("Storm", "The storm has hit you, it will be tough to survive this.");
-        ev.storyTurn(10);
+        ev.storyTurn(9);
         ev.eff(new Eff().upkeep().food(-2));
         addEvent(ev);
 
         ev = new Event("Thunderstorm", "And then the rain started");
-        ev.storyTurn(14);
+        ev.storyTurn(13);
         ev.eff(new Eff().upkeep().food(-2));
         addEvent(ev);
 
         ev = new Event("Soaked through", "The dirt has turned to mud");
-        ev.storyTurn(14);
+        ev.storyTurn(16);
         ev.eff(new Eff().upkeep().food(-1));
-        addEvent(ev);
-
-
-        ev = new Event("Hope", "A gap in the clouds");
-        ev.storyTurn(21);
-        ev.eff(new Eff().upkeep().food(1));
-        addEvent(ev);
-
-        ev = new Event("Light", "The storm is clearing, finally");
-        ev.storyTurn(23);
-        ev.eff(new Eff().upkeep().food(2));
         addEvent(ev);
     }
 
     @Override
     protected void setupBuildings() {
-        this.availableBuildings.addAll(ProjectGenerator.makeBasicProjects());
+        this.availableProjects.addAll(ProjectGenerator.makeBasicProjects());
     }
 
     @Override

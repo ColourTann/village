@@ -18,6 +18,7 @@ public class Project {
 	public Array<Eff> effects = new Array<>();
 	public TextureRegion image = Main.atlas.findRegion("building/hut");
     public Project unlockedBy;
+    float chance = 1;
 
     public Project(String name) {
         this(name,"");
@@ -45,5 +46,17 @@ public class Project {
 
     public void addEffect(Eff e) {
 	    this.effects.add(e);
+    }
+
+    public void chance(float chance) {
+        this.chance=chance;
+    }
+
+    public float getChance() {
+        return chance;
+    }
+
+    public boolean isValid() {
+        return true;
     }
 }

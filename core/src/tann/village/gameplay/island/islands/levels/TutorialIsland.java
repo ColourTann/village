@@ -6,11 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.ProjectGenerator;
 import tann.village.gameplay.island.event.Event;
-import tann.village.gameplay.island.event.EventCreator;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.ProjectObjective;
-import tann.village.gameplay.village.Buff;
-import tann.village.gameplay.village.villager.Villager;
 import tann.village.util.Sounds;
 
 public class TutorialIsland extends Island {
@@ -60,7 +57,7 @@ public class TutorialIsland extends Island {
 
     @Override
     protected void setupBuildings() {
-        this.availableBuildings.addAll(ProjectGenerator.makeBasicProjects());
+        this.availableProjects.addAll(ProjectGenerator.makeBasicProjects());
     }
 
     @Override

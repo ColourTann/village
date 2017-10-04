@@ -122,9 +122,11 @@ public class ConstructionPanel extends InfoPanel{
 	private void resetAvailablePanels() {
 		int levelToGenerate = 0;
 		levelToGenerate = Math.min(1, levelToGenerate);
-		for(ProjectPanel bp:availables){
+		Project[] generated = Village.island.getRandomProjects(availables.size);
+		for(int i=0;i<availables.size;i++){
+            ProjectPanel bp = availables.get(i);
 		    bp.setVisible(true);
-			bp.setProject(Village.island.getRandomBuilding());
+			bp.setProject(generated[i]);
 		}
 		refreshButton.setVisible(true);
 	}

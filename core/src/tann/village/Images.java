@@ -25,6 +25,7 @@ public class Images {
 	public static final TextureRegion level_up = Main.atlas.findRegion("resource/levelup");
     public static final TextureRegion skull = Main.atlas.findRegion("resource/skull");
     public static final TextureRegion skull_red = Main.atlas.findRegion("resource/skullRed");
+    public static final TextureRegion baby = Main.atlas.findRegion("resource/baby");
 	public static final TextureRegion roll = Main.atlas.findRegion("roll");
 	public static final TextureRegion refresh = Main.atlas.findRegion("generalIcons/refresh");
     public static final TextureRegion turn = Main.atlas.findRegion("generalIcons/hourglass");

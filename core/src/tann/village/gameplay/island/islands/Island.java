@@ -1,9 +1,6 @@
 package tann.village.gameplay.island.islands;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -21,7 +18,7 @@ public abstract class Island {
 	TextureRegion tr;
 	int x,y;
 
-    protected Array<Project> availableBuildings = new Array<>();
+    protected Array<Project> availableProjects = new Array<>();
 
 	public Island(TextureRegion tr, int x, int y){
 		this.tr=tr;
@@ -43,7 +40,43 @@ public abstract class Island {
 		if(e==null) e= getRandomEvent();
 		return e;
 	}
-	
+
+
+    private static Array<Project> tempList = new Array<>();
+    public Project[] getRandomProjects(int number) {
+        Project[] projects = new Project[number];
+	    tempList.clear();
+	    float totalRand = 0;
+	    for(Project p: availableProjects){
+	        if(p.isValid()){
+	            totalRand += p.getChance();
+	            tempList.add(p);
+            }
+        }
+        tempList.shuffle();
+        for(int i=0;i<number;i++) {
+            float rand = (float) (Math.random() * totalRand);
+            boolean found = false;
+            for (Project p : tempList) {
+                if (rand < p.getChance()) {
+                    projects[i] = p;
+                    totalRand -= p.getChance();
+                    tempList.removeValue(p, true);
+                    found = true;
+                    break;
+                }
+                else {
+                    rand -= p.getChance();
+                }
+            }
+            if(!found) {
+                System.err.println("halp");
+                projects[i] = availableProjects.random();
+            }
+        }
+        return projects;
+    }
+
 	private static Event getRandomEvent(){
 		// make a list of possible events
         Event toReturn = null;
@@ -126,10 +159,6 @@ public abstract class Island {
     }
 
     public abstract String getVictoryText();
-
-    public Project getRandomBuilding() {
-        return availableBuildings.random();
-    }
 
     public Array<Villager.VillagerType> getRandomVillagerTypes(Villager.VillagerType source, int amount){
         Array<Villager.VillagerType> results = new Array<>();

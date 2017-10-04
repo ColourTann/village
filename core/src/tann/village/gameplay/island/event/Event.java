@@ -9,7 +9,7 @@ import tann.village.gameplay.village.Village;
 public class Event {
     public static Specificity currentSpecificity;
     public enum Specificity{
-        General(1), Scenario(3);
+        General(1), Scenario(2);
         float multiplier;
         Specificity(float multiplier){
             this.multiplier=multiplier;

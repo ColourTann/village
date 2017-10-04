@@ -45,6 +45,7 @@ public class TextWriter extends Lay {
         textureMap.put("dice", Images.roll);
         textureMap.put("refresh", Images.refresh);
         textureMap.put("gem", Images.gem);
+        textureMap.put("newvillager", Images.baby);
         textureMap.put("death", Images.skull);
         textureMap.put("lose", Images.skull_red);
 

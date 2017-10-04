@@ -77,6 +77,11 @@ public class ProjectGenerator {
         p.addEffect(new Eff().inTurns(3).wood(10));
         results.add(p);
 
+        p = new Project("A baby!", "Why does this cost so much wood?");
+        p.setCost(9);
+        p.addEffect(new Eff().newVillager());
+        results.add(p);
+
         p = new Project("Offering", "If the gods exist, it's a good idea to get on their good side");
         p.setCost(6,2);
         p.addEffect(new Eff().morale(2));
@@ -111,12 +116,6 @@ public class ProjectGenerator {
         p.addEffect(new Eff().eachTurn(10).wood(1));
         p.addEffect(new Eff().eachTurn(10).food(1));
         results.add(p);
-
-        // TODO awh baby!!
-//        p = new Project("A baby!", "Why does this cost so much wood?");
-//        p.setCost(12);
-//        p.addEffect(new Eff().newVillager());
-//        results.add(p);
 
         return results;
     }

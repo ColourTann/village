@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.utils.Array;
+import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.effect.EffAct;
@@ -13,6 +14,7 @@ import tann.village.gameplay.village.inventory.InventoryItem;
 import tann.village.gameplay.village.phase.*;
 import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
+import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.eventStuff.JoelDebugPanel;
 import tann.village.screens.gameScreen.panels.bottomBar.ObjectivePanel;
@@ -152,6 +154,9 @@ public class Village {
                 case Lose:
                     pushPhase(new LossPhase(e));
                     break;
+                case NewVillager:
+                    newVillager();
+                    break;
             }
             int value = e.value*(invert?-1:1);
             InventoryItem item = getInventory().get(e.type);
@@ -171,7 +176,17 @@ public class Village {
         }
     }
 
-
+    private void newVillager() {
+        Villager v = new Villager(villagers.size);
+        villagers.add(v);
+        if (currentPhase instanceof RollingPhase) {
+            BulletStuff.refresh(villagers);
+            Die d = v.die;
+            d.addToScreen();
+            d.roll(true);
+        }
+        GameScreen.get().vbp.layout();
+    }
 
     private void refreshDelta(){
         calculateDelta();

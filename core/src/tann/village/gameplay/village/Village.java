@@ -149,6 +149,7 @@ public class Village {
                     GameScreen.get().objectivePanel.addObject(e.obj);
                     break;
                 case XpToVillager:
+                case DEATH:
                     pushPhase(new BuffVillagerPhase(e));
                     break;
                 case Lose:

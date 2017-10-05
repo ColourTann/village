@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
+import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.AddSub;
 import tann.village.gameplay.village.Village;
@@ -29,7 +30,7 @@ public class Villager {
 	public VillagerType type;
 	public Die die;
     Array<VillagerType> sources = new Array<>();
-
+    boolean dead;
 
 	private static final Color[] colours = new Color[]{(Colours.blue_light), (Colours.fate_light), (Colours.green_light), (Colours.brown_light), (Colours.red)};
 	
@@ -120,11 +121,20 @@ public class Villager {
             case XpToVillager:
                 gainXP(eff.value);
                 break;
+            case DEATH:
+                dead=true;
+                die();
+                break;
             default:
                 System.err.println("Can't give "+eff+" to villager");
         }
     }
 
+    private void die(){
+        Village.get().villagers.removeValue(this, true);
+        BulletStuff.dice.removeValue(die, true);
+        GameScreen.get().vbp.layout();
+    }
 
     public enum VillagerType{
         Villager(0,"no description maybe?", new Array<VillagerType>(),

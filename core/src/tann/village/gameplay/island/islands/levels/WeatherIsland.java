@@ -22,40 +22,56 @@ public class WeatherIsland extends Island {
         ev.addOutcome("Cold night");
         ev.eff(new Eff().wood(-3));
         ev.addOutcome("Quickly, repair the roof!");
-        ev.joel(.7f);
+        ev.eff(new Eff().morale(2));
+        ev.addOutcome("but it turns into light snow!", 4);
+        ev.joel(-.6f);
         addEvent(ev);
 
         ev = new Event("Momentary Repose", "A break in the clouds lifts your spirits");
         ev.eff(new Eff(new Buff().rerolls(2)));
         ev.addOutcome("Plenty of time to work");
         ev.eff(new Eff().villagerXP(4));
-        ev.addOutcome("A moment to reflect leads to a new idea!", 1);
-        ev.chance(5000);
-        ev.joel(-.6f);
+        ev.addOutcome("A moment to reflect leads to a new idea!", 3);
+        ev.joel(.6f);
         ev.eff(new Eff().morale(2));
         addEvent(ev);
 
-        ev = new Event("Whale Carcass",  "The storm in the night washed up a grisly prize");
-        ev.effR(new Eff().food(5));
+        ev = new Event("Washed up",  "The storm in the night washed up something interesting");
+        ev.eff(new Eff().wood(2));
+        ev.addOutcome("A strange wooden crate");
+        ev.eff(new Eff().food(2));
+        ev.addOutcome( "A bright red crustacean");
+        ev.eff(new Eff().food(10));
+        ev.addOutcome("A whale carcass!", 2);
         ev.eff(new Eff().morale(1));
-        ev.joel(-1.2f);
+        ev.joel(.8);
         addEvent(ev);
 
         ev = new Event("Relentless Rain", "It never stops");
-        ev.effR(new Eff().food(-1));
-        ev.joel(.5f);
+        ev.effR(new Eff().food(-3));
+        ev.joel(-.5f);
         addEvent(ev);
 
-        ev = new Event("Lightning", "Lightning strikes, setting fire to your storage hut");
-        ev.effR(new Eff().food(-2));
-        ev.effR(new Eff().storage(-2));
+        ev = new Event("Lightning", "A huge lightning storm in the night");
+        ev.effR(new Eff().storage(-4));
+        ev.addOutcome("It sets fire to your food hut");
         ev.effR(new Eff().wood(-2));
-        ev.joel(1);
+        ev.addOutcome("It destroys your workbench");
+        ev.eff(new Eff().morale(3));
+        ev.eff(new Eff().villagerXP(2));
+        ev.addOutcome("An inspiring storm for everyone to watch", 5);
+        ev.joel(-.4);
         addEvent(ev);
 
-        ev = new Event("Fallen tree", "In the night, a tree falls near one of the huts. You're lucky nobody was injured!");
-        ev.effR(new Eff().wood(2));
-        ev.joel(.4f);
+        ev = new Event("Fallen tree", "In the night, a tree falls.");
+        ev.eff(new Eff().death(1));
+        ev.addOutcome("It crushes one of your villagers!");
+        ev.eff(new Eff().morale(1));
+        ev.addOutcome("You're lucky nobody was injured!", 4);
+        ev.joel(-1);
+        ev.turn(5, -1);
+        ev.eff(new Eff().wood(1));
+        ev.chance(1,1);
         addEvent(ev);
     }
 
@@ -79,12 +95,12 @@ public class WeatherIsland extends Island {
 
         ev = new Event("Thunderstorm", "And then the rain started");
         ev.storyTurn(13);
-        ev.eff(new Eff().upkeep().food(-2));
+        ev.eff(new Eff().upkeep().food(-3));
         addEvent(ev);
 
         ev = new Event("Soaked through", "The dirt has turned to mud");
         ev.storyTurn(16);
-        ev.eff(new Eff().upkeep().food(-1));
+        ev.eff(new Eff().upkeep().food(-2));
         addEvent(ev);
     }
 

@@ -67,7 +67,7 @@ public class ProjectGenerator {
         p.addEffect(new Eff().morale(3));
         results.add(p);
 
-        p = new Project("Foraging Trip", "A small expedition to find some extra food. +4 food next turn");
+        p = new Project("Foraging Trip", "A small expedition to find some extra food. +7 food next turn");
         p.setCost(6);
         p.addEffect(new Eff().inTurns(1).food(7));
         results.add(p);
@@ -88,7 +88,7 @@ public class ProjectGenerator {
         p.addEffect(new Eff().fate(1));
         results.add(p);
 
-        // high cose megaprojects
+        // high cost megaprojects
 
         p = new Project("Larder", "Large storage area for food");
         p.setCost(11);

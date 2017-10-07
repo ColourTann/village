@@ -13,6 +13,12 @@ import tann.village.gameplay.village.villager.Villager;
 
 public abstract class Island {
 
+    public enum Keyword{
+        Gem
+    }
+
+    public Array<Keyword> keywords = new Array<>();
+
 	public boolean available;
 	public boolean explored;
 	TextureRegion tr;
@@ -123,10 +129,13 @@ public abstract class Island {
     public TextureRegion background;
 
 	public void setup(){
+	    keywords.clear();
+	    addKeywords();
 		validEvents.clear();
 		storyEvents.clear();
 		randomEventsPool.clear();
-		randomEventsPool.addAll(EventCreator.makeBasicEvents());
+        Event.currentSpecificity = Event.Specificity.General;
+        randomEventsPool.addAll(EventCreator.makeBasicEvents());
 		availableProjects.clear();
         Event.currentSpecificity = Event.Specificity.Scenario;
         setupRandomPool();
@@ -160,12 +169,22 @@ public abstract class Island {
     }
 
     public abstract String getVictoryText();
+    public abstract void addKeywords();
 
     public Array<Villager.VillagerType> getRandomVillagerTypes(Villager.VillagerType source, int amount){
         Array<Villager.VillagerType> results = new Array<>();
         for(Villager.VillagerType t: Villager.VillagerType.values()){
             if(t.sources.contains(source, true)){
-                results.add(t);
+                boolean good = true;
+                for(Keyword kw:t.keywords){
+                    if(!keywords.contains(kw, true)){
+                        good=false;
+                        break;
+                    }
+                }
+                if(good) {
+                    results.add(t);
+                }
             }
         }
         results.shuffle();

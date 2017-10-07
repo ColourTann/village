@@ -28,13 +28,14 @@ public class GemIsland extends Island{
         ev.effR(new Eff().food(-3));
         ev.effR(new Eff().wood(-2));
         ev.eff(new Eff().morale(-2));
-        ev.joel(-.7f);
+        ev.joel(-1.6);
+        ev.chance(1,1);
         addEvent(ev);
 
         ev = new Event("Lights in the sky", "A dance of red and green in the sky awes the village");
         ev.eff(new Eff().morale(-1));
         ev.addOutcome("Cower inside");
-        ev.eff(new Eff().fate(2));
+        ev.eff(new Eff().morale(4));
         ev.addOutcome("Make an offering", 0,3,3);
         ev.joel(-.3);
         ev.chance(.4f, 1);
@@ -74,11 +75,10 @@ public class GemIsland extends Island{
         ev.eff(new Eff().morale(1));
         ev.addOutcome("Quickly build some flood defences", 0,3,0);
         ev.eff(new Eff().gem(2));
-        ev.addOutcome("The tide draws back and reveals two gems!", 1);
+        ev.addOutcome("The tide draws back and reveals two gems!", 3);
         ev.effR(new Eff().storage(-2));
         ev.joel(-.5);
         addEvent(ev);
-        //TODO tide parts to show a cool gem!
     }
 
     @Override
@@ -95,15 +95,13 @@ public class GemIsland extends Island{
         addEvent(ev);
 
         ev = new Event("Burning ground", "The ground shifts beneath your feet");
-        ev.eff(new Eff().upkeep().food(-1));
-        ev.storyTurn(16);
-        ev.eff(new Eff().upkeep().wood(-1));
+        ev.eff(new Eff().upkeep().food(-2));
+        ev.storyTurn(14);
         addEvent(ev);
 
         ev = new Event("Dire omen", "The sky turns black, the gods grow tired of your sloth.");
-        ev.eff(new Eff().upkeep().food(-2));
+        ev.eff(new Eff().upkeep().food(-5));
         ev.storyTurn(24);
-        ev.eff(new Eff().upkeep().wood(-2));
         addEvent(ev);
     }
 
@@ -132,27 +130,36 @@ public class GemIsland extends Island{
         b.setCost(5,3);
         b.addEffect(new Eff().gem(3));
         b.addEffect(new Eff().morale(-1));
+        b.chance(2);
         availableProjects.add(b);
 
         b = new Project("Fountain","");
-        b.setCost(15,5);
+        b.setCost(14,4);
         b.addEffect(new Eff().gem(5));
+        b.chance(2);
         availableProjects.add(b);
 
         b = new Project("Expedition");
         b.setCost(10,2);
         b.addEffect(new Eff().gem(2));
         b.addEffect(new Eff().morale(1));
+        b.chance(3);
         availableProjects.add(b);
 
         b = new Project("Ocean sifting");
         b.setCost(4,1);
         b.addEffect(new Eff().gem(1));
+        b.chance(2);
         availableProjects.add(b);
     }
 
     @Override
     public String getVictoryText() {
         return "you win!";
+    }
+
+    @Override
+    public void addKeywords() {
+        keywords.add(Keyword.Gem);
     }
 }

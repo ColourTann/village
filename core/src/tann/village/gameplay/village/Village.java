@@ -64,7 +64,7 @@ public class Village {
     private Upkeep upkeep;
     private Array<Buff> buffs = new Array<Buff>();
 
-    public static final int STARTING_VILLAGERS = 5;
+    public static final int STARTING_VILLAGERS = 15;
     public Array<Villager> villagers = new Array<>();
 
     private int dayNum=0;

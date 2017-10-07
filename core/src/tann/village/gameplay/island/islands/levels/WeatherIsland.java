@@ -134,4 +134,9 @@ public class WeatherIsland extends Island {
     public String getVictoryText() {
         return "You win!";
     }
+
+    @Override
+    public void addKeywords() {
+
+    }
 }

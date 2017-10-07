@@ -65,4 +65,9 @@ public class TutorialIsland extends Island {
         return "You win!!";
     }
 
+    @Override
+    public void addKeywords() {
+
+    }
+
 }

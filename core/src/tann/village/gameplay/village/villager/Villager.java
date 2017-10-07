@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.bullet.BulletStuff;
 import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.village.AddSub;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.phase.LevelupPhase;
@@ -36,8 +37,8 @@ public class Villager {
 	
 	public Villager(int index) {
 		this.type=VillagerType.Villager;
-		firstName=generateName(true);
-        lastName=generateName(false);
+//		firstName=generateName(true);
+//        lastName=generateName(false);
         this.col = colours[index%colours.length];
         setupDie();
     }
@@ -49,7 +50,7 @@ public class Villager {
 		this.die=die;
 		this.die.villager=this;
 		this.type=die.type;
-        this.xpToLevelUp = die.type.level+3;
+        this.xpToLevelUp = die.type.level+1;
         getIcon().layout();
 	}
 	
@@ -75,27 +76,27 @@ public class Villager {
 	public int potentialXp;
 
 
-	private static Array<String> firstNames;
-	private static Array<String> lastNames;
-	
-	public static String generateName(boolean first){
-		if(firstNames==null||firstNames.size==0) {
-            firstNames = new Array<>(Gdx.files.internal("names/first.txt").readString().replaceAll("\r", "").split("\n"));
-        }
-        if(lastNames==null||lastNames.size==0){
-			lastNames = new Array<>(Gdx.files.internal("names/last.txt").readString().replaceAll("\r", "").split("\n"));
-		}
-		if(first){
-            String result = firstNames.random();
-            firstNames.removeValue(result, true);
-            return result;
-		}
-		else{
-            String result = lastNames.random();
-            lastNames.removeValue(result, true);
-            return result;
-		}
-	}
+//	private static Array<String> firstNames;
+//	private static Array<String> lastNames;
+//
+//	public static String generateName(boolean first){
+//		if(firstNames==null||firstNames.size==0) {
+//            firstNames = new Array<>(Gdx.files.internal("names/first.txt").readString().replaceAll("\r", "").split("\n"));
+//        }
+//        if(lastNames==null||lastNames.size==0){
+//			lastNames = new Array<>(Gdx.files.internal("names/last.txt").readString().replaceAll("\r", "").split("\n"));
+//		}
+//		if(first){
+//            String result = firstNames.random();
+//            firstNames.removeValue(result, true);
+//            return result;
+//		}
+//		else{
+//            String result = lastNames.random();
+//            lastNames.removeValue(result, true);
+//            return result;
+//		}
+//	}
 
 	public Color getColour() {
 		return col;
@@ -155,6 +156,9 @@ public class Villager {
         Teacher(1, "Share the knowledge", VillagerType.Villager,
                 Side.brainOther, Side.brainOther, Side.brainOther, Side.brain, Side.food1, Side.food1),
 
+        GemSniffer(1, "Hungry for gems", VillagerType.Villager, Island.Keyword.Gem,
+                Side.gem1, Side.food1, Side.food1, Side.wood1, Side.brain, Side.brain),
+
         // 2
 
         Sailor(2, "Scavenging the oceans for fish and flotsam", VillagerType.Fisher,
@@ -187,6 +191,11 @@ public class Villager {
         Guide(2, "Show the way", VillagerType.Teacher,
                 Side.brainOther2, Side.bonusFood, Side.morale1, Side.morale1, Side.food1wood1, Side.brain),
 
+        Digger(2, "The gems call me from underground", VillagerType.GemSniffer,
+                Side.gem1, Side.gem1, Side.gem1, Side.brain, Side.skull, Side.skull),
+        Spelunker(2, "They're in the caves!", VillagerType.GemSniffer,
+                Side.gem1, Side.gem1, Side.food2, Side.wood2, Side.brain, Side.brain),
+
         // 3
 
         Navigator(3, "????", VillagerType.Sailor,
@@ -217,18 +226,26 @@ public class Villager {
         Enlightended(3, "???", VillagerType.Mentor,
                 Side.brainOther3, Side.brainOther3, Side.brainOther3, Side.food2wood2, Side.food2wood2, Side.fate1morale1),
         Tracker(3, "???", VillagerType.Guide,
-                Side.brainOther3, Side.bonusFood2, Side.bonusWood2, Side.food2wood2, Side.food2wood2, Side.food2wood2);
+                Side.brainOther3, Side.bonusFood2, Side.bonusWood2, Side.food2wood2, Side.food2wood2, Side.food2wood2),
 
+        GEMGEM(3, "???", VillagerType.Spelunker,
+                Side.gem1, Side.gem1, Side.gem1, Side.gem1, Side.gem1, Side.gem1),
+        GEMGEMGEM(3, "???", VillagerType.Digger,
+                Side.gem1, Side.gem1, Side.gem1, Side.gem1, Side.gem1, Side.gem1);
 		public int level;
 		public String description;
 		public Side[] sides;
+		public Island.Keyword[] keywords;
         public TextureRegion lapel;
         public Array<VillagerType> sources;
 
-        VillagerType(int level, String description, Array<VillagerType> sources, Side... sides){
+
+        VillagerType(int level, String description, Array<VillagerType> sources, Island.Keyword[] keywords, Side... sides){
             if(sides.length!=6){
                 System.err.println("side error making "+this);
             }
+            if(keywords==null) keywords = new Island.Keyword[]{};
+            this.keywords = keywords;
             switch(level){
                 case 0: this.lapel = Images.lapel0; break;
                 case 1: this.lapel = Images.lapel1; break;
@@ -242,8 +259,20 @@ public class Villager {
             this.sources=sources;
         }
 
+        VillagerType(int level, String description, Array<VillagerType> sources, Side... sides){
+            this(level, description, sources, null, sides);
+        }
+
         VillagerType(int level, String description, VillagerType source, Side... sides){
             this(level, description, new Array<VillagerType>(new VillagerType[]{source}), sides);
+        }
+
+        VillagerType(int level, String description, VillagerType source, Island.Keyword[] keywords, Side... sides){
+            this(level, description, new Array<VillagerType>(new VillagerType[]{source}), keywords, sides);
+        }
+
+        VillagerType(int level, String description, VillagerType source, Island.Keyword keyword, Side... sides){
+            this(level, description, new Array<VillagerType>(new VillagerType[]{source}), new Island.Keyword[]{keyword}, sides);
         }
 	}
 }

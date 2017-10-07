@@ -6,53 +6,65 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import tann.village.Images;
 import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.island.event.Outcome;
+import tann.village.gameplay.village.Upkeep;
+import tann.village.screens.gameScreen.panels.UpkeepPanel;
 import tann.village.util.*;
 
 public class OutcomePanel extends Group {
-    public static int WIDTHSMALL = 220, WIDTHBIG=260, HEIGHTBASE = 40, HEIGHT = 115;
+    public static int WIDTHSMALL = 220, WIDTHBIG=260;
     private static final float GAP=10, EXTRA = GAP + EffectPanel.staticHeight();
     Color border = Colours.dark;
     Outcome o;
     boolean locked;
     public OutcomePanel(final Outcome o, boolean triple) {
         this.o=o;
-        float h = HEIGHT;
-        setSize(WIDTHBIG, HEIGHT+EXTRA*(Math.max(0, o.effects.size-1)));
+        float h = GAP;
         Fonts.fontSmall.setColor(Colours.light);
         TextBox tb = new TextBox(o.description, Fonts.fontSmall, WIDTHBIG-10, Align.center);
-        float textPosition = .27f;
-        tb.setPosition(getWidth()/2-tb.getWidth()/2, getHeight()-HEIGHT*textPosition-tb.getHeight()/2);
+        h += tb.getHeight() + GAP;
         addActor(tb);
-        EffectPanel first =null;
-        if(o.effects.size>0) {
-            Eff e = o.effects.get(0);
-            first = new EffectPanel(e, true);
-            float effPanelPosition = .72f;
-            first.setPosition(getWidth() / 2 - first.getWidth() / 2, getHeight() -HEIGHT*effPanelPosition - first.getHeight() / 2);
-            addActor(first);
-        }
 
-        for(int i=1;i<o.effects.size;i++){
-            Eff e = o.effects.get(i);
-            EffectPanel ep = new EffectPanel(e, true);
-            ep.setPosition(first.getX(), first.getY()-EXTRA);
-            addActor(ep);
-            first = ep;
-            h += EXTRA;
-        }
+        Array<Lay> effPanels = new Array<>();
 
+        for(Eff effect: o.getEffects()){
+            Lay lay;
+            if(effect.effAct.type== EffAct.ActivationType.UPKEEP){
+                UpkeepPanel upkeepShow = new UpkeepPanel();
+                Array<Eff> effects = new Array<>();
+                effects.add(effect);
+                upkeepShow.setEffects(effects);
+                lay = upkeepShow;
+            }
+            else {
+                lay = new EffectPanel(effect, true);
+            }
+            effPanels.add(lay);
+            h += lay.getHeight() + GAP;
+        }
         setSize(WIDTHBIG, h);
-        if(o.cost!=null){
-            CostTab ct = new CostTab(o.cost);
+
+        float y=h;
+        y -= GAP + tb.getHeight();
+        tb.setPosition(getWidth()/2-tb.getWidth()/2, y);
+        addActor(tb);
+        for(Lay l:effPanels){
+            y -= GAP + l.getHeight();
+            l.setPosition(getWidth()/2-l.getWidth()/2, y);
+            addActor(l);
+        }
+
+        if(o.getCost() !=null){
+            CostTab ct = new CostTab(o.getCost());
             addActor(ct);
             ct.setPosition(getWidth()/2-ct.getWidth()/2, getHeight());
         }
+
         setColor(0,0,0,0);
-
-
     }
 
     @Override
@@ -70,8 +82,6 @@ public class OutcomePanel extends Group {
             float scale = Math.min(getWidth()/Images.eagle.getRegionWidth(), getHeight()/Images.eagle.getRegionHeight())*.7f;
             Draw.drawCenteredScaled(batch, Images.eagle, getX()+getWidth()/2, getY()+getHeight()/2, scale, scale);
         }
-        batch.setColor(getColor());
-        Draw.fillActor(batch,this);
     }
 
     private void lock(){

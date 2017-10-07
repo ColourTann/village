@@ -131,7 +131,9 @@ public class Eff {
                 if(effAct.value==0){
                     dead=true;
                 }
-                Village.get().activate(this.copy().now(), false, false);
+                else {
+                    Village.get().activate(this.copy().now(), false, false);
+                }
                 break;
             case UPKEEP:
                 break;
@@ -200,6 +202,11 @@ public class Eff {
             results.add(e.copy());
         }
         return results;
+    }
+
+    public Eff invert() {
+        this.value = -this.value;
+        return this;
     }
 
 }

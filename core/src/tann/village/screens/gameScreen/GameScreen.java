@@ -355,11 +355,9 @@ public class GameScreen extends Screen{
 	}
 	
 	private static Actor inputBlocker;
-	private static Array<Actor> stack = new Array<>();
-	public void push(Actor a){
-		
-		if(inputBlocker==null){
-			inputBlocker = new Actor(){
+	private Actor getInputBlocker(){
+        if(inputBlocker==null){
+            inputBlocker = new Actor(){
 
                 @Override
                 public void draw(Batch batch, float parentAlpha) {
@@ -367,19 +365,24 @@ public class GameScreen extends Screen{
                     Draw.fillActor(batch,this);
                 }
             };
-			inputBlocker.setSize(Main.width, Main.height);
-			inputBlocker.addListener(new InputListener(){
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					pop();
-					return true;
-				}
-			});
-		}
+            inputBlocker.setSize(Main.width, Main.height);
+            inputBlocker.addListener(new InputListener(){
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    pop();
+                    return true;
+                }
+            });
+        }
+        return inputBlocker;
+    }
+	private static Array<Actor> stack = new Array<>();
+	public void push(Actor a){
 		
+
 		stack.add(a);
 		
-		addActor(inputBlocker);
+		addActor(getInputBlocker());
 		addActor(a);
 	}
 	public void pop(){
@@ -405,7 +408,7 @@ public class GameScreen extends Screen{
 
 	public void win() {
 
-	    addActor(inputBlocker);
+	    addActor(getInputBlocker());
         Sounds.playSound(Sounds.marimba_too_happy,1,1);
 	    String vicText = Village.island.getVictoryText();
 	    tann.village.screens.gameScreen.panels.miscStuff.VictoryPanel vp = new tann.village.screens.gameScreen.panels.miscStuff.VictoryPanel(vicText);

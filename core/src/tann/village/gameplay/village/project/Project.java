@@ -8,6 +8,7 @@ import tann.village.Main;
 import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.village.Village;
+import tann.village.screens.gameScreen.GameScreen;
 
 public class Project {
 
@@ -31,8 +32,17 @@ public class Project {
 
     public void onCommence() {
         Village.get().activate(effects, true, false);
+        for(Eff e:effects) {
+            if (e.effAct != null) {
+                switch (e.effAct.type) {
+                    case FOR_TURNS:
+                    Village.get().activate(e.copy().now(), false);
+                }
+            }
+        }
         Village.getInventory().resetWisps();
         Village.getInventory().showWisps();
+        GameScreen.get().checkEnd();
 	}
 
 

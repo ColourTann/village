@@ -8,9 +8,9 @@ import tann.village.screens.gameScreen.panels.eventStuff.OutcomePanel;
 import tann.village.util.Prefs;
 
 public class Outcome {
-    public Array<Eff> effects = new Array<>();
+    private Array<Eff> effects = new Array<>();
     public String description;
-    public Cost cost;
+    private Cost cost;
     public boolean pickedBeforeEver;
     public boolean fateful;
     private boolean triple;
@@ -24,12 +24,31 @@ public class Outcome {
         }
     }
 
-    public void activate(){
-        if(cost!=null) Village.get().activate(cost.effects, true, true);
-        Array<Eff> copied = Eff.copyArray(effects);
-        Event.process(copied);
-        Village.get().activate(copied, true);
+    public Array<Eff> combineEffects(){
+        Array<Eff> result = new Array<>();
+        if(cost!=null){
+            for(Eff e:cost.effects){
+                result.add(e.copy().invert());
+            }
+        }
+        result.addAll(Eff.copyArray(effects));
+        return result;
     }
+
+    public Array<Eff> getEffects(){
+        return effects;
+    }
+
+    public Cost getCost(){
+        return cost;
+    }
+
+//    public void activate(){
+//        if(cost!=null) Village.get().activate(cost.effects, true, true);
+//        Array<Eff> copied = Eff.copyArray(effects);
+//        Event.process(copied);
+//        Village.get().activate(copied, true);
+//    }
 
     OutcomePanel ocp;
     public OutcomePanel makePanel(){

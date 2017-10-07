@@ -87,7 +87,7 @@ public class EventCreator {
 
         ev = new Event("Fresh breeze", "The whole village feels refreshed today");
         ev.eff(new Eff(new Buff().rerolls(3)));
-        ev.addOutcome("Get up early for a good day's work");
+        ev.addOutcome("Get up early for");
         ev.eff(new Eff().morale(1));
         ev.addOutcome("Time for a lie-in");
         ev.eff(new Eff().morale(2));
@@ -148,8 +148,11 @@ public class EventCreator {
         current.add(ev);
 
         ev = new Event("Red Mould", "The food is getting infected");
-        ev.eff(new Eff().eachTurn(3).food(-2));
-        ev.joel(-1);
+        ev.eff(new Eff().eachTurn(3).food(-1));
+        ev.addOutcome("Throw it away");
+        ev.eff(new Eff().eachTurn(3).food(2));
+        ev.addOutcome("Turns out the mould is super tasty", 3);
+        ev.joel(-.5);
         current.add(ev);
 
         ev = new Event("Nightmares", "A deep fear invades the sleep of the village");

@@ -15,9 +15,11 @@ public class InventoryItemPanel extends Lay{
 	protected int value;
 	TextureRegion tr;
     protected Color border = Colours.dark;
+    boolean food;
 	public InventoryItemPanel(TextureRegion tr, int value) {
 		this.value=value;
 		this.tr=tr;
+		food = tr==Images.food;
         layout();
     }
 
@@ -131,7 +133,7 @@ public class InventoryItemPanel extends Lay{
 	    setDeltas(addSub.add, addSub.sub);
     }
 
-    public static class InventoryDeltaGroup extends Lay{
+    public class InventoryDeltaGroup extends Lay{
 
         public InventoryDeltaGroup() {
 
@@ -167,11 +169,18 @@ public class InventoryItemPanel extends Lay{
 
         @Override
         public void draw(Batch batch, float parentAlpha) {
-
             batch.setColor(Colours.dark);
             Draw.fillActor(batch,this);
             batch.setColor(Colours.brown_dark);
             Draw.fillRectangle(batch, getX(), getY(), 2, getHeight());
+            if(food) {
+                if (value + plus + neg < 0) {
+                    batch.setColor(Colours.red);
+                } else {
+                    batch.setColor(Colours.green_light);
+                }
+                Draw.drawRectangle(batch, getX(), getY(), getWidth(), getHeight(), 3);
+            }
             super.draw(batch, parentAlpha);
         }
     }

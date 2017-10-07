@@ -31,6 +31,7 @@ public class RollingPhase extends Phase{
 
     @Override
     public void deactivate() {
+        GameScreen.get().checkEnd();
         GameScreen.get().showRollContainer(false);
         LockBar.get().moveAway();
         Village.get().actionPotential();

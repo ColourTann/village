@@ -94,11 +94,9 @@ public class EventPanel extends Lay{
                 effects.add(effect);
                 upkeepShow.setEffects(effects);
                 pann = upkeepShow;
-
             }
              else {
                 pann = new EffectPanel(effect, true);
-
             }
             if(count%items_per_row==0) height += pann.getHeight();
             l.actor(pann);
@@ -109,15 +107,16 @@ public class EventPanel extends Lay{
             count++;
 
         }
-        l.row(1);
 
         if(e.outcomes.size>0){
+            l.row(1);
             TextWriter tw = new TextWriter("[frill-left] Choose One [frill-right]", Fonts.fontSmall);
             l.actor(tw);
-
+            float outcomeHeight = 0;
             for(int i=0;i<e.outcomes.size;i++){
                 final Outcome o = e.outcomes.get(i);
                 final OutcomePanel op = o.makePanel();
+                if (op.getHeight()>outcomeHeight && i<2) outcomeHeight = op.getHeight();
                 outcomePanels.add(op);
                 op.addListener(new InputListener(){
                     @Override
@@ -130,7 +129,7 @@ public class EventPanel extends Lay{
                 if(i%2==0){
                     for(int j = i;j<e.outcomes.size&&j<i+2;j++){
                         Outcome test = e.outcomes.get(j);
-                        if(test.cost!=null){
+                        if(test.getCost() !=null){
                             l.absRow(CostTab.height());
                             break;
                         }
@@ -147,13 +146,10 @@ public class EventPanel extends Lay{
                 l.actor(op);
                 l.gap(1);
             }
-            if(e.outcomes.size>0){
-                height += OutcomePanel.HEIGHT;
-            }
+            height += outcomeHeight;
             if(e.outcomes.size==3){
                 height += outcomePanels.get(2).getHeight();
             }
-            height += (((e.outcomes.size+1)/2)+1) * Main.h(2);
 
         }
 
@@ -231,14 +227,4 @@ public class EventPanel extends Lay{
             super.draw(batch, parentAlpha);
         }
     }
-
-    public void choiceAction() {
-        for(Outcome o:e.outcomes){
-            if(o.chosen){
-                o.activate();
-                break;
-            }
-        }
-    }
-
 }

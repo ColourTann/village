@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
+import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.village.Village;
 
 public class Event {
@@ -62,7 +63,7 @@ public class Event {
 	}
 	
 	public int getGoodness(){
-        return -(int)(Math.signum(joel));
+        return (int)(Math.signum(joel));
     }
 
 	public String toString(){
@@ -184,13 +185,21 @@ public class Event {
     public void activate() {
         Village.get().addJoel(joel);
         Array<Eff> copied = Eff.copyArray(effects);
-        process(copied);
-        Village.get().activate(copied, true, false);
         for(Outcome o:outcomes){
             if(o.chosen){
-                o.activate();
+                copied.addAll(o.combineEffects());
             }
         }
+
+        //hax
+        for(Eff e:copied){
+            if(e.effAct!=null && e.effAct.type== EffAct.ActivationType.FOR_TURNS){
+                e.effAct.value++;
+            }
+        }
+
+        process(copied);
+        Village.get().activate(copied, true, false);
         this.uses++;
     }
 

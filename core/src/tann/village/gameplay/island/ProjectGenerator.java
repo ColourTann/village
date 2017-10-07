@@ -25,7 +25,7 @@ public class ProjectGenerator {
         p.addEffect(new Eff().fate(1));
         results.add(p);
 
-        p = new Project("TenderGrass", "Not very tasty. +1 food each turn for 3 turns.");
+        p = new Project("TenderGrass", "Grows quickly. +1 food each turn for 3 turns.");
         p.setCost(3);
         p.addEffect(new Eff().eachTurn(3).food(1));
         results.add(p);

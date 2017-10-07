@@ -26,6 +26,7 @@ public class EventPhase extends Phase {
     @Override
     public void deactivate() {
         event.activate();
+        GameScreen.get().checkEnd();
         Village.get().pushPhase(new RollingPhase());
     }
 

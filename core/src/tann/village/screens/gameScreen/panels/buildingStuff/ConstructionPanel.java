@@ -110,7 +110,6 @@ public class ConstructionPanel extends InfoPanel{
 	private void startProject(Project p ){
         Village.get().addBuilding(p);
         p.onCommence();
-        GameScreen.get().checkEnd();
         built=true;
         for(ProjectPanel bp:availables){
             bp.setVisible(false);

@@ -88,19 +88,25 @@ public class WeatherIsland extends Island {
         ev.effR(new Eff().upkeep().food(-1));
         addEvent(ev);
 
-        ev = new Event("Storm", "The storm has hit you, it will be tough to survive this.");
-        ev.storyTurn(9);
+        ev = new Event("Storm", "The storm is rolling in");
+        ev.storyTurn(10);
         ev.eff(new Eff().upkeep().food(-2));
-        addEvent(ev);
+        ev.addOutcome("It will be tough to survive this");
+        ev.eff(new Eff().upkeep().food(-1));
+        ev.addOutcome("You feel warm inside", 3);
 
+        addEvent(ev);
         ev = new Event("Thunderstorm", "And then the rain started");
-        ev.storyTurn(13);
-        ev.eff(new Eff().upkeep().food(-3));
-        addEvent(ev);
-
-        ev = new Event("Soaked through", "The dirt has turned to mud");
-        ev.storyTurn(16);
+        ev.storyTurn(14);
         ev.eff(new Eff().upkeep().food(-2));
+        ev.addOutcome("Everyone is shivering");
+        ev.eff(new Eff().upkeep().food(-1));
+        ev.addOutcome("You can already see a break in the clouds", 2);
+
+        addEvent(ev);
+        ev = new Event("Soaked through", "The dirt has turned to mud, but the end is in sight");
+        ev.storyTurn(17);
+        ev.eff(new Eff().upkeep().food(-1));
         addEvent(ev);
     }
 

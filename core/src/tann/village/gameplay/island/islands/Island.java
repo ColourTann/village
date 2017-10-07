@@ -127,6 +127,7 @@ public abstract class Island {
 		storyEvents.clear();
 		randomEventsPool.clear();
 		randomEventsPool.addAll(EventCreator.makeBasicEvents());
+		availableProjects.clear();
         Event.currentSpecificity = Event.Specificity.Scenario;
         setupRandomPool();
         setupStory();

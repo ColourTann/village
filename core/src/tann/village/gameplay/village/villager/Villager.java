@@ -50,7 +50,7 @@ public class Villager {
 		this.die=die;
 		this.die.villager=this;
 		this.type=die.type;
-        this.xpToLevelUp = die.type.level+1;
+        this.xpToLevelUp = die.type.level+3;
         getIcon().layout();
 	}
 	
@@ -138,6 +138,9 @@ public class Villager {
     }
 
     public enum VillagerType{
+
+        // 0
+
         Villager(0,"no description maybe?", new Array<VillagerType>(),
                 Side.food1, Side.food1, Side.wood1, Side.wood1, Side.brain, Side.skull),
 
@@ -156,7 +159,7 @@ public class Villager {
         Teacher(1, "Share the knowledge", VillagerType.Villager,
                 Side.brainOther, Side.brainOther, Side.brainOther, Side.brain, Side.food1, Side.food1),
 
-        GemSniffer(1, "Hungry for gems", VillagerType.Villager, Island.Keyword.Gem,
+        GemSniffer(1, "Hungry for gems", VillagerType.Villager, Island.Keyword.Gem, .01f,
                 Side.gem1, Side.food1, Side.food1, Side.wood1, Side.brain, Side.brain),
 
         // 2
@@ -238,9 +241,10 @@ public class Villager {
 		public Island.Keyword[] keywords;
         public TextureRegion lapel;
         public Array<VillagerType> sources;
+        public float chance = 1;
 
 
-        VillagerType(int level, String description, Array<VillagerType> sources, Island.Keyword[] keywords, Side... sides){
+        VillagerType(int level, String description, Array<VillagerType> sources, Island.Keyword[] keywords, float chance, Side... sides){
             if(sides.length!=6){
                 System.err.println("side error making "+this);
             }
@@ -260,7 +264,7 @@ public class Villager {
         }
 
         VillagerType(int level, String description, Array<VillagerType> sources, Side... sides){
-            this(level, description, sources, null, sides);
+            this(level, description, sources, null, 1, sides);
         }
 
         VillagerType(int level, String description, VillagerType source, Side... sides){
@@ -268,11 +272,11 @@ public class Villager {
         }
 
         VillagerType(int level, String description, VillagerType source, Island.Keyword[] keywords, Side... sides){
-            this(level, description, new Array<VillagerType>(new VillagerType[]{source}), keywords, sides);
+            this(level, description, new Array<VillagerType>(new VillagerType[]{source}), keywords, 1, sides);
         }
 
-        VillagerType(int level, String description, VillagerType source, Island.Keyword keyword, Side... sides){
-            this(level, description, new Array<VillagerType>(new VillagerType[]{source}), new Island.Keyword[]{keyword}, sides);
+        VillagerType(int level, String description, VillagerType source, Island.Keyword keyword, float chance, Side... sides){
+            this(level, description, new Array<VillagerType>(new VillagerType[]{source}), new Island.Keyword[]{keyword}, chance, sides);
         }
 	}
 }

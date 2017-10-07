@@ -22,7 +22,7 @@ import tann.village.screens.gameScreen.panels.rollStuff.RerollPanel;
 import tann.village.util.Sounds;
 
 public class Village {
-	
+    public static final int STARTING_VILLAGERS = 5;
 	private Array<Project> buildings  = new Array<>();
 	private RerollPanel panel;
     private tann.village.gameplay.village.inventory.Inventory inventory;
@@ -64,7 +64,6 @@ public class Village {
     private Upkeep upkeep;
     private Array<Buff> buffs = new Array<Buff>();
 
-    public static final int STARTING_VILLAGERS = 15;
     public Array<Villager> villagers = new Array<>();
 
     private int dayNum=0;

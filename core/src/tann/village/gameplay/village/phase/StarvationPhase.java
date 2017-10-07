@@ -8,6 +8,7 @@ import tann.village.screens.gameScreen.panels.review.StarvationPanel;
 public class StarvationPhase extends Phase {
     @Override
     public void activate() {
+        Village.get().starvation++;
         int food = Village.getInventory().getResourceAmount(Eff.EffectType.Food);
         int wood = Village.getInventory().getResourceAmount(Eff.EffectType.Wood);
         int foodMissing = Math.max(0, -food);
@@ -19,6 +20,8 @@ public class StarvationPhase extends Phase {
 
     @Override
     public void deactivate() {
-
+        if(Village.get().starvation>=Village.MAX_STARVATION){
+            Village.get().pushPhase(new LossPhase(null));
+        }
     }
 }

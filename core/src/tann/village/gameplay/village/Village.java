@@ -122,7 +122,7 @@ public class Village {
         if(e.effAct!=null) {
             switch (e.effAct.type) {
                 case FOR_TURNS:
-//                    activate(e.copy().now(), false);
+//                    activate(e.copy().now(), false); now only for buildings
                 case IN_TURNS: // fallthrough
                     addTurnEff(e.copy());
                     return;
@@ -270,7 +270,10 @@ public class Village {
     }
 
 
+    public int starvation = 0;
+    public static final int MAX_STARVATION = 3;
 	public void setup(){
+	    starvation=0;
 	    dayNum=0;
 	    this.joel=0;
         buildings.clear();

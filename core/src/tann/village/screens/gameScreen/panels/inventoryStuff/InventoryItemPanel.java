@@ -184,5 +184,4 @@ public class InventoryItemPanel extends Lay{
             super.draw(batch, parentAlpha);
         }
     }
-
 }

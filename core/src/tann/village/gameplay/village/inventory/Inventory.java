@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
+import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.village.AddSub;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
@@ -124,6 +125,7 @@ public class Inventory{
 	
 	public boolean isEffectValid(Eff e){
 		if(get(e) == null) return true;
+        if(e.effAct!= EffAct.now) return true;
 		return get(e).canChangeBy(e.value);
 	}
 

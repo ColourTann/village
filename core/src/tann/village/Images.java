@@ -21,6 +21,8 @@ public class Images {
     public static final TextureRegion morale_inner = Main.atlas.findRegion("generalIcons/moralecenter");
     public static final TextureRegion morale_pointer = Main.atlas.findRegion("generalIcons/pointer");
 
+    public static final TextureRegion starvation = Main.atlas.findRegion("generalIcons/starvation");
+
 	public static final TextureRegion fate = Main.atlas.findRegion("resource/fate");
 	public static final TextureRegion level_up = Main.atlas.findRegion("resource/levelup");
     public static final TextureRegion skull = Main.atlas.findRegion("resource/skull");

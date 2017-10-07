@@ -18,7 +18,7 @@ public class LossPanel extends InfoPanel{
 		String lossText="";
 		switch(reason){
 		case Morale:
-			lossText="The village has lost hope and must return to the mainland";
+			lossText="The village has lost hope and must give up";
 			break;
 		default:
 			break;

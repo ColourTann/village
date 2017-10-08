@@ -1,12 +1,16 @@
 package tann.village.gameplay.island.islands.levels;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import tann.village.Images;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.island.ProjectGenerator;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.SurviveObjective;
 import tann.village.gameplay.village.Buff;
+import tann.village.gameplay.village.inventory.MoralePoint;
+import tann.village.gameplay.village.inventory.MoraleRange;
+import tann.village.util.Colours;
 import tann.village.util.Sounds;
 
 public class WeatherIsland extends Island {
@@ -138,5 +142,31 @@ public class WeatherIsland extends Island {
     @Override
     public void addKeywords() {
 
+    }
+
+    @Override
+    public void setupMorale() {
+        moraleMin = -5;
+        moraleMax = 12;
+        moralePoints.add(new MoralePoint(5, Images.food, new Eff[]{new Eff().food(5), new Eff().storage(2)}));
+        moralePoints.add(new MoralePoint(9, Images.wood, new Eff[]{new Eff().wood(6)}));
+        moralePoints.add(new MoralePoint(11, Images.fate, new Eff[]{new Eff().fate(4)}));
+        moralePoints.add(new MoralePoint(-5, Images.skull, new Eff[]{new Eff().lose()}));
+
+        moraleRanges.add(new MoraleRange(-6,-2, Colours.red, new Eff(new Buff().rerolls(-1))));
+        moraleRanges.add(new MoraleRange(2,5,Colours.green_light,
+                new Eff[]{new Eff(new Buff().rerolls(1))}));
+        moraleRanges.add(new MoraleRange(5,10,Colours.blue_light,
+                new Eff[]{
+                        new Eff(new Buff().rerolls(1)),
+                        new Eff(new Buff().bonusFood(1)),
+                        new Eff().morale(-1)
+                }));
+        moraleRanges.add(new MoraleRange(10,15,Colours.light,
+                new Eff[]{
+                        new Eff(new Buff().rerolls(1)),
+                        new Eff(new Buff().bonusFood(3)),
+                        new Eff().morale(-2)
+                }));
     }
 }

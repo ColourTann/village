@@ -10,6 +10,7 @@ import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.effect.EffAct;
 import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
+import tann.village.gameplay.village.inventory.Inventory;
 import tann.village.gameplay.village.inventory.InventoryItem;
 import tann.village.gameplay.village.phase.*;
 import tann.village.gameplay.village.project.Project;
@@ -26,36 +27,6 @@ public class Village {
 	private Array<Project> buildings  = new Array<>();
 	private RerollPanel panel;
     private tann.village.gameplay.village.inventory.Inventory inventory;
-    private Array<Phase> phaseStack = new Array<>();
-    public static Island island;
-    public void pushPhase(Phase p){
-        if(p.putOnBottom()){
-            phaseStack.insert(0, p);
-        }
-        else {
-            phaseStack.add(p);
-        }
-    }
-    public Phase currentPhase = new NothingPhase();
-
-    public boolean canPop(){
-        return currentPhase.canContinue();
-    }
-
-    public void popPhase(){
-        if(!canPop()){
-            System.err.println("trying to pop and can't! "+currentPhase);
-        }
-        if(currentPhase!=null){
-            currentPhase.deactivate();
-        }
-        if(phaseStack.size==0){
-            System.err.println("no phase to pop");
-        }
-        Phase p =  phaseStack.removeIndex(phaseStack.size-1);
-        p.activate();
-        currentPhase=p;
-    }
 
     public Upkeep getUpkeep() {
         return upkeep;
@@ -72,7 +43,6 @@ public class Village {
 	public static Village get(){
 		if(self==null){
 			self = new Village();
-			self.setup();
 		}
 		return self;
 	}
@@ -276,7 +246,7 @@ public class Village {
 	    dayNum=0;
 	    this.joel=0;
         buildings.clear();
-        inventory = new tann.village.gameplay.village.inventory.Inventory();
+        inventory = new Inventory();
         upkeep= new Upkeep();
         villagers.clear();
         buffs.clear();
@@ -368,5 +338,35 @@ public class Village {
             System.out.println(p);
         }
         System.out.println("-------------");
+    }
+
+    private Array<Phase> phaseStack = new Array<>();
+    public Phase currentPhase = new NothingPhase();
+    public void pushPhase(Phase p){
+        if(p.putOnBottom()){
+            phaseStack.insert(0, p);
+        }
+        else {
+            phaseStack.add(p);
+        }
+    }
+
+    public boolean canPop(){
+        return currentPhase.canContinue();
+    }
+
+    public void popPhase(){
+        if(!canPop()){
+            System.err.println("trying to pop and can't! "+currentPhase);
+        }
+        if(currentPhase!=null){
+            currentPhase.deactivate();
+        }
+        if(phaseStack.size==0){
+            System.err.println("no phase to pop");
+        }
+        Phase p =  phaseStack.removeIndex(phaseStack.size-1);
+        p.activate();
+        currentPhase=p;
     }
 }

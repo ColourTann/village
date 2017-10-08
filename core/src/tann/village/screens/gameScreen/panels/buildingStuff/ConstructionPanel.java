@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 
 import tann.village.Images;
 import tann.village.gameplay.effect.Cost;
+import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.project.Project;
 import tann.village.screens.gameScreen.GameScreen;
@@ -121,7 +122,7 @@ public class ConstructionPanel extends InfoPanel{
 	private void resetAvailablePanels() {
 		int levelToGenerate = 0;
 		levelToGenerate = Math.min(1, levelToGenerate);
-		Project[] generated = Village.island.getRandomProjects(availables.size);
+		Project[] generated = Island.get().getRandomProjects(availables.size);
 		for(int i=0;i<availables.size;i++){
             ProjectPanel bp = availables.get(i);
 		    bp.setVisible(true);

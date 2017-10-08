@@ -8,10 +8,21 @@ import com.badlogic.gdx.utils.Array;
 import tann.village.Main;
 import tann.village.gameplay.island.event.Event;
 import tann.village.gameplay.island.event.EventCreator;
+import tann.village.gameplay.village.inventory.MoralePoint;
+import tann.village.gameplay.village.inventory.MoraleRange;
 import tann.village.gameplay.village.project.Project;
 import tann.village.gameplay.village.villager.Villager;
 
 public abstract class Island {
+
+
+    private static Island self;
+    public static void setIsland(Island island){
+        self = island;
+    }
+    public static Island get(){
+        return self;
+    }
 
     public enum Keyword{
         Gem
@@ -23,6 +34,10 @@ public abstract class Island {
 	public boolean explored;
 	TextureRegion tr;
 	int x,y;
+
+	public int moraleMin, moraleMax;
+	public Array<MoralePoint> moralePoints = new Array<>();
+    public Array<MoraleRange> moraleRanges = new Array<>();
 
     protected Array<Project> availableProjects = new Array<>();
 
@@ -131,6 +146,7 @@ public abstract class Island {
 	public void setup(){
 	    keywords.clear();
 	    addKeywords();
+	    setupMorale();
 		validEvents.clear();
 		storyEvents.clear();
 		randomEventsPool.clear();
@@ -170,6 +186,7 @@ public abstract class Island {
 
     public abstract String getVictoryText();
     public abstract void addKeywords();
+    public abstract void setupMorale();
 
     public Array<Villager.VillagerType> getRandomVillagerTypes(Villager.VillagerType source, int amount){
         Array<Villager.VillagerType> results = new Array<>();

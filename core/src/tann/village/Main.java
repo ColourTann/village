@@ -272,6 +272,7 @@ public class Main extends ApplicationAdapter {
 
 	public void travelTo(Island island) {
 //	    BulletStuff.reset();
+        Island.setIsland(island);
 		island.setup();
 		Village.get().setup();
 		GameScreen.reset();

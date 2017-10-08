@@ -1,6 +1,7 @@
 package tann.village.gameplay.village.phase;
 
 import tann.village.gameplay.island.event.Event;
+import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.eventStuff.EventPanel;
@@ -11,7 +12,7 @@ public class EventPhase extends Phase {
     @Override
     public void activate() {
         int dayNum = Village.get().getDayNum();
-        event = Village.island.getEventForTurn(dayNum);
+        event = Island.get().getEventForTurn(dayNum);
         Village.get().nextDay();
         int goodness = event.getGoodness();
         String[] sound = null;

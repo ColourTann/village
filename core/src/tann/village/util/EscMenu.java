@@ -50,9 +50,8 @@ public class EscMenu extends InfoPanel {
             public void run() {
                 BulletStuff.reset();
                 GameScreen.get().pop();
-                Island island = Village.island;
                 GameScreen.nullScreen();
-                Main.self.travelTo(island);
+                Main.self.travelTo(Island.get());
             }
         });
     }

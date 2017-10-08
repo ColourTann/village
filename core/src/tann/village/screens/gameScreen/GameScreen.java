@@ -85,7 +85,6 @@ public class GameScreen extends Screen{
 	public VillagerBarPanel vbp;
 	public void init(Island island, Village village){
 		this.village=village;
-		Village.island = island;
 		addActor(LockBar.get());
 		setSize(Main.width, Main.height);
 		addListener(new ClickListener(){
@@ -187,7 +186,7 @@ public class GameScreen extends Screen{
     EventDebugPanel edp;
     public void toggleEventDebug(){
         if(edp==null) {
-            edp = new EventDebugPanel(Village.island.getRandomEvents());
+            edp = new EventDebugPanel(Island.get().getRandomEvents());
             edp.setPosition(getWidth()/2-edp.getWidth()/2, getHeight()/2-edp.getHeight()/2);
         }
         if(!edp.remove()) addActor(edp);
@@ -202,7 +201,7 @@ public class GameScreen extends Screen{
 	@Override
 	public void preDraw(Batch batch) {
 		batch.setColor(Colours.z_white);
-		Draw.drawSize(batch, Village.island.background, getX(), getY(), getWidth(), getHeight());
+		Draw.drawSize(batch, Island.get().background, getX(), getY(), getWidth(), getHeight());
         LockBar.get().render(batch);
 	}
 
@@ -410,7 +409,7 @@ public class GameScreen extends Screen{
 
 	    addActor(getInputBlocker());
         Sounds.playSound(Sounds.marimba_too_happy,1,1);
-	    String vicText = Village.island.getVictoryText();
+	    String vicText = Island.get().getVictoryText();
 	    tann.village.screens.gameScreen.panels.miscStuff.VictoryPanel vp = new tann.village.screens.gameScreen.panels.miscStuff.VictoryPanel(vicText);
 	    vp.setPosition(getWidth()/2-vp.getWidth()/2, getHeight()/2 - vp.getHeight()/2);
 	    addActor(vp);

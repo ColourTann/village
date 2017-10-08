@@ -70,4 +70,9 @@ public class TutorialIsland extends Island {
 
     }
 
+    @Override
+    public void setupMorale() {
+
+    }
+
 }

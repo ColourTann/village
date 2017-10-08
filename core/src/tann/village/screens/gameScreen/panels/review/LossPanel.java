@@ -45,9 +45,8 @@ public class LossPanel extends InfoPanel{
             @Override
             public void run() {
                 GameScreen.get().pop();
-                Island island = Village.island;
                 GameScreen.nullScreen();
-                Main.self.travelTo(island);
+                Main.self.travelTo(Island.get());
             }
         });
 	}

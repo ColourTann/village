@@ -1,6 +1,7 @@
 package tann.village.gameplay.village.phase;
 
 import com.badlogic.gdx.utils.Array;
+import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.screens.gameScreen.GameScreen;
@@ -17,8 +18,7 @@ public class LevelupPhase extends Phase {
 
     @Override
     public void activate() {
-        //TODO fix this
-        Array<Villager.VillagerType> choices = Village.island.getRandomVillagerTypes(v.type, 3);
+        Array<Villager.VillagerType> choices = Island.get().getRandomVillagerTypes(v.type, 3);
         LevelupPanel lup = new LevelupPanel(v, choices);
         GameScreen.get().addWithProceedButton(lup, false);
         Sounds.playSound(Sounds.marimba_happy, 1, 1);

@@ -5,6 +5,7 @@ import tann.village.gameplay.effect.Cost;
 import tann.village.gameplay.effect.Eff;
 import tann.village.gameplay.effect.Eff.EffectType;
 import tann.village.gameplay.effect.EffAct;
+import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.village.AddSub;
 import tann.village.gameplay.village.Village;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryPanel;
@@ -35,7 +36,8 @@ public class Inventory{
         food = new InventoryItem(EffectType.Food);
         foodStorage = new InventoryItem(EffectType.FoodStorage);
 		wood = new InventoryItem(EffectType.Wood);
-		morale = new MoraleInventoryItem(-5,15);
+		Island island = Island.get();
+		morale = new MoraleInventoryItem(island.moraleMin, island.moraleMax, island.moralePoints, island.moraleRanges);
 		fate = new InventoryItem(EffectType.Fate);
 
 		morale.setValue(0);
@@ -154,6 +156,10 @@ public class Inventory{
     }
 
     public void actionPotential(Map<Object, AddSub> deltaMap) {
+	    if(deltaMap.containsKey(EffectType.Gem)){
+	        get(new Eff().gem(0));
+	        // hax
+        }
         for(InventoryItem ii:items){
             AddSub as = deltaMap.get(ii.type);
             ii.clearDelta();

@@ -11,34 +11,15 @@ import tann.village.util.Colours;
 
 public class MoraleInventoryItem extends InventoryItem {
 
-    Array<MoralePoint> points = new Array<>();
-    Array<MoraleRange> ranges = new Array<>();
-    public MoraleInventoryItem(int min, int max) {
+    Array<MoralePoint> points;
+    Array<MoraleRange> ranges;
+    public MoraleInventoryItem(int min, int max, Array<MoralePoint> points, Array<MoraleRange> ranges) {
         super(Eff.EffectType.Morale);
         setBounds(min, max);
+        this.points = points;
+        this.ranges=ranges;
         points.add(new MoralePoint(min, null,null));
         points.add(new MoralePoint(max, null,null));
-
-        points.add(new MoralePoint(5, Images.food, new Eff[]{new Eff().food(5), new Eff().storage(2)}));
-        points.add(new MoralePoint(9, Images.wood, new Eff[]{new Eff().wood(6)}));
-        points.add(new MoralePoint(11, Images.fate, new Eff[]{new Eff().fate(4)}));
-        points.add(new MoralePoint(-5, Images.skull, new Eff[]{new Eff().lose()}));
-
-        ranges.add(new MoraleRange(-6,-2, Colours.red, new Eff(new Buff().rerolls(-1))));
-        ranges.add(new MoraleRange(2,5,Colours.green_light,
-                new Eff[]{new Eff(new Buff().rerolls(1))}));
-        ranges.add(new MoraleRange(5,10,Colours.blue_light,
-                new Eff[]{
-                        new Eff(new Buff().rerolls(1)),
-                        new Eff(new Buff().bonusFood(1)),
-                        new Eff().morale(-1)
-        }));
-        ranges.add(new MoraleRange(10,15,Colours.light,
-                new Eff[]{
-                    new Eff(new Buff().rerolls(1)),
-                    new Eff(new Buff().bonusFood(3)),
-                    new Eff().morale(-2)
-        }));
     }
 
     private int min, max;

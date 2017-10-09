@@ -25,10 +25,11 @@ public class BuffVillagerPhase extends Phase {
     }
 
     @Override
-    public void selectVillager(Villager v) {
+    public boolean selectVillager(Villager v) {
         v.giveBuff(villagerBuff);
         GameScreen.get().pop();
         Village.get().popPhase();
+        return true;
     }
 
     @Override

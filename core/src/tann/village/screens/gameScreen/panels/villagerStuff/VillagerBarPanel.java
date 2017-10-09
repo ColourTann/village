@@ -1,6 +1,8 @@
 package tann.village.screens.gameScreen.panels.villagerStuff;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import tann.village.Main;
 import tann.village.gameplay.village.Village;

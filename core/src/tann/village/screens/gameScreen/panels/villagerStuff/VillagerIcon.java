@@ -9,6 +9,7 @@ import tann.village.Images;
 import tann.village.Main;
 import tann.village.gameplay.village.Village;
 import tann.village.gameplay.village.villager.Villager;
+import tann.village.screens.gameScreen.GameScreen;
 import tann.village.screens.gameScreen.panels.inventoryStuff.InventoryItemPanel;
 import tann.village.util.*;
 
@@ -20,7 +21,11 @@ public class VillagerIcon extends Lay {
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Village.getPhase().selectVillager(v);
+                boolean used = Village.getPhase().selectVillager(v);
+                if(!used){
+                    GameScreen.get().addVillagerPanel(v);
+                }
+
                 return super.touchDown(event, x, y, pointer, button);
             }
         });

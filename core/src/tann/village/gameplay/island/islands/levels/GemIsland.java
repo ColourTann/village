@@ -70,7 +70,7 @@ public class GemIsland extends Island{
         ev.eff(new Eff().morale(-1));
         ev.addOutcome("You wake up damp");
         ev.eff(new Eff().gem(1));
-        ev.addOutcome("The rain uncovers a gem!", 3);
+        ev.addOutcome("The rain uncovers a gem!", 2);
         ev.joel(-.4);
         addEvent(ev);
 
@@ -94,18 +94,18 @@ public class GemIsland extends Island{
         ev.storyTurn(0);
         addEvent(ev);
 
-        ev = new Event("Blood Skies", "The sky has turned deep red, the heat makes it hard to work");
+        ev = new Event("Blood Skies", "The sky has turned deep red");
         ev.storyTurn(8);
         ev.eff(new Eff().upkeep().food(-1));
         addEvent(ev);
 
         ev = new Event("Burning ground", "The ground shifts beneath your feet");
-        ev.eff(new Eff().upkeep().food(-2));
+        ev.eff(new Eff().upkeep().food(-1));
         ev.storyTurn(14);
         addEvent(ev);
 
         ev = new Event("Dire omen", "The sky turns black, the gods grow tired of your sloth.");
-        ev.eff(new Eff().upkeep().food(-5));
+        ev.eff(new Eff().upkeep().food(-6));
         ev.storyTurn(24);
         addEvent(ev);
     }

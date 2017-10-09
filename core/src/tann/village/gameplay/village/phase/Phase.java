@@ -8,7 +8,7 @@ public abstract class Phase {
     public boolean allowDieClicking() {return false;}
     public boolean allowBuying() {return false;}
     public boolean canContinue() {return true;}
-    public void selectVillager(Villager v){};
+    public boolean selectVillager(Villager v){ return false; };
     public boolean putOnBottom(){return false;}
 
     @Override

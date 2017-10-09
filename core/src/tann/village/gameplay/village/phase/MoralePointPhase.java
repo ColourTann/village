@@ -17,6 +17,7 @@ public class MoralePointPhase extends Phase {
         Village.get().activate(point.effs, true);
         MoralePointPanel panel = new MoralePointPanel(point);
         GameScreen.get().addWithProceedButton(panel, true);
+        GameScreen.get().checkEnd();
     }
 
     @Override

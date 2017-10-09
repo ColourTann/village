@@ -20,6 +20,7 @@ import tann.village.gameplay.island.islands.Island;
 import tann.village.gameplay.island.objective.Objective;
 import tann.village.gameplay.village.RollManager;
 import tann.village.gameplay.village.Village;
+import tann.village.gameplay.village.phase.NothingPhase;
 import tann.village.gameplay.village.villager.Villager;
 import tann.village.gameplay.village.villager.die.Die;
 import tann.village.screens.gameScreen.panels.buildingStuff.ConstructionPanel;
@@ -233,10 +234,10 @@ public class GameScreen extends Screen{
                 toggleEscMenu();
                 break;
             case Input.Keys.LEFT:
-                Village.get().activate(new Eff().morale(-1), true);
+//                Village.get().activate(new Eff().morale(-1), true);
                 break;
             case Input.Keys.RIGHT:
-                Village.get().activate(new Eff().morale(1), true);
+//                Village.get().activate(new Eff().morale(1), true);
                 break;
             case Input.Keys.ALT_RIGHT:
                 Village.get().printPhases();
@@ -348,7 +349,7 @@ public class GameScreen extends Screen{
 
 
 	public void addVillagerPanel(Villager villager) {
-		VillagerPanel panel = new VillagerPanel(villager);
+	    ClassPanel panel = new ClassPanel(villager.type, villager, 300, false);
 		push(panel);
 		panel.setPosition(getWidth()/2-panel.getWidth()/2, getHeight()/2-panel.getHeight()/2);
 	}
